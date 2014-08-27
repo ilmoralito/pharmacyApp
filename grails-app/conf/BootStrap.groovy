@@ -28,9 +28,8 @@ class BootStrap {
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
         new Role(authority:"ROLE_USER").save()
-        new Role(authority:"ROLE_SUPERVISOR").save()
 
-        assert Role.count() == 3
+        assert Role.count() == 2
 
         UserRole.create user, adminRole, true
 
