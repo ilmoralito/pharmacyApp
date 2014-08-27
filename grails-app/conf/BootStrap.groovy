@@ -6,7 +6,10 @@ class BootStrap {
   def init = { servletContext ->
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
-  			
+  			def provider1 = Provider.build()
+  			def provider2 = Provider.build()
+
+  			assert Provider.count() == 2
   		break
   	}
   }
