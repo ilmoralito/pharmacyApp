@@ -83,6 +83,9 @@ grails.project.dependency.resolution = {
     //app plugins
     compile ":build-test-data:2.2.0"
     compile ":spring-security-core:2.0-RC4"
+    compile ":spring-security-ui:1.0-RC2"
+    compile ":mail:1.0.7"
+    compile ":jquery-ui:1.10.3"
     compile ":twitter-bootstrap:3.2.0.2"
   }
 }

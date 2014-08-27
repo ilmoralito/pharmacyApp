@@ -25,6 +25,28 @@ class BootStrap {
   			assert Provider.count() == 2
   			assert provider1.products.size() == 3
   			assert provider2.products.size() == 4
+
+        def user = new User(
+          username:"me@gmail.com",
+          password:"123",
+          email:"me@gmail.com",
+          fullName:"Arnulfo Rolando Blandon"
+        )
+
+        if (!user.save()) {
+          user.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
+        def adminRole = new Role(authority:"ROLE_ADMIN").save()
+        new Role(authority:"ROLE_USER").save()
+        
+        UserRole.create user, adminRole, true
+
+        assert User.count() == 1
+        assert Role.count() == 2
+        assert UserRole.count() == 1
   		break
   	}
   }
