@@ -25,14 +25,5 @@
 		</div>
 	</form>
 </div>
-
-<script>
-$(document).ready(function() {
-	$('#username').focus();
-});
-
-<s2ui:initCheckboxes/>
-
-</script>
 </body>
 </html>
