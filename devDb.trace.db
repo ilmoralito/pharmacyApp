@@ -1,0 +1,24 @@
+08-27 14:52:49 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46A317E8126 [42102-173]
+08-27 14:52:49 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46AD6A94506 [42102-173]
+08-27 14:54:51 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46A317E8126 [42102-173]
+08-27 14:54:51 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46AD6A94506 [42102-173]
+08-27 14:57:57 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46A317E8126 [42102-173]
+08-27 14:57:57 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46AD6A94506 [42102-173]
