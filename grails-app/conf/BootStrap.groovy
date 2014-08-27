@@ -1,7 +1,15 @@
-class BootStrap {
+import ni.sb.*
+import grails.util.Environment
+import grails.util.Holders
 
-    def init = { servletContext ->
-    }
-    def destroy = {
-    }
+class BootStrap {
+  def init = { servletContext ->
+  	switch(Environment.current) {
+  		case Environment.DEVELOPMENT:
+  			
+  		break
+  	}
+  }
+  def destroy = {
+  }
 }
