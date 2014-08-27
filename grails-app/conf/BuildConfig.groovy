@@ -66,8 +66,6 @@ grails.project.dependency.resolution = {
     runtime ":database-migration:1.4.0"
     runtime ":jquery:1.11.0.2"
     runtime ":resources:1.2.7"
-    compile ":build-test-data:2.2.0"
-    compile ":spring-security-core:2.0-RC4"
     // Uncomment these (or add new ones) to enable additional resources capabilities
     //runtime ":zipped-resources:1.0.1"
     //runtime ":cached-resources:1.1"
@@ -81,5 +79,10 @@ grails.project.dependency.resolution = {
     //compile ":less-asset-pipeline:1.5.3"
     //compile ":coffee-asset-pipeline:1.5.0"
     //compile ":handlebars-asset-pipeline:1.3.0.1"
+
+    //app plugins
+    compile ":build-test-data:2.2.0"
+    compile ":spring-security-core:2.0-RC4"
+    compile ":twitter-bootstrap:3.2.0.2"
   }
 }
