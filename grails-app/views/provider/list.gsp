@@ -7,6 +7,14 @@
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro quas, placeat corporis saepe nemo neque rem doloribus temporibus adipisci recusandae sapiente ea consequatur sequi, consectetur velit perspiciatis blanditiis ullam dignissimos!
+	<g:render template="toolbar"/>
+
+	<g:if test="${providers}">
+		<g:each in="${providers}" var="provider">
+			<h4><g:link action="show" id="${provider.id}">${provider}</g:link></h4>
+			<p>${provider.contactInformation()}</p>
+			<br>
+		</g:each>
+	</g:if>
 </body>
 </html>

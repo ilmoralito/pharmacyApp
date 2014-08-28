@@ -24,5 +24,9 @@ class Provider {
   	version false
   }
 
+  String contactInformation() {
+    "$address, $phone"
+  }
+
   String toString() { name }
 }

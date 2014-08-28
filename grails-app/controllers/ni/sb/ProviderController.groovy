@@ -10,6 +10,6 @@ class ProviderController {
 	]
 
   def list() {
-  	
+  	[providers:Provider.list()]
   }
 }
