@@ -6,10 +6,25 @@ class BootStrap {
   def init = { servletContext ->
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
-  			def provider1 = Provider.build()
-  			def provider2 = Provider.build()
+  			def provider1 = new Provider(
+  				name:"provider1",
+  				address:"address1",
+  				products:["product1", "product2", "product3"]
+  			)
+
+  			provider1.save()
+
+  			def provider2 = new Provider(
+  				name:"provider2",
+  				address:"address2",
+  				products:["product4", "product5", "product6", "product7"]
+  			)
+
+  			provider2.save()
 
   			assert Provider.count() == 2
+  			assert provider1.products.size() == 3
+  			assert provider2.products.size() == 4
 
         def user = new User(
           username:"me@gmail.com",
@@ -24,8 +39,6 @@ class BootStrap {
           }
         }
 
-        assert User.count() == 1
-
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
         new Role(authority:"ROLE_USER").save()
 
@@ -33,6 +46,8 @@ class BootStrap {
 
         UserRole.create user, adminRole, true
 
+        assert User.count() == 1
+        assert Role.count() == 2
         assert UserRole.count() == 1
   		break
   	}
