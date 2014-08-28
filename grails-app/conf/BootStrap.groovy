@@ -9,18 +9,28 @@ class BootStrap {
   			def provider1 = new Provider(
   				name:"provider1",
   				address:"address1",
+          phone:"23114455",
   				products:["product1", "product2", "product3"]
   			)
 
-  			provider1.save()
+  			if (!provider1.save()) {
+          provider1.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
 
   			def provider2 = new Provider(
   				name:"provider2",
   				address:"address2",
+          phone:"23114488",
   				products:["product4", "product5", "product6", "product7"]
   			)
  			
-  			provider2.save()
+  			if (!provider2.save()) {
+          provider2.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
 
   			assert Provider.count() == 2
   			assert provider1.products.size() == 3

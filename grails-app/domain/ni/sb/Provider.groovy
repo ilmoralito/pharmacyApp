@@ -3,6 +3,7 @@ package ni.sb
 class Provider {
 	String name
   String address
+  String phone
   SortedSet products
 
 	Date dateCreated
@@ -11,6 +12,9 @@ class Provider {
   static constraints = {
     name blank:false, unique:true
     address blank:false, unique:true
+    phone blank:false, unique:true, validator: { phone ->
+      phone.size() == 8 && phone.isNumber()
+    }
     products nullable:false
   }
 
