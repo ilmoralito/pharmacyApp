@@ -19,7 +19,7 @@ class BootStrap {
   				address:"address2",
   				products:["product4", "product5", "product6", "product7"]
   			)
- 			
+
   			provider2.save()
 
   			assert Provider.count() == 2
@@ -41,7 +41,9 @@ class BootStrap {
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
         new Role(authority:"ROLE_USER").save()
-        
+
+        assert Role.count() == 2
+
         UserRole.create user, adminRole, true
 
         assert User.count() == 1
