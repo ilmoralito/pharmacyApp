@@ -6,10 +6,19 @@ import grails.plugin.springsecurity.annotation.Secured
 class ProviderController {
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET"
+		list:"GET",
+		show:"GET"
 	]
 
   def list() {
   	[providers:Provider.list()]
+  }
+
+  def show(Integer id) {
+  	def provider = Provider.get id
+
+  	if (!provider) { response.sendError 404 }
+
+  	[provider:provider, products:provider.products]
   }
 }
