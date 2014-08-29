@@ -9,7 +9,8 @@ class ProviderController {
 		list:"GET",
 		show:"GET",
     update:"POST",
-    addProduct:"POST"
+    addProduct:"POST",
+    removeProduct:"GET"
 	]
 
   def list() {
@@ -54,6 +55,16 @@ class ProviderController {
     provider.save()
 
     redirect action:"show", id:id
+  }
+
+  def removeProduct(Integer providerId, String product) {
+    def provider = Provider.get providerId
+    
+    if (!provider) { response.sendError 404 }
+
+    provider.products -= product
+
+    redirect action:"show", id:providerId
   }
 }
 
