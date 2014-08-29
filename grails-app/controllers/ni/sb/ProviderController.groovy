@@ -8,7 +8,8 @@ class ProviderController {
 	static allowedMethods = [
 		list:"GET",
 		show:"GET",
-    update:"POST"
+    update:"POST",
+    addProduct:"POST"
 	]
 
   def list() {
@@ -20,7 +21,7 @@ class ProviderController {
 
   	if (!provider) { response.sendError 404 }
 
-  	[provider:provider, products:provider.products]
+  	[provider:provider]
   }
 
   def update(Integer id) {
@@ -31,11 +32,35 @@ class ProviderController {
     provider.properties = params
 
     if (!provider.save()) {
-      render view:"show", model:[id:id, provider:provider, products:provider.products]
+      render view:"show", model:[id:id, provider:provider]
       return
     }
 
     flash.message = "Actualizado"
     redirect action:"show", id:id
+  }
+
+  def addProduct(Integer id, AddProductCommand cmd) {
+    def provider = Provider.get id
+    
+    if (!provider) { response.sendError 404 }
+
+    if (cmd.hasErrors()) {
+      render view:"show", model:[id:id, cmd:cmd, provider:provider]
+      return
+    }
+
+    provider.addToProducts cmd.product
+    provider.save()
+
+    redirect action:"show", id:id
+  }
+}
+
+class AddProductCommand {
+  String product
+
+  static constraints = {
+    product blank:false
   }
 }

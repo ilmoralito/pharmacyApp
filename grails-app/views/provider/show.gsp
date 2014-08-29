@@ -18,38 +18,17 @@
 				<g:submitButton name="confirm" value="Confirmar" class="btn btn-default"/>
 			</g:form>
 
-			<g:hasErrors bean="${provider}">
-				<br>
-				<g:renderErrors bean="${provider}"/>
-			</g:hasErrors>
+			<g:render template="/layouts/errorsMessage" model="[instance:provider]"/>
 		</div>
 		<div class="col-md-6">
 			<h4>Productos</h4>
-			<g:form action="addProduct">
-				<div class="form-group">
-					<label for="product">Producto</label>
-					<g:textField name="product" class="form-control"/>
-				</div>
+			<g:form action="addProduct" autocomplete="off">
+				<g:hiddenField name="id" value="${params?.id}"/>
+				<g:render template="formProduct"/>
 				<g:submitButton name="confirm" value="Agregar producto" class="btn btn-default"/>
 			</g:form>
-			<table class="table">
-				<thead>
-					<th></th>
-					<th width="1"></th>
-				</thead>
-				<tbody>
-					<g:each in="${products}" var="${product}" status="i">
-						<tr>
-							<td>${product}</td>
-							<td>
-								<g:link action="removeProduct" id="${i}">
-									<span class="glyphicon glyphicon-trash"></span>
-								</g:link>
-							</td>
-						</tr>
-					</g:each>
-				</tbody>
-			</table>
+			<g:render template="productsList"/>
+			<g:render template="/layouts/errorsMessage" model="[instance:cmd]"/>
 		</div>
 	</div>
 </body>
