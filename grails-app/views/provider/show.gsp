@@ -17,6 +17,11 @@
 				<g:render template="form"/>
 				<g:submitButton name="confirm" value="Confirmar" class="btn btn-default"/>
 			</g:form>
+
+			<g:hasErrors bean="${provider}">
+				<br>
+				<g:renderErrors bean="${provider}"/>
+			</g:hasErrors>
 		</div>
 		<div class="col-md-6">
 			<h4>Productos</h4>
