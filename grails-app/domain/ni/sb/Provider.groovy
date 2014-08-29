@@ -14,7 +14,7 @@ class Provider {
     address blank:false, unique:true
     phone blank:false, unique:true, validator: { phone ->
       if (phone.size() != 8 || !phone.isNumber()) {
-        return ["notMatch"]
+        ["notMatch"]
       }
     }
     products nullable:false
