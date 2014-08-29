@@ -64,7 +64,7 @@ class UserController {
                 return false
             }
         } else {
-            flash.message = "La contraseña actual no es correcta, ingrese su contraseña actual nuevamente!!"
+            flash.message = "La contraseña actual que ingreso no es correcta, intentelo nuevamente!!"
             redirect action:"password"
             return false
         }
