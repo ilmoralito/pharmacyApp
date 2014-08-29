@@ -9,9 +9,37 @@
 <body>
 	<div class="row">
 		<div class="col-md-12">
-			<g:render template="/layouts/tabs"/>
-			<g:render template="/layouts/errors"/>
-			<g:render template="profileForm"/>
+			<g:if test="${actionName=='profile' || actionName=='updateProfile' || actionName=='password'}">
+				<ul class="nav nav-tabs">
+				  	<li class="${(actionName == 'profile' || actionName == 'updateProfile') ? 'active' : ''}">
+				  		<g:link controller="user" action="profile">Perfil de Usuario</g:link>
+				  	</li>
+
+					<li class="${(actionName == 'password' || actionName == 'updatePassword') ? 'active' : ''}">
+						<g:link controller="user" action="password">
+							Cambiar Contraseña
+						</g:link>
+					</li>
+				</ul>
+			</g:if>
+
+			<g:render template="/layouts/errors" model="[instance:userInstance]"/>
+
+			<div class="col-md-6">
+				<h3>Datos Generales</h3>
+				<g:form action="updateProfile">
+					<g:hiddenField name="id" value="${userInstance.id}"/>
+					<div class="form-group">
+						<label for="username">Correo electrónico</label>
+						<g:textField type="text" name="username" maxlength="70" value="${userInstance?.username}" class="form-control" placeholder="Nombre de usuario" autofocus="true"/>
+					</div>
+					<div class="form-group">
+						<label for="username">Nombre Completo</label>
+						<g:textField name="fullName" class="form-control" value="${userInstance?.fullName}" placeholder="Nombre completo"/>
+					</div>
+					<input type="submit" class="btn btn-info" value="Cambiar"/>
+				</g:form>
+			</div>
 		</div>
 	</div>
 </body>

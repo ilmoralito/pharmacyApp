@@ -3,11 +3,11 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN'])
 class UserController {
-	static defaultAction = ""
 
 	static allowedMethods = [
-    	profile:["GET", "POST"],
-        changePassword:"GET",
+    	profile:"GET",
+        updateProfile:"POST",
+        password:"GET",
         updatePassword:"POST"
 	]
 
@@ -24,14 +24,7 @@ class UserController {
     def updateProfile(){
         def userInstance = User.get(params.id)
 
-        if (params.username) {
-            userInstance.properties["email"] = params.username
-            userInstance.properties["username"] = params.username
-        }
-
-        if (params.fullName) {
-            userInstance.properties["fullName"] = params.fullName
-        }
+        userInstance.properties = params
 
         if (!userInstance.save()) {
             render(view:'profile', model:[userInstance:userInstance])
@@ -39,7 +32,7 @@ class UserController {
         }else {
             springSecurityService.reauthenticate userInstance.username
             flash.message = "Datos Actualizados!!"
-        	redirect(action:"profile")
+            redirect(action:"profile")
         }
     }
 
@@ -49,17 +42,19 @@ class UserController {
         [userInstance:userInstance]
     }
 
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def updatePassword(passwordChangeCommand cmd){
         def userInstance = springSecurityService.currentUser
-        String currentPassword = cmd.currentPassword
-        String password = params.password
-        String confirmPassword = params.confirmPassword
 
         if (cmd.hasErrors()) {
         	flash.message = "Las contraseñas no coinciden, intentelo nuevamente!!"
             redirect (action:"password")
             return false
         }
+
+        String currentPassword = cmd.currentPassword
+        String password = cmd.password
+        String confirmPassword = cmd.confirmPassword
 
         if (passwordEncoder.isPasswordValid(userInstance.password, currentPassword, null)) {
             userInstance.properties["password"] = params
@@ -69,9 +64,9 @@ class UserController {
                 return false
             }
         } else {
-                flash.message = "La contraseña actula no es correcta, ingrese su contraseña actual nuevamente!!"
-                redirect action:"password"
-                return false
+            flash.message = "La contraseña actula no es correcta, ingrese su contraseña actual nuevamente!!"
+            redirect action:"password"
+            return false
         }
 
     }
