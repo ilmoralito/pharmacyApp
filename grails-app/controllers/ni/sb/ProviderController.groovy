@@ -9,6 +9,7 @@ class ProviderController {
 		list:"GET",
 		show:"GET",
     update:"POST",
+    delete:"GET",
     addProduct:"POST",
     removeProduct:"GET"
 	]
@@ -65,6 +66,21 @@ class ProviderController {
     provider.products -= product
 
     redirect action:"show", id:providerId
+  }
+
+  def delete(Integer id) {
+    def provider = Provider.get id
+
+    if (!provider) { response.sendError 404 }
+
+    try {
+      provider.delete()
+    }
+    catch(org.springframework.dao.DataIntegrityViolationException e) {
+      flash.message "Error al intentar eliminar el proveedor $e"
+    }
+    
+    redirect action:"list"
   }
 
   def createFlow = {
