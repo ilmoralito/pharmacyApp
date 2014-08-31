@@ -27,14 +27,18 @@
           </ul>
         </li>
 				<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-align-justify"></span> <span class="caret"></span></a>
+		  <g:set var="userName" value="${applicationContext.springSecurityService.currentUser.fullName}"/>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		  <g:if test="${(userName != null)}">${userName}</g:if>
+		  <g:else><sec:username/></g:else>
+          <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><g:link controller="#" action="#">Perfil</g:link></li>
+            <li><g:link controller="user" action="profile">Perfil</g:link></li>
             <sec:ifAllGranted roles="ROLE_ADMIN">
             	<li><g:link controller="#" action="#">Administrar usuarios</g:link></li>
             </sec:ifAllGranted>
             <li class="divider"></li>
-            <li><g:link controller="#" action="#">Salir</g:link></li>
+            <li><g:link controller="logout" action="index">Salir</g:link></li>
           </ul>
         </li>
 			</ul>

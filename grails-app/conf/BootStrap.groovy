@@ -25,7 +25,7 @@ class BootStrap {
           phone:"23114488",
   				products:["product4", "product5", "product6", "product7"]
   			)
- 			
+
   			if (!provider2.save()) {
           provider2.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
@@ -51,7 +51,9 @@ class BootStrap {
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
         new Role(authority:"ROLE_USER").save()
-        
+
+        assert Role.count() == 2
+
         UserRole.create user, adminRole, true
 
         assert User.count() == 1
