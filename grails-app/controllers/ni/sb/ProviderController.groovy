@@ -66,9 +66,76 @@ class ProviderController {
 
     redirect action:"show", id:providerId
   }
+
+  def createFlow = {
+    init {
+      action {
+        flow.products = []
+      }
+
+      on("success").to "createProduct"
+    }
+
+    createProduct {
+      on("confirm") { addProviderCommand cmd ->
+        if (cmd.hasErrors()) {
+          flow.errors = cmd
+
+          return error()
+        }
+
+        [name:cmd.name, address:cmd.address, phone:cmd.phone]
+      }.to "addProducts"
+    }
+
+    addProducts {
+      on("confirm") {
+        def provider = new Provider(
+          name:flow.name,
+          address:flow.address,
+          phone:flow.phone,
+          products:flow.products
+        )
+
+        if (!provider.save(flush:true)) {
+          provider.errors.allErrors.each { error -> log.error "[$error.field: $error.defaultMessage]" }
+
+          return error()
+        }
+      }.to "done"
+
+      on("addProduct") { AddProductCommand cmd ->
+        if (cmd.hasErrors()) {
+          flow.errors = cmd
+
+          return error()
+        }
+
+        flow.products << cmd.product
+      }.to "addProducts"
+
+      on("removeProduct") {
+        flow.products -= params?.product
+      }.to "addProducts"
+    }
+
+    done() {
+      redirect action:"list"
+    }
+  }
 }
 
-class AddProductCommand {
+class addProviderCommand implements Serializable {
+  String name
+  String address
+  String phone
+
+  static constraints = {
+    importFrom Provider
+  }
+}
+
+class AddProductCommand implements Serializable {
   String product
 
   static constraints = {

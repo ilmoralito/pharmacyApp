@@ -1,6 +1,6 @@
 package ni.sb
 
-class Provider {
+class Provider implements Serializable {
 	String name
   String address
   String phone

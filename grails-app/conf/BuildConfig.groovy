@@ -87,5 +87,6 @@ grails.project.dependency.resolution = {
     compile ":mail:1.0.7"
     compile ":jquery-ui:1.10.3"
     compile ":twitter-bootstrap:3.2.0.2"
+    compile ":webflow:2.0.8.1"
   }
 }
