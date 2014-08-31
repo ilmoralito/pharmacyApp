@@ -17,7 +17,7 @@ class Provider implements Serializable {
         ["notMatch"]
       }
     }
-    products nullable:false
+    products nullable:false, minSize:1
   }
 
   static hasMany = [products:String]
