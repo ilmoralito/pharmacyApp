@@ -63,7 +63,13 @@ class ProviderController {
     
     if (!provider) { response.sendError 404 }
 
-    provider.products -= product
+    provider.removeFromProducts product
+
+    if (!provider.save()) {
+      provider.errors.allErrors.each { error -> log.error "[$error.field: $error.defaultMessage]" }
+      chain action:"show", id:providerId, model:[cmd:provider]
+      return
+    }
 
     redirect action:"show", id:providerId
   }
