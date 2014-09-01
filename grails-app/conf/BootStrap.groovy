@@ -6,6 +6,7 @@ class BootStrap {
   def init = { servletContext ->
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
+        //PROVIDERS
   			def provider1 = new Provider(
   				name:"provider1",
   				address:"address1",
@@ -36,6 +37,26 @@ class BootStrap {
   			assert provider1.products.size() == 3
   			assert provider2.products.size() == 4
 
+        //CLIENTS
+        def client1 = new Client(fullName:"juan perez", address:"Santa Pancha", identificationCard:"291-290160-0001W", phones:["23114455", "88554477"])
+
+        if (!client1.save()) {
+          client1.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
+        def client2 = new Client(fullName:"fulano mengano", address:"De donde amarra la burra don mauro", identificationCard:"291-290160-0001X", phones:["23118855", "88559977"])
+
+        if (!client2.save()) {
+          client2.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
+        assert Client.count() == 2
+
+        //USERS
         def user = new User(
           username:"me@gmail.com",
           password:"123",
