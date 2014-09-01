@@ -11,5 +11,6 @@
 		<g:render template="form"/>
 		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block"/>
 	</g:form>
+	<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
 </body>
 </html>
