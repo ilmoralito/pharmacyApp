@@ -27,7 +27,7 @@
 						<g:each in="${clients}" var="client">
 							<tr>
 								<td><g:link action="show" id="${client.id}">
-									${client.fullName} <small>${client.identificationCard}</small></g:link>
+									${client.fullName}</g:link>
 								</td>
 								<td>${client.address}</td>
 							</tr>
