@@ -5,6 +5,9 @@ import grails.plugin.springsecurity.annotation.Secured
 class UserController {
 
 	static allowedMethods = [
+        list:["GET", "POST"],
+        create:["GET", "POST"],
+        edit:["GET", "POST"],
     	profile:"GET",
         updateProfile:"POST",
         password:"GET",
@@ -13,6 +16,70 @@ class UserController {
 
 	def springSecurityService
 	def passwordEncoder
+
+    def list(){
+        if (request.method == "GET") {
+            [userInstance:User.list()]
+        }else{
+            def userInstance = new User(
+                username:params?.username,
+                email:params?.username,
+                password:"farmaciaSB",
+                fullName:params?.fullName,
+            )
+
+            if (!userInstance.save(flush:true)) {
+                render(view:"list", model:[user:userInstance, userInstance:User.list()])
+                return false
+            }
+
+            def role = Role.findByAuthority(params?.authority)
+            UserRole.create userInstance, role, true
+            flash.message = "Usuario creado correctamente!!"
+            redirect(action:"list")
+        }
+    }
+
+    def edit(){
+        def userInstance = User.get(params.id)
+        if (!userInstance) { response.sendError 404 }
+
+        if (request.method == "GET") {
+            [userInstance:userInstance]
+        }else{
+            params.email = params.username
+
+            userInstance.properties = params
+
+            if (!userInstance.save()) {
+                render(view:"edit", model:[userInstance:userInstance])
+                return false
+            }
+
+            def r = UserRole.findByUser(userInstance)
+
+            if (r.role.authority != params.authority) {
+                def roleDelete = Role.findByAuthority(r.role.authority)
+                UserRole.remove userInstance, roleDelete, true
+
+                def role = Role.findByAuthority(params.authority)
+                UserRole.create userInstance, role, true
+            }
+
+            redirect(action:"edit", params:[id:params.id])
+            flash.message = "Datos de usuario actualiados correctamente!!"
+        }
+    }
+
+    def enabled(){
+        def userInstance = User.get(params.id)
+        if (!userInstance) { response.sendError 404 }
+
+        userInstance.properties = params
+
+        redirect(action:"edit", params:[id:params.id])
+        flash.message = "La cuanta fue actualizada correctamente!!"
+    }
 
   	@Secured(['ROLE_ADMIN','ROLE_USER'])
     def profile(){
