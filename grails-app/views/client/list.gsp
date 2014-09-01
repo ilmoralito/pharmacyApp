@@ -36,18 +36,7 @@
 		<div class="col-md-3">
 			<h4>Crear cliente</h4>
 			<g:form action="save" autocomplete="off">
-				<div class="form-group">
-					<label for="fullName" class="sr-only">Nombre completo</label>
-					<g:textField name="fullName" class="form-control" placeholder="Nombre completo" autofocus="true"/>
-				</div>
-				<div class="form-group">
-					<label for="address" class="sr-only">Direccion</label>
-					<g:textField name="address" class="form-control" placeholder="Direccion"/>
-				</div>
-				<div class="form-group">
-					<label for="identificationCard" class="sr-only">Cedula</label>
-					<g:textField name="identificationCard" class="form-control" placeholder="Cedula"/>
-				</div>
+				<g:render template="form"/>
 				<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block"/>
 			</g:form>
 		</div>
