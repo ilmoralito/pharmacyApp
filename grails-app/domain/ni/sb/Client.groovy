@@ -13,6 +13,7 @@ class Client {
   })
   String identificationCard
   SortedSet phones 
+  Boolean status = true
 
 	Date dateCreated
 	Date lastUpdated
