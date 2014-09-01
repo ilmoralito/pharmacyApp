@@ -20,7 +20,7 @@ class Client {
   static constraints = {
     fullName blank:false
     address blank:false
-    identificationCard blank:false, unique:true, maxSize:16
+    identificationCard blank:false, unique:true, maxSize:16, minSize: 16
     phones nullable:true
   }
 
