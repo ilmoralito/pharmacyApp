@@ -26,6 +26,7 @@ class Client {
 
   static mapping = {
   	version false
+    sort dateCreated: "desc"
   }
 
   static hasMany = [phones:String]
