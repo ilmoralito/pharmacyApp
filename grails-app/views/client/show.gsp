@@ -20,12 +20,30 @@
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
 			<g:form action="addTelephone">
+				<g:hiddenField name="id" value="${params?.id}"/>
 				<div class="form-group">
 					<label for="phone" class="sr-only">Telefono</label>
 					<g:textField name="phone" class="form-control" placeholder="Telefono"/>
 				</div>
 				<g:submitButton name="send" value="Agregar telefono" class="btn btn-default"/>
 			</g:form>
+
+			<g:if test="${client?.phones}">
+				<table class="table">
+					<tbody>
+						<g:each in="${client?.phones}" var="phone">
+							<tr>
+								<td>${phone}</td>
+								<td width="1">
+									<g:link action="deletePhone" params="[phone:phone]">
+										<span class="glyphicon glyphicon-trash"></span>
+									</g:link>
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</g:if>
 		</div>
 	</div>
 </body>

@@ -8,7 +8,8 @@ class ClientController {
 	static allowedMethods = [
 		list:"GET",
 		save:"POST",
-    show:"GET"
+    show:"GET",
+    addTelephone:"POST"
 	]
 
   def list() {
@@ -46,6 +47,34 @@ class ClientController {
     } else {
       flash.message = "Actualizado"
       redirect action:"show", id:id
+    }
+  }
+
+  def addTelephone(Integer id, AddTelephoneCommand cmd) {
+    def client = Client.get id
+
+    if (!client) { response.sendError 404 }
+
+    if (cmd.hasErrors()) {
+      chain action:"show", params:[id:id], model:[cmd:cmd]
+    } else {
+      client.addToPhones cmd.phone
+
+      client.save()
+
+      redirect action:"show", id:id
+    }
+  }
+}
+
+class AddTelephoneCommand {
+  String phone
+
+  static constraints = {
+    phone blank:false, maxSize:8, minSize: 8, validator: { phone ->
+      if (!phone.isNumber()) {
+        "notMatch"
+      }
     }
   }
 }
