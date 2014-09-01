@@ -8,6 +8,9 @@ class Client {
   })
   String fullName
 	String address
+  @BindUsing({ obj, source ->
+    source["identificationCard"]?.toUpperCase()
+  })
   String identificationCard
   SortedSet phones 
 
@@ -17,7 +20,7 @@ class Client {
   static constraints = {
     fullName blank:false
     address blank:false
-    identificationCard blank:false, unique:true
+    identificationCard blank:false, unique:true, maxSize:16
     phones nullable:true
   }
 
