@@ -35,7 +35,7 @@
 							<tr>
 								<td>${phone}</td>
 								<td width="1">
-									<g:link action="deletePhone" params="[phone:phone]">
+									<g:link action="deletePhone" params="[id:client?.id, phone:phone]">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>

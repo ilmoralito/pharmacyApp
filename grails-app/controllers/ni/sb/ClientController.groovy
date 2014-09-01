@@ -9,7 +9,8 @@ class ClientController {
 		list:"GET",
 		save:"POST",
     show:"GET",
-    addTelephone:"POST"
+    addTelephone:"POST",
+    deletePhone:"GET"
 	]
 
   def list() {
@@ -64,6 +65,16 @@ class ClientController {
 
       redirect action:"show", id:id
     }
+  }
+
+  def deletePhone(Integer id, String phone) {
+    def client = Client.get id
+
+    if (!client) { response.sendError 404 }
+
+    client.removeFromPhones phone
+
+    redirect action:"show", id:id
   }
 }
 
