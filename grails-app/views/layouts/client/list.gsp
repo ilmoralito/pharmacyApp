@@ -43,8 +43,8 @@
 		<div class="col-md-2">
 			<g:layoutBody/>
 			<g:if test="${flash.message}">
-				<br>
-				<small>${flash.message}</small>
+				<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
+				<small><br>${flash.message}</small>
 			</g:if>
 		</div>
 	</div>

@@ -17,7 +17,7 @@ class ClientController {
   def save() {
   	def client = new Client(params)
 
-  	flash.message = client.save() ? "Cliente creado" : "A courrido un error verifica que los datos sean correctos"
-  	redirect action:"list"
+  	flash.message = client.save() ? "Cliente creado" : " "
+  	chain action:"list", model:[client:client]
   }
 }
