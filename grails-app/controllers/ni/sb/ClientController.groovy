@@ -14,7 +14,9 @@ class ClientController {
 	]
 
   def list() {
-  	[clients:Client.list()]
+    def status = params?.status ?: true
+    
+  	[clients:Client.findAllByStatus(status)]
   }
 
   def save() {
