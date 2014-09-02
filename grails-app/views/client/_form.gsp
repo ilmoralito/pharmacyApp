@@ -10,3 +10,9 @@
 	<label for="identificationCard" class="sr-only">Cedula</label>
 	<g:textField name="identificationCard" value="${client?.identificationCard}" class="form-control" placeholder="Cedula"/>
 </div>
+<g:if test="${actionName == 'show'}">
+	<div class="form-group">
+		<label for="status" class="sr-only">Estado</label>
+		<g:select name="status" from="['Activo', 'Inactivo']" keys="[true, false]" value="${client?.status}" class="form-control"/>
+	</div>
+</g:if>
