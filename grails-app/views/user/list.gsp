@@ -9,17 +9,13 @@
 <body>
 	<div class="col-md-7">
 	<g:if test="${userInstance}">
-		<table class="" id="tableUsers">
-			<thead>
-				<tr>
-					<th colspan="4">USUARIOS</th>
-				</tr>
-			</thead>
+		<h4>Usuarios</h4>
+		<table id="tableUsers">
 			<tbody>
 				<g:each in="${userInstance}" var="user">
 					<g:set var="auth" value="${ni.sb.UserRole.findByUser(user)}"/>
 					<tr>
-						<td colspan="4"><g:link action="edit" params="[id:"${user.id}"]" class="">${user.username}</g:link></td>
+						<td colspan="4"><g:link action="edit" params="[id:user.id]">${user.username}</g:link></td>
 					</tr>
 					<tr>
 						<td>${user.fullName}</td>
@@ -40,16 +36,15 @@
 	</div>
 	<div class="col-md-5">
 		<h4>Registrar Nuevo usuario</h4>
-		<hr>
 		<g:form controller="user" action="list">
 			<div class="form-group">
-				<g:textField type="text" class="form-control" name="username" placeHolder="correo electrónico" required=""/>
+				<g:textField type="text" class="form-control" name="username" placeHolder="Correo electrónico" required=""/>
 			</div>
 			<div class="form-group">
 			<g:textField type="text" class="form-control" name="fullName" placeHolder="Nombre completo" required=""/>
 			</div>
 			<div class="form-group">
-				<g:select from="${ni.sb.Role.list().authority}" name="authority" value="" class="form-control"/>
+				<g:select name="authority" from="${['Administrador', 'Usuario']}" keys="['ROLE_ADMIN', 'ROLE_USER']" noSelection="[null:'Selecciona rol del usuario']" class="form-control"/>
 			</div>
 			<input type="submit" class="btn btn-info" value="Agregar"/>
 		</g:form>
