@@ -10,9 +10,18 @@ class BootStrap {
   			def provider1 = new Provider(
   				name:"provider1",
   				address:"address1",
-          phone:"23114455",
-  				products:["product1", "product2", "product3"]
+          phone:"23114455"
   			)
+
+        def product1 = new Product(name:"product1", code:"123")
+        def product2 = new Product(name:"product2", code:"456")
+        def product3 = new Product(name:"product3", code:"789")
+
+        def providerOneProducts = [product1, product2, product3]
+
+        providerOneProducts.each { product ->
+          provider1.addToProducts product
+        }
 
   			if (!provider1.save()) {
           provider1.errors.allErrors.each { error ->
@@ -23,9 +32,19 @@ class BootStrap {
   			def provider2 = new Provider(
   				name:"provider2",
   				address:"address2",
-          phone:"23114488",
-  				products:["product4", "product5", "product6", "product7"]
+          phone:"23114488"
   			)
+
+        def product4 = new Product(name:"product4", code:"10111")
+        def product5 = new Product(name:"product5", code:"45614")
+        def product6 = new Product(name:"product6", code:"78911")
+        def product7 = new Product(name:"product7", code:"78910")
+
+        def providerTwoProducts = [product4, product5, product6, product7]
+
+        providerTwoProducts.each { product ->
+          provider2.addToProducts product
+        }
 
   			if (!provider2.save()) {
           provider2.errors.allErrors.each { error ->

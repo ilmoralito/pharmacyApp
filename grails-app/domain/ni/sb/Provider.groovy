@@ -9,7 +9,7 @@ class Provider implements Serializable {
 	String name
   String address
   String phone
-  SortedSet products
+  List products
 
 	Date dateCreated
 	Date lastUpdated
@@ -22,10 +22,10 @@ class Provider implements Serializable {
         ["notMatch"]
       }
     }
-    products nullable:false, minSize:1
+    products nullable:true, minSize:1
   }
 
-  static hasMany = [products:String]
+  static hasMany = [products:Product]
 
   static mapping = {
   	version false
