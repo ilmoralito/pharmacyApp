@@ -38,7 +38,7 @@ class BootStrap {
   			assert provider2.products.size() == 4
 
         //CLIENTS
-        def client1 = new Client(fullName:"juan perez", address:"Santa Pancha", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
+        def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
 
         if (!client1.save()) {
           client1.errors.allErrors.each { error ->
@@ -46,7 +46,7 @@ class BootStrap {
           }
         }
 
-        def client2 = new Client(fullName:"fulano mengano", address:"De donde amarra la burra don mauro", identificationCard:"291-290160-0001x", phones:["23118855", "88559977"])
+        def client2 = new Client(fullName:"fulano mengano", address:"Address2", identificationCard:"291-290160-0001x", phones:["23118855", "88559977"])
 
         if (!client2.save()) {
           client2.errors.allErrors.each { error ->
