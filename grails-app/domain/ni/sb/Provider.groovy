@@ -1,6 +1,11 @@
 package ni.sb
 
+import org.grails.databinding.BindUsing
+
 class Provider implements Serializable {
+  @BindUsing({ obj, source ->
+    source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+  })
 	String name
   String address
   String phone
