@@ -7,6 +7,7 @@ class ProviderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
+    create:["GET", "POST"],
 		show:"GET",
     update:"POST",
     delete:"GET",
@@ -16,6 +17,20 @@ class ProviderController {
 
   def list() {
   	[providers:Provider.list()]
+  }
+
+  def create() {
+    def provider = new Provider(params)
+
+    if (request.method == "POST") {
+      if (!provider.save()) {
+        return [provider:provider]
+      }
+
+      flash.message = "Proveedor creado"
+    } else {
+      [provider:provider]
+    }
   }
 
   def show(Integer id) {
@@ -91,62 +106,6 @@ class ProviderController {
     redirect action:"list"
   }
 
-  def createFlow = {
-    init {
-      action {
-        flow.products = []
-      }
-
-      on("success").to "createProduct"
-    }
-
-    createProduct {
-      on("confirm") { addProviderCommand cmd ->
-        if (cmd.hasErrors()) {
-          flow.errors = cmd
-
-          return error()
-        }
-
-        [name:cmd.name, address:cmd.address, phone:cmd.phone]
-      }.to "addProducts"
-    }
-
-    addProducts {
-      on("confirm") {
-        def provider = new Provider(
-          name:flow.name,
-          address:flow.address,
-          phone:flow.phone,
-          products:flow.products
-        )
-
-        if (!provider.save(flush:true)) {
-          provider.errors.allErrors.each { error -> log.error "[$error.field: $error.defaultMessage]" }
-
-          return error()
-        }
-      }.to "done"
-
-      on("addProduct") { AddProductCommand cmd ->
-        if (cmd.hasErrors()) {
-          flow.errors = cmd
-
-          return error()
-        }
-
-        flow.products << cmd.product
-      }.to "addProducts"
-
-      on("removeProduct") {
-        flow.products -= params?.product
-      }.to "addProducts"
-    }
-
-    done() {
-      redirect action:"list"
-    }
-  }
 }
 
 class addProviderCommand implements Serializable {
