@@ -8,8 +8,7 @@
 </head>
 <body>
 	<g:render template="toolbar"/>
-
-	<h4>${provider}</h4>
+	
 	<g:if test="${products}">
 		<table class="table">
 			<thead>
