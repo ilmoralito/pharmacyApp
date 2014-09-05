@@ -17,7 +17,7 @@ class ProductController {
 
   	if (!provider) { response.sendError 404 }
 
-  	[products:Product.findAllByProvider(provider), provider:provider]
+  	[products:Product.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
   }
 
   def save(Integer providerId) {
