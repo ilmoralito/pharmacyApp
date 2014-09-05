@@ -28,7 +28,9 @@
 							${product.name}
 						</td>
 						<td>
-							<g:link controller="presentation" action="list" params="[params]" class="pull-right">Presentaciones</g:link>
+							<g:link controller="presentation" action="list" params="[productId:product.id]" class="pull-right">
+								Presentaciones
+							</g:link>
 						</td>
 					</tr>
 				</g:each>
