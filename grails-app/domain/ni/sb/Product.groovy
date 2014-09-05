@@ -4,7 +4,7 @@ import org.grails.databinding.BindUsing
 
 class Product {
   @BindUsing({ obj, source ->
-    source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+    source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
 	String name
   String code
@@ -19,6 +19,7 @@ class Product {
 
   static mapping = {
   	version false
+    sort dateCreated: "desc"
   }
 
   static belongsTo = [provider:Provider]
