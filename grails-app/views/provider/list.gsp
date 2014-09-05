@@ -10,11 +10,28 @@
 	<g:render template="toolbar"/>
 
 	<g:if test="${providers}">
-		<g:each in="${providers}" var="provider">
-			<h4><g:link action="show" id="${provider.id}">${provider}</g:link></h4>
-			<p>${provider.contactInformation()}</p>
-			<br>
-		</g:each>
+		<table class="table">
+			<thead>
+				<th>Proveedor</th>
+				<th></th>
+			</thead>
+			<tbody>
+				<g:each in="${providers}" var="provider">
+					<tr>
+						<td>
+							<g:link action="show" params="[id:provider.id]">
+								${provider}
+							</g:link>
+						</td>
+						<td>
+							<g:link controller="product" action="list" class="pull-right">
+								Administrar productos
+							</g:link>
+						</td>
+					</tr>
+				</g:each>
+			</tbody>
+		</table>
 	</g:if>
 </body>
 </html>

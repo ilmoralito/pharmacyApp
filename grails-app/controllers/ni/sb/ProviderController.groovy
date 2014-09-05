@@ -42,7 +42,7 @@ class ProviderController {
     redirect action:"show", id:id
   }
 
-  def addProduct(Integer id, AddProductCommand cmd) {
+  def addProduct(Integer id) {
     def provider = Provider.get id
     
     if (!provider) { response.sendError 404 }
@@ -53,7 +53,10 @@ class ProviderController {
     }
 
     provider.addToProducts cmd.product
-    provider.save()
+
+    if (!provider.save()) {
+      //pro
+    }
 
     redirect action:"show", id:id
   }
@@ -158,8 +161,9 @@ class addProviderCommand implements Serializable {
 
 class AddProductCommand implements Serializable {
   String product
+  String code
 
   static constraints = {
-    product blank:false
+    importFrom Product
   }
 }
