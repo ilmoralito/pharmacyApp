@@ -20,16 +20,6 @@
 
 			<g:render template="/layouts/errorsMessage" model="[instance:provider]"/>
 		</div>
-		<div class="col-md-6">
-			<h4>Productos</h4>
-			<g:form action="addProduct" autocomplete="off">
-				<g:hiddenField name="id" value="${params?.id}"/>
-				<g:render template="formProduct"/>
-				<g:submitButton name="confirm" value="Agregar producto" class="btn btn-default"/>
-			</g:form>
-			<g:render template="productsList"/>
-			<g:render template="/layouts/errorsMessage" model="[instance:cmd]"/>
-		</div>
 	</div>
 </body>
 </html>

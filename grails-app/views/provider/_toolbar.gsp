@@ -2,13 +2,18 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<g:link action="${target}" class="btn btn-default pull-right">
-			<g:if test="${target != 'list'}">
-				Crear proveedor
+		<div class="pull-right">
+			<g:if test="${actionName == 'show'}">
+				<g:link action="delete" params="[id:provider.id]" class="btn btn-default">Borrar proveedor</g:link>
 			</g:if>
-			<g:else>
-				Listar proveedores
-			</g:else>
-		</g:link>
+			<g:link action="${target}" class="btn btn-default">
+				<g:if test="${target != 'list'}">
+					Crear proveedor
+				</g:if>
+				<g:else>
+					Listar proveedores
+				</g:else>
+			</g:link>
+		</div>
 	</div>
 </div>
