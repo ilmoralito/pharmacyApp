@@ -33,5 +33,8 @@
 			</tbody>
 		</table>
 	</g:if>
+	<g:else>
+		<p>Nada que mostrar</p>
+	</g:else>
 </body>
 </html>

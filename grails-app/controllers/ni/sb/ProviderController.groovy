@@ -9,12 +9,13 @@ class ProviderController {
 		list:"GET",
     create:["GET", "POST"],
 		show:"GET",
-    update:"POST",
-    delete:"GET"
+    update:"POST"
 	]
 
   def list() {
-  	[providers:Provider.list()]
+    def status = params?.status ?: true
+
+  	[providers:Provider.findAllByStatus(status)]
   }
 
   def create() {
@@ -53,20 +54,5 @@ class ProviderController {
 
     flash.message = "Actualizado"
     redirect action:"show", id:id
-  }
-
-  def delete(Integer id) {
-    def provider = Provider.get id
-
-    if (!provider) { response.sendError 404 }
-
-    try {
-      provider.delete()
-    }
-    catch(org.springframework.dao.DataIntegrityViolationException e) {
-      flash.message "Error al intentar eliminar el proveedor $e"
-    }
-    
-    redirect action:"list"
   }
 }

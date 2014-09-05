@@ -11,7 +11,6 @@
 
 	<div class="row">
 		<div class="col-md-6">
-			<h4>Proveedor</h4>
 			<g:form action="update" autocomplete="off">
 				<g:hiddenField name="id" value="${params?.id}"/>
 				<g:render template="form"/>

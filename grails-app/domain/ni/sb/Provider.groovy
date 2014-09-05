@@ -9,6 +9,7 @@ class Provider implements Serializable {
 	String name
   String address
   String phone
+  Boolean status = true
   List products
 
 	Date dateCreated
