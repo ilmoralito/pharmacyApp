@@ -24,7 +24,7 @@
 							</g:link>
 						</td>
 						<td>
-							<g:link controller="product" action="list" class="pull-right">
+							<g:link controller="product" action="list" params="[providerId:provider.id]" class="pull-right">
 								Administrar productos
 							</g:link>
 						</td>
