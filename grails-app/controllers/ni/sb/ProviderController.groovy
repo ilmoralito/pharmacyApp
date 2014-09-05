@@ -10,9 +10,7 @@ class ProviderController {
     create:["GET", "POST"],
 		show:"GET",
     update:"POST",
-    delete:"GET",
-    addProduct:"POST",
-    removeProduct:"GET"
+    delete:"GET"
 	]
 
   def list() {
@@ -57,40 +55,6 @@ class ProviderController {
     redirect action:"show", id:id
   }
 
-  def addProduct(Integer id) {
-    def provider = Provider.get id
-    
-    if (!provider) { response.sendError 404 }
-
-    if (cmd.hasErrors()) {
-      render view:"show", model:[id:id, cmd:cmd, provider:provider]
-      return
-    }
-
-    provider.addToProducts cmd.product
-
-    if (!provider.save()) {
-      //pro
-    }
-
-    redirect action:"show", id:id
-  }
-
-  def removeProduct(Integer providerId, String product) {
-    def provider = Provider.get providerId
-    
-    if (!provider) { response.sendError 404 }
-
-    provider.removeFromProducts product
-
-    if (!provider.save()) {
-      chain action:"show", id:providerId, model:[cmd:provider]
-      return
-    }
-
-    redirect action:"show", id:providerId
-  }
-
   def delete(Integer id) {
     def provider = Provider.get id
 
@@ -104,25 +68,5 @@ class ProviderController {
     }
     
     redirect action:"list"
-  }
-
-}
-
-class addProviderCommand implements Serializable {
-  String name
-  String address
-  String phone
-
-  static constraints = {
-    importFrom Provider
-  }
-}
-
-class AddProductCommand implements Serializable {
-  String product
-  String code
-
-  static constraints = {
-    importFrom Product
   }
 }

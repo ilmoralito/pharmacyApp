@@ -22,7 +22,7 @@ class Provider implements Serializable {
         ["notMatch"]
       }
     }
-    products nullable:true, minSize:1
+    products nullable:true
   }
 
   static hasMany = [products:Product]
