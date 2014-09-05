@@ -22,6 +22,7 @@ class Product {
   }
 
   static belongsTo = [provider:Provider]
+  static hasMany = [presentations:Presentation]
 
   String toString() { "$name, $code" }
 }
