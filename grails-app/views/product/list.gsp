@@ -16,7 +16,6 @@
 				<th width="1">Codigo</th>
 				<th>Producto</th>
 				<th></th>
-				<th width="1"></th>
 			</thead>
 			<tbody>
 				<g:each in="${products}" var="product">
@@ -31,11 +30,6 @@
 						</td>
 						<td>
 							<g:link controller="presentation" action="list" params="[params]" class="pull-right">Presentaciones</g:link>
-						</td>
-						<td>
-							<g:link action="delete">
-								<span class="glyphicon glyphicon-trash"></span>
-							</g:link>
 						</td>
 					</tr>
 				</g:each>

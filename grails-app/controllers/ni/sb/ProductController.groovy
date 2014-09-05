@@ -7,7 +7,9 @@ class ProductController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
-		save:"POST"
+		save:"POST",
+		show:"GET",
+		update:"POST"
 	]
 
   def list(Integer providerId) {
@@ -32,5 +34,27 @@ class ProductController {
   	}
 
   	redirect action:"list", params:[providerId:providerId]
+  }
+
+  def show(Integer id) {
+  	def product = Product.get id
+
+  	if (!product) { response.sendError 404 }
+
+  	[product:product, providerId:product.provider.id]
+  }
+
+  def update(Integer id) {
+  	def product = Product.get id
+
+  	if (!product) { response.sendError 404 }
+
+  	product.properties = params
+
+  	if (!product.save()) {
+  		chain action:"show", params:[id:id], model:[product:product]
+  	} else {
+  		redirect action:"show", params:[id:id]
+  	}
   }
 }

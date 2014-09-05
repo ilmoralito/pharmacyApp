@@ -8,6 +8,7 @@ class Product {
   })
 	String name
   String code
+  Boolean status = true
 
 	Date dateCreated
 	Date lastUpdated
