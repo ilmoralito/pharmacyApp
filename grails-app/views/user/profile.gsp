@@ -12,7 +12,7 @@
 			<g:if test="${actionName=='profile' || actionName=='updateProfile' || actionName=='password'}">
 				<ul class="nav nav-tabs">
 				  	<li class="${(actionName == 'profile' || actionName == 'updateProfile') ? 'active' : ''}">
-				  		<g:link controller="user" action="profile">Perfil de Usuario</g:link>
+				  		<g:link controller="user" action="profile">Perfil</g:link>
 				  	</li>
 
 					<li class="${(actionName == 'password' || actionName == 'updatePassword') ? 'active' : ''}">
@@ -26,7 +26,7 @@
 			<g:render template="/layouts/errors" model="[instance:userInstance]"/>
 
 			<div class="col-md-6">
-				<h3>Datos Generales</h3>
+				<br>
 				<g:form action="updateProfile">
 					<g:hiddenField name="id" value="${userInstance.id}"/>
 					<div class="form-group">
@@ -37,7 +37,7 @@
 						<label for="username">Nombre Completo</label>
 						<g:textField name="fullName" class="form-control" value="${userInstance?.fullName}" placeholder="Nombre completo"/>
 					</div>
-					<input type="submit" class="btn btn-info" value="Cambiar"/>
+					<input type="submit" class="btn btn-default" value="Cambiar"/>
 				</g:form>
 			</div>
 		</div>
