@@ -1,5 +1,5 @@
 <table class="table">
-	<tbody>
+	<tbody class="col-md-4">
 		<g:each in="${provider?.products ?: products}" var="${product}">
 			<tr>
 				<td>${product}</td>
