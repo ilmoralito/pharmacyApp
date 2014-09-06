@@ -37,8 +37,6 @@
 					<div class="form-group">
 						<g:passwordField class="form-control" name="confirmPassword" placeholder="Confirme su nueva contraseña" required=""/>
 					</div>
-
-					<br>
 					<input type="submit" class="btn btn-default" value="Cambiar" required=""/>
 				</g:form>
 			</div>
