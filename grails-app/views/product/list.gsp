@@ -29,7 +29,7 @@
 						</td>
 						<td>
 							<g:link controller="presentation" action="list" params="[productId:product.id]" class="pull-right">
-								Presentaciones
+								Presentaciones y medidas
 							</g:link>
 						</td>
 					</tr>
