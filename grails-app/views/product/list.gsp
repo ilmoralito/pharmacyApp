@@ -3,29 +3,33 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Proveedores</title>
+	<title>Productos</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
 	<g:render template="toolbar"/>
-
-	<g:if test="${providers}">
+	
+	<g:if test="${products}">
 		<table class="table">
 			<thead>
-				<th>Proveedor</th>
+				<th width="1">Codigo</th>
+				<th>Producto</th>
 				<th></th>
 			</thead>
 			<tbody>
-				<g:each in="${providers}" var="provider">
+				<g:each in="${products}" var="product">
 					<tr>
 						<td>
-							<g:link action="show" params="[id:provider.id]">
-								${provider}
+							<g:link action="show" params="[id:product.id]">
+								${product.code}
 							</g:link>
 						</td>
 						<td>
-							<g:link controller="product" action="list" params="[providerId:provider.id]" class="pull-right">
-								Administrar productos
+							${product.name}
+						</td>
+						<td>
+							<g:link controller="presentation" action="list" params="[productId:product.id]" class="pull-right">
+								Presentaciones y medidas
 							</g:link>
 						</td>
 					</tr>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Proveedor</title>
+	<title>Producto</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -17,7 +17,7 @@
 				<g:submitButton name="confirm" value="Confirmar" class="btn btn-default"/>
 			</g:form>
 
-			<g:render template="/layouts/errorsMessage" model="[instance:provider]"/>
+			<g:render template="/layouts/errorsMessage" model="[instance:product]"/>
 		</div>
 	</div>
 </body>

@@ -10,9 +10,35 @@ class BootStrap {
   			def provider1 = new Provider(
   				name:"provider1",
   				address:"address1",
-          phone:"23114455",
-  				products:["product1", "product2", "product3"]
+          phone:"23114455"
   			)
+
+        def product1 = new Product(name:"product1", code:"123")
+
+          def presentation1 = new Presentation(name:"Crema", measures:["15g", "30g"])
+          def presentation2 = new Presentation(name:"Talco", measures:["80gm"])
+
+          product1.addToPresentations presentation1
+          product1.addToPresentations presentation2
+
+        def product2 = new Product(name:"product2", code:"456")
+
+          def presentation3 = new Presentation(name:"Soluble", measures:["25g", "100g", "125g"])
+          product2.addToPresentations presentation3
+
+        def product3 = new Product(name:"product3", code:"789")
+
+          def presentation4 = new Presentation(name:"Spray", measures:["150ml", "356ml", "475ml", "159gm"])
+          def presentation5 = new Presentation(name:"Tableta", measures:["2tabs", "300tabs"])
+
+          product3.addToPresentations presentation4
+          product3.addToPresentations presentation5
+
+        def providerOneProducts = [product1, product2, product3]
+
+        providerOneProducts.each { product ->
+          provider1.addToProducts product
+        }
 
   			if (!provider1.save()) {
           provider1.errors.allErrors.each { error ->
@@ -23,9 +49,24 @@ class BootStrap {
   			def provider2 = new Provider(
   				name:"provider2",
   				address:"address2",
-          phone:"23114488",
-  				products:["product4", "product5", "product6", "product7"]
+          phone:"23114488"
   			)
+
+        def product4 = new Product(name:"product4", code:"10111")
+
+          def presentation6 = new Presentation(name:"Spray", measures:["250ml", "356ml"])
+          product4.addToPresentations presentation6
+
+        def product5 = new Product(name:"product5", code:"45614")
+
+          def presentation7 = new Presentation(name:"Spray", measures:["475ml"])
+          product5.addToPresentations presentation7
+
+        def providerTwoProducts = [product4, product5]
+
+        providerTwoProducts.each { product ->
+          provider2.addToProducts product
+        }
 
   			if (!provider2.save()) {
           provider2.errors.allErrors.each { error ->
@@ -35,10 +76,10 @@ class BootStrap {
 
   			assert Provider.count() == 2
   			assert provider1.products.size() == 3
-  			assert provider2.products.size() == 4
+  			assert provider2.products.size() == 2
 
         //CLIENTS
-        def client1 = new Client(fullName:"juan perez", address:"Santa Pancha", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
+        def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
 
         if (!client1.save()) {
           client1.errors.allErrors.each { error ->
@@ -46,7 +87,7 @@ class BootStrap {
           }
         }
 
-        def client2 = new Client(fullName:"fulano mengano", address:"De donde amarra la burra don mauro", identificationCard:"291-290160-0001x", phones:["23118855", "88559977"])
+        def client2 = new Client(fullName:"fulano mengano", address:"Address2", identificationCard:"291-290160-0001x", phones:["23118855", "88559977"])
 
         if (!client2.save()) {
           client2.errors.allErrors.each { error ->

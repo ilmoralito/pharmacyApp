@@ -1,10 +1,16 @@
 package ni.sb
 
+import org.grails.databinding.BindUsing
+
 class Provider implements Serializable {
+  @BindUsing({ obj, source ->
+    source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+  })
 	String name
   String address
   String phone
-  SortedSet products
+  Boolean status = true
+  List products
 
 	Date dateCreated
 	Date lastUpdated
@@ -17,10 +23,10 @@ class Provider implements Serializable {
         ["notMatch"]
       }
     }
-    products nullable:false, minSize:1
+    products nullable:true
   }
 
-  static hasMany = [products:String]
+  static hasMany = [products:Product]
 
   static mapping = {
   	version false
