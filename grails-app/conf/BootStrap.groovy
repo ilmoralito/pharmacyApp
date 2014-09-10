@@ -123,12 +123,13 @@ class BootStrap {
         assert purchaseOrder.balance == 4000
 
         /*
+        -->todo
         purchaseOrder.removeFromItems item2
         purchaseOrder.save()
-        */
         item2.delete(flush:true)
 
         assert purchaseOrder.balance == 1500
+        */
 
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
