@@ -78,6 +78,58 @@ class BootStrap {
   			assert provider1.products.size() == 3
   			assert provider2.products.size() == 2
 
+        //PURCHASE ORDER
+        def purchaseOrder = new PurchaseOrder(
+          deadline:new Date() + 31,
+          invoiceNumber:"001001",
+          typeOfPurchase:"Credito"
+        )
+
+        def item1 = new Item(
+          product:product1,
+          presentation:presentation1,
+          measure:presentation1.measures[0],//15g
+          quantity:100,
+          purchasePrice:15,
+          sellingPrice:20,
+          bash:"2525",
+          total:0,
+          purchaseOrder:purchaseOrder
+        )
+
+        def item2 = new Item(
+          product:product1,
+          presentation:presentation1,
+          measure:presentation1.measures[1],//30g
+          quantity:100,
+          purchasePrice:25,
+          sellingPrice:45,
+          bash:"2526",
+          total:0,
+          purchaseOrder:purchaseOrder
+        )
+
+        purchaseOrder.addToItems item1
+        purchaseOrder.addToItems item2
+
+        if (!purchaseOrder.save()) {
+          purchaseOrder.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
+        assert purchaseOrder.count() == 1
+        assert Item.count() == 2
+        assert purchaseOrder.balance == 4000
+
+        /*
+        purchaseOrder.removeFromItems item2
+        purchaseOrder.save()
+        */
+        item2.delete(flush:true)
+
+        assert purchaseOrder.balance == 1500
+
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
 

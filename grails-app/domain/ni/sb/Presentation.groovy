@@ -17,6 +17,8 @@ class Presentation {
   }
 
   static belongsTo = [product:Product]
+
+  List measures
   static hasMany = [measures:String]
 
   String toString() { name }
