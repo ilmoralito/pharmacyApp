@@ -1,8 +1,14 @@
 package ni.sb
 
-class PurchaseOrder {
+import org.grails.databinding.BindingFormat
+
+class PurchaseOrder implements Serializable {
+  @BindingFormat('yyyy-MM-dd')
 	Date dateCreated
+
+  @BindingFormat('yyyy-MM-dd')
   Date deadline //fecha tope
+  
   String invoiceNumber //numero de factura
   BigDecimal balance //saldo <- calculate field
   String typeOfPurchase //tipo de compra

@@ -1,9 +1,4 @@
-if (typeof jQuery !== 'undefined') {
-	(function($) {
-		$('#spinner').ajaxStart(function() {
-			$(this).fadeIn();
-		}).ajaxStop(function() {
-			$(this).fadeOut();
-		});
-	})(jQuery);
-}
+$("#deadline").datepicker({
+ 	dateFormat: "yy-mm-dd",
+ 	minDate: +1
+});

@@ -1,6 +1,6 @@
 package ni.sb
 
-class Item {
+class Item implements Serializable {
   Product product
   Presentation presentation	
   String measure

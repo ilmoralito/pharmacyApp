@@ -2,7 +2,7 @@ package ni.sb
 
 import grails.util.Holders
 
-class Presentation {
+class Presentation implements Serializable {
   String name	
 
 	Date dateCreated
