@@ -55,11 +55,22 @@ class PurchaseOrderController {
 
   	administeredItems {
   		on("addItem") {
+        def item = new Item(params)
 
+        if (item.hasErrors()) {
+          item.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+        flow.purchaseOrder.addToItems item
+
+        flow.items << item
  			}.to "administeredItems"
 
  			on("deleteItem") {
-
+        flow.items -= flow.items[params.int("index")]
 			}.to "administeredItems"
 
 			on("cancel").to "done"

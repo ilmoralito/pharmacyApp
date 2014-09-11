@@ -34,8 +34,8 @@
 						<th>Presentacion</th>
 						<th>Medida</th>
 						<th>Cantidad</th>
-						<th>Precio de compra</th>
-						<th>Precio de venta</th>
+						<th>P Compra</th>
+						<th>P Venta</th>
 						<th>Lote</th>
 						<th>Total</th>
 						<th width="1"></th>
@@ -43,7 +43,7 @@
 					<tbody>
 						<g:each in="${items}" var="item" status="index">
 							<tr>
-								<td>${item.product}</td>
+								<td>${item.product.name}</td>
 								<td>${item.presentation}</td>
 								<td>${item.measure}</td>
 								<td>${item.quantity}</td>
