@@ -14,4 +14,14 @@ class PresentationService {
   		product.presentations
   	}
   }
+
+  def getMeasuresByPresentation(Integer presentationId) {
+  	def presentation = Presentation.get presentationId
+
+  	if (!presentation) {
+  		null
+  	} else {
+  		presentation.measures
+  	}
+  }
 }

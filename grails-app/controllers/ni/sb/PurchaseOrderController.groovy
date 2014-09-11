@@ -12,7 +12,8 @@ class PurchaseOrderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
-    getPresentationsByProduct:"GET"
+    getPresentationsByProduct:"GET",
+    getMeasuresByPresentation:"GET"
 	]
 
   def list() {
@@ -76,6 +77,16 @@ class PurchaseOrderController {
       render { status:false }
     } else {
 
+      render results as JSON
+    }
+  }
+
+  def getMeasuresByPresentation(Integer presentationId) {
+    def results = presentationService.getMeasuresByPresentation(presentationId)
+
+    if (!results) {
+      render { status:false }
+    } else {
       render results as JSON
     }
   }

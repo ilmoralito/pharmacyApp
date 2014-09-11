@@ -11,12 +11,24 @@ $(document).ready(function() {
 				data:{ productId:productId },
 				dataType:"JSON",
 				success:function(res) {
-					var presentation = $("#presentation")
+					var presentation = $("#presentation"),
+							measure = $("#measure")
 
 					presentation.find("option").remove()
+					measure.find("option").remove()
 
+					//add presentations
 					for (var i = res.length - 1; i >= 0; i--){
-						var opt = $("<option>", {value:res[i].id, text:res[i].name});
+						var opt = $("<option>", { value:res[i].id, text:res[i].name });
+
+						//add measures only for first presentation
+						if (i == res.length - 1) {
+							for (var j = res[i].measures.length - 1; j >= 0; j--) {
+								var optionMeasure = $("<option>", { value:res[i].measures[j], text:res[i].measures[j] })
+
+								measure.append(optionMeasure)
+							};
+						}
 
 						presentation.append(opt)
 					}
@@ -24,8 +36,27 @@ $(document).ready(function() {
 			})
 		}
 
+		var getMeasuresByPresentation = function(presentationId) {
+			$.ajax({
+				url:"getMeasuresByPresentation/",
+				data:{ presentationId:presentationId },
+				dataType:"JSON",
+				success:function(res) {
+					var measure = $("#measure");
+					measure.find("option").remove()
+
+					for (var i = res.length - 1; i >= 0; i--) {
+						var option = $("<option>", { value:res[i], text:res[i] })
+
+						measure.append(option)
+					};
+				}
+			})
+		}
+
 		return {
-			getPresentations:getPresentations
+			getPresentations:getPresentations,
+			getMeasuresByPresentation:getMeasuresByPresentation
 		}
 	})();
 
@@ -33,5 +64,9 @@ $(document).ready(function() {
 
 	$("#product").on("change", function(){
 		ItemBuilder.getPresentations($(this).val())
+	})
+
+	$("#presentation").on("change", function(){
+		ItemBuilder.getMeasuresByPresentation($(this).val())
 	})
 });
