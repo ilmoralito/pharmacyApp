@@ -3,12 +3,16 @@ package ni.sb
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.webflow.execution.RequestContext
 import org.springframework.webflow.execution.RequestContextHolder
+import grails.converters.JSON
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
+  def presentationService
+
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET"
+		list:"GET",
+    getPresentationsByProduct:"GET"
 	]
 
   def list() {
@@ -63,5 +67,16 @@ class PurchaseOrderController {
   	done() {
   		redirect action:"list"
   	}
+  }
+
+  def getPresentationsByProduct(Integer productId) {
+    def results = presentationService.presentationsByProduct productId
+
+    if (!results) {
+      render { status:false }
+    } else {
+
+      render results as JSON
+    }
   }
 }

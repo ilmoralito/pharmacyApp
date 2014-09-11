@@ -10,21 +10,24 @@
 	<g:render template="create/toolbar"/>
 
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			Numero de factura: ${purchaseOrder.invoiceNumber}
 		</div>
-		<div class="col-md-4">
-			Fecha maxima de pago: ${purchaseOrder.deadline.format("yyyy-MM-dd")}
+		<div class="col-md-3">
+			Fecha de pago: ${purchaseOrder.deadline.format("yyyy-MM-dd")}
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			Tipo de compra: ${purchaseOrder.typeOfPurchase}
 		</div>
+		<div class="col-md-3">
+			Saldo: ${purchaseOrder.balance ?: 0}
+		</div>
 	</div>
+	<br>
 	
 	<div class="row">
 		<div class="col-md-9">
 			<g:if test="${items}">
-				<h4>Productos</h4>
 				<table class="table table-striped">
 					<thead>
 						<th>Producto</th>
@@ -59,19 +62,18 @@
 				</table>
 			</g:if>
 			<g:else>
-				<h4>Agrega productos...</h4>
+				<h4>...</h4>
 			</g:else>
 		</div>
 		<div class="col-md-3">
-			<h4>Agregar producto</h4>
 			<g:form>
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<g:select name="product" from="${ni.sb.Product.list()}" class="form-control"/>
+					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="presentation" class="sr-only">Presentacion</label>
-					<g:select name="product" from="${}" class="form-control"/>
+					<g:select name="presentation" from="${}" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="measure" class="sr-only">Unidad de medida</label>
