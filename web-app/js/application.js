@@ -54,9 +54,16 @@ $(document).ready(function() {
 			})
 		}
 
+		var calcSellingPrice = function(purchasePrice) {
+			var sellingPrice = parseFloat(purchasePrice) + (parseFloat(purchasePrice) * 25 / 100)
+
+			$("#sellingPrice").val(sellingPrice)
+		}
+
 		return {
 			getPresentations:getPresentations,
-			getMeasuresByPresentation:getMeasuresByPresentation
+			getMeasuresByPresentation:getMeasuresByPresentation,
+			calcSellingPrice:calcSellingPrice
 		}
 	})();
 
@@ -68,5 +75,9 @@ $(document).ready(function() {
 
 	$("#presentation").on("change", function(){
 		ItemBuilder.getMeasuresByPresentation($(this).val())
+	})
+
+	$("#purchasePrice").on("blur", function(){
+		ItemBuilder.calcSellingPrice($(this).val())
 	})
 });
