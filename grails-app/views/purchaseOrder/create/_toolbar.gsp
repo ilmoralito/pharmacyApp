@@ -3,6 +3,8 @@
 		<!--TODO-->
 	</div>
 	<div class="col-md-6">
-		<g:link event="cancel" class="btn btn-warning pull-right">Cancelar</g:link>
+		<div class="pull-right">
+			<g:link event="cancel" class="btn btn-warning">Cancelar</g:link>
+		</div>
 	</div>
 </div>

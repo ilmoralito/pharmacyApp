@@ -2,10 +2,24 @@ body { padding-top: 70px; }
 
 table { margin: 15px 0; }
 
-#tableUsers, td, th{
-	padding: 3px;
+
+#tableUsers, td, th { padding: 3px; }
+
+/*
+.table-no-border>thead>tr>th, 
+.table-no-border>tbody>tr>th, 
+.table-no-border>tfoot>tr>th, 
+.table-no-border>thead>tr>td, 
+.table-no-border>tbody>tr>td, 
+.table-no-border>tfoot>tr>td {
+  border-top: none; 
 }
+*/
 
-.statusEnabled{background: #3071A9; color: white; border-radius: 3px; padding:2px;}
-.statusDisabled{background: #CE1010; color: white; border-radius: 3px; padding:2px;}
+.statusEnabled { background: #3071A9; color: white; border-radius: 3px; padding:2px; }
+.statusDisabled { background: #CE1010; color: white; border-radius: 3px; padding:2px; }
 
+.well{
+	background: #FFF;
+  font-size: 0.8em;
+}

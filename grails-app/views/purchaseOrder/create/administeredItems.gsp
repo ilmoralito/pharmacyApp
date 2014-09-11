@@ -8,23 +8,8 @@
 </head>
 <body>
 	<g:render template="create/toolbar"/>
-
-	<div class="row">
-		<div class="col-md-3">
-			Numero de factura: ${purchaseOrder.invoiceNumber}
-		</div>
-		<div class="col-md-3">
-			Fecha de pago: ${purchaseOrder.deadline.format("yyyy-MM-dd")}
-		</div>
-		<div class="col-md-3">
-			Tipo de compra: ${purchaseOrder.typeOfPurchase}
-		</div>
-		<div class="col-md-3">
-			Saldo: ${purchaseOrder.balance ?: 0}
-		</div>
-	</div>
 	<br>
-	
+
 	<div class="row">
 		<div class="col-md-9">
 			<g:if test="${items}">
@@ -66,6 +51,23 @@
 			</g:else>
 		</div>
 		<div class="col-md-3">
+			<div class="well well-sm">
+				<div class="row">
+					<div class="col-md-6">
+						<p><b>#</b> ${purchaseOrder.invoiceNumber}</p> 
+						<p>
+							<span class="glyphicon glyphicon-calendar"></span>
+							${purchaseOrder.deadline.format("yyyy-MM-dd")}
+						</p>
+						<span class="glyphicon glyphicon-th"></span>
+						${purchaseOrder.typeOfPurchase}
+					</div>
+					<div class="col-md-6">
+						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar</g:link>
+					</div>
+				</div>
+			</div>
+
 			<g:form>
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>

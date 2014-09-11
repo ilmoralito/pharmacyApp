@@ -24,9 +24,6 @@ class PurchaseOrderController {
   	init {
   		action {
   			List<Item> items = []
-  			
-  			//TODO
-  			RequestContext requestContext = RequestContextHolder.getRequestContext()
 
   			[items:items]
   		}
