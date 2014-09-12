@@ -2,7 +2,7 @@ package ni.sb
 
 import grails.util.Holders
 
-class Presentation {
+class Presentation implements Serializable {
   String name	
 
 	Date dateCreated
@@ -17,6 +17,8 @@ class Presentation {
   }
 
   static belongsTo = [product:Product]
+
+  List measures
   static hasMany = [measures:String]
 
   String toString() { name }
