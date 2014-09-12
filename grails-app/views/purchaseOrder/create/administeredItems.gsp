@@ -57,7 +57,7 @@
 						<p><b>#</b> ${purchaseOrder.invoiceNumber}</p> 
 						<p>
 							<span class="glyphicon glyphicon-calendar"></span>
-							${purchaseOrder.deadline.format("yyyy-MM-dd")}
+							${purchaseOrder.dutyDate.format("yyyy-MM-dd")}
 						</p>
 						<span class="glyphicon glyphicon-th"></span>
 						${purchaseOrder.typeOfPurchase}

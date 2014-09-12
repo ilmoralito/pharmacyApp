@@ -80,7 +80,7 @@ class BootStrap {
 
         //PURCHASE ORDER
         def purchaseOrder = new PurchaseOrder(
-          deadline:new Date() + 31,
+          dutyDate:new Date() + 31,
           invoiceNumber:"001001",
           typeOfPurchase:"Credito"
         )

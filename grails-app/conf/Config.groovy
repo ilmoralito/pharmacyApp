@@ -155,3 +155,5 @@ ni.sb.presentationsAndMeasures = [
   Inyectable:
     ["10ml", "20ml", "25ml", "50ml", "100ml", "250ml", "500ml"]
 ]
+
+grails.databinding.dateFormats = ["yyyy-MM-dd"]

@@ -1,6 +1,6 @@
 <div class="form-group">
-	<label for="deadline" class="sr-only">Fecha tope de pago</label>
-	<g:textField name="deadline" value="${purchaseOrder?.deadline?.format('yyyy-MM-dd')}" class="form-control" placeholder="Fecha tope de pago"/>
+	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
+	<g:textField name="dutyDate" value="" class="form-control" placeholder="Fecha tope de pago"/>
 </div>
 <div class="form-group">
 	<label for="invoiceNumber" class="sr-only">Numero de factura</label>

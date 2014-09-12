@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#deadline").datepicker({
+	$("#dutyDate").datepicker({
 	 	dateFormat: "yy-mm-dd",
 	 	minDate: +1
 	});

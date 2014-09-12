@@ -32,17 +32,26 @@ class PurchaseOrderController {
   	}
 
   	createPurchaseOrder {
-  		on("confirm") {
-  			params.deadline = params.date("deadline", "yyyy-MM-dd")
-  			def purchaseOrder = new PurchaseOrder(params)
+  		on("confirm") { PurchaseOrderCommand cmd ->
+        println params.dump()
+        println "+" * 100
+        println cmd.dump()
+        return error()
 
-  			if (!purchaseOrder.validate()) {
-  				purchaseOrder.errors.allErrors.each { error ->
-  					log.error "[$error.field: $error.defaultMessage]"
-  				}
+        if (cmd.hasErrors()) {
+          flow.errors = cmd
+          flow.purchaseOrder = cmd
 
-  				return error()
-  			}
+          return error()
+        }
+
+  			def purchaseOrder = new PurchaseOrder(
+          deadline:cmd.dutyDate,
+          invoiceNumber:cmd.invoiceNumber,
+          typeOfPurchase:cmd.typeOfPurchase
+        )
+
+        flow.errors = null
 
   			[purchaseOrder:purchaseOrder]
   		}.to "administeredItems"
@@ -66,12 +75,34 @@ class PurchaseOrderController {
         flow.items << item
  			}.to "administeredItems"
 
+      on("editPurchaseOrder").to "editPurchaseOrder"
+
  			on("deleteItem") {
         flow.items -= flow.items[params.int("index")]
 			}.to "administeredItems"
 
 			on("cancel").to "done"
   	}
+
+    editPurchaseOrder {
+      on("confirm") { PurchaseOrderCommand cmd ->
+        if (cmd.hasErrors()) {
+          flow.errors = cmd
+
+          return error()
+        }
+
+        /*
+        flow.purchaseOrder.dutyDate = params.date(dutyDate)
+        flow.purchaseOrder.invoiceNumber = cmd.invoiceNumber
+        flow.purchaseOrder.typeOfPurchase = cmd.typeOfPurchase
+        */
+
+
+      }.to "administeredItems"
+
+      on("cancel").to "administeredItems" 
+    }
 
   	done() {
   		redirect action:"list"
@@ -97,5 +128,15 @@ class PurchaseOrderController {
     } else {
       render results as JSON
     }
+  }
+}
+
+class PurchaseOrderCommand implements Serializable {
+  Date dutyDate
+  String invoiceNumber
+  String typeOfPurchase
+
+  static constraints = {
+    importFrom PurchaseOrder
   }
 }
