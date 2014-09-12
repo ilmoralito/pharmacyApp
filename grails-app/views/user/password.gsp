@@ -12,7 +12,7 @@
 			<g:if test="${actionName=='profile' || actionName=='updateProfile' || actionName=='password'}">
 				<ul class="nav nav-tabs">
 				  	<li class="${(actionName == 'profile' || actionName == 'updateProfile') ? 'active' : ''}">
-				  		<g:link controller="user" action="profile">Perfil de Usuario</g:link>
+				  		<g:link controller="user" action="profile">Perfil</g:link>
 				  	</li>
 
 					<li class="${(actionName == 'password' || actionName == 'updatePassword') ? 'active' : ''}">
@@ -33,7 +33,6 @@
 					<div class="form-group">
 						<g:passwordField class="form-control" name="password" placeholder="Nueva contraseña"/>
 					</div>
-
 					<div class="form-group">
 						<g:passwordField class="form-control" name="confirmPassword" placeholder="Confirme su nueva contraseña" required=""/>
 					</div>
