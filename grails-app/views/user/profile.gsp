@@ -22,9 +22,7 @@
 					</li>
 				</ul>
 			</g:if>
-
 			<g:render template="/layouts/errors" model="[instance:userInstance]"/>
-
 			<div class="col-md-6">
 				<br>
 				<g:form action="updateProfile">
