@@ -12,19 +12,20 @@ $(document).ready(function() {
 				dataType:"JSON",
 				success:function(res) {
 					var presentation = $("#presentation"),
-							measure = $("#measure")
+							measure = $("#measure"),
+							presentations = res.presentations;
 
 					presentation.find("option").remove()
 					measure.find("option").remove()
 
 					//add presentations
-					for (var i = res.length - 1; i >= 0; i--){
-						var opt = $("<option>", { value:res[i].id, text:res[i].name });
+					for (var i = presentations.length - 1; i >= 0; i--){
+						var opt = $("<option>", { value:presentations[i].id, text:presentations[i].name });
 
 						//add measures only for first presentation
-						if (i == res.length - 1) {
-							for (var j = res[i].measures.length - 1; j >= 0; j--) {
-								var optionMeasure = $("<option>", { value:res[i].measures[j], text:res[i].measures[j] })
+						if (i == presentations.length - 1) {
+							for (var j = presentations[i].measures.length - 1; j >= 0; j--) {
+								var optionMeasure = $("<option>", { value:presentations[i].measures[j], text:presentations[i].measures[j] })
 
 								measure.append(optionMeasure)
 							};

@@ -3,7 +3,6 @@ package ni.sb
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.webflow.execution.RequestContext
 import org.springframework.webflow.execution.RequestContextHolder
-import grails.converters.JSON
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
@@ -36,8 +35,8 @@ class PurchaseOrderController {
         println params.dump()
         println "+" * 100
         println cmd.dump()
-        return error()
 
+        /*
         if (cmd.hasErrors()) {
           flow.errors = cmd
           flow.purchaseOrder = cmd
@@ -54,6 +53,7 @@ class PurchaseOrderController {
         flow.errors = null
 
   			[purchaseOrder:purchaseOrder]
+        */
   		}.to "administeredItems"
 
   		on("cancel").to "done"
@@ -113,10 +113,17 @@ class PurchaseOrderController {
     def results = presentationService.presentationsByProduct productId
 
     if (!results) {
-      render { status:false }
+      render(contentType:"application/json") {
+        status = false
+      }
     } else {
-
-      render results as JSON
+      render(contentType:"application/json") {
+        presentations = array {
+          for(p in results) {
+            presentation id:p.id, name:p.name, measures:p.measures
+          }
+        }
+      }
     }
   }
 
@@ -124,9 +131,13 @@ class PurchaseOrderController {
     def results = presentationService.getMeasuresByPresentation(presentationId)
 
     if (!results) {
-      render { status:false }
+      render(contentType:"application/json") {
+        status = false
+      }
     } else {
-      render results as JSON
+      render(contentType:"application/json") {
+        results
+      }
     }
   }
 }

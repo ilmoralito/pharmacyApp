@@ -54,13 +54,13 @@
 			<div class="well well-sm">
 				<div class="row">
 					<div class="col-md-6">
-						<p><b>#</b> ${purchaseOrder.invoiceNumber}</p> 
+						<p><b>#</b> ${purchaseOrder?.invoiceNumber}</p> 
 						<p>
 							<span class="glyphicon glyphicon-calendar"></span>
-							${purchaseOrder.dutyDate.format("yyyy-MM-dd")}
+							${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
 						</p>
 						<span class="glyphicon glyphicon-th"></span>
-						${purchaseOrder.typeOfPurchase}
+						${purchaseOrder?.typeOfPurchase}
 					</div>
 					<div class="col-md-6">
 						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar</g:link>
@@ -75,11 +75,11 @@
 				</div>
 				<div class="form-group">
 					<label for="presentation" class="sr-only">Presentacion</label>
-					<g:select name="presentation" from="${}" class="form-control"/>
+					<g:select name="presentation" from="" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="measure" class="sr-only">Unidad de medida</label>
-					<g:select name="measure" from="${}" class="form-control"/>
+					<g:select name="measure" from="" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
