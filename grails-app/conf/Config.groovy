@@ -156,4 +156,6 @@ ni.sb.presentationsAndMeasures = [
     ["10ml", "20ml", "25ml", "50ml", "100ml", "250ml", "500ml"]
 ]
 
-grails.databinding.dateFormats = ["yyyy-MM-dd"]
+//grails.databinding.dateFormats = ["yyyy-MM-dd HH:mm:ss.S"]
+//grails.databinding.dateFormats = ['MMddyyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
+grails.databinding.dateFormats = ['yyyy-MM-dd', 'MMddyyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]

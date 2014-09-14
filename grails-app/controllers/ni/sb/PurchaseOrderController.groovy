@@ -31,29 +31,21 @@ class PurchaseOrderController {
   	}
 
   	createPurchaseOrder {
-  		on("confirm") { PurchaseOrderCommand cmd ->
-        println params.dump()
-        println "+" * 100
-        println cmd.dump()
+  		on("confirm") {
+  			def purchaseOrder = new PurchaseOrder(
+          dutyDate:params?.dutyDate,
+          invoiceNumber:params?.invoiceNumber,
+          typeOfPurchase:params?.typeOfPurchase
+        )
 
-        /*
-        if (cmd.hasErrors()) {
-          flow.errors = cmd
-          flow.purchaseOrder = cmd
-
+        if (!purchaseOrder.validate()) {
+          flow.errors = flow.purchaseOrder
           return error()
         }
-
-  			def purchaseOrder = new PurchaseOrder(
-          deadline:cmd.dutyDate,
-          invoiceNumber:cmd.invoiceNumber,
-          typeOfPurchase:cmd.typeOfPurchase
-        )
 
         flow.errors = null
 
   			[purchaseOrder:purchaseOrder]
-        */
   		}.to "administeredItems"
 
   		on("cancel").to "done"
@@ -85,20 +77,15 @@ class PurchaseOrderController {
   	}
 
     editPurchaseOrder {
-      on("confirm") { PurchaseOrderCommand cmd ->
-        if (cmd.hasErrors()) {
-          flow.errors = cmd
+      on("confirm") {
+        flow.purchaseOrder.properties = params
 
+        if (!flow.purchaseOrder.validate()) {
+          flow.errors = flow.purchaseOrder
           return error()
         }
 
-        /*
-        flow.purchaseOrder.dutyDate = params.date(dutyDate)
-        flow.purchaseOrder.invoiceNumber = cmd.invoiceNumber
-        flow.purchaseOrder.typeOfPurchase = cmd.typeOfPurchase
-        */
-
-
+        flow.errors = null
       }.to "administeredItems"
 
       on("cancel").to "administeredItems" 
@@ -139,15 +126,5 @@ class PurchaseOrderController {
         results
       }
     }
-  }
-}
-
-class PurchaseOrderCommand implements Serializable {
-  Date dutyDate
-  String invoiceNumber
-  String typeOfPurchase
-
-  static constraints = {
-    importFrom PurchaseOrder
   }
 }

@@ -1,12 +1,12 @@
 package ni.sb
 
 class PurchaseOrder implements Serializable {
-	Date dateCreated
   Date dutyDate
   String invoiceNumber
   BigDecimal balance
   String typeOfPurchase
 
+  Date dateCreated
 	Date lastUpdated
 
   static constraints = {
