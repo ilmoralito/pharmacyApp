@@ -12,7 +12,7 @@
 
 	<div class="row">
 		<div class="col-md-9">
-			<g:if test="${items}">
+			<g:if test="${purchaseOrder?.items}">
 				<table class="table table-striped">
 					<thead>
 						<th>Producto</th>
@@ -26,7 +26,7 @@
 						<th width="1"></th>
 					</thead>
 					<tbody>
-						<g:each in="${items}" var="item" status="index">
+						<g:each in="${purchaseOrder?.items}" var="item" status="index">
 							<tr>
 								<td>${item.product.name}</td>
 								<td>${item.presentation}</td>
@@ -37,7 +37,7 @@
 								<td>${item.bash}</td>
 								<td>${item.total}</td>
 								<td>
-									<g:link event="deleteItem" params="[index:index]">
+									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash]">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>
@@ -54,21 +54,24 @@
 			<div class="well well-sm">
 				<div class="row">
 					<div class="col-md-6">
-						<p><b>#</b> ${purchaseOrder?.invoiceNumber}</p> 
 						<p>
 							<span class="glyphicon glyphicon-calendar"></span>
 							${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
 						</p>
-						<span class="glyphicon glyphicon-th"></span>
-						${purchaseOrder?.typeOfPurchase}
+						<p>
+							<span class="glyphicon glyphicon-th"></span>
+							${purchaseOrder?.typeOfPurchase}
+						</p>
+						<span class="glyphicon glyphicon-usd"></span>
+						${purchaseOrder?.balance ?: 0}
 					</div>
 					<div class="col-md-6">
-						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar</g:link>
+						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar ${purchaseOrder?.invoiceNumber}</g:link>
 					</div>
 				</div>
 			</div>
 
-			<g:form>
+			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
 					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"/>
