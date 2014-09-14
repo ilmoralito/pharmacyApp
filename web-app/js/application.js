@@ -79,6 +79,6 @@ $(document).ready(function() {
 	})
 
 	$("#purchasePrice").on("blur", function(){
-		ItemBuilder.calcSellingPrice($(this).val())
+		ItemBuilder.calcSellingPrice($(this).val() || 0)
 	})
 });
