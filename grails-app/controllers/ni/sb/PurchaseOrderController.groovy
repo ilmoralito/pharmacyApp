@@ -87,6 +87,16 @@ class PurchaseOrderController {
         flow.purchaseOrder.balance -= itemInstance.total
       }.to "administeredItems"
 
+      on("complete") {
+        if (!flow.purchaseOrder.save(flush:true)) {
+          flow.purchaseOrder.errors.allErrors.each { error ->
+            log.error "[$error.field:$error.defaultMessage]"
+          }
+          
+          return error()
+        }
+      }.to "done"
+
 			on("cancel").to "done"
   	}
 

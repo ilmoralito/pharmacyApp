@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Ordenes de compra</title>
+	<title>Ordenes</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -11,7 +11,7 @@
 	<g:if test="${orders}">
 		<table class="table">
 			<thead>
-				<th>Numero de facturas</th>
+				<th>Facturas</th>
 			</thead>
 			<tbody>
 				<g:each in="${orders}" var="order">

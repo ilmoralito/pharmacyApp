@@ -102,6 +102,7 @@
 				</div>
 
 				<g:submitButton name="addItem" value="Agregar producto" class="btn btn-primary btn-block"/>
+				<g:link event="complete" class="btn btn-default btn-block">Confirmar</g:link>
 			</g:form>
 		</div>
 	</div>
