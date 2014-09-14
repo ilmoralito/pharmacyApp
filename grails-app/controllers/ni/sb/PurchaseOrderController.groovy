@@ -1,8 +1,6 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
-import org.springframework.webflow.execution.RequestContext
-import org.springframework.webflow.execution.RequestContextHolder
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
@@ -56,7 +54,14 @@ class PurchaseOrderController {
         //calculate total
         params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
 
-        //update item instance properties values if user try to update the same instance
+        //check if new item already exist if it is true then delete item in items and then recreate item besides update purchase order balance
+        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params?.bash, flow.purchaseOrder.items)
+
+        if (itemInstance) {
+          flow.purchaseOrder.items -= itemInstance
+          flow.purchaseOrder.balance -= itemInstance.total
+        }
+
         def item = new Item(params)
 
         if (!item.validate(["product", "presentation", "measure", "quantity", "purchasePrice", "sellingPrice", "bash"])) {
@@ -71,7 +76,7 @@ class PurchaseOrderController {
         def balance = flow.purchaseOrder.balance ?: 0
         flow.purchaseOrder.balance = balance + item.total
 
-        //add item to ccurrent purchase order instance
+        //add item to current purchase order instance
         flow.purchaseOrder.addToItems item
  			}.to "administeredItems"
 
