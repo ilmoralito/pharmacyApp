@@ -5,6 +5,7 @@ class PurchaseOrder implements Serializable {
   String invoiceNumber
   BigDecimal balance
   String typeOfPurchase
+  Boolean status = true
 
   Date dateCreated
 	Date lastUpdated
