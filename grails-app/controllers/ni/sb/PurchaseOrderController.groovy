@@ -39,11 +39,11 @@ class PurchaseOrderController {
         )
 
         if (!purchaseOrder.validate()) {
-          flow.errors = flow.purchaseOrder
+          flow.errors = purchaseOrder
           return error()
         }
 
-        flow.errors = null
+        flow.errors.clearErrors()
 
   			[purchaseOrder:purchaseOrder]
   		}.to "administeredItems"
@@ -85,7 +85,7 @@ class PurchaseOrderController {
           return error()
         }
 
-        flow.errors = null
+        flow.errors.clearErrors()
       }.to "administeredItems"
 
       on("cancel").to "administeredItems" 
