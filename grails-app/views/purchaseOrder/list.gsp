@@ -7,7 +7,22 @@
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
-	<g:link action="create" class="btn btn-default pull-right">Crear orden de compra</g:link>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="pull-right">
+				<div class="btn-group">
+					<g:link action="list" class="btn btn-default">Activas</g:link>
+					<g:link action="list" class="btn btn-default">Inactivas</g:link>
+				</div>
+				<div class="btn-group">
+					<g:link action="list" class="btn btn-default">Credito</g:link>
+					<g:link action="list" class="btn btn-default">Contado</g:link>
+				</div>
+				<g:link action="create" class="btn btn-default">Crear orden de compra</g:link>
+			</div>
+		</div>
+	</div>
+
 	<g:if test="${orders}">
 		<table class="table">
 			<thead>
