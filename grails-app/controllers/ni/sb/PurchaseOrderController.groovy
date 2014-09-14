@@ -18,16 +18,6 @@ class PurchaseOrderController {
   }
 
   def createFlow = {
-  	init {
-  		action {
-  			List<Item> items = []
-
-  			[items:items]
-  		}
-
-  		on("success").to "createPurchaseOrder"
-  	}
-
   	createPurchaseOrder {
   		on("confirm") {
   			def purchaseOrder = new PurchaseOrder(
