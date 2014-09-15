@@ -3,15 +3,16 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="pull-right">
-			<g:if test="${actionName == 'list'}">
-				<g:link action="list" class="${!params?.status || params?.status == 'true' ? 'active' : ''} btn btn-default">
-					Activos
-				</g:link>
-				<g:link action="list" params="[status:'false']" class="${params?.status == 'false' ? 'active' : ''} btn btn-default">
-					Inactivos
-				</g:link>
-			</g:if>
-
+			<div class="btn-group">
+				<g:if test="${actionName == 'list'}">
+					<g:link action="list" class="${!params?.status || params?.status == 'true' ? 'active' : ''} btn btn-default">
+						Activos
+					</g:link>
+					<g:link action="list" params="[status:'false']" class="${params?.status == 'false' ? 'active' : ''} btn btn-default">
+						Inactivos
+					</g:link>
+				</g:if>
+			</div>
 			<g:link action="${target}" class="btn btn-default">
 				<g:if test="${target != 'list'}">
 					Crear proveedor
