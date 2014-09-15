@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="form-group">
-			<input type='submit' id="submit" value='Iniciar Sesion' class="btn btn-info"/>
+			<input type='submit' id="submit" value='Iniciar Sesion' class="btn btn-primary"/>
 			<g:link controller='register' action='forgotPassword' class="btn">Olvido su contraseña</g:link>
 		</div>
 	</form>
