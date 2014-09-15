@@ -18,7 +18,7 @@
 					<g:link action="list" class="btn btn-default">Credito</g:link>
 					<g:link action="list" class="btn btn-default">Contado</g:link>
 				</div>
-				<g:link action="create" class="btn btn-default">Crear orden de compra</g:link>
+				<g:link action="create" class="btn btn-primary">Crear orden de compra</g:link>
 			</div>
 		</div>
 	</div>
