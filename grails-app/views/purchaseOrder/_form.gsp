@@ -10,3 +10,10 @@
 	<label for="typeOfPurchase" class="sr-only">Tipo de compra</label>
 	<g:select name="typeOfPurchase" from="['Contado', 'Credito']" value="${purchaseOrder?.typeOfPurchase}" noSelection="['':'Seleccione un tipo de pago']" class="form-control"/>
 </div>
+<g:if test="${actionName != 'create'}">
+	<div class="form-group">
+		<label for="status" class="sr-only">Estado</label>
+		<!--Verifica si los valores en la lista values es el texto de el select y los valores en from son los datos pasados-->
+		<g:select name="status" from="[true, false]", values="['Activo', 'Inactivo']" value="${purchaseOrder?.status}" noSelection="['':'Seleccione un estado']" class="form-control"/>
+	</div>
+</g:if>
