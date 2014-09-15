@@ -1,9 +1,6 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
-import org.springframework.webflow.execution.RequestContext
-import org.springframework.webflow.execution.RequestContextHolder
-import grails.converters.JSON
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
@@ -21,28 +18,20 @@ class PurchaseOrderController {
   }
 
   def createFlow = {
-  	init {
-  		action {
-  			List<Item> items = []
-
-  			[items:items]
-  		}
-
-  		on("success").to "createPurchaseOrder"
-  	}
-
   	createPurchaseOrder {
   		on("confirm") {
-  			params.deadline = params.date("deadline", "yyyy-MM-dd")
-  			def purchaseOrder = new PurchaseOrder(params)
+  			def purchaseOrder = new PurchaseOrder(
+          dutyDate:params?.dutyDate,
+          invoiceNumber:params?.invoiceNumber,
+          typeOfPurchase:params?.typeOfPurchase
+        )
 
-  			if (!purchaseOrder.validate()) {
-  				purchaseOrder.errors.allErrors.each { error ->
-  					log.error "[$error.field: $error.defaultMessage]"
-  				}
+        if (!purchaseOrder.validate()) {
+          flow.errors = purchaseOrder
+          return error()
+        }
 
-  				return error()
-  			}
+        flow?.errors?.clearErrors()
 
   			[purchaseOrder:purchaseOrder]
   		}.to "administeredItems"
@@ -52,26 +41,79 @@ class PurchaseOrderController {
 
   	administeredItems {
   		on("addItem") {
+        //calculate total
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        //check if new item already exist if it is true then delete item in items and then recreate item besides update purchase order balance
+        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params?.bash, flow.purchaseOrder.items)
+
+        if (itemInstance) {
+          flow.purchaseOrder.items -= itemInstance
+          flow.purchaseOrder.balance -= itemInstance.total
+        }
+
         def item = new Item(params)
 
-        if (item.hasErrors()) {
+        if (!item.validate(["product", "presentation", "measure", "quantity", "purchasePrice", "sellingPrice", "bash"])) {
           item.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
 
           return error()
         }
-        flow.purchaseOrder.addToItems item
+        
+        //update purchace order balance property
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + item.total
 
-        flow.items << item
+        //add item to current purchase order instance
+        flow.purchaseOrder.addToItems item
  			}.to "administeredItems"
 
+      on("editPurchaseOrder").to "editPurchaseOrder"
+
  			on("deleteItem") {
-        flow.items -= flow.items[params.int("index")]
-			}.to "administeredItems"
+        //get item from purchase order items
+        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params?.bash, flow.purchaseOrder.items)
+
+        //if there exist item then remove it from items in purchase order
+        if (itemInstance) {
+          flow.purchaseOrder.items -= itemInstance
+        } else {
+          response.sendError 404
+        }
+
+        //update purchase order balance
+        flow.purchaseOrder.balance -= itemInstance.total
+      }.to "administeredItems"
+
+      on("complete") {
+        if (!flow.purchaseOrder.save(flush:true)) {
+          flow.purchaseOrder.errors.allErrors.each { error ->
+            log.error "[$error.field:$error.defaultMessage]"
+          }
+          
+          return error()
+        }
+      }.to "done"
 
 			on("cancel").to "done"
   	}
+
+    editPurchaseOrder {
+      on("confirm") {
+        flow.purchaseOrder.properties = params
+
+        if (!flow.purchaseOrder.validate()) {
+          flow.errors = flow.purchaseOrder
+          return error()
+        }
+
+        flow?.errors?.clearErrors()
+      }.to "administeredItems"
+
+      on("cancel").to "administeredItems" 
+    }
 
   	done() {
   		redirect action:"list"
@@ -82,10 +124,17 @@ class PurchaseOrderController {
     def results = presentationService.presentationsByProduct productId
 
     if (!results) {
-      render { status:false }
+      render(contentType:"application/json") {
+        status = false
+      }
     } else {
-
-      render results as JSON
+      render(contentType:"application/json") {
+        presentations = array {
+          for(p in results) {
+            presentation id:p.id, name:p.name, measures:p.measures
+          }
+        }
+      }
     }
   }
 
@@ -93,9 +142,24 @@ class PurchaseOrderController {
     def results = presentationService.getMeasuresByPresentation(presentationId)
 
     if (!results) {
-      render { status:false }
+      render(contentType:"application/json") {
+        status = false
+      }
     } else {
-      render results as JSON
+      render(contentType:"application/json") {
+        results
+      }
     }
+  }
+
+  private getItemFromItems(Integer productId, Integer presentationId, String measure, String bash, items) {
+    def product = Product.get productId
+    def presentation = Presentation.get presentationId
+
+    def item = items.find { itemInstance ->
+      itemInstance.product == product && itemInstance.presentation == presentation && itemInstance.measure == measure && itemInstance.bash == bash
+    }
+
+    item
   }
 }

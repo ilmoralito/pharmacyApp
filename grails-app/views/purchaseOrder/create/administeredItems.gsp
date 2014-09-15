@@ -12,7 +12,7 @@
 
 	<div class="row">
 		<div class="col-md-9">
-			<g:if test="${items}">
+			<g:if test="${purchaseOrder?.items}">
 				<table class="table table-striped">
 					<thead>
 						<th>Producto</th>
@@ -26,7 +26,7 @@
 						<th width="1"></th>
 					</thead>
 					<tbody>
-						<g:each in="${items}" var="item" status="index">
+						<g:each in="${purchaseOrder?.items}" var="item" status="index">
 							<tr>
 								<td>${item.product.name}</td>
 								<td>${item.presentation}</td>
@@ -37,14 +37,22 @@
 								<td>${item.bash}</td>
 								<td>${item.total}</td>
 								<td>
-									<g:link event="deleteItem" params="[index:index]">
+									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash]">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>
 							</tr>
 						</g:each>
+						<tr>
+							<td>BALANCE</td>
+							<td colspan="7">
+								<div class="pull-right">${purchaseOrder?.balance ?: 0}</div>
+							</td>
+							<td width="1"></td>
+						</tr>
 					</tbody>
 				</table>
+				<g:link event="complete" class="btn btn-warning">Completar proceso</g:link>
 			</g:if>
 			<g:else>
 				<h4>...</h4>
@@ -53,33 +61,42 @@
 		<div class="col-md-3">
 			<div class="well well-sm">
 				<div class="row">
-					<div class="col-md-6">
-						<p><b>#</b> ${purchaseOrder.invoiceNumber}</p> 
-						<p>
-							<span class="glyphicon glyphicon-calendar"></span>
-							${purchaseOrder.deadline.format("yyyy-MM-dd")}
-						</p>
-						<span class="glyphicon glyphicon-th"></span>
-						${purchaseOrder.typeOfPurchase}
+					<div class="col-md-12">
+						<g:link event="editPurchaseOrder" class="btn btn-xs btn-primary btn-block">Editar #${purchaseOrder?.invoiceNumber}</g:link>
 					</div>
-					<div class="col-md-6">
-						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar</g:link>
+				</div>
+
+				<div class="row" style="margin-top:10px;">
+					<div class="col-md-12">
+						<span class="glyphicon glyphicon-calendar"></span>
+						${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
+						<br>
+						<span class="glyphicon glyphicon-th"></span>
+						${purchaseOrder?.typeOfPurchase}
 					</div>
 				</div>
 			</div>
 
-			<g:form>
+			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
 					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
 				</div>
 				<div class="form-group">
 					<label for="presentation" class="sr-only">Presentacion</label>
+<<<<<<< HEAD
 					<g:select name="presentation" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Presentacion"/>
 				</div>
 				<div class="form-group">
 					<label for="measure" class="sr-only">Unidad de medida</label>
 					<g:select name="measure" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Unidad de medida"/>
+=======
+					<g:select name="presentation" from="" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<label for="measure" class="sr-only">Unidad de medida</label>
+					<g:select name="measure" from="" class="form-control"/>
+>>>>>>> upstream/master
 				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>

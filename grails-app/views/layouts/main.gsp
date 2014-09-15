@@ -22,6 +22,7 @@
 			</g:if>
 		</div>
 	</div>
+	<br>
 	<r:layoutResources/>
 </body>
 </html>

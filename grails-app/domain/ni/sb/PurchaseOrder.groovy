@@ -1,27 +1,24 @@
 package ni.sb
 
-import org.grails.databinding.BindingFormat
-
 class PurchaseOrder implements Serializable {
-  @BindingFormat('yyyy-MM-dd')
-	Date dateCreated
+  Date dutyDate
+  String invoiceNumber
+  BigDecimal balance
+  String typeOfPurchase
+  Boolean status = true
 
-  @BindingFormat('yyyy-MM-dd')
-  Date deadline //fecha tope
-  
-  String invoiceNumber //numero de factura
-  BigDecimal balance //saldo <- calculate field
-  String typeOfPurchase //tipo de compra
-
+  Date dateCreated
 	Date lastUpdated
 
   static constraints = {
-    deadline blank:false, validator:{ deadline ->
+    dutyDate nullable:false, validator: { dutyDate ->
       def today = new Date()
 
-      if (deadline <= today) {
-        "notMatch"
+      if (dutyDate <= today) {
+        return "purchaseOrder.dutyDate.notMatch"
       }
+
+      true
     }
     invoiceNumber blank:false, unique:true
     balance nullable:true
@@ -30,6 +27,7 @@ class PurchaseOrder implements Serializable {
 
   static mapping = {
   	version false
+    sort dateCreated: "desc"
   }
 
   List items

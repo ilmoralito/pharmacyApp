@@ -26,21 +26,23 @@ class Item implements Serializable {
       }
     }
     quantity nullable:false, min:1
-    purchasePrice nullable:false, min:0.1, validator:{ purchasePrice, item ->
+    purchasePrice nullable:false, min:0.1, scale:2, validator:{ purchasePrice, item ->
       if (purchasePrice >= item.sellingPrice) {
         "notValid"
       }
     }
-    sellingPrice nullable:false, min:0.1
+    sellingPrice nullable:false, min:0.1, scale:2
     bash blank:false, unique:true
     total nullable:false
   }
 
   def beforeInsert() {
+    /*
     def balance = purchaseOrder.balance ?: 0
 
     total = purchasePrice * quantity
     purchaseOrder.balance = balance + total
+    */
   }
 
   def beforeUpdate() {
