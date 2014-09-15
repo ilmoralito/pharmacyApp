@@ -26,7 +26,8 @@
 	<g:if test="${orders}">
 		<table class="table">
 			<thead>
-				<th>Facturas</th>
+				<th width="1">Facturas</th>
+				<th>Fecha de pedido</th>
 			</thead>
 			<tbody>
 				<g:each in="${orders}" var="order">
@@ -36,6 +37,7 @@
 								${order.invoiceNumber}
 							</g:link>
 						</td>
+						<td>${order.dateCreated.format("yyyy-MM-dd")}</td>
 					</tr>
 				</g:each>
 			</tbody>
