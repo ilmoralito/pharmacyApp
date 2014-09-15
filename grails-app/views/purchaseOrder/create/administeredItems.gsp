@@ -43,8 +43,16 @@
 								</td>
 							</tr>
 						</g:each>
+						<tr>
+							<td>BALANCE</td>
+							<td colspan="7">
+								<div class="pull-right">${purchaseOrder?.balance ?: 0}</div>
+							</td>
+							<td width="1"></td>
+						</tr>
 					</tbody>
 				</table>
+				<g:link event="complete" class="btn btn-warning">Completar proceso</g:link>
 			</g:if>
 			<g:else>
 				<h4>...</h4>
@@ -53,20 +61,18 @@
 		<div class="col-md-3">
 			<div class="well well-sm">
 				<div class="row">
-					<div class="col-md-6">
-						<p>
-							<span class="glyphicon glyphicon-calendar"></span>
-							${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
-						</p>
-						<p>
-							<span class="glyphicon glyphicon-th"></span>
-							${purchaseOrder?.typeOfPurchase}
-						</p>
-						<span class="glyphicon glyphicon-usd"></span>
-						${purchaseOrder?.balance ?: 0}
+					<div class="col-md-12">
+						<g:link event="editPurchaseOrder" class="btn btn-xs btn-primary btn-block">Editar #${purchaseOrder?.invoiceNumber}</g:link>
 					</div>
-					<div class="col-md-6">
-						<g:link event="editPurchaseOrder" class="btn btn-default btn-xs btn-block">Editar ${purchaseOrder?.invoiceNumber}</g:link>
+				</div>
+
+				<div class="row" style="margin-top:10px;">
+					<div class="col-md-12">
+						<span class="glyphicon glyphicon-calendar"></span>
+						${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
+						<br>
+						<span class="glyphicon glyphicon-th"></span>
+						${purchaseOrder?.typeOfPurchase}
 					</div>
 				</div>
 			</div>
@@ -102,7 +108,6 @@
 				</div>
 
 				<g:submitButton name="addItem" value="Agregar producto" class="btn btn-primary btn-block"/>
-				<g:link event="complete" class="btn btn-default btn-block">Confirmar</g:link>
 			</g:form>
 		</div>
 	</div>
