@@ -3,7 +3,10 @@ import grails.util.Environment
 import grails.util.Holders
 
 class BootStrap {
+  def itemService
+
   def init = { servletContext ->
+
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
         //PROVIDERS
@@ -82,7 +85,8 @@ class BootStrap {
         def purchaseOrder = new PurchaseOrder(
           dutyDate:new Date() + 31,
           invoiceNumber:"001001",
-          typeOfPurchase:"Credito"
+          typeOfPurchase:"Credito",
+          balance:0
         )
 
         def item1 = new Item(
@@ -93,9 +97,10 @@ class BootStrap {
           purchasePrice:15,
           sellingPrice:20,
           bash:"2525",
-          total:0,
+          total:100 * 15,
           purchaseOrder:purchaseOrder
         )
+
 
         def item2 = new Item(
           product:product1,
@@ -105,12 +110,16 @@ class BootStrap {
           purchasePrice:25,
           sellingPrice:45,
           bash:"2526",
-          total:0,
+          total:100 * 25,
           purchaseOrder:purchaseOrder
         )
 
+
         purchaseOrder.addToItems item1
         purchaseOrder.addToItems item2
+
+        purchaseOrder.balance += item1.total
+        purchaseOrder.balance += item2.total
 
         if (!purchaseOrder.save()) {
           purchaseOrder.errors.allErrors.each { error ->
@@ -123,13 +132,12 @@ class BootStrap {
         assert purchaseOrder.balance == 4000
 
         /*
-        -->todo
         purchaseOrder.removeFromItems item2
         purchaseOrder.save()
         item2.delete(flush:true)
 
         assert purchaseOrder.balance == 1500
-        */
+        //*/
 
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])

@@ -37,10 +37,12 @@ class Item implements Serializable {
   }
 
   def beforeInsert() {
+    /*
     def balance = purchaseOrder.balance ?: 0
 
     total = purchasePrice * quantity
     purchaseOrder.balance = balance + total
+    */
   }
 
   def beforeUpdate() {
