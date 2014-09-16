@@ -2,6 +2,7 @@ package ni.sb
 
 class SaleToClient extends Sale {
 	Client client
+  String typeOfPurchase
 
   static constraints = {
     client nullable:false, validator:{ client ->
@@ -9,6 +10,7 @@ class SaleToClient extends Sale {
     		"saleToClient.client.invalidClient"
     	}
     }
+    typeOfPurchase inList:["Contado", "Credito"]
   }
 
   static mapping = {
