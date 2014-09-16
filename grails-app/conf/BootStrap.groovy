@@ -130,13 +130,18 @@ class BootStrap {
         assert Item.count() == 2
         assert purchaseOrder.balance == 4000
 
+        //SALE
         /*
-        purchaseOrder.removeFromItems item2
-        purchaseOrder.save()
-        item2.delete(flush:true)
+        def sale1 = new Sale()
 
-        assert purchaseOrder.balance == 1500
-        //*/
+        def saleDetail1 = new SaleDetail(
+          product:product1,
+          presentation.presentation1,
+          measure:presentation1.measures[0],
+          quantity:20,
+          total:product1.sellingPrice * 20
+        )
+        */
 
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])

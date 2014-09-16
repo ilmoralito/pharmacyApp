@@ -1,21 +1,21 @@
 package ni.sb
 
-class Sale {
-	
+class Sale implements Serializable {
+  BigDecimal balance = 0
 
 	Date dateCreated
 	Date lastUpdated
 
   static constraints = {
-
+    balance scale:2
   }
 
   static mapping = {
   	version false
+    sort dateCreated: "desc"
   }
 
-  static hasMany = []
-  static belongsTo = []
+  static hasMany = [saleDetails:SaleDetail]
 
-  String toString() {  }
+  String toString() { dateCreated }
 }

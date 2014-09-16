@@ -157,3 +157,4 @@ ni.sb.presentationsAndMeasures = [
 ]
 
 grails.databinding.dateFormats = ['yyyy-MM-dd', "dd-MM-yyyy"]
+ni.sb.minDateToSale = 60
