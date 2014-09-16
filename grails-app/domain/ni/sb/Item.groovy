@@ -7,7 +7,7 @@ class Item implements Serializable {
   Integer quantity
   BigDecimal purchasePrice
   BigDecimal sellingPrice
-  String bash
+  Date bash
   BigDecimal total
 
 	Date dateCreated
@@ -32,7 +32,12 @@ class Item implements Serializable {
       }
     }
     sellingPrice nullable:false, min:0.1, scale:2
-    bash blank:false, unique:true
+    bash nullable:false, validator:{ bash ->
+      def date = new Date() + 60
+      if (bash < date) {
+        "notValid"
+      }
+    }
     total nullable:false
   }
 

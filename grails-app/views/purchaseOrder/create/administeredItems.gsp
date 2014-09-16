@@ -34,10 +34,12 @@
 								<td>${item.quantity}</td>
 								<td>${item.purchasePrice}</td>
 								<td>${item.sellingPrice}</td>
-								<td>${item.bash}</td>
+								<td>
+									<g:formatDate date="${item.bash}" formatName="custom.date.format"/>
+								</td>
 								<td>${item.total}</td>
 								<td>
-									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash]">
+									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash.format('yyyy-MM-dd')]">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>
@@ -104,7 +106,7 @@
 				</div>
 				<div class="form-group">
 					<label for="bash" class="sr-only">Lote</label>
-					<g:textField name="bash" class="form-control" placeholder="Lote"/>
+					<g:textField name="bash" class="form-control" placeholder="Fecha de vencimiento"/>
 				</div>
 
 				<g:submitButton name="addItem" value="Agregar producto" class="btn btn-primary btn-block"/>

@@ -4,6 +4,11 @@ $(document).ready(function() {
 	 	minDate: +1
 	});
 
+	$("#bash").datepicker({
+	 	dateFormat: "yy-mm-dd",
+	 	minDate: +60
+	});
+
 	var ItemBuilder = (function() {
 		var getPresentations = function(productId) {
 			$.ajax({

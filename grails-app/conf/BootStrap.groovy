@@ -96,7 +96,7 @@ class BootStrap {
           quantity:100,
           purchasePrice:15,
           sellingPrice:20,
-          bash:"2525",
+          bash:new Date() + 90,
           total:100 * 15,
           purchaseOrder:purchaseOrder
         )
@@ -109,11 +109,10 @@ class BootStrap {
           quantity:100,
           purchasePrice:25,
           sellingPrice:45,
-          bash:"2526",
+          bash:new Date() + 100,
           total:100 * 25,
           purchaseOrder:purchaseOrder
         )
-
 
         purchaseOrder.addToItems item1
         purchaseOrder.addToItems item2
