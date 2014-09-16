@@ -1,13 +1,21 @@
 package ni.sb
 
 class Sale implements Serializable {
+  def springSecurityService
+
+  User user
   BigDecimal balance = 0
 
 	Date dateCreated
 	Date lastUpdated
 
   static constraints = {
+    user nullable:false
     balance scale:2
+  }
+
+  def beforeInsert() {
+    user = springSecurityService.currentUser
   }
 
   static mapping = {
