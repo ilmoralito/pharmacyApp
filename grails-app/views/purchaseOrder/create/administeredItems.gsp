@@ -69,7 +69,7 @@
 				<div class="row" style="margin-top:10px;">
 					<div class="col-md-12">
 						<span class="glyphicon glyphicon-calendar"></span>
-						${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
+						<g:formatDate date="${purchaseOrder?.dutyDate}" formatName="custom.date.format"/>
 						<br>
 						<span class="glyphicon glyphicon-th"></span>
 						${purchaseOrder?.typeOfPurchase}

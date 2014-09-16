@@ -37,7 +37,9 @@
 								${order.invoiceNumber}
 							</g:link>
 						</td>
-						<td>${order.dateCreated.format("yyyy-MM-dd")}</td>
+						<td>
+							<g:formatDate date="${order.dateCreated}" formatName="custom.date.format"/>
+						</td>
 					</tr>
 				</g:each>
 			</tbody>
