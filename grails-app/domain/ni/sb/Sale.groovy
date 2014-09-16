@@ -15,6 +15,13 @@ class Sale implements Serializable {
     sort dateCreated: "desc"
   }
 
+  static namedQueries = {
+    salesFromTo { from, to ->
+      ge "dateCreated", from.clearTime()
+      le "dateCreated", to.clearTime()
+    }
+  }
+
   static hasMany = [saleDetails:SaleDetail]
 
   String toString() { dateCreated }

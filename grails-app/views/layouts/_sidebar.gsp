@@ -9,6 +9,6 @@
 		<g:link controller="purchaseOrder" action="list">Pedidos</g:link>
 	</li>
 	<li class="${controllerName == 'sale' ? 'active' : ''}">
-		<g:link controller="sale">Ventas</g:link>
+		<g:link controller="sale" action="list">Ventas</g:link>
 	</li>
 </ul>
