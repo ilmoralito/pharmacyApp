@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label for="product" class="sr-only">Producto</label>
-	<g:select name="product" from="" noSelection="['':'Seleccionar producto']" class="form-control"/>
+	<g:select name="product" from="${products}" optionKey="id" noSelection="['':'Seleccionar producto']" class="form-control"/>
 </div>
 <div class="form-group">
 	<label for="presentation" class="sr-only">Presentacion</label>

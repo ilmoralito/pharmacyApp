@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Ventas</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, saleFilter, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, sale, jquery-ui"/>
 </head>
 <body>
 	<div class="row">
@@ -35,7 +35,11 @@
 			<g:form>
 				<div class="form-group">
 					<label for="client" class="sr-only">Cliente</label>
+<<<<<<< HEAD
 					<g:select name="client" from="" noSelection="['':'Seleccione cliente']" class="form-control"/>
+=======
+					<g:select name="client" from="${clients}" noSelection="['':'Seleccione cliente']" class="form-control"/>
+>>>>>>> luffy
 				</div>
 				<div class="form-group">
 					<label for="typeOfPurchase" class="sr-only">Tipo de compra</label>

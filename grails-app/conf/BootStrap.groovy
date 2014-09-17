@@ -97,8 +97,7 @@ class BootStrap {
           purchasePrice:15,
           sellingPrice:20,
           bash:new Date() + 90,
-          total:100 * 15,
-          purchaseOrder:purchaseOrder
+          total:100 * 15
         )
 
 
@@ -110,15 +109,27 @@ class BootStrap {
           purchasePrice:25,
           sellingPrice:45,
           bash:new Date() + 100,
-          total:100 * 25,
-          purchaseOrder:purchaseOrder
+          total:100 * 25
+        )
+
+        def item3 = new Item(
+          product:product4,
+          presentation:presentation6,
+          measure:presentation6.measures[1],//356ml
+          quantity:50,
+          purchasePrice:10,
+          sellingPrice:55,
+          bash:new Date() + 100,
+          total:50 * 10
         )
 
         purchaseOrder.addToItems item1
         purchaseOrder.addToItems item2
+        purchaseOrder.addToItems item3
 
         purchaseOrder.balance += item1.total
         purchaseOrder.balance += item2.total
+        purchaseOrder.balance += item3.total
 
         if (!purchaseOrder.save()) {
           purchaseOrder.errors.allErrors.each { error ->
@@ -127,21 +138,10 @@ class BootStrap {
         }
 
         assert purchaseOrder.count() == 1
-        assert Item.count() == 2
-        assert purchaseOrder.balance == 4000
+        assert Item.count() == 3
+        //assert purchaseOrder.balance == 4000
 
         //SALE
-        /*
-        def sale1 = new Sale()
-
-        def saleDetail1 = new SaleDetail(
-          product:product1,
-          presentation.presentation1,
-          measure:presentation1.measures[0],
-          quantity:20,
-          total:product1.sellingPrice * 20
-        )
-        */
 
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])

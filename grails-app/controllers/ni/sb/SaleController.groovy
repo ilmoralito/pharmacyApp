@@ -16,6 +16,26 @@ class SaleController {
   }
 
   def createFlow = {
+  	init {
+  		action {
+  			def criteria = Item.createCriteria()
+  			def products = criteria.listDistinct {
+  				purchaseOrder {
+  					eq "status", true
+  				}
+  				ge "bash", new Date() + 60
+  			}
+
+  			def clientQuery = Client.where {
+  				status == true
+  			}
+
+  			[products:products, clients:clientQuery.list()]
+  		}
+
+  		on("success").to "sale"
+  	}
+
   	sale {
   		on("confirm") {
 

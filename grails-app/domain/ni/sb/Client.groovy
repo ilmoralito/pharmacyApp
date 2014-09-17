@@ -2,7 +2,7 @@ package ni.sb
 
 import org.grails.databinding.BindUsing
 
-class Client {
+class Client implements Serializable {
   @BindUsing({ obj, source ->
     source["fullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
   })
