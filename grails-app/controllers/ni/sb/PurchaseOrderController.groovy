@@ -9,12 +9,34 @@ class PurchaseOrderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
+    show:"GET",
+    update:"POST",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET"
 	]
 
   def list() {
   	[orders:PurchaseOrder.list()]
+  }
+
+  def show(Integer id){
+    def purchaseOrder = PurchaseOrder.get(params.id)
+    if (!purchaseOrder) { response.sendError 404}
+    [purchaseOrder:purchaseOrder]
+  }
+
+  def update(Integer id){
+    def purchaseOrder = PurchaseOrder.get(params.id)
+    if (!purchaseOrder) { response.sendError 404}
+    purchaseOrder.properties = params
+
+    if (!purchaseOrder.save()) {
+      render(view:"show", model:[id:id, purchaseOrder:purchaseOrder])
+      return
+    }
+
+    flash.message = "Actualizado"
+    redirect action:"show", id:id
   }
 
   def createFlow = {
@@ -61,7 +83,7 @@ class PurchaseOrderController {
 
           return error()
         }
-        
+
         //update purchace order balance property
         def balance = flow.purchaseOrder.balance ?: 0
         flow.purchaseOrder.balance = balance + item.total
@@ -92,7 +114,7 @@ class PurchaseOrderController {
           flow.purchaseOrder.errors.allErrors.each { error ->
             log.error "[$error.field:$error.defaultMessage]"
           }
-          
+
           return error()
         }
       }.to "done"
@@ -112,7 +134,7 @@ class PurchaseOrderController {
         flow?.errors?.clearErrors()
       }.to "administeredItems"
 
-      on("cancel").to "administeredItems" 
+      on("cancel").to "administeredItems"
     }
 
   	done() {

@@ -3,16 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Crear pedido y articulos</title>
+	<title>Editar Pedido</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, createPurchaseOrder, jquery-ui"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>
 	<div class="row">
 		<div class="col-md-6">
-			<g:form autocomplete="off">
+			<g:form autocomplete="off" action="update">
+				<g:hiddenField name="id" value="${purchaseOrder.id}"/>
 				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Confirmar" class="btn btn-primary"/>
+				<g:submitButton name="editPurchaseOrder" value="Actualizar" class="btn btn-default"/>
 			</g:form>
 
 			<g:render template="/layouts/errorsMessage" model="[instance:errors]"/>
