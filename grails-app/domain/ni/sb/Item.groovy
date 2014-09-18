@@ -65,5 +65,11 @@ class Item implements Serializable {
 
   static belongsTo = [purchaseOrder:PurchaseOrder]
 
+  String itemInfo() {
+    "$product.name, $presentation[$measure], $bash"
+  }
+
+  static transients = ["itemInfo"]
+
   String toString() { product }
 }
