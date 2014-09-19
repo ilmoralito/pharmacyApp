@@ -3,7 +3,7 @@ package ni.sb
 import grails.transaction.Transactional
 
 @Transactional
-class ItemService {
+class ItemService implements Serializable {
 
   def calTotal(Integer quantity, BigDecimal purchasePrice) {
   	quantity + purchasePrice

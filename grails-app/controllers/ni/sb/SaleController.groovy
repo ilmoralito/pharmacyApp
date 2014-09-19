@@ -7,7 +7,6 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
-    getProductData:"GET"
 	]
 
   def list() {
@@ -36,7 +35,10 @@ class SaleController {
   				status == true
   			}
 
-  			[products:products, clients:clientsQuery.list()]
+        //list of sales added
+        def sales = []
+
+  			[products:products, clients:clientsQuery.list(), sales:sales]
   		}
 
   		on("success").to "sale"
@@ -53,6 +55,10 @@ class SaleController {
 
         [productsInStock:items.groupBy { it.presentation }, product:product]
   		}.to "sale"
+
+      on("confirm") {
+        
+      }.to "sale"
 
   		on("delete") {
 
@@ -80,28 +86,5 @@ class SaleController {
   	done() {
   		redirect action:"list"
   	}
-  }
-
-  def getProductData(String product) {
-    /*
-    def query = Item.where {
-      product.name == product
-    }
-
-    def results = query.list()
-
-    if (!results) {
-      render(contentType:"application/json") {
-        status = false
-      }
-    } else {
-      def g = results.groupBy { it.presentation }
-
-      render(contentType:"application/json") {
-        g
-      }
-    }
-
-    */
   }
 }

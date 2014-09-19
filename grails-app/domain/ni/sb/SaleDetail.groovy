@@ -19,11 +19,13 @@ class SaleDetail implements Serializable {
       }
     }
 
+    /*
     presentation validator:{ presentation, saleDetail ->
       if (!saleDetail.product.presentations.contains(presentation)) {
         "saleDetail.presentation.notFound"
       }
     }
+    */
 
     measure validator: { measure, saleDetail ->
       if (!saleDetail.presentation.measures.contains(measure)) {
