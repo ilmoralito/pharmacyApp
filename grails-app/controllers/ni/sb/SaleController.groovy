@@ -6,7 +6,8 @@ import grails.plugin.springsecurity.annotation.Secured
 class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET"
+		list:"GET",
+    getProductData:"GET"
 	]
 
   def list() {
@@ -18,19 +19,15 @@ class SaleController {
   def createFlow = {
   	init {
   		action {
-  			def criteria = Item.createCriteria()
-  			def products = criteria.listDistinct {
-  				purchaseOrder {
-  					eq "status", true
-  				}
-  				ge "bash", new Date() + 60
-  			}
+  			def productsQuery = Item.where {
+          purchaseOrder.status == true
+        }
 
-  			def clientQuery = Client.where {
+  			def clientsQuery = Client.where {
   				status == true
   			}
 
-  			[products:products, clients:clientQuery.list()]
+  			[products:productsQuery.list(), clients:clientsQuery.list()]
   		}
 
   		on("success").to "sale"
@@ -67,5 +64,25 @@ class SaleController {
   	done() {
   		redirect action:"list"
   	}
+  }
+
+  def getProductData(Integer id) {
+    def item = Item.get id
+
+    if (!item) {
+      render(contentType:"application/json") {
+        status = false
+      }
+    } else {
+      render(contentType:"application/json") {
+        productId = item.product.id
+        product = item.product.name
+        presentation = item.presentation.name
+        measure = item.measure
+        quantity = item.quantity
+        bash = item.bash
+        sellingPrice = item.sellingPrice
+      }
+    }
   }
 }

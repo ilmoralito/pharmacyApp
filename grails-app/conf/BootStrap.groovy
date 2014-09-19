@@ -81,6 +81,7 @@ class BootStrap {
   			assert provider1.products.size() == 3
   			assert provider2.products.size() == 2
 
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PURCHASE ORDER
         def purchaseOrder = new PurchaseOrder(
           dutyDate:new Date() + 31,
@@ -92,22 +93,21 @@ class BootStrap {
         def item1 = new Item(
           product:product1,
           presentation:presentation1,
-          measure:presentation1.measures[0],//15g
+          measure:presentation1.measures[0],
           quantity:100,
           purchasePrice:15,
-          sellingPrice:20,
+          sellingPrice:15 + ((15 * 25) / 100), 
           bash:new Date() + 90,
           total:100 * 15
         )
 
-
         def item2 = new Item(
           product:product1,
           presentation:presentation1,
-          measure:presentation1.measures[1],//30g
+          measure:presentation1.measures[1],
           quantity:100,
           purchasePrice:25,
-          sellingPrice:45,
+          sellingPrice:25 + ((25 * 25) / 100),
           bash:new Date() + 100,
           total:100 * 25
         )
@@ -118,7 +118,7 @@ class BootStrap {
           measure:presentation6.measures[1],//356ml
           quantity:50,
           purchasePrice:10,
-          sellingPrice:55,
+          sellingPrice:55 + ((55 * 25) / 100),
           bash:new Date() + 100,
           total:50 * 10
         )
@@ -137,11 +137,54 @@ class BootStrap {
           }
         }
 
-        assert purchaseOrder.count() == 1
-        assert Item.count() == 3
-        //assert purchaseOrder.balance == 4000
+        def purchaseOrder1 = new PurchaseOrder(
+          dutyDate:new Date() + 60,
+          invoiceNumber:"001002",
+          typeOfPurchase:"Contado",
+          balance:0
+        )
 
-        //SALE
+        def item4 = new Item(
+          product:product5,
+          presentation:presentation7,
+          measure:presentation7.measures[0],
+          quantity:150,
+          purchasePrice:9.50,
+          sellingPrice:9.50 + ((9.50 * 25) / 100),
+          bash:new Date() + 80,
+          total:150 * 9.50
+        )
+
+        def item5 = new Item(
+          product:product1,
+          presentation:presentation1,
+          measure:presentation1.measures[0],
+          quantity:50,
+          purchasePrice:16,
+          sellingPrice:16 + ((16 * 25) / 100),
+          bash:new Date() + 200,
+          total:50 * 16
+        )
+
+        purchaseOrder1.addToItems item4
+        purchaseOrder1.addToItems item5
+
+        purchaseOrder1.balance += item4.total
+        purchaseOrder1.balance += item5.total
+
+        if (!purchaseOrder1.save()) {
+          purchaseOrder1.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
+        assert PurchaseOrder.count() == 2
+        assert Item.count() == 5
+        assert purchaseOrder.balance == 4500
+        assert purchaseOrder1.balance == 2225
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        //SALES
 
         //CLIENTS
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
