@@ -19,8 +19,8 @@
 						<th>Presentacion</th>
 						<th>Medida</th>
 						<th>Cantidad</th>
-						<th>P Compra</th>
-						<th>P Venta</th>
+						<th>Compra</th>
+						<th>Venta</th>
 						<th>Lote</th>
 						<th>Total</th>
 						<th width="1"></th>
@@ -37,7 +37,7 @@
 								<td>
 									<g:formatDate date="${item.bash}" formatName="custom.date.format"/>
 								</td>
-								<td>${item.total}</td>
+								<td><g:formatNumber number="${item.total}" formatName="default.number.decimal"/></td>
 								<td>
 									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash.format('yyyy-MM-dd')]">
 										<span class="glyphicon glyphicon-trash"></span>
@@ -48,7 +48,7 @@
 						<tr>
 							<td>BALANCE</td>
 							<td colspan="7">
-								<div class="pull-right">${purchaseOrder?.balance ?: 0}</div>
+								<div class="pull-right"><g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/></div>
 							</td>
 							<td width="1"></td>
 						</tr>

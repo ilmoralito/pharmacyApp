@@ -51,15 +51,17 @@
 					<g:textField name="to" class="form-control" placeholder="Hasta"/>
 				</div>
 				
-				<h5>Clientes</h5>
-				<g:each in="${ni.sb.Client.findAllByStatus(true)}" var="client">
-					<div class="checkbox">
-						<label>
-							<g:checkBox name="clients" value="${client}" checked="false"/>
-							${client}
-						</label>
-					</div>
-				</g:each>
+				<h5 id="clientLabel">Clientes</h5>
+				<div id="showHideClients">
+					<g:each in="${ni.sb.Client.findAllByStatus(true)}" var="client">
+						<div class="checkbox">
+							<label>
+								<g:checkBox name="clients" value="${client}" checked="false"/>
+								${client}
+							</label>
+						</div>
+					</g:each>
+				</div>
 
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
