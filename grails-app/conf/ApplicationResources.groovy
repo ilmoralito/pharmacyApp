@@ -12,9 +12,4 @@ modules = {
   	dependsOn "app"
   	resource url:"js/saleFilter.js"
   }
-
-  sale {
-    dependsOn "app"
-    resource url:"js/sale.js"
-  }
 }

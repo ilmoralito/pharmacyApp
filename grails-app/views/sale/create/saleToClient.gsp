@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Ventas</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, sale, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
 	<div class="row">
@@ -17,11 +17,11 @@
 	<br>
 
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<g:render template="sales"/>
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<ul class="nav nav-tabs">
 				<li>
 					<g:link event="sale">General</g:link>

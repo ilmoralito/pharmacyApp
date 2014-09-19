@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Ventas</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, sale, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
 	<div class="row">
@@ -17,11 +17,11 @@
 	<br>
 
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<g:render template="sales"/>
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<ul class="nav nav-tabs">
 				<li class="active">
 					<g:link>General</g:link>
@@ -34,8 +34,11 @@
 
 			<g:form>
 				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block"/>
+				<g:submitButton name="selectProduct" value="Mostrar" class="btn btn-primary btn-block"/>
 			</g:form>
+			<g:if test="${productsInStock}">
+				<g:render template="create/productsInStock"/>
+			</g:if>
 		</div>
 	</div>
 </body>
