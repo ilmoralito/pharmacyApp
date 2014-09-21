@@ -38,7 +38,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<g:submitButton name="completeSale" value="Confirmar" class="btn btn-primary"/>
+	<g:link event="confirmSale" class="btn btn-primary">Confirmar</g:link>
 </g:if>
 <g:else>
 	<h4>...</h4>

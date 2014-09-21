@@ -22,15 +22,16 @@
 				<h4>Ventas</h4>
 				<table class="table table-striped">
 					<thead>
-						<th></th>
+						<th width="1"></th>
 					</thead>
-					<tbody></tbody>
+					<tbody>
+						<g:each in="${sales}" var="sale" status="index">
+							<tr>
+								<td>${index + 1}</td>
+							</tr>
+						</g:each>
+					</tbody>
 				</table>
-				<g:each in="${sales}" var="sale" status="index">
-					<tr>
-						<td>${index + 1}</td>
-					</tr>
-				</g:each>
 			</g:if>
 			<g:else>
 				<h4>Sin ventas...</h4>

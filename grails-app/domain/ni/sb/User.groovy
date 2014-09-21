@@ -1,6 +1,6 @@
 package ni.sb
 
-class User {
+class User implements Serializable {
 
 	transient springSecurityService
 
