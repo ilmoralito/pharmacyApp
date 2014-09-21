@@ -87,7 +87,7 @@ class SaleController {
       }.to "sale"
 
   		on("delete") {
-
+        flow.sales.remove params.int("index")
   		}.to "sale"
 
   		//moves

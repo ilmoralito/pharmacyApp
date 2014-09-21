@@ -24,7 +24,9 @@
 					<td>${sale.quantity}</td>
 					<td><span class="pull-right">${sale.total}</span></td>
 					<td>
-						<g:link action="actionName"><span class="glyphicon glyphicon-trash"></span></g:link>
+						<g:link event="delete" params="[index:index]">
+							<span class="glyphicon glyphicon-trash"></span>
+						</g:link>
 					</td>
 				</tr>
 			</g:each>
