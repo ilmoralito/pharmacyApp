@@ -1,9 +1,9 @@
 package ni.sb
 
 class SaleDetail implements Serializable {
-  def itemService
+  //def itemService
 
-	Product product
+	Item item
   Presentation presentation
   String measure
   Integer quantity
@@ -13,26 +13,28 @@ class SaleDetail implements Serializable {
 	Date lastUpdated
 
   static constraints = {
+    /*
     product validator:{ product ->
       if (!itemService.checkValidProduct(product)) {
         "saleDetail.product.notMatch"
       }
     }
 
-    /*
     presentation validator:{ presentation, saleDetail ->
       if (!saleDetail.product.presentations.contains(presentation)) {
         "saleDetail.presentation.notFound"
       }
     }
-    */
 
     measure validator: { measure, saleDetail ->
       if (!saleDetail.presentation.measures.contains(measure)) {
         "saleDetail.measure.notFound"
       }
     }
-
+    */
+    item nullable:false
+    presentation nullable:false
+    measure blank:false
     quantity min:1, nullable:false
     total scale:2, min:0.1
   }
@@ -43,5 +45,5 @@ class SaleDetail implements Serializable {
 
   static belongsTo = [sale:Sale]
 
-  String toString() { product }
+  String toString() { item }
 }

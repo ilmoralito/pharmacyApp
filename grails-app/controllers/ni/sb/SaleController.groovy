@@ -57,7 +57,33 @@ class SaleController {
   		}.to "sale"
 
       on("confirm") {
-        
+        def item = Item.get params.int("item")
+        def presentation = Presentation.get params.int("presentation")
+        def measure = params?.measure
+        def quantity = params.int("quantity")
+        def total = quantity * item.sellingPrice
+
+        def saleDetail = new SaleDetail(item:item, presentation:presentation, measure:measure, quantity:quantity, total:total)
+
+        if (!saleDetail.validate(["item", "presentation", "measure", "quantity", "total"])) {
+          saleDetail.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        //check if current item is in sales
+        def target = flow.sales.find {
+          it.item == item && it.presentation == presentation && it.measure == measure && it.item.bash == item.bash
+        }
+
+        //if above condition is true then removed
+        if (target) {
+          flow.sales -= target
+        }
+
+        flow.sales << saleDetail
       }.to "sale"
 
   		on("delete") {
@@ -86,5 +112,21 @@ class SaleController {
   	done() {
   		redirect action:"list"
   	}
+  }
+}
+
+class SaleDetailCommand implements Serializable {
+  Product product
+  Presentation presentation
+  String measure
+  Integer quantity
+  BigDecimal total = 1
+
+  static constraints = {
+    importFrom SaleDetail
+  }
+
+  def calcTotal() {
+
   }
 }

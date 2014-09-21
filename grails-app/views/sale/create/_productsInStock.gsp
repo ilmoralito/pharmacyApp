@@ -13,8 +13,8 @@
 			</tr>
 			<g:each in="${productsInStock[presentation]}" var="item">
 				<g:form>
-					<g:hiddenField name="id" value="${item.id}"/>
-					<g:hiddenField name="presentationId" value="${item.presentation.id}"/>
+					<g:hiddenField name="item" value="${item.id}"/>
+					<g:hiddenField name="presentation" value="${item.presentation.id}"/>
 					<g:hiddenField name="measure" value="${item.measure}"/>
 					<g:hiddenField name="bash" value="${item.bash}"/>
 					<tr>
