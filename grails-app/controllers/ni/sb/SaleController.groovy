@@ -4,6 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class SaleController {
+  def springSecurityService
+
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
@@ -12,7 +14,7 @@ class SaleController {
   def list() {
   	def today = new Date()
 
-  	[sales:Sale.salesFromTo(today, today).list()]
+  	[sales:Sale.salesFromTo(today, today + 1).list()]
   }
 
   def createFlow = {
@@ -73,12 +75,32 @@ class SaleController {
           return error()
         }
 
+        //check if current item is in sales
+        def target = flow.sales.find {
+          it.item == item && it.presentation == presentation && it.measure == measure && it.item.bash == item.bash
+        }
+
+        //if above condition is true then removed
+        if (target) {
+          flow.sales -= target
+        }
+
         flow.sales << saleDetail
       }.to "sale"
 
   		on("delete") {
-
+        flow.sales.remove params.int("index")
   		}.to "sale"
+
+      on("confirmSale") {
+        def sale = new Sale(user:springSecurityService.currentUser, balance:flow.sales.total.sum())
+
+        flow.sales.each { saleInstance ->
+          sale.addToSaleDetails saleInstance
+        }
+
+        sale.save(flush:true)
+      }.to "done"
 
   		//moves
   		on("saleToClient").to "saleToClient"
