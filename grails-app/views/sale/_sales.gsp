@@ -7,7 +7,7 @@
 			<th>Presentacion</th>
 			<th>Medida</th>
 			<th>Cantidad</th>
-			<th>Total</th>
+			<th><span class="pull-right">Total</span></th>
 			<th width="1"></th>
 		</thead>
 		<tbody>
@@ -22,12 +22,18 @@
 					<td>${sale.presentation}</td>
 					<td>${sale.measure}</td>
 					<td>${sale.quantity}</td>
-					<td>${sale.total}</td>
+					<td><span class="pull-right">${sale.total}</span></td>
 					<td>
 						<g:link action="actionName"><span class="glyphicon glyphicon-trash"></span></g:link>
 					</td>
 				</tr>
 			</g:each>
+			<tr>
+				<td colspan="6">
+					<span class="pull-right">${sales.total.sum()}</span>
+				</td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 	<g:submitButton name="completeSale" value="Confirmar" class="btn btn-primary"/>
