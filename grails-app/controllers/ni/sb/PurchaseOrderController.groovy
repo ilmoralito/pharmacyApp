@@ -18,7 +18,12 @@ class PurchaseOrderController {
 	]
 
   def list() {
-  	[orders:PurchaseOrder.list()]
+    def status = (params?.option == "true")?true:(params?.option == "false")?false:params?.option
+    if (status == true || status == false) {
+      [orders:PurchaseOrder.findAllByStatus(status)]
+    }else{
+      [orders:PurchaseOrder.findAllByTypeOfPurchase(status)]
+    }
   }
 
   def show(Integer id){
