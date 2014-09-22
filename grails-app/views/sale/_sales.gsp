@@ -1,8 +1,8 @@
 <g:if test="${sales}">
 	<h4>Detalle de venta</h4>
-	<table class="table table-striped">
+	<table class="table table-hover">
 		<thead>
-			<th width="1"></th>
+			<th width="1">#</th>
 			<th>Producto</th>
 			<th>Presentacion</th>
 			<th>Medida</th>

@@ -76,14 +76,10 @@ class SaleController {
         }
 
         //check if current item is in sales
-        def target = flow.sales.find {
-          it.item == item && it.presentation == presentation && it.measure == measure && it.item.bash == item.bash
-        }
+        def target = flow.sales.find { it.item == item }
 
         //if above condition is true then removed
-        if (target) {
-          flow.sales -= target
-        }
+        if (target) { flow.sales -= target }
 
         flow.sales << saleDetail
       }.to "sale"
