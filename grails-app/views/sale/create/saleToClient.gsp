@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Ventas</title>
+	<title>Ventas por cliente</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -35,15 +35,23 @@
 			<g:form>
 				<div class="form-group">
 					<label for="client" class="sr-only">Cliente</label>
-					<g:select name="client" from="${clients}" noSelection="['':'Seleccione cliente']" class="form-control"/>
+					<g:select name="client.id" from="${clients}" optionKey="id" value="${client?.id}" noSelection="['':'Cliente']" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="typeOfPurchase" class="sr-only">Tipo de compra</label>
-					<g:select name="typeOfPurchase" from="['Contado', 'Credito']" noSelection="['':'Seleccione tipo de pago']" class="form-control"/>
+					<g:select name="typeOfPurchase" from="['Contado', 'Credito']" value="${typeOfPurchase}" noSelection="['':'Tipo de pago']" class="form-control"/>
 				</div>
-				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block"/>
+				<g:submitButton name="chooseClient" value="Seleccionar cliente y tipo de pago" class="btn btn-primary btn-block"/>
 			</g:form>
+			<br>
+	
+			<g:form>
+				<g:render template="form"/>
+				<g:submitButton name="selectProduct" value="Mostrar" class="btn btn-primary btn-block"/>
+			</g:form>
+			<g:if test="${productsInStock}">
+				<g:render template="create/productsInStock"/>
+			</g:if>
 		</div>
 	</div>
 </body>

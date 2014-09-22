@@ -47,15 +47,18 @@ class SaleController {
   	}
 
   	sale {
-  		on("selectProduct") {
-        def product = params?.product
-        def query = Item.where {
-          product.name == product
+  		on("selectProduct") { SelectProductCommand command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
         }
 
-        def items = query.list()
-
-        [productsInStock:items.groupBy { it.presentation }, product:product]
+        def items = this.getItemsByProduct(command.product)
+       
+        [productsInStock:items.groupBy { it.presentation }, product:command.product]
   		}.to "sale"
 
       on("confirm") {
@@ -107,8 +110,30 @@ class SaleController {
   	}
 
   	saleToClient {
-  		on("confirm") {
+      on("chooseClient") { SaleToClientCommand command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
 
+          return error()
+        }
+
+        [client:command.client, typeOfPurchase:command.typeOfPurchase]
+      }.to "saleToClient"
+
+  		on("selectProduct") { SelectProductCommand command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        def items = this.getItemsByProduct(command.product)
+       
+        [productsInStock:items.groupBy { it.presentation }, product:command.product]
   		}.to "saleToClient"
 
   		on("delete") {
@@ -124,20 +149,35 @@ class SaleController {
   		redirect action:"list"
   	}
   }
+
+  def getItemsByProduct(Product product) {
+    def query = Item.where {
+      product == product
+    }
+
+    def items = query.list()
+
+    items
+  }
 }
 
-class SaleDetailCommand implements Serializable {
-  Product product
-  Presentation presentation
-  String measure
-  Integer quantity
-  BigDecimal total = 1
+class SaleToClientCommand implements Serializable {
+  Client client
+  String typeOfPurchase
 
   static constraints = {
-    importFrom SaleDetail
+    importFrom SaleToClient
   }
+}
 
-  def calcTotal() {
+class SelectProductCommand implements Serializable {
+  Product product
 
+  static constraints = {
+    product nullable:false, validator: { product ->
+      if (!product.status) {
+        "selectProductCommand.product.notValidProduct"
+      }
+    }
   }
 }
