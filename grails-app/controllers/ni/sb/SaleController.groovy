@@ -97,7 +97,7 @@ class SaleController {
 
         flow.sales.each { saleInstance ->
           //get item instance in order to update stock
-          
+          saleInstance.item.quantity -= saleInstance.quantity
 
           sale.addToSaleDetails saleInstance
         }
