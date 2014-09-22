@@ -83,8 +83,8 @@ class PurchaseOrderController {
         //calculate total
         params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
 
-        //check if new item already exist if it is true then delete item in items and then recreate item besides update purchase order balance
-        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params?.bash, flow.purchaseOrder.items)
+        //check if new item already exist. If it is true then delete item from items and then recreate it
+        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params.date("bash", "yyyy-MM-dd"), flow.purchaseOrder.items)
 
         if (itemInstance) {
           flow.purchaseOrder.items -= itemInstance
@@ -113,13 +113,20 @@ class PurchaseOrderController {
 
  			on("deleteItem") {
         //get item from purchase order items
-        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params?.bash, flow.purchaseOrder.items)
+        def product = params.int("product")
+        def presentation = params.int("presentation")
+        def measure = params?.measure
+        def bash = params.date("bash", "yyyy-MM-dd")
+        def items = flow.purchaseOrder.items
+
+        def itemInstance = this.getItemFromItems(product, presentation, measure, bash, items)
 
         //if there exist item then remove it from items in purchase order
         if (itemInstance) {
           flow.purchaseOrder.items -= itemInstance
         } else {
           response.sendError 404
+          return error()
         }
 
         //update purchase order balance
@@ -191,12 +198,15 @@ class PurchaseOrderController {
     }
   }
 
-  private getItemFromItems(Integer productId, Integer presentationId, String measure, String bash, items) {
+  private getItemFromItems(Integer productId, Integer presentationId, String measure, Date bash, items) {
     def product = Product.get productId
     def presentation = Presentation.get presentationId
 
     def item = items.find { itemInstance ->
-      itemInstance.product == product && itemInstance.presentation == presentation && itemInstance.measure == measure && itemInstance.bash == bash
+      itemInstance.product == product &&
+      itemInstance.presentation == presentation &&
+      itemInstance.measure == measure &&
+      itemInstance.bash.clearTime() == bash.clearTime()
     }
 
     item

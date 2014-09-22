@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
-	<g:textField name="dutyDate" value="${purchaseOrder?.dutyDate?.format('yyyy-MM-dd')}" class="form-control" placeholder="Fecha tope de pago"/>
+	<g:textField name="dutyDate" value="${g.formatDate(date:purchaseOrder?.dutyDate, formatName:'custom.date.format')}" class="form-control" placeholder="Fecha tope de pago"/>
 </div>
 <div class="form-group">
 	<label for="invoiceNumber" class="sr-only">Numero de factura</label>

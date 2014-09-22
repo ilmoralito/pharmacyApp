@@ -26,5 +26,5 @@ class Product implements Serializable {
   static belongsTo = [provider:Provider]
   static hasMany = [presentations:Presentation]
 
-  String toString() { "$name, $code" }
+  String toString() { name }
 }

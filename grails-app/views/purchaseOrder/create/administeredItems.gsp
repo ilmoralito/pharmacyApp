@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar articulos</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, createPurchaseOrder, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, createPurchaseOrder, jquery-ui"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>
@@ -19,8 +19,8 @@
 						<th>Presentacion</th>
 						<th>Medida</th>
 						<th>Cantidad</th>
-						<th>P Compra</th>
-						<th>P Venta</th>
+						<th>Compra</th>
+						<th>Venta</th>
 						<th>Lote</th>
 						<th>Total</th>
 						<th width="1"></th>
@@ -34,10 +34,12 @@
 								<td>${item.quantity}</td>
 								<td>${item.purchasePrice}</td>
 								<td>${item.sellingPrice}</td>
-								<td>${item.bash}</td>
-								<td>${item.total}</td>
 								<td>
-									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash]">
+									<g:formatDate date="${item.bash}" formatName="custom.date.format"/>
+								</td>
+								<td><g:formatNumber number="${item.total}" formatName="default.number.decimal"/></td>
+								<td>
+									<g:link event="deleteItem" params="[product:item.product.id, presentation:item.presentation.id, measure:item.measure, bash:item.bash.format('yyyy-MM-dd')]">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>
@@ -46,7 +48,7 @@
 						<tr>
 							<td>BALANCE</td>
 							<td colspan="7">
-								<div class="pull-right">${purchaseOrder?.balance ?: 0}</div>
+								<div class="pull-right"><g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/></div>
 							</td>
 							<td width="1"></td>
 						</tr>
@@ -69,7 +71,7 @@
 				<div class="row" style="margin-top:10px;">
 					<div class="col-md-12">
 						<span class="glyphicon glyphicon-calendar"></span>
-						${purchaseOrder?.dutyDate?.format("yyyy-MM-dd")}
+						<g:formatDate date="${purchaseOrder?.dutyDate}" formatName="custom.date.format"/>
 						<br>
 						<span class="glyphicon glyphicon-th"></span>
 						${purchaseOrder?.typeOfPurchase}
@@ -80,31 +82,31 @@
 			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"/>
+					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
 				</div>
 				<div class="form-group">
 					<label for="presentation" class="sr-only">Presentacion</label>
-					<g:select name="presentation" from="" class="form-control"/>
+					<g:select name="presentation" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Presentacion"/>
 				</div>
 				<div class="form-group">
 					<label for="measure" class="sr-only">Unidad de medida</label>
-					<g:select name="measure" from="" class="form-control"/>
+					<g:select name="measure" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Unidad de medida"/>
 				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
-					<g:textField name="quantity" class="form-control" placeholder="Cantidad"/>
+					<g:textField name="quantity" class="form-control" placeholder="Cantidad" data-toggle="tooltip" data-placement="left" title="Cantidad"/>
 				</div>
 				<div class="form-group">
 					<label for="purchasePrice" class="sr-only">Precio de compra</label>
-					<g:textField name="purchasePrice" class="form-control" placeholder="Precio de compra"/>
+					<g:textField name="purchasePrice" class="form-control" placeholder="Precio de compra" data-toggle="tooltip" data-placement="left" title="Precio de compra"/>
 				</div>
 				<div class="form-group">
 					<label for="sellingPrice" class="sr-only">Precio de venta</label>
-					<g:textField name="sellingPrice" class="form-control" placeholder="Precio de venta"/>
+					<g:textField name="sellingPrice" class="form-control" placeholder="Precio de venta" data-toggle="tooltip" data-placement="left" title="Precio de venta"/>
 				</div>
 				<div class="form-group">
 					<label for="bash" class="sr-only">Lote</label>
-					<g:textField name="bash" class="form-control" placeholder="Lote"/>
+					<g:textField name="bash" class="form-control" placeholder="Fecha de vencimiento" data-toggle="tooltip" data-placement="left" title="Fecha de vencimiento"/>
 				</div>
 
 				<g:submitButton name="addItem" value="Agregar producto" class="btn btn-primary btn-block"/>

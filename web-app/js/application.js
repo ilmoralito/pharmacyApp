@@ -4,6 +4,11 @@ $(document).ready(function() {
 	 	minDate: +1
 	});
 
+	$("#bash").datepicker({
+	 	dateFormat: "yy-mm-dd",
+	 	minDate: +60
+	});
+
 	var ItemBuilder = (function() {
 
 		var getPresentations = function(id) {
@@ -60,7 +65,7 @@ $(document).ready(function() {
 		var calcSellingPrice = function(purchasePrice) {
 			var sellingPrice = parseFloat(purchasePrice) + (parseFloat(purchasePrice) * 25 / 100)
 
-			$("#sellingPrice").val(sellingPrice)
+			$("#sellingPrice").val(sellingPrice.toFixed(2))
 		}
 
 		return {
@@ -83,4 +88,6 @@ $(document).ready(function() {
 	$("#purchasePrice").on("blur", function(){
 		ItemBuilder.calcSellingPrice($(this).val() || 0)
 	})
+
+	$('[data-toggle=tooltip]').tooltip();
 });
