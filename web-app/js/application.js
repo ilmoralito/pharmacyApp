@@ -5,10 +5,11 @@ $(document).ready(function() {
 	});
 
 	var ItemBuilder = (function() {
-		var getPresentations = function(productId) {
+
+		var getPresentations = function(id) {
 			$.ajax({
 				url:"getPresentationsByProduct/",
-				data:{ productId:productId },
+				data:{ id:id },
 				dataType:"JSON",
 				success:function(res) {
 					var presentation = $("#presentation"),
@@ -20,6 +21,7 @@ $(document).ready(function() {
 
 					//add presentations
 					for (var i = presentations.length - 1; i >= 0; i--){
+
 						var opt = $("<option>", { value:presentations[i].id, text:presentations[i].name });
 
 						//add measures only for first presentation

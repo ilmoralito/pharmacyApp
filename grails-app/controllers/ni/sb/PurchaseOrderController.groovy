@@ -11,6 +11,8 @@ class PurchaseOrderController {
 		list:"GET",
     show:"GET",
     update:"POST",
+    edit:"GET",
+    editItem:"GET",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET"
 	]
@@ -20,13 +22,13 @@ class PurchaseOrderController {
   }
 
   def show(Integer id){
-    def purchaseOrder = PurchaseOrder.get(params.id)
+    def purchaseOrder = PurchaseOrder.get id
     if (!purchaseOrder) { response.sendError 404}
     [purchaseOrder:purchaseOrder]
   }
 
   def update(Integer id){
-    def purchaseOrder = PurchaseOrder.get(params.id)
+    def purchaseOrder = PurchaseOrder.get id
     if (!purchaseOrder) { response.sendError 404}
     purchaseOrder.properties = params
 
@@ -37,6 +39,21 @@ class PurchaseOrderController {
 
     flash.message = "Actualizado"
     redirect action:"show", id:id
+  }
+
+  def edit(Integer id){
+    def purchaseOrder = PurchaseOrder.get id
+    if (!purchaseOrder) {response.sendError 404}
+    def itemInstance = Item.findAllByPurchaseOrder(purchaseOrder)
+    [itemInstance:itemInstance, purchaseOrder:purchaseOrder]
+  }
+
+  def editItem(Integer id){
+    def itemInstance = Item.get id
+    if (!itemInstance) {response.sendError 404}
+    def product = Product.get(itemInstance.product.id)
+    def presentations = Presentation.findAllByProduct(product)
+    [itemInstance:itemInstance, presentations:presentations]
   }
 
   def createFlow = {
@@ -142,8 +159,8 @@ class PurchaseOrderController {
   	}
   }
 
-  def getPresentationsByProduct(Integer productId) {
-    def results = presentationService.presentationsByProduct productId
+  def getPresentationsByProduct(Integer id) {
+    def results = presentationService.presentationsByProduct id
 
     if (!results) {
       render(contentType:"application/json") {

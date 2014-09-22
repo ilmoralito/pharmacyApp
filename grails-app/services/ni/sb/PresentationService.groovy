@@ -6,6 +6,7 @@ import grails.transaction.Transactional
 class PresentationService {
 
   def presentationsByProduct(Integer productId) {
+    println productId
   	def product = Product.get productId
 
   	if (!product) {

@@ -14,6 +14,7 @@
 				<g:hiddenField name="id" value="${purchaseOrder.id}"/>
 				<g:render template="form"/>
 				<g:submitButton name="editPurchaseOrder" value="Actualizar" class="btn btn-default"/>
+				<g:link action="edit" class="btn btn-primary" id="${purchaseOrder.id}">Editar Items</g:link>
 			</g:form>
 
 			<g:render template="/layouts/errorsMessage" model="[instance:errors]"/>
