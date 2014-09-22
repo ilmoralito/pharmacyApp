@@ -9,6 +9,6 @@ $(document).ready(function() {
 
 	$("#showHideClients").toggle();
   	$("#clientLabel").click(function(){
-    	$("#showHideClients").toggle('slow');
+    	$("#showHideClients").toggle();
     });
 });
