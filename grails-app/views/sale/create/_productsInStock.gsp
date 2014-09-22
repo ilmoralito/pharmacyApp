@@ -12,7 +12,7 @@
 				<td></td>
 			</tr>
 			<g:each in="${productsInStock[presentation]}" var="item">
-				<g:set var="saleDetailInstanceQuantity" value="${sales.find { it.item == item && it.presentation == item.presentation && it.measure == item.measure && it.item.bash == item.bash }?.quantity ?: 0}"/>
+				<g:set var="saleDetailInstanceQuantity" value="${sales.find { it.item == item }?.quantity ?: 0}"/>
 				<g:set var="quantity" value="${saleDetailInstanceQuantity ? item.quantity - saleDetailInstanceQuantity : item.quantity}"/>
 				<g:form>
 					<g:hiddenField name="item" value="${item.id}"/>
