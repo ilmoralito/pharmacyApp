@@ -96,6 +96,9 @@ class SaleController {
         def sale = new Sale(user:springSecurityService.currentUser, balance:flow.sales.total.sum())
 
         flow.sales.each { saleInstance ->
+          //get item instance in order to update stock
+          
+
           sale.addToSaleDetails saleInstance
         }
 
