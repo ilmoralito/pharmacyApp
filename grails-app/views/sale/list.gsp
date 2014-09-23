@@ -52,16 +52,9 @@
 					<g:textField name="to" class="form-control" placeholder="Hasta"/>
 				</div>
 				
-				<h5 id="clientLabel">Clientes</h5>
-				<div id="showHideClients">
-					<g:each in="${ni.sb.Client.findAllByStatus(true)}" var="client">
-						<div class="checkbox">
-							<label>
-								<g:checkBox name="clients" value="${client}" checked="false"/>
-								${client}
-							</label>
-						</div>
-					</g:each>
+				<!-- Clientes -->
+				<div class="select">
+					<g:select name="clients" from="${ni.sb.Client.findAllByStatus(true)}" class="chosen-select-deselect" noSelection="['':'Busque el ciente...']"/>
 				</div>
 
 				<h5>Tipo de pago</h5>

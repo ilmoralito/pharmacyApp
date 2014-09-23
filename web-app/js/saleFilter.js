@@ -7,8 +7,6 @@ $(document).ready(function() {
 	 	dateFormat: "yy-mm-dd"
 	});
 
-	$("#showHideClients").toggle();
-  	$("#clientLabel").click(function(){
-    	$("#showHideClients").toggle('slow');
-    });
+    $(".chosen-select").chosen();
+    $(".chosen-select-deselect").chosen({ allow_single_deselect: true });
 });
