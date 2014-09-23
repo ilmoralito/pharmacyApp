@@ -23,11 +23,21 @@
 				<table class="table table-striped table-hover">
 					<thead>
 						<th width="1">#</th>
+						<th>Fecha de compra</th>
+						<th>Saldo de venta</th>
+						<th>Atendido por</th>
 					</thead>
 					<tbody>
 						<g:each in="${sales}" var="sale" status="index">
 							<tr>
 								<td>${index + 1}</td>
+								<td>
+									<g:link action="show" id="${sale.id}">
+										<g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/>
+									</g:link>
+								</td>
+								<td>${sale.balance}</td>
+								<td>${sale.user.fullName}</td>
 							</tr>
 						</g:each>
 					</tbody>
