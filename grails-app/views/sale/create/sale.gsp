@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Ventas</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, app, saleFilter, jquery-ui"/>
 </head>
 <body>
 	<div class="row">
