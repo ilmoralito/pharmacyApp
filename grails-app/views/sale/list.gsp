@@ -20,9 +20,9 @@
 		<div class="col-md-9">
 			<g:if test="${sales}">
 				<h4>Ventas</h4>
-				<table class="table table-striped">
+				<table class="table table-striped table-hover">
 					<thead>
-						<th width="1"></th>
+						<th width="1">#</th>
 					</thead>
 					<tbody>
 						<g:each in="${sales}" var="sale" status="index">

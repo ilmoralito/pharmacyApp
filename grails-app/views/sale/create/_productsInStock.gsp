@@ -12,6 +12,8 @@
 				<td></td>
 			</tr>
 			<g:each in="${productsInStock[presentation]}" var="item">
+				<g:set var="saleDetailInstanceQuantity" value="${sales.find { it.item == item }?.quantity ?: 0}"/>
+				<g:set var="quantity" value="${saleDetailInstanceQuantity ? item.quantity - saleDetailInstanceQuantity : item.quantity}"/>
 				<g:form>
 					<g:hiddenField name="item" value="${item.id}"/>
 					<g:hiddenField name="presentation" value="${item.presentation.id}"/>
@@ -22,7 +24,7 @@
 						<td>${item.bash.format("MM-yy")}</td>
 						<td>${item.sellingPrice}</td>
 						<td>
-							<input type="number" name="quantity" id="number" class="form-control input-sm" max="${item.quantity}" min="1" placeholder="${item.quantity}">
+							<input type="number" name="quantity" id="number" class="form-control input-sm" max="${quantity}" min="1" placeholder="${quantity}">
 						</td>
 						<td>
 							<g:submitButton name="confirm" value="Ir" class="btn btn-primary btn-xs"/>
