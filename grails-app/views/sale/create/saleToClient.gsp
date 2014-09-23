@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Ventas por cliente</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, app, saleFilter, jquery-ui"/>
 </head>
 <body>
 	<div class="row">
@@ -34,8 +34,8 @@
 
 			<g:form>
 				<div class="form-group">
-					<label for="client" class="sr-only">Cliente</label>
-					<g:select name="client.id" from="${clients}" optionKey="id" value="${client?.id}" noSelection="['':'Cliente']" class="form-control"/>
+					<label for="client">Cliente</label>
+					<g:select name="client.id" from="${clients}" optionKey="id" value="${client?.id}" class="chosen-select" tabindex="2"/>
 				</div>
 				<div class="form-group">
 					<label for="typeOfPurchase" class="sr-only">Tipo de compra</label>
