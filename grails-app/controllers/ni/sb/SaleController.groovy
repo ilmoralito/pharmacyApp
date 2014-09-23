@@ -61,30 +61,28 @@ class SaleController {
         [productsInStock:items.groupBy { it.presentation }, product:command.product]
   		}.to "sale"
 
-      on("confirm") {
-        def item = Item.get params.int("item")
-        def presentation = Presentation.get params.int("presentation")
-        def measure = params?.measure
-        def quantity = params.int("quantity")
-        def total = quantity * item.sellingPrice
-
-        def saleDetail = new SaleDetail(item:item, presentation:presentation, measure:measure, quantity:quantity, total:total)
-
-        if (!saleDetail.validate(["item", "presentation", "measure", "quantity", "total"])) {
-          saleDetail.errors.allErrors.each { error ->
+      on("confirm") { SaleDetailCommand command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
 
           return error()
         }
 
+        //calc total
+        def total = command.item.sellingPrice * command.quantity
+
+        //create saleDetails instance whit validated properties
+        def sale = new SaleDetail( item:command.item, presentation:command.presentation, measure:command.measure, quantity:command.quantity, total:total)
+
         //check if current item is in sales
-        def target = flow.sales.find { it.item == item }
+        def target = flow.sales.find { it.item == command.item }
 
         //if above condition is true then removed
         if (target) { flow.sales -= target }
 
-        flow.sales << saleDetail
+        flow.sales << sale
       }.to "sale"
 
   		on("delete") {
@@ -110,6 +108,7 @@ class SaleController {
   	}
 
   	saleToClient {
+      //choose client
       on("chooseClient") { SaleToClientCommand command ->
         if (command.hasErrors()) {
           command.errors.allErrors.each { error ->
@@ -122,6 +121,7 @@ class SaleController {
         [client:command.client, typeOfPurchase:command.typeOfPurchase]
       }.to "saleToClient"
 
+      //select product
   		on("selectProduct") { SelectProductCommand command ->
         if (command.hasErrors()) {
           command.errors.allErrors.each { error ->
@@ -136,9 +136,49 @@ class SaleController {
         [productsInStock:items.groupBy { it.presentation }, product:command.product]
   		}.to "saleToClient"
 
-  		on("delete") {
+      //add product to sales list
+      on("confirm") { SaleDetailCommand command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
 
+          return error()
+        }
+
+        //calc total
+        def total = command.item.sellingPrice * command.quantity
+
+        //create saleDetails instance whit validated properties
+        def saleDetail = new SaleDetail(item:command.item, presentation:command.presentation, measure:command.measure, quantity:command.quantity, total:total)
+
+        //check if current item is in sales
+        def target = flow.sales.find { it.item == command.item }
+
+        //if above condition is true then removed
+        if (target) { flow.sales -= target }
+
+        flow.sales << saleDetail
+      }.to "saleToClient"
+
+      //delete product from sale list
+  		on("delete") {
+        flow.sales.remove params.int("index")
   		}.to "saleToClient"
+
+      //confirm sale and complete process
+      on("confirmSale") {
+        def saleToClient = new SaleToClient(client:flow.client, typeOfPurchase:flow.typeOfPurchase, user:springSecurityService.currentUser, balance:flow.sales.total.sum())
+
+        flow.sales.each { saleInstance ->
+          //update stock
+          saleInstance.item.quantity -= saleInstance.quantity
+
+          saleToClient.addToSaleDetails saleInstance
+        }
+
+        saleToClient.save(flush:true)
+      }.to "done"
 
   		//moves
   		on("sale").to "sale"
@@ -179,5 +219,18 @@ class SelectProductCommand implements Serializable {
         "selectProductCommand.product.notValidProduct"
       }
     }
+  }
+}
+
+class SaleDetailCommand implements Serializable {
+  Item item
+  Presentation presentation
+  String measure
+  Integer quantity
+  //TODO: to pass validation find the right way
+  BigDecimal total = 1
+
+  static constraints = {
+    importFrom SaleDetail
   }
 }

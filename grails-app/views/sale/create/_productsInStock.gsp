@@ -15,8 +15,8 @@
 				<g:set var="saleDetailInstanceQuantity" value="${sales.find { it.item == item }?.quantity ?: 0}"/>
 				<g:set var="quantity" value="${saleDetailInstanceQuantity ? item.quantity - saleDetailInstanceQuantity : item.quantity}"/>
 				<g:form>
-					<g:hiddenField name="item" value="${item.id}"/>
-					<g:hiddenField name="presentation" value="${item.presentation.id}"/>
+					<g:hiddenField name="item.id" value="${item.id}"/>
+					<g:hiddenField name="presentation.id" value="${item.presentation.id}"/>
 					<g:hiddenField name="measure" value="${item.measure}"/>
 					<g:hiddenField name="bash" value="${item.bash}"/>
 					<tr>
