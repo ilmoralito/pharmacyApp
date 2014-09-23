@@ -168,6 +168,12 @@ class SaleController {
 
       //confirm sale and complete process
       on("confirmSale") {
+        if (!flow.client || !flow.typeOfPurchase) {
+          flash.message = "Agrege cliente y tipo de compra para continuar"
+
+          return error()
+        }
+
         def saleToClient = new SaleToClient(client:flow.client, typeOfPurchase:flow.typeOfPurchase, user:springSecurityService.currentUser, balance:flow.sales.total.sum())
 
         flow.sales.each { saleInstance ->
