@@ -25,6 +25,7 @@
 						</td>
 						<td>
 							<g:link controller="product" action="list" params="[providerId:provider.id]" class="pull-right">
+								<g:if test="${!provider.products}">*</g:if>
 								Administrar productos
 							</g:link>
 						</td>

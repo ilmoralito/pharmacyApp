@@ -14,7 +14,7 @@
 				</div>	
 			</g:if>
 			
-			<g:link action="${target}" class="btn btn-default">
+			<g:link action="${target}" class="btn btn-primary">
 				<g:if test="${target != 'list'}">
 					Crear proveedor
 				</g:if>
