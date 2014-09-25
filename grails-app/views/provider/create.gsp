@@ -13,7 +13,7 @@
 		<div class="col-md-6">
 			<g:form action="create">
 				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Confirmar" class="btn btn-default"/>
+				<g:submitButton name="confirm" value="Confirmar" class="btn btn-primary"/>
 			</g:form>
 			
 			<g:render template="/layouts/errorsMessage" model="[instance:provider]"/>

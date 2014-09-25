@@ -16,7 +16,6 @@
 		</div>
 		<!--MAIN-->
 		<div class="col-md-8">
-			<h4>Clientes</h4>
 			<g:if test="${clients}">
 				<table class="table table-striped">
 					<thead>

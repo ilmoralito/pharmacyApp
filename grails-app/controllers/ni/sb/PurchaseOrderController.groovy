@@ -9,12 +9,56 @@ class PurchaseOrderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
+    show:"GET",
+    update:"POST",
+    edit:"GET",
+    editItem:"GET",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET"
 	]
 
   def list() {
-  	[orders:PurchaseOrder.list()]
+    def status = (params?.option == "true")?true:(params?.option == "false")?false:params?.option
+    if (status == true || status == false) {
+      [orders:PurchaseOrder.findAllByStatus(status)]
+    }else{
+      [orders:PurchaseOrder.findAllByTypeOfPurchase(status)]
+    }
+  }
+
+  def show(Integer id){
+    def purchaseOrder = PurchaseOrder.get id
+    if (!purchaseOrder) { response.sendError 404}
+    [purchaseOrder:purchaseOrder]
+  }
+
+  def update(Integer id){
+    def purchaseOrder = PurchaseOrder.get id
+    if (!purchaseOrder) { response.sendError 404}
+    purchaseOrder.properties = params
+
+    if (!purchaseOrder.save()) {
+      render(view:"show", model:[id:id, purchaseOrder:purchaseOrder])
+      return
+    }
+
+    flash.message = "Actualizado"
+    redirect action:"show", id:id
+  }
+
+  def edit(Integer id){
+    def purchaseOrder = PurchaseOrder.get id
+    if (!purchaseOrder) {response.sendError 404}
+    def itemInstance = Item.findAllByPurchaseOrder(purchaseOrder)
+    [itemInstance:itemInstance, purchaseOrder:purchaseOrder]
+  }
+
+  def editItem(Integer id){
+    def itemInstance = Item.get id
+    if (!itemInstance) {response.sendError 404}
+    def product = Product.get(itemInstance.product.id)
+    def presentations = Presentation.findAllByProduct(product)
+    [itemInstance:itemInstance, presentations:presentations]
   }
 
   def createFlow = {
@@ -61,7 +105,7 @@ class PurchaseOrderController {
 
           return error()
         }
-        
+
         //update purchace order balance property
         def balance = flow.purchaseOrder.balance ?: 0
         flow.purchaseOrder.balance = balance + item.total
@@ -99,7 +143,7 @@ class PurchaseOrderController {
           flow.purchaseOrder.errors.allErrors.each { error ->
             log.error "[$error.field:$error.defaultMessage]"
           }
-          
+
           return error()
         }
       }.to "done"
@@ -119,7 +163,7 @@ class PurchaseOrderController {
         flow?.errors?.clearErrors()
       }.to "administeredItems"
 
-      on("cancel").to "administeredItems" 
+      on("cancel").to "administeredItems"
     }
 
   	done() {
@@ -127,8 +171,8 @@ class PurchaseOrderController {
   	}
   }
 
-  def getPresentationsByProduct(Integer productId) {
-    def results = presentationService.presentationsByProduct productId
+  def getPresentationsByProduct(Integer id) {
+    def results = presentationService.presentationsByProduct id
 
     if (!results) {
       render(contentType:"application/json") {
