@@ -19,22 +19,32 @@
 							${sale.item}
 						</a>
 						<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-						  <div class="modal-dialog modal-sm">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${sale.item}</h4>
-						      </div>
-						      <div class="modal-body">
-						     	<ul>
-								  <li data-item="${sale.item}">${sale.item}</li>
-								  <li data-purchasePrice="${sale.item.purchasePrice}">${sale.item.purchasePrice}</li>
-								  <li data-sellingPrice="${sale.item.sellingPrice}"> ${sale.item.sellingPrice}</li>
-								  <li data-bash="${sale.item.bash}">${sale.item.bash}</li>
-								</ul>
-						      </div>
-						    </div>
-						  </div>
+							<div class="modal-dialog modal-sm">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="myModalLabel">${sale.item}</h4>
+								</div>
+								<div class="modal-body">
+									<table class="table">
+										<tr>
+											<td><strong>Precio de compra: </strong></td>
+											<td>${sale.item.purchasePrice}</td>
+										</tr>
+										<tr>
+											<td><strong>Precio de venta: </strong></td>
+											<td>${sale.item.sellingPrice}</td>
+										</tr>
+										<tr>
+											<td><strong>Fecha de vencimiento: </strong></td>
+											<td><g:formatDate formatName="custom.date.format" date="${sale.item.bash}"/></td>
+										</tr>
+									</table>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								</div>
+								</div>
+							</div>
 						</div>
 					</td>
 					<td>${sale.presentation}</td>
