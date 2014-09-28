@@ -18,26 +18,26 @@
 						<a href="#" data-toggle="modal" data-target="#myModal">
 							${sale.item}
 						</a>
-						<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-sm">
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
 								<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title" id="myModalLabel">${sale.item}</h4>
+									<h3 class="modal-title" id="myModalLabel">${sale.item}</h4>
 								</div>
 								<div class="modal-body">
-									<table class="table">
-										<tr>
-											<td><strong>Precio de compra: </strong></td>
-											<td>${sale.item.purchasePrice}</td>
-										</tr>
-										<tr>
-											<td><strong>Precio de venta: </strong></td>
-											<td>${sale.item.sellingPrice}</td>
-										</tr>
-										<tr>
-											<td><strong>Fecha de vencimiento: </strong></td>
-											<td><g:formatDate formatName="custom.date.format" date="${sale.item.bash}"/></td>
-										</tr>
+					     			<table class="table">
+										<thead>
+											<th>Precio de compra</th>
+											<th>Precio de venta</th>
+											<th>Fecha de vencimiento</th>
+										</thead>
+										<tbody>
+											<tr>
+												<td>${sale.item.purchasePrice}</td>
+												<td>${sale.item.sellingPrice}</td>
+												<td><g:formatDate formatName="custom.date.format" date="${sale.item.bash}"/></td>
+											</tr>
+										</tbody>
 									</table>
 								</div>
 								<div class="modal-footer">
