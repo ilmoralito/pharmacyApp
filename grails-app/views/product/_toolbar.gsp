@@ -8,9 +8,9 @@
 			    <span class="sr-only">${provider}</span>
 			  </button>
 				<ul class="dropdown-menu" role="menu">
-					<g:each in="${ni.sb.Provider.list()}" var="provider">
-						<li>
-							<g:link action="list" params="[providerId:provider.id]">${provider}</g:link>
+					<g:each in="${ni.sb.Provider.list()}" var="providerInstance">
+						<li class="${provider == providerInstance ? 'active' : ''}">
+							<g:link action="list" params="[providerId:providerInstance.id]">${providerInstance}</g:link>
 						</li>
 					</g:each>
 			  </ul>
