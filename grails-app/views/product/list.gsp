@@ -12,25 +12,19 @@
 	<g:if test="${products}">
 		<table class="table">
 			<thead>
-				<th width="1">Codigo</th>
 				<th>Producto</th>
 				<th></th>
 			</thead>
 			<tbody>
 				<g:each in="${products}" var="product">
 					<tr>
+						<td><g:link action="show" params="[id:product.id]">${product.name}</g:link></td>
 						<td>
-							<g:link action="show" params="[id:product.id]">
-								${product.code}
-							</g:link>
-						</td>
-						<td>
-							${product.name}
-						</td>
-						<td>
-							<g:link controller="presentation" action="list" params="[productId:product.id]" class="pull-right">
-								Presentaciones y medidas
-							</g:link>
+							<g:if test="${product instanceof ni.sb.Medicine}">
+								<g:link controller="presentation" action="list" params="[productId:product.id]" class="pull-right">
+									Presentaciones y medidas
+								</g:link>
+							</g:if>
 						</td>
 					</tr>
 				</g:each>
