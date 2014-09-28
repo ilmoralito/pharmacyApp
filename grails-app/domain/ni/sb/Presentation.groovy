@@ -16,7 +16,7 @@ class Presentation implements Serializable {
   	version false
   }
 
-  static belongsTo = [product:Product]
+  static belongsTo = [medicine:Medicine]
 
   List measures
   static hasMany = [measures:String]

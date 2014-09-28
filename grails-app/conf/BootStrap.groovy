@@ -10,36 +10,23 @@ class BootStrap {
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
         //PROVIDERS
-  			def provider1 = new Provider(
-  				name:"provider1",
-  				address:"address1",
-          phone:"23114455"
-  			)
+        //PROVIDER1
+  			def provider1 = new Provider(name:"provider1", address:"address1", phone:"23114455")
 
-        def product1 = new Product(name:"product1", code:"123")
+        def product1 = new Product(name:"product1")
+        def product2 = new Product(name:"product2")
+        def product3 = new Product(name:"product3")
+        def medicine1 = new Medicine(name:"Medicine1", code:"1234")
+          def presentation1 = new Presentation(name:"Crema", measures:["5g", "15g"])
+          medicine1.addToPresentations(presentation1)
 
-          def presentation1 = new Presentation(name:"Crema", measures:["15g", "30g"])
-          def presentation2 = new Presentation(name:"Talco", measures:["80gm"])
+          def medicine2 = new Medicine(name:"Medicine2", code:"1235")
+          def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
+          medicine2.addToPresentations(presentation2)
 
-          product1.addToPresentations presentation1
-          product1.addToPresentations presentation2
+        def productsInProvider1 = [product1, product2, product3, medicine1, medicine2]
 
-        def product2 = new Product(name:"product2", code:"456")
-
-          def presentation3 = new Presentation(name:"Soluble", measures:["25g", "100g", "125g"])
-          product2.addToPresentations presentation3
-
-        def product3 = new Product(name:"product3", code:"789")
-
-          def presentation4 = new Presentation(name:"Spray", measures:["150ml", "356ml", "475ml", "159gm"])
-          def presentation5 = new Presentation(name:"Tableta", measures:["2tabs", "300tabs"])
-
-          product3.addToPresentations presentation4
-          product3.addToPresentations presentation5
-
-        def providerOneProducts = [product1, product2, product3]
-
-        providerOneProducts.each { product ->
+        productsInProvider1.each { product ->
           provider1.addToProducts product
         }
 
@@ -49,25 +36,14 @@ class BootStrap {
           }
         }
 
-  			def provider2 = new Provider(
-  				name:"provider2",
-  				address:"address2",
-          phone:"23114488"
-  			)
+        //PROVIDER2
+  			def provider2 = new Provider(name:"provider2", address:"address2", phone:"23114488")
 
-        def product4 = new Product(name:"product4", code:"10111")
+        def product4 = new Product(name:"product4")
+        def product5 = new Product(name:"product5")
+        def productsInProvider2 = [product4, product5]
 
-          def presentation6 = new Presentation(name:"Spray", measures:["250ml", "356ml"])
-          product4.addToPresentations presentation6
-
-        def product5 = new Product(name:"product5", code:"45614")
-
-          def presentation7 = new Presentation(name:"Spray", measures:["475ml"])
-          product5.addToPresentations presentation7
-
-        def providerTwoProducts = [product4, product5]
-
-        providerTwoProducts.each { product ->
+        productsInProvider2.each { product ->
           provider2.addToProducts product
         }
 
@@ -78,10 +54,13 @@ class BootStrap {
         }
 
   			assert Provider.count() == 2
-  			assert provider1.products.size() == 3
+  			assert provider1.products.size() == 5
   			assert provider2.products.size() == 2
+        println "Expeting 2 medicine: $medicine1 $medicine2"
+        assert Medicine.count() == 2
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        /*
         //PURCHASE ORDER
         def purchaseOrder = new PurchaseOrder(
           dutyDate:new Date() + 31,
@@ -183,7 +162,8 @@ class BootStrap {
         assert purchaseOrder.balance == 4500
         assert purchaseOrder1.balance == 2225
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+        */
+        /*
         //SALES
 
         //CLIENTS
@@ -204,7 +184,7 @@ class BootStrap {
         }
 
         assert Client.count() == 2
-
+        */
         //USERS
         def user = new User(
           username:"me@gmail.com",

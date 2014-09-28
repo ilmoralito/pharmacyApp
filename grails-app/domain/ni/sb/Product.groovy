@@ -7,7 +7,6 @@ class Product implements Serializable {
     source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
 	String name
-  String code
   Boolean status = true
 
 	Date dateCreated
@@ -15,7 +14,6 @@ class Product implements Serializable {
 
   static constraints = {
     name blank:false, unique:true
-    code blank:false, unique:"provider"
   }
 
   static mapping = {
@@ -24,7 +22,6 @@ class Product implements Serializable {
   }
 
   static belongsTo = [provider:Provider]
-  static hasMany = [presentations:Presentation]
 
   String toString() { name }
 }
