@@ -6,7 +6,7 @@
 		<g:link controller="client" action="list">Clientes</g:link>
 	</li>
 	<li class="${controllerName == 'purchaseOrder' ? 'active' : ''}">
-		<g:link controller="purchaseOrder" action="list">Pedidos</g:link>
+		<g:link controller="purchaseOrder" params="[option:"true"]" action="list">Pedidos</g:link>
 	</li>
 	<li class="${controllerName == 'sale' ? 'active' : ''}">
 		<g:link controller="sale" action="list">Ventas</g:link>

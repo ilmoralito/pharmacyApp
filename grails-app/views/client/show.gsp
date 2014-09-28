@@ -9,7 +9,7 @@
 <body>
 	<h4>Actualizar ${client?.fullName}</h4>
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<g:form action="update" autocomplete="off">
 				<g:hiddenField name="id" value="${params?.id}"/>
 				<g:render template="form"/>
@@ -17,15 +17,14 @@
 			</g:form>
 			<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
 		</div>
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<g:form action="addTelephone">
 				<g:hiddenField name="id" value="${params?.id}"/>
 				<div class="form-group">
 					<label for="phone" class="sr-only">Telefono</label>
 					<g:textField name="phone" class="form-control" placeholder="Telefono"/>
 				</div>
-				<g:submitButton name="send" value="Agregar telefono" class="btn btn-default"/>
+				<g:submitButton name="send" value="Agregar telefono" class="btn btn-primary"/>
 			</g:form>
 
 			<g:if test="${client?.phones}">

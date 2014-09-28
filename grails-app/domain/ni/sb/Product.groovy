@@ -15,7 +15,7 @@ class Product implements Serializable {
 
   static constraints = {
     name blank:false, unique:true
-    code blank:false, unique:true
+    code blank:false, unique:"provider"
   }
 
   static mapping = {
