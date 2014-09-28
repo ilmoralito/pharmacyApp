@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Producto</title>
+	<title>Editar</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
 			<g:form action="update" autocomplete="off">
 				<g:hiddenField name="id" value="${params?.id}"/>
 				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Confirmar" class="btn btn-default"/>
+				<g:submitButton name="confirm" value="Confirmar" class="btn btn-primary"/>
 			</g:form>
 
 			<g:render template="/layouts/errorsMessage" model="[instance:product]"/>
