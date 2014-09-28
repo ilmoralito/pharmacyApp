@@ -17,8 +17,6 @@ class PurchaseOrder implements Serializable {
       if (dutyDate <= today) {
         return "purchaseOrder.dutyDate.notMatch"
       }
-
-      true
     }
     invoiceNumber blank:false, unique:true
     balance nullable:true
