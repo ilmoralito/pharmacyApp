@@ -10,21 +10,48 @@ class PresentationController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
-		save:"POST",
-		delete:"GET",
-    addMeasures:"POST"
+    addMeasures:"POST",
+    save:"POST",
+    delete:"GET"
 	]
 
   def list(Integer productId) {
-  	def product = Product.get productId
+  	def medicine = Medicine.get productId
 
-  	if (!product) { response.sendError 404 }
+  	if (!medicine) { response.sendError 404 }
 
-  	def productPresentations = product.presentations.name
-  	def presentationsKeys = grailsApplication.config.ni.sb.presentationsAndMeasures.keySet()
-  	def presentationsList = presentationsKeys - productPresentations
-  	
-  	[presentations:Presentation.findAllByProduct(product), product:product, presentationsList:presentationsList]
+  	def productPresentations = medicine.presentations.name
+    def presentationsKeys = grailsApplication.config.ni.sb.presentationsAndMeasures.keySet()
+    def presentationsList = presentationsKeys - productPresentations
+
+ 	 	[presentations:Presentation.findAllByMedicine(medicine), medicine:medicine, presentationsList:presentationsList]
+  }
+
+  def addMeasures(AddMeasuresCommand cmd, Integer id, Integer productId) {
+    if (cmd.hasErrors()) {
+      cmd.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"
+      }
+    } else {
+      def presentation = Presentation.get id
+
+      if (!presentation) { response.sendError 404 }
+
+      def tmp = []
+      tmp.addAll presentation.measures
+
+      tmp.each { measure ->
+        presentation.removeFromMeasures measure
+      }
+
+      cmd.measures.each { measure ->
+        presentation.addToMeasures measure
+      }
+
+      presentation.save()
+    }
+
+    redirect action:"list", params:[productId:productId], fragment:cmd.presentation
   }
 
   def save(Integer productId) {
@@ -46,34 +73,7 @@ class PresentationController {
   	if (!presentation) { response.sendError 404 }
   	presentation.delete()
 
-  	redirect action:"list", params:[productId:presentation.product.id]
-  }
-
-  def addMeasures(AddMeasuresCommand cmd, Integer id, Integer productId) {
-    if (cmd.hasErrors()) {
-      cmd.errors.allErrors.each { error ->
-        log.error "[$error.field: $error.defaultMessage]"
-      }
-    } else {
-        def presentation = Presentation.get id
-
-        if (!presentation) { response.sendError 404 }
-
-        def tmp = []
-        tmp.addAll presentation.measures
-
-        tmp.each { measure ->
-          presentation.removeFromMeasures measure
-        }
-
-        cmd.measures.each { measure ->
-          presentation.addToMeasures measure
-        }
-
-        presentation.save()
-    }
-
-    redirect action:"list", params:[productId:productId], fragment:cmd.presentation
+  	redirect action:"list", params:[productId:presentation.medicine.id]
   }
 }
 

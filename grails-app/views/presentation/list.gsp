@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
-	<title>Presentaciones de ${product}</title>
+	<title>Presentaciones</title>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -12,7 +12,7 @@
 	<g:if test="${presentations}">
 		<table class="table">
 			<thead>
-				<th>Presentacion</th>
+				<th>Presentaciones</th>
 				<th width="1"></th>
 			</thead>
 			<tbody>
@@ -40,7 +40,7 @@
 										</label>
 									</div>
 								</g:each>
-								<g:submitButton name="confirm" value="Agregar unidad de medida" class="btn btn-primary"/>
+								<g:submitButton name="confirm" value="Agregar unidad de medida" class="btn btn-primary btn-xs"/>
 							</g:form>
 						</td>
 					</tr>
@@ -48,5 +48,8 @@
 			</tbody>
 		</table>
 	</g:if>
+	<g:else>
+		<h4>Sin presentaciones</h4>
+	</g:else>
 </body>
 </html>
