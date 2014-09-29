@@ -15,25 +15,26 @@
 					</g:each>
 			  </ul>
 			</div>
+			<div class="btn-group">
+				<g:link action="list" params="[providerId:provider.id]" class="${!params?.status || params?.status == 'true' ? 'active' : ''} btn btn-default">
+					Activos
+				</g:link>
+				<g:link action="list" params="[providerId:provider.id, status:'false']" class="${params?.status == 'false' ? 'active' : ''} btn btn-default">
+					Inactivos
+				</g:link>
+			</div>
 		</g:if>
 	</div>
 	<div class="col-md-6">
 		<div class="pull-right">
 			<g:if test="${actionName == 'list'}">
 				<div class="btn-group">
-					<g:link action="list" params="[providerId:provider.id]" class="${!params?.status || params?.status == 'true' ? 'active' : ''} btn btn-default">
-						Activos
-					</g:link>
-					<g:link action="list" params="[providerId:provider.id, status:'false']" class="${params?.status == 'false' ? 'active' : ''} btn btn-default">
-						Inactivos
-					</g:link>
-				</div>
-				<div class="btn-group">
 					<g:link action="createProduct" params="[providerId:provider.id]" class="btn btn-default">Producto</g:link>
 					<g:link action="createMedicine" params="[providerId:provider.id]" class="btn btn-default">Medicamento</g:link>
+					<g:link action="createBrandProduct" params="[providerId:provider.id]" class="btn btn-default">Marca</g:link>
 				</div>
 			</g:if>
-			<g:if test="${actionName in ['show', 'createProduct', 'createMedicine']}">
+			<g:if test="${actionName in ['show', 'createProduct', 'createMedicine', 'createBrandProduct']}">
 				<g:link action="list" params="[status:product?.status, providerId:providerId]" class="btn btn-default pull-right">
 					Regresar a lista de productos
 				</g:link>

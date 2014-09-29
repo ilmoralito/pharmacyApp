@@ -8,7 +8,8 @@ class ProductController {
 	static allowedMethods = [
 		list:"GET",
     createProduct:["GET", "POST"],
-		createMedicine:["GET", "POST"],
+    createMedicine:["GET", "POST"],
+		createBrandProduct:["GET", "POST"],
 		show:"GET",
 		update:"POST"
 	]
@@ -62,6 +63,29 @@ class ProductController {
       }
 
       flash.message = "Medicina agregado correctamente"
+    }
+
+    [providerId:providerId]
+  }
+
+  def createBrandProduct(Integer providerId) {
+    def provider = Provider.get providerId
+
+    if (!provider) { response.sendError 404 }
+
+    if (request.method == "POST") {
+      params.provider = provider
+      def brand = new BrandProduct(params)
+
+      if (!brand.save()) {
+        brand.errors.allErrors.each { error ->
+          log.error "[$error.field: $error.defaultMessage]"
+        }
+
+        return [brand:brand, providerId:providerId]
+      }
+
+      flash.message = "Producto agregado correctamente"
     }
 
     [providerId:providerId]
