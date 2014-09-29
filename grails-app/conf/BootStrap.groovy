@@ -9,9 +9,10 @@ class BootStrap {
 
   	switch(Environment.current) {
   		case Environment.DEVELOPMENT:
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PROVIDERS
-        //PROVIDER1
-  			def provider1 = new Provider(name:"provider1", address:"address1", phone:"23114455")
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        def provider1 = new Provider(name:"provider1", address:"address1", phone:"23114455")
 
         def product1 = new Product(name:"product1")
         def product2 = new Product(name:"product2")
@@ -58,98 +59,27 @@ class BootStrap {
   			assert provider2.products.size() == 2
         println "Expeting 2 medicine: $medicine1 $medicine2"
         assert Medicine.count() == 2
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //PROVIDERS
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
-        /*
         //PURCHASE ORDER
-        def purchaseOrder = new PurchaseOrder(
-          dutyDate:new Date() + 31,
-          invoiceNumber:"001001",
-          typeOfPurchase:"Credito",
-          balance:0
-        )
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        def today = new Date()
+        def purchaseOrder1 = new PurchaseOrder(dutyDate:today + 31, invoiceNumber:"001", typeOfPurchase:"Credito", balance:0)
 
-        def item1 = new Item(
-          product:product1,
-          presentation:presentation1,
-          measure:presentation1.measures[0],
-          quantity:100,
-          purchasePrice:15,
-          sellingPrice:15 + ((15 * 25) / 100), 
-          bash:new Date() + 90,
-          total:100 * 15
-        )
+        def item1 = new Item(product:product1, quantity:100, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
+        def item2 = new Item(product:product2, quantity:100, purchasePrice:25, sellingPrice:25 + (25 * 0.25), total:100 * 25)
+        def item3 = new Item(product:product4, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
 
-        def item2 = new Item(
-          product:product1,
-          presentation:presentation1,
-          measure:presentation1.measures[1],
-          quantity:100,
-          purchasePrice:25,
-          sellingPrice:25 + ((25 * 25) / 100),
-          bash:new Date() + 100,
-          total:100 * 25
-        )
+        purchaseOrder1.addToItems(item1).addToItems(item2).addToItems(item3)
 
-        def item3 = new Item(
-          product:product4,
-          presentation:presentation6,
-          measure:presentation6.measures[1],//356ml
-          quantity:50,
-          purchasePrice:10,
-          sellingPrice:55 + ((55 * 25) / 100),
-          bash:new Date() + 100,
-          total:50 * 10
-        )
-
-        purchaseOrder.addToItems item1
-        purchaseOrder.addToItems item2
-        purchaseOrder.addToItems item3
-
-        purchaseOrder.balance += item1.total
-        purchaseOrder.balance += item2.total
-        purchaseOrder.balance += item3.total
-
-        if (!purchaseOrder.save()) {
-          purchaseOrder.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-        }
-
-        def purchaseOrder1 = new PurchaseOrder(
-          dutyDate:new Date() + 60,
-          invoiceNumber:"001002",
-          typeOfPurchase:"Contado",
-          balance:0
-        )
-
-        def item4 = new Item(
-          product:product5,
-          presentation:presentation7,
-          measure:presentation7.measures[0],
-          quantity:150,
-          purchasePrice:9.50,
-          sellingPrice:9.50 + ((9.50 * 25) / 100),
-          bash:new Date() + 80,
-          total:150 * 9.50
-        )
-
-        def item5 = new Item(
-          product:product1,
-          presentation:presentation1,
-          measure:presentation1.measures[0],
-          quantity:50,
-          purchasePrice:16,
-          sellingPrice:16 + ((16 * 25) / 100),
-          bash:new Date() + 200,
-          total:50 * 16
-        )
-
-        purchaseOrder1.addToItems item4
-        purchaseOrder1.addToItems item5
-
-        purchaseOrder1.balance += item4.total
-        purchaseOrder1.balance += item5.total
+        purchaseOrder1.balance += item1.total
+        purchaseOrder1.balance += item2.total
+        purchaseOrder1.balance += item3.total
 
         if (!purchaseOrder1.save()) {
           purchaseOrder1.errors.allErrors.each { error ->
@@ -157,12 +87,43 @@ class BootStrap {
           }
         }
 
+        def purchaseOrder2 = new PurchaseOrder(dutyDate:today + 60, invoiceNumber:"002", typeOfPurchase:"Contado", balance:0)
+
+        def item4 = new Item(product:product4, quantity:150, purchasePrice:9.50, sellingPrice:9.50 + (9.50 * 0.25), total:150 * 9.50)
+        def item5 = new Item(product:product5, quantity:50, purchasePrice:16, sellingPrice:16 + (16 * 0.25), total:50 * 16)
+
+        def m1 = new MedicineOrder(
+          product:medicine1,
+          presentation:presentation1,
+          measure:presentation1.measures[1],
+          bash:today + 150,
+          quantity:50,
+          purchasePrice:16,
+          sellingPrice:16 + (16 * 0.25),
+          total:50 * 16
+        )
+
+        purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1)
+
+        purchaseOrder2.balance += item4.total
+        purchaseOrder2.balance += item5.total
+        purchaseOrder2.balance += m1.total
+
+        if (!purchaseOrder2.save()) {
+          purchaseOrder2.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+        }
+
         assert PurchaseOrder.count() == 2
-        assert Item.count() == 5
-        assert purchaseOrder.balance == 4500
-        assert purchaseOrder1.balance == 2225
+        assert Item.count() == 6
+        assert purchaseOrder1.balance == 4500
+        assert purchaseOrder2.balance == 3025
+
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
-        */
+        //PURCHASE ORDER
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+
         /*
         //SALES
 
