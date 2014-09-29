@@ -10,8 +10,13 @@ modules = {
 
   saleFilter {
   	dependsOn "app"
-    dependsOn "chosen"
   	resource url:"js/saleFilter.js"
+  }
+
+  chosenLib {
+    dependsOn "app"
+    dependsOn "chosen"
+    resource url:"js/chosenLib.js"
   }
 
   chosen { 
