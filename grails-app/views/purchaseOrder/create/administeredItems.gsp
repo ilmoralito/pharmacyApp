@@ -8,10 +8,9 @@
 </head>
 <body>
 	<g:render template="create/toolbar"/>
-	<br>
 
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<g:if test="${purchaseOrder?.items}">
 				<table class="table table-striped">
 					<thead>
@@ -48,7 +47,9 @@
 						<tr>
 							<td>BALANCE</td>
 							<td colspan="7">
-								<div class="pull-right"><g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/></div>
+								<div class="pull-right">
+									<g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/>
+								</div>
 							</td>
 							<td width="1"></td>
 						</tr>
@@ -60,24 +61,34 @@
 				<h4>...</h4>
 			</g:else>
 		</div>
-		<div class="col-md-3">
-			<div class="well well-sm">
+
+		<div class="col-md-4">
+			<div class="well well-sm" style="margin-bottom:10px;">
 				<div class="row">
 					<div class="col-md-12">
-						<g:link event="editPurchaseOrder" class="btn btn-xs btn-primary btn-block">Editar #${purchaseOrder?.invoiceNumber}</g:link>
+						<g:link event="editPurchaseOrder" class="btn btn-xs btn-primary btn-block">
+							Editar #${purchaseOrder?.invoiceNumber}
+						</g:link>
 					</div>
 				</div>
 
-				<div class="row" style="margin-top:10px;">
-					<div class="col-md-12">
+				<div class="row" style="padding:10px 0 5px 0;">
+					<div class="col-md-6">
 						<span class="glyphicon glyphicon-calendar"></span>
 						<g:formatDate date="${purchaseOrder?.dutyDate}" formatName="custom.date.format"/>
-						<br>
+					</div>
+					<div class="col-md-6">
 						<span class="glyphicon glyphicon-th"></span>
 						${purchaseOrder?.typeOfPurchase}
 					</div>
 				</div>
 			</div>
+
+			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
+			  <li class="active"><a href="#">Medicina</a></li>
+			  <li><a href="#">Producto</a></li>
+			  <li><a href="#">Marcas</a></li>
+			</ul>
 
 			<g:form autocomplete="off">
 				<div class="form-group">
