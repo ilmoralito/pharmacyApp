@@ -18,10 +18,11 @@ class PurchaseOrderController {
 	]
 
   def list() {
-    def status = (params?.option == "true")?true:(params?.option == "false")?false:params?.option
+    def status = (params?.option == "true") ? true : (params?.option == "false") ? false : params?.option
+
     if (status == true || status == false) {
       [orders:PurchaseOrder.findAllByStatus(status)]
-    }else{
+    } else {
       [orders:PurchaseOrder.findAllByTypeOfPurchase(status)]
     }
   }
