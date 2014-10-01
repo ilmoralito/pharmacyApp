@@ -63,6 +63,16 @@ class PurchaseOrderController {
   }
 
   def createFlow = {
+    init {
+      action {
+        flow.medicines = []
+        flow.products = []
+        flow.brands = []
+      }
+
+      on("success"). to "createPurchaseOrder"
+    }
+
   	createPurchaseOrder {
   		on("confirm") {
   			def purchaseOrder = new PurchaseOrder(
@@ -79,28 +89,36 @@ class PurchaseOrderController {
         flow?.errors?.clearErrors()
 
   			[purchaseOrder:purchaseOrder]
-  		}.to "administeredItems"
+  		}.to "medicine"
 
   		on("cancel").to "done"
   	}
 
-  	administeredItems {
+    //MEDICINE
+  	medicine {
   		on("addItem") {
+        //check if new medicine already exist. If it is true then delete it from flow.medicines and then recreate it
+        if (flow.medicines) {
+          def medicineInstance = flow.medicines.find { 
+            it.product == Product.get(params.int("product")) &&
+            it.presentation == Presentation.get(params.int("presentation")) &&
+            it.measure == params?.measure &&
+            it.bash == params.date("bash", "yyyy-MM-dd")
+          }
+        
+          if (medicineInstance) {
+            flow.medicines -= medicineInstance
+            flow.purchaseOrder.balance -= medicineInstance.total
+          }
+        }
+        
         //calculate total
         params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
 
-        //check if new item already exist. If it is true then delete item from items and then recreate it
-        def itemInstance = this.getItemFromItems(params.int("product"), params.int("presentation"), params?.measure, params.date("bash", "yyyy-MM-dd"), flow.purchaseOrder.items)
+        def medicine = new MedicineOrder(params)
 
-        if (itemInstance) {
-          flow.purchaseOrder.items -= itemInstance
-          flow.purchaseOrder.balance -= itemInstance.total
-        }
-
-        def item = new Item(params)
-
-        if (!item.validate(["product", "presentation", "measure", "quantity", "purchasePrice", "sellingPrice", "bash"])) {
-          item.errors.allErrors.each { error ->
+        if (!medicine.validate(["product", "presentation", "measure", "quantity", "purchasePrice", "sellingPrice", "bash"])) {
+          medicine.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
 
@@ -109,48 +127,61 @@ class PurchaseOrderController {
 
         //update purchace order balance property
         def balance = flow.purchaseOrder.balance ?: 0
-        flow.purchaseOrder.balance = balance + item.total
+        flow.purchaseOrder.balance = balance + medicine.total
 
-        //add item to current purchase order instance
-        flow.purchaseOrder.addToItems item
- 			}.to "administeredItems"
+        flow.medicines << medicine
+ 			}.to "medicine"
 
-      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("deleteMedicine") {
+        def index = params.int("index")
 
- 			on("deleteItem") {
-        //get item from purchase order items
-        def product = params.int("product")
-        def presentation = params.int("presentation")
-        def measure = params?.measure
-        def bash = params.date("bash", "yyyy-MM-dd")
-        def items = flow.purchaseOrder.items
-
-        def itemInstance = this.getItemFromItems(product, presentation, measure, bash, items)
-
-        //if there exist item then remove it from items in purchase order
-        if (itemInstance) {
-          flow.purchaseOrder.items -= itemInstance
-        } else {
-          response.sendError 404
-          return error()
-        }
-
-        //update purchase order balance
-        flow.purchaseOrder.balance -= itemInstance.total
-      }.to "administeredItems"
+        flow.purchaseOrder.balance -= flow.medicines[index].total
+        flow.medicines.remove index
+      }.to "medicine"
 
       on("complete") {
-        if (!flow.purchaseOrder.save(flush:true)) {
-          flow.purchaseOrder.errors.allErrors.each { error ->
-            log.error "[$error.field:$error.defaultMessage]"
-          }
-
-          return error()
-        }
+        
       }.to "done"
 
+      on("editPurchaseOrder").to "editPurchaseOrder"
 			on("cancel").to "done"
   	}
+
+    //PRODUCT
+    product {
+      on("addItem") {
+
+      }.to "product"
+
+      on("deleteItem") {
+
+      }.to "product"
+
+      on("complete") {
+
+      }.to "done"
+
+      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("cancel").to "done"
+    }
+
+    //BRAND
+    brand {
+      on("addItem") {
+
+      }.to "brand"
+
+      on("deleteItem") {
+
+      }.to "brand"
+
+      on("complete") {
+
+      }.to "done"
+
+      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("cancel").to "done"
+    }
 
     editPurchaseOrder {
       on("confirm") {
@@ -162,9 +193,9 @@ class PurchaseOrderController {
         }
 
         flow?.errors?.clearErrors()
-      }.to "administeredItems"
+      }.to "medicine"
 
-      on("cancel").to "administeredItems"
+      on("cancel").to "medicine"
     }
 
   	done() {
@@ -202,19 +233,5 @@ class PurchaseOrderController {
         results
       }
     }
-  }
-
-  private getItemFromItems(Integer productId, Integer presentationId, String measure, Date bash, items) {
-    def product = Product.get productId
-    def presentation = Presentation.get presentationId
-
-    def item = items.find { itemInstance ->
-      itemInstance.product == product &&
-      itemInstance.presentation == presentation &&
-      itemInstance.measure == measure &&
-      itemInstance.bash.clearTime() == bash.clearTime()
-    }
-
-    item
   }
 }

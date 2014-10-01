@@ -85,24 +85,21 @@
 			</div>
 
 			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
-			  <li class="active"><a href="#">Medicina</a></li>
+			  <li><g:link event="medicine">Medicina</g:link></li>
 			  <li><a href="#">Producto</a></li>
-			  <li><a href="#">Marcas</a></li>
+			  <li class="active">
+			  	<g:link event="brand">Medicina</g:link>
+			  </li>
 			</ul>
 
 			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
+					<g:select name="product" from="${ni.sb.Medicine.list()}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
 				</div>
-				<div class="form-group">
-					<label for="presentation" class="sr-only">Presentacion</label>
-					<g:select name="presentation" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Presentacion"/>
-				</div>
-				<div class="form-group">
-					<label for="measure" class="sr-only">Unidad de medida</label>
-					<g:select name="measure" from="${}" class="form-control" data-toggle="tooltip" data-placement="left" title="Unidad de medida"/>
-				</div>
+
+				<g:render template="create/medicineForm"/>
+				
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
 					<g:textField name="quantity" class="form-control" placeholder="Cantidad" data-toggle="tooltip" data-placement="left" title="Cantidad"/>
@@ -114,10 +111,6 @@
 				<div class="form-group">
 					<label for="sellingPrice" class="sr-only">Precio de venta</label>
 					<g:textField name="sellingPrice" class="form-control" placeholder="Precio de venta" data-toggle="tooltip" data-placement="left" title="Precio de venta"/>
-				</div>
-				<div class="form-group">
-					<label for="bash" class="sr-only">Lote</label>
-					<g:textField name="bash" class="form-control" placeholder="Fecha de vencimiento" data-toggle="tooltip" data-placement="left" title="Fecha de vencimiento"/>
 				</div>
 
 				<g:submitButton name="addItem" value="Agregar producto" class="btn btn-primary btn-block"/>
