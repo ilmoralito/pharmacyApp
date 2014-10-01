@@ -143,6 +143,9 @@ class PurchaseOrderController {
         
       }.to "done"
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
       on("editPurchaseOrder").to "editPurchaseOrder"
 			on("cancel").to "done"
   	}
@@ -158,9 +161,12 @@ class PurchaseOrderController {
       }.to "product"
 
       on("complete") {
-
+        
       }.to "done"
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
       on("editPurchaseOrder").to "editPurchaseOrder"
       on("cancel").to "done"
     }
@@ -176,9 +182,12 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("complete") {
-
+        
       }.to "done"
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
       on("editPurchaseOrder").to "editPurchaseOrder"
       on("cancel").to "done"
     }

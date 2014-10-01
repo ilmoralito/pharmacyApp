@@ -19,10 +19,10 @@
 
 			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
 			  <li class="active">
-			  	<g:link action="create" event="medicine">Medicina</g:link>
+			  	<g:link event="medicine">Medicina</g:link>
 			  </li>
-			  <li><a href="#">Producto</a></li>
-			  <li><a href="#">Marcas</a></li>
+			  <li><g:link event="product">Producto</g:link></li>
+			  <li><g:link event="brand">Marca</g:link></li>
 			</ul>
 
 			<g:form autocomplete="off">
