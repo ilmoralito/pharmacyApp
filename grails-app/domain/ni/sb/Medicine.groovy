@@ -13,5 +13,5 @@ class Medicine extends Product {
 
   static hasMany = [presentations:Presentation]
 
-  String toString() { "$name, $code" }
+  String toString() { name }
 }
