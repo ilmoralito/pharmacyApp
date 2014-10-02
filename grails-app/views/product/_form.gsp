@@ -9,14 +9,7 @@
 	</div>
 </g:if>
 <g:if test="${actionName == 'createBrandProduct' || product instanceof ni.sb.BrandProduct}">
-	<div class="form-group">
-		<label for="brand" class="sr-only">Marca</label>
-		<g:textField name="brand" value="${product?.brand}" class="form-control" placeholder="Marca"/>
-	</div>
-	<div class="form-group">
-		<label for="detail" class="sr-only">Detalle</label>
-		<g:textField name="detail" value="${product?.detail}" class="form-control" placeholder="Detalle"/>
-	</div>
+
 </g:if>
 <g:if test="${actionName == 'show'}">
 	<div class="form-group">

@@ -7,8 +7,8 @@ class BootStrap {
 
   def init = { servletContext ->
 
-  	switch(Environment.current) {
-  		case Environment.DEVELOPMENT:
+    switch(Environment.current) {
+      case Environment.DEVELOPMENT:
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PROVIDERS
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -33,35 +33,43 @@ class BootStrap {
           provider1.addToProducts product
         }
 
-  			if (!provider1.save()) {
+        if (!provider1.save()) {
           provider1.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
         }
 
-        //PROVIDER2
-  			def provider2 = new Provider(name:"provider2", address:"address2", phone:"23114488")
+        def provider2 = new Provider(name:"provider2", address:"address2", phone:"23114488")
 
         def product4 = new Product(name:"product4")
         def product5 = new Product(name:"product5")
-        def brandProduct1 = new BrandProduct(name:"Jabon", brand:"Palmolive", detail:"Clasico")
-        def brandProduct2 = new BrandProduct(name:"Cepillo de diente", brand:"Colgate", detail:"Clasico")
-        
+        def brandProduct1 = new BrandProduct(name:"Pasta dental")
+          def brand1 = new Brand(name:"Colgate", details:["Clasico", "Extreme"])
+          def brand2 = new Brand(name:"Zoro", details:["Riorusen"])
+
+          brandProduct1.addToBrands(brand1).addToBrands(brand2)
+
+        def brandProduct2 = new BrandProduct(name:"Jabon")
+          def brand3 = new Brand(name:"Palmolive", details:["Clasico", "Moderno", "Contemporanio"])
+          def brand4 = new Brand(name:"Dermacare", details:["1% Clotrimazol", "5% Water 7"])
+
+          brandProduct2.addToBrands(brand3).addToBrands(brand4)
+
         def productsInProvider2 = [product4, product5, brandProduct1, brandProduct2]
 
         productsInProvider2.each { product ->
           provider2.addToProducts product
         }
 
-  			if (!provider2.save()) {
+        if (!provider2.save()) {
           provider2.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
         }
 
-  			assert Provider.count() == 2
-  			assert provider1.products.size() == 5
-  			assert provider2.products.size() == 4
+        assert Provider.count() == 2
+        assert provider1.products.size() == 5
+        assert provider2.products.size() == 4
         assert BrandProduct.count() == 2
         assert Medicine.count() == 2
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -129,10 +137,11 @@ class BootStrap {
         //PURCHASE ORDER
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
-        /*
-        //SALES
+        //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
-        //CLIENTS
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //CLIENT
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
         def client1 = new Client(fullName:"juan perez", address:"Address1", identificationCard:"291-290160-0001w", phones:["23114455", "88554477"])
 
         if (!client1.save()) {
@@ -150,7 +159,10 @@ class BootStrap {
         }
 
         assert Client.count() == 2
-        */
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //CLIENT
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+
         //USERS
         def user = new User(
           username:"me@gmail.com",

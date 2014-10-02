@@ -1,22 +1,13 @@
 package ni.sb
 
-import org.grails.databinding.BindUsing
-
 class BrandProduct extends Product {
-  @BindUsing({ obj, source ->
-    source["brand"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
-  })
-	String brand
+  List brands
 
-  @BindUsing({ obj, source ->
-    source["detail"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
-  })
-  String detail
-	
   static constraints = {
-    brand blank:false
-    detail blank:false
+    brands nullable:false
   }
 
-  String toString() { brand }
+  static hasMany = [brands:Brand]
+
+  String toString() { product }
 }
