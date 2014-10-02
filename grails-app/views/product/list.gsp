@@ -12,8 +12,7 @@
 	<g:if test="${products}">
 		<table class="table table-hover">
 			<thead>
-				<th>Producto</th>
-				<th></th>
+				<th colspan="2">Producto</th>
 			</thead>
 			<tbody>
 				<g:each in="${products}" var="product">
