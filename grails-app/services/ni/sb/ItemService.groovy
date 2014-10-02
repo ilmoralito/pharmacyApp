@@ -29,6 +29,7 @@ class ItemService implements Serializable {
   		product == product
   	}
 
+    /*
   	def constraintsQuery = query.where {
       purchaseOrder.status == true &&
       quantity <= saleQuantity &&
@@ -38,5 +39,6 @@ class ItemService implements Serializable {
     def result= constraintsQuery.find()
 
     result ? true : false
+    */
   }
 }
