@@ -10,7 +10,7 @@
 	<g:render template="toolbar"/>
 	
 	<g:if test="${products}">
-		<table class="table">
+		<table class="table table-hover">
 			<thead>
 				<th>Producto</th>
 				<th></th>
