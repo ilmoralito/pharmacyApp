@@ -3,7 +3,7 @@ package ni.sb
 import grails.util.Holders
 
 class Presentation implements Serializable {
-  String name	
+  String name
 
 	Date dateCreated
 	Date lastUpdated

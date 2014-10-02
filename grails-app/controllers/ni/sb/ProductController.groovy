@@ -4,6 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class ProductController {
+  def grailsApplication
+
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
@@ -42,7 +44,7 @@ class ProductController {
       flash.message = "Producto agregado correctamente"
     }
 
-  	[providerId:providerId]
+    [providerId:providerId]
   }
 
   def createMedicine(Integer providerId) {
@@ -51,18 +53,31 @@ class ProductController {
     if (!provider) { response.sendError 404 }
 
     if (request.method == "POST") {
-      params.provider = provider
-      def medicine = new Medicine(params)
+      def presentations = grailsApplication.config.ni.sb.presentationsAndMeasures.keySet()
+      def result = presentations.intersect(params.keySet())
 
-      if (!medicine.save()) {
-        medicine.errors.allErrors.each { error ->
-          log.error "[$error.field: $error.defaultMessage]"
+      if (result) {
+        params.provider = provider
+        def medicine = new Medicine(params)
+
+        result.each { p ->
+          def presentation = new Presentation(name:p, measures:params[p])
+
+          medicine.addToPresentations presentation
         }
 
-        return [medicine:medicine, providerId:providerId]
-      }
+        if (!medicine.save()) {
+          medicine.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
 
-      flash.message = "Medicina agregado correctamente"
+          return [medicine:medicine, providerId:providerId]
+        }
+
+        flash.message = "Medicina agregado correctamente"
+      } else {
+        flash.message = "Selecciona presentaciones y unidades de medida"
+      }
     }
 
     [providerId:providerId]
