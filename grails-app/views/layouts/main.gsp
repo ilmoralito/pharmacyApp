@@ -18,7 +18,7 @@
 		<div class="col-md-10">
 			<g:layoutBody/>
 			<g:if test="${flash.message}">
-				${flash.message}
+				<div class="message">${flash.message}</div>
 			</g:if>
 		</div>
 	</div>
