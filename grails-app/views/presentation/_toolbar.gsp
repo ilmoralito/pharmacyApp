@@ -1,5 +1,10 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
+		<g:link controller="product" action="list" params="[providerId:medicine.provider.id]" class="btn btn-default">
+			Regresar a lista de productos
+		</g:link>
+	</div>
+	<div class="col-md-6">
 		<div class="pull-right">
 			<g:form action="save" params="[productId:params?.productId]"	class="form-inline" role="form">
 				<div class="form-group">
