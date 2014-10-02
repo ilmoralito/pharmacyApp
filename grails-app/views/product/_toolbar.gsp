@@ -1,5 +1,10 @@
 <div class="row">
 	<div class="col-md-6">
+		<g:if test="${actionName in ['show', 'createProduct', 'createMedicine', 'createBrandProduct']}">
+			<g:link action="list" params="[status:product?.status, providerId:providerId]" class="btn btn-default">
+				Regresar a lista de productos
+			</g:link>
+		</g:if>
 		<g:if test="${actionName == 'list'}">
 			<div class="btn-group">
 				<button type="button" class="btn btn-default">${provider}</button>
@@ -33,11 +38,6 @@
 					<g:link action="createMedicine" params="[providerId:provider.id]" class="btn btn-default">Medicamento</g:link>
 					<g:link action="createBrandProduct" params="[providerId:provider.id]" class="btn btn-default">Marca</g:link>
 				</div>
-			</g:if>
-			<g:if test="${actionName in ['show', 'createProduct', 'createMedicine', 'createBrandProduct']}">
-				<g:link action="list" params="[status:product?.status, providerId:providerId]" class="btn btn-default pull-right">
-					Regresar a lista de productos
-				</g:link>
 			</g:if>
 		</div>
 	</div>
