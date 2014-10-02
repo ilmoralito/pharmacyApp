@@ -10,7 +10,7 @@
 	<g:render template="toolbar"/>
 	<g:render template="navbar"/>
 
-	<g:form action="createMedicine">
+	<g:form action="createMedicine" autocomplete="off">
 		<g:hiddenField name="providerId" value="${providerId}"/>
 		<g:render template="form"/>
 		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary"/>
