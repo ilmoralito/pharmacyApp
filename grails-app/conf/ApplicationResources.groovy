@@ -24,8 +24,8 @@ modules = {
     resource url:"css/chosen.css"
   }
 
-  productMedicine
-  {
+  productMedicine {
+    dependsOn "app"
     resource url:"js/productMedicine.js"
   }
 }
