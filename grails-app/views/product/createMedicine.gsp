@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Agregar Medicamento</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app, productMedicine"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, productMedicine"/>
 </head>
 <body>
 	<g:render template="toolbar"/>

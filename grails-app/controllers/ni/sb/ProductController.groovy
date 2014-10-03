@@ -83,27 +83,38 @@ class ProductController {
     [providerId:providerId]
   }
 
-  def createBrandProduct(Integer providerId) {
-    def provider = Provider.get providerId
+  def createBrandProductFlow = {
+    init {
+      action {
+        def provider = Provider.get params?.providerId
+        
+        if (!provider) { response.sendError 404 }
 
-    if (!provider) { response.sendError 404 }
-
-    if (request.method == "POST") {
-      params.provider = provider
-      def brand = new BrandProduct(params)
-
-      if (!brand.save()) {
-        brand.errors.allErrors.each { error ->
-          log.error "[$error.field: $error.defaultMessage]"
+        def criteria = Brand.createCriteria()
+        def brands = criteria.list {
+          projections {
+            groupProperty "name"
+          }
         }
 
-        return [brand:brand, providerId:providerId]
+        [provider:provider, brandsAndDetails:[], brands:brands]
       }
-
-      flash.message = "Producto agregado correctamente"
+      on("success").to "createBrandProduct"
     }
 
-    [providerId:providerId]
+    createBrandProduct {
+      on("createProduct").to "createProduct"
+      on("createMedicine").to "createMedicine"
+      on("createBrandProduct").to "createBrandProduct"
+    }
+
+    createMedicine {
+      redirect action:"createMedicine", params:[providerId:flow.provider.id]
+    }
+
+    createProduct {
+      redirect action:"createProduct", params:[providerId:flow.provider.id]
+    }
   }
 
   def show(Integer id) {
