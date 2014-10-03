@@ -23,4 +23,9 @@ modules = {
     resource url:"js/chosen.js"
     resource url:"css/chosen.css"
   }
+
+  productMedicine
+  {
+    resource url:"js/productMedicine.js"
+  }
 }
