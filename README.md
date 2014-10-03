@@ -1,1 +1,1 @@
-Aplicacion para adminsitrar farmacia
+Aplicacion para administrar farmacia
