@@ -51,7 +51,7 @@ class NotificationsController {
         order("dutyDate", "desc")
     }
     println results
-    [infoInstance:results, notif:results.size(), today:today, pen:results.size()]
+    [infoInstance:results, notif:results.size(), today:today, pending:results.size()]
   }
 
 }

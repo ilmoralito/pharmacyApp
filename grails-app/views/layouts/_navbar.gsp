@@ -21,32 +21,32 @@
           <ul class="dropdown-menu">
               <li>
                 <g:link controller="notifications" action="quantity">
-                    <g:if test="${q > 0}">
-                      <span class="badge notifications">${q}</span>
+                    <g:if test="${quantity > 0}">
+                      <span class="badge notifications">${quantity}</span>
                     </g:if>
                     Existencias bajas
                 </g:link>
               </li>
               <li>
                 <g:link controller="notifications" action="expire">
-                    <g:if test="${ex > 0}">
-                      <span class="badge notifications">${ex}</span>
+                    <g:if test="${expire > 0}">
+                      <span class="badge notifications">${expire}</span>
                     </g:if>
                     Por vencerse
                 </g:link>
               </li>
               <li>
                 <g:link controller="notifications" action="expired">
-                    <g:if test="${exd > 0}">
-                      <span class="badge notifications">${exd}</span>
+                    <g:if test="${expired > 0}">
+                      <span class="badge notifications">${expired}</span>
                     </g:if>
                     Vencidos
                 </g:link>
               </li>
               <li>
-                <g:link controller="notifications" action="expired">
-                    <g:if test="${pen > 0}">
-                      <span class="badge notifications">${exd}</span>
+                <g:link controller="notifications" action="pendingOrders">
+                    <g:if test="${pending > 0}">
+                      <span class="badge notifications">${pending}</span>
                     </g:if>
                     Vencidos
                 </g:link>
@@ -54,7 +54,7 @@
           </ul>
         </li>
   			<li class="dropdown">
-  	  		<g:set var="userName" value="${applicationContext.springSecurityService.currentUser.fullName}"/>
+  	  		<g:set var="userName" value="${applicationContext.springSecurityService.currentUser?.fullName}"/>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
   	  		<g:if test="${(userName != null)}">${userName}</g:if>
   	  		<g:else><sec:username/></g:else>

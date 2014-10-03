@@ -16,8 +16,8 @@
 			<g:link controller="notifications" action="pendingOrders">Pedidos pendientes</g:link>
 		</li>
 
-		<li class="${(actionName == 'clientes') ? 'active' : ''}">
-			<g:link controller="user" action="expire">Pagos de clientes pendientes</g:link>
+		<li class="${(actionName == 'clientPayments') ? 'active' : ''}">
+			<g:link controller="notifications" action="clientPayments">Pagos de clientes pendientes</g:link>
 		</li>
 	</ul>
 </div>
