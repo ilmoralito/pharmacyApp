@@ -25,17 +25,21 @@
 		<g:hiddenField name="providerId" value="${providerId}"/>
 		<g:render template="form"/>
 
-		
 		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary"/>
 	</g:form>
+	<br>
 
 	<g:form autocomplete="off">
-		<input list="brands" name="brand" id="brand" class="form-control">
-		<datalist id="brands">
-			<g:each in="${brands}" var="brand">
-				<option value="${brand}">
-			</g:each>
-		</datalist>
+		<div class="form-group">
+			<input list="brands" name="brand" id="brand" class="form-control" placeholder="Marcas">
+			<datalist id="brands">
+				<g:each in="${brands}" var="brand">
+					<option value="${brand}">
+				</g:each>
+			</datalist>
+		</div>
+
+		<g:submitButton name="addBrand" value="Agregar marca" class="btn btn-primary"/>
 	</g:form>
 </body>
 </html>
