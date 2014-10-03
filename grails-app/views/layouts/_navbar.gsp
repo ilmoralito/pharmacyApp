@@ -11,10 +11,46 @@
 		</div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   		<ul class="nav navbar-nav navbar-right">
-  			<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notificaciones <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <!--TODO-->
+  			<li class="dropdown ${(controllerName == 'notifications') ? 'active' : ''}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <g:if test="${notif > 0}">
+                <span class="badge notifications">${notif}</span>
+              </g:if>
+              Notificaciones <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+              <li>
+                <g:link controller="notifications" action="quantity">
+                    <g:if test="${q > 0}">
+                      <span class="badge notifications">${q}</span>
+                    </g:if>
+                    Existencias bajas
+                </g:link>
+              </li>
+              <li>
+                <g:link controller="notifications" action="expire">
+                    <g:if test="${ex > 0}">
+                      <span class="badge notifications">${ex}</span>
+                    </g:if>
+                    Por vencerse
+                </g:link>
+              </li>
+              <li>
+                <g:link controller="notifications" action="expired">
+                    <g:if test="${exd > 0}">
+                      <span class="badge notifications">${exd}</span>
+                    </g:if>
+                    Vencidos
+                </g:link>
+              </li>
+              <li>
+                <g:link controller="notifications" action="expired">
+                    <g:if test="${pen > 0}">
+                      <span class="badge notifications">${exd}</span>
+                    </g:if>
+                    Vencidos
+                </g:link>
+              </li>
           </ul>
         </li>
   			<li class="dropdown">

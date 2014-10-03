@@ -12,3 +12,7 @@ table { margin: 15px 0; }
 .toolbar { margin-bottom: 8px; }
 
 .message { margin: 10px 0; }
+
+.notifications{
+	background: #FF003F;
+}

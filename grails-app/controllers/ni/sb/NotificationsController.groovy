@@ -9,26 +9,49 @@ class NotificationsController {
 
   @Secured(['ROLE_ADMIN','ROLE_USER'])
   def quantity() {
-  	def prod = Item.list()
-
-  	//def p = Item.get(2)
-
-  	//p.properties["quantity"] = 10
-
-  	//p = Item.get(3)
-  	//p.properties["quantity"] = 3
-
-    prod.each{
-      println it.quantity
-      println it.id
-    }
-
-    def c = Item.createCriteria()
+  	def c = Item.createCriteria()
     def results = c.list {
         le("quantity", 10)
     }
 
-    [quantityInstance:results]
+    [infoInstance:results, notif:results.size(), q:results.size()]
+  }
+
+  def expire(){
+  	def today = new Date()
+  	def proyectionDate = new Date() + 90
+
+   	def c = MedicineOrder.createCriteria()
+    def results = c.list {
+        between("bash",today, proyectionDate)
+        order("bash", "desc")
+    }
+    [infoInstance:results, notif:results.size(), today:today, ex:results.size()]
+  }
+
+  def expired(){
+  	def today = new Date()
+  	def date = new Date() - 1
+
+  	def c = MedicineOrder.createCriteria()
+    def results = c.list {
+        le("bash",date)
+        order("bash", "desc")
+    }
+    [infoInstance:results, notif:results.size(), today:today, exd:results.size()]
+  }
+
+  def pendingOrders(){
+  	def today = new Date()
+  	def date = new Date() + 7
+
+  	def c = PurchaseOrder.createCriteria()
+    def results = c.list {
+        le("dutyDate",date)
+        order("dutyDate", "desc")
+    }
+    println results
+    [infoInstance:results, notif:results.size(), today:today, pen:results.size()]
   }
 
 }
