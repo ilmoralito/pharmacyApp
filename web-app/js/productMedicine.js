@@ -1,6 +1,5 @@
 $(document).ready(function() {
-	$(".unit").hide();
-	$(".presentation").on("click", function() {
-		$(".unit").next().toggle("show");
-	});
+	$(".presentation").on("click", function(){
+      $(this).parent().next().toggle();
+    });
 });
