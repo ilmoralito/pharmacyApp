@@ -26,7 +26,6 @@ modules = {
 
   productMedicine
   {
-    dependsOn "app"
     resource url:"js/productMedicine.js"
   }
 }
