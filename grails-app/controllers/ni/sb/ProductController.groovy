@@ -103,6 +103,15 @@ class ProductController {
     }
 
     createBrandProduct {
+      on("addBrand") {
+        if (!flow.brandsAndDetails.find { it.containsKey(params?.brand) }) {
+          def map = [:]
+
+          map.put(params?.brand, [])
+          flow.brandsAndDetails.add map
+        }
+      }.to "createBrandProduct"
+
       on("createProduct").to "createProduct"
       on("createMedicine").to "createMedicine"
       on("createBrandProduct").to "createBrandProduct"
