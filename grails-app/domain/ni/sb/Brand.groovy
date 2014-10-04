@@ -12,5 +12,5 @@ class Brand {
   static belongsTo = [brandProduct:BrandProduct]
   static hasMany = [details:String]
 
-  String toString() {  brand }
+  String toString() { name }
 }
