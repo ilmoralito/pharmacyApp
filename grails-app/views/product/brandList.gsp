@@ -16,9 +16,13 @@
 			<tbody>
 				<g:each in="${brands}" var="brand">
 					<tr>
-						<td><g:link action="show" params="[id:brand.id]">${brand.name}</g:link></td>
 						<td>
-							<g:link controller="brand" action="list" params="[id:brand.id]" class="pull-right">
+							<g:link action="show" params="[id:brand.id]">
+								${brand.name}
+							</g:link>
+						</td>
+						<td>
+							<g:link controller="brand" params="[id:brand.id]" class="pull-right">
 								Marcas y detalles
 							</g:link>
 						</td>

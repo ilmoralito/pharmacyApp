@@ -4,15 +4,37 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class BrandController {
-	static defaultAction = "list"
-	static allowedMethods = [ list:"GET" ]
+	static defaultAction = "show"
+	static allowedMethods = [
+		show:"GET",
+		update:"POST"
+	]
 
-  def list(BrandProduct id) {
-  	def brands = Brand.findAllByBrandProduct id
+  def show(Integer id) {
+  	def brandProduct = BrandProduct.get id
 
-  	if (!brands) { response.sendError 404 }
+  	if (!brandProduct) {
+  		response.sendError 404
+  	}
 
-//  	[brands:brands]
-	println brands
+  	[brandProduct:brandProduct, brands:brandProduct.brands]
+  }
+
+  def update(Integer id) {
+  	def brandProduct = BrandProduct.get id
+
+  	if (!brandProduct) {
+  		response.sendError 404
+  	}
+
+  	brandProduct.name = params?.name
+
+  	if (!brandProduct.save()) {
+  		chain action:"show", params:[id:id]
+  		return
+  	}
+
+  	flash.message = "Producto actualizado"
+  	redirect action:"show", id:id
   }
 }
