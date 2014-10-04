@@ -6,9 +6,11 @@ import grails.plugin.springsecurity.annotation.Secured
 class ProductController {
   def grailsApplication
 
-	static defaultAction = "list"
+	static defaultAction = "productList"
 	static allowedMethods = [
-		list:"GET",
+		productList:"GET",
+    medicineList:"GET",
+    brandList:"GET",
     createProduct:["GET", "POST"],
     createMedicine:["GET", "POST"],
 		createBrandProduct:["GET", "POST"],
@@ -16,12 +18,28 @@ class ProductController {
 		update:"POST"
 	]
 
-  def list(Integer providerId) {
+  def productList(Integer providerId) {
+    def provider = Provider.get providerId
+
+    if (!provider) { response.sendError 404 }
+
+    [products:Product.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
+  }
+
+  def medicineList(Integer providerId) {
   	def provider = Provider.get providerId
 
   	if (!provider) { response.sendError 404 }
 
-  	[products:Product.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
+  	[medicines:Medicine.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
+  }
+
+  def brandList(Integer providerId) {
+    def provider = Provider.get providerId
+
+    if (!provider) { response.sendError 404 }
+
+    [brands:BrandProduct.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
   }
 
   def createProduct(Integer providerId) {
