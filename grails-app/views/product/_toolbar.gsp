@@ -15,7 +15,7 @@
 				<ul class="dropdown-menu" role="menu">
 					<g:each in="${ni.sb.Provider.list()}" var="providerInstance">
 						<li class="${provider == providerInstance ? 'active' : ''}">
-							<g:link action="productList" params="[providerId:providerInstance.id]">${providerInstance}</g:link>
+							<g:link action="${actionName}" params="[providerId:providerInstance.id]">${providerInstance}</g:link>
 						</li>
 					</g:each>
 			  </ul>
