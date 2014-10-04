@@ -18,7 +18,7 @@
 					<tr>
 						<td><g:link action="show" params="[id:brand.id]">${brand.name}</g:link></td>
 						<td>
-							<g:link controller="presentation" action="list" params="[productId:brand.id]" class="pull-right">
+							<g:link controller="brand" action="list" params="[id:brand.id]" class="pull-right">
 								Marcas y detalles
 							</g:link>
 						</td>
