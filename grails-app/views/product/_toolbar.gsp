@@ -5,7 +5,7 @@
 				Regresar a lista de productos
 			</g:link>
 		</g:if>
-		<g:if test="${actionName == 'list'}">
+		<g:else>
 			<div class="btn-group">
 				<button type="button" class="btn btn-default">${provider}</button>
 			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -20,6 +20,7 @@
 					</g:each>
 			  </ul>
 			</div>
+			<!--
 			<div class="btn-group">
 				<g:link action="list" params="[providerId:provider.id]" class="${!params?.status || params?.status == 'true' ? 'active' : ''} btn btn-default">
 					Activos
@@ -28,15 +29,23 @@
 					Inactivos
 				</g:link>
 			</div>
-		</g:if>
+			-->
+		</g:else>
 	</div>
 	<div class="col-md-6">
 		<div class="pull-right">
 			<g:if test="${actionName == 'list'}">
 				<div class="btn-group">
-					<g:link action="createProduct" params="[providerId:provider.id]" class="btn btn-default">Producto</g:link>
-					<g:link action="createMedicine" params="[providerId:provider.id]" class="btn btn-default">Medicamento</g:link>
-					<g:link action="createBrandProduct" params="[providerId:provider.id]" class="btn btn-default">Marca</g:link>
+					<button type="button" class="btn btn-default">Crear</button>
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				    <span class="caret"></span>
+				    <span class="sr-only">Crear</span>
+				  </button>
+					<ul class="dropdown-menu" role="menu">
+						<li><g:link action="createProduct" params="[providerId:provider.id]">Producto</g:link></li>
+						<li><g:link action="createMedicine" params="[providerId:provider.id]">Medicamento</g:link></li>
+						<li><g:link action="createBrandProduct" params="[providerId:provider.id]">Marca</g:link></li>
+				  </ul>
 				</div>
 			</g:if>
 		</div>
