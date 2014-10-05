@@ -26,7 +26,9 @@
 		<div class="pull-right">
 			<g:if test="${actionName in ['productList', 'medicineList', 'brandList']}">
 				<div class="btn-group">
-					<button type="button" class="btn btn-default">Crear</button>
+					<g:link action="${ actionName == 'brandList' ? 'createBrandProduct' : actionName == 'medicineList' ? 'createMedicine' : actionName == 'productList' ?  'createProduct' : actionName }" params="[providerId:provider.id]" class="btn btn-default">
+						Crear
+					</g:link>
 				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 				    <span class="caret"></span>
 				    <span class="sr-only">Crear</span>
