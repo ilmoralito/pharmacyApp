@@ -30,7 +30,42 @@
 			</g:form>
 		</div>
 		<div class="col-md-6">
-			${distinctBrands}
+			<g:form action="actionName">
+				<div class="form-group">
+					<label for="brand" class="sr-only">Marca</label>
+					<input list="brands" name="brand" id="brand" class="form-control" placeholder="Marca"/>
+					<datalist id="brands">
+						<g:each in="${availableBrands}" var="availableBrand">
+							<option value="${availableBrand}"/>
+						</g:each>
+					</datalist>
+				</div>
+
+				<g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
+			</g:form>
+			<br>
+
+			<table class="table">
+				<tbody>
+					<g:each in="${brands}" var="brand">
+						<tr>
+							<td>${brand}</td>
+							<td width="1">
+								<g:link action="deleteBrand" class="pull-right">
+									<span class="glyphicon glyphicon-trash"></span>
+								</g:link>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:each in="${brand.details}" var="detail">
+									<p>${detail}</p>
+								</g:each>
+							</td>
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>
