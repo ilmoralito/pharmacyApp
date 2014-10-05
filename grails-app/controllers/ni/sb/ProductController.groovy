@@ -108,12 +108,7 @@ class ProductController {
         
         if (!provider) { response.sendError 404 }
 
-        def criteria = Brand.createCriteria()
-        def brands = criteria.list {
-          projections {
-            groupProperty "name"
-          }
-        }
+        def brands = Brand.distinctBrands.list()
 
         [provider:provider, brandsAndDetails:[], brands:brands]
       }

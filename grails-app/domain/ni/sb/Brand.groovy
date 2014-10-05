@@ -1,8 +1,11 @@
 package ni.sb
 
-import org.hibernate.transform.AliasToEntityMapResultTransformer
+import org.grails.databinding.BindUsing
 
 class Brand {
+  @BindUsing({obj, source ->
+    source['name']?.capitalize()
+  })
   String name
   List details
 
@@ -15,8 +18,6 @@ class Brand {
   		projections {
         groupProperty "name"
       }
-
-      resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
   	}
   }
 
