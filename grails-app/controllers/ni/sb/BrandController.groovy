@@ -17,7 +17,9 @@ class BrandController {
   		response.sendError 404
   	}
 
-  	[brandProduct:brandProduct, brands:brandProduct.brands]
+  	def distinctBrands = Brand.distinctBrands.list()
+
+  	[brandProduct:brandProduct, brands:brandProduct.brands, distinctBrands:distinctBrands]
   }
 
   def update(Integer id) {

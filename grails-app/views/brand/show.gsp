@@ -30,7 +30,7 @@
 			</g:form>
 		</div>
 		<div class="col-md-6">
-			
+			${distinctBrands}
 		</div>
 	</div>
 </body>
