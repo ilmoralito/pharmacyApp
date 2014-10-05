@@ -1,7 +1,7 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<g:if test="${actionName in ['show', 'createProduct', 'createMedicine', 'createBrandProduct']}">
-			<g:link action="productList" params="[status:product?.status, providerId:providerId]" class="btn btn-default">
+			<g:link action="${ actionName == 'createProduct' ? 'productList' : actionName == 'createMedicine' ? 'medicineList' : 'productList' }" params="[status:product?.status, providerId:providerId]" class="btn btn-default">
 				Regresar a lista de productos
 			</g:link>
 		</g:if>
@@ -21,26 +21,6 @@
 			  </ul>
 			</div>
 		</g:else>
-	</div>
-	<div class="col-md-6">
-		<div class="pull-right">
-			<g:if test="${actionName in ['productList', 'medicineList', 'brandList']}">
-				<div class="btn-group">
-					<g:link action="${ actionName == 'brandList' ? 'createBrandProduct' : actionName == 'medicineList' ? 'createMedicine' : actionName == 'productList' ?  'createProduct' : actionName }" params="[providerId:provider.id]" class="btn btn-default">
-						Crear
-					</g:link>
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				    <span class="caret"></span>
-				    <span class="sr-only">Crear</span>
-				  </button>
-					<ul class="dropdown-menu" role="menu">
-						<li><g:link action="createProduct" params="[providerId:provider.id]">Producto</g:link></li>
-						<li><g:link action="createMedicine" params="[providerId:provider.id]">Medicamento</g:link></li>
-						<li><g:link action="createBrandProduct" params="[providerId:provider.id]">Marca</g:link></li>
-				  </ul>
-				</div>
-			</g:if>
-		</div>
 	</div>
 </div>
 <br>

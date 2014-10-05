@@ -9,7 +9,7 @@
 <body>
 	<g:render template="toolbar"/>
 	<g:render template="listNavbar"/>
-	<g:render template="statusButtonGroup"/>
+	<g:render template="listToolbar"/>
 
 	<g:if test="${medicines}">
 		<table class="table table-hover">
