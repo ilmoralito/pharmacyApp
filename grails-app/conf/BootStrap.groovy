@@ -52,8 +52,9 @@ class BootStrap {
         def brandProduct2 = new BrandProduct(name:"Jabon")
           def brand3 = new Brand(name:"Palmolive", details:["Clasico", "Moderno", "Contemporanio"])
           def brand4 = new Brand(name:"Dermacare", details:["1% Clotrimazol", "5% Water 7"])
+          def brand5 = new Brand(name:"Colgate", details:["Detalle1", "Detalle2"])
 
-          brandProduct2.addToBrands(brand3).addToBrands(brand4)
+          brandProduct2.addToBrands(brand3).addToBrands(brand4).addToBrands(brand5)
 
         def productsInProvider2 = [product4, product5, brandProduct1, brandProduct2]
 
