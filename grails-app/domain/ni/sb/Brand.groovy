@@ -7,7 +7,6 @@ class Brand {
     source['name']?.capitalize()
   })
   String name
-  List details
 
   Date dateCreated
 
