@@ -9,5 +9,9 @@ class BrandProduct extends Product {
 
   static hasMany = [brands:Brand]
 
-  String toString() { product }
+  static mapping = {
+  	brands cascade: "all-delete-orphan"
+  }
+
+  String toString() { name }
 }

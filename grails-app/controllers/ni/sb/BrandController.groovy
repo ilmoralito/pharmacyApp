@@ -52,14 +52,11 @@ class BrandController {
       response.sendError 404
     }
 
-    try {
-      brand.delete(flush:true)
-    }
-    catch(org.springframework.dao.DataIntegrityViolationException e) {
-      flash.message = "Could not delete brand $brand"
-    }
+    def brandProduct = brand.brandProduct
 
-    redirect acction:"show", id:brand.brandProduct.id
+    brandProduct.removeFromBrands brand
+
+    redirect action:"show", id:brandProduct.id
   }
 
   //@params id: brandProduct id
@@ -73,7 +70,7 @@ class BrandController {
       def brand = new Brand(name:params?.brand, details:details)
 
       brandProduct.addToBrands brand
-      brandProduct.save()
+      brandProduct.save(flush:true)
     }
 
     redirect action:"show", id:id
