@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-6">
-		<g:link controller="product" action="list" params="[providerId:medicine.provider.id]" class="btn btn-default">
+		<g:link controller="product" action="medicineList" params="[providerId:medicine.provider.id]" class="btn btn-default">
 			Regresar a lista de productos
 		</g:link>
 	</div>
