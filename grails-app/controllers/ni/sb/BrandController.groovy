@@ -8,7 +8,8 @@ class BrandController {
 	static allowedMethods = [
 		show:"GET",
 		update:"POST",
-    delete:"GET"
+    delete:"GET",
+    addBrand:"POST"
 	]
 
   def show(Integer id) {
@@ -59,5 +60,22 @@ class BrandController {
     }
 
     redirect acction:"show", id:brand.brandProduct.id
+  }
+
+  //@params id: brandProduct id
+  def addBrand(Integer id) {
+    def brandProduct = BrandProduct.get id
+
+    if (!brandProduct) { response.sendError 404 }
+
+    if (params?.brand && params?.details) {
+      def details = params?.details?.tokenize(",")
+      def brand = new Brand(name:params?.brand, details:details)
+
+      brandProduct.addToBrands brand
+      brandProduct.save()
+    }
+
+    redirect action:"show", id:id
   }
 }

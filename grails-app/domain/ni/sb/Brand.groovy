@@ -9,8 +9,10 @@ class Brand {
   String name
   List details
 
+  Date dateCreated
+
   static constraints = {
-    name blank:false
+    name blank:false, unique:"brandProduct"
   }
 
   static namedQueries = {
@@ -23,6 +25,11 @@ class Brand {
 
   static belongsTo = [brandProduct:BrandProduct]
   static hasMany = [details:String]
+
+  static mapping = {
+    version false
+    sort dateCreated: "desc"
+  }
 
   String toString() { name }
 }

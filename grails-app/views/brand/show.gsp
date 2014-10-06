@@ -30,7 +30,9 @@
 			</g:form>
 		</div>
 		<div class="col-md-6">
-			<g:form action="actionName">
+			<g:form action="addBrand" autocomplete="off">
+				<g:hiddenField name="id" value="${params?.id}"/>
+
 				<div class="form-group">
 					<label for="brand" class="sr-only">Marca</label>
 					<input list="brands" name="brand" id="brand" class="form-control" placeholder="Marca"/>
@@ -39,6 +41,11 @@
 							<option value="${availableBrand}"/>
 						</g:each>
 					</datalist>
+				</div>
+
+				<div class="form-group">
+					<label for="details" class="sr-only"></label>
+					<g:textField name="details" class="form-control" placeholder="Detalle(s) Ej. Detalle o Detalle1, Detalle2"/>
 				</div>
 
 				<g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
