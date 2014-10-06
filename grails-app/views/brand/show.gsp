@@ -43,7 +43,6 @@
 
 				<g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
 			</g:form>
-			<br>
 
 			<table class="table">
 				<tbody>
@@ -51,7 +50,7 @@
 						<tr>
 							<td>${brand}</td>
 							<td width="1">
-								<g:link action="deleteBrand" class="pull-right">
+								<g:link action="delete" id="${brand.id}" class="pull-right">
 									<span class="glyphicon glyphicon-trash"></span>
 								</g:link>
 							</td>

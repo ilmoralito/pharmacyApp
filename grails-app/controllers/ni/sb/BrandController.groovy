@@ -7,7 +7,8 @@ class BrandController {
 	static defaultAction = "show"
 	static allowedMethods = [
 		show:"GET",
-		update:"POST"
+		update:"POST",
+    delete:"GET"
 	]
 
   def show(Integer id) {
@@ -24,6 +25,7 @@ class BrandController {
   	[brandProduct:brandProduct, brands:brands, availableBrands:availableBrands]
   }
 
+  //@params id: brandProduct id
   def update(Integer id) {
   	def brandProduct = BrandProduct.get id
 
@@ -40,5 +42,22 @@ class BrandController {
 
   	flash.message = "Producto actualizado"
   	redirect action:"show", id:id
+  }
+
+  def delete(Integer id) {
+    def brand = Brand.get id
+
+    if (!brand) {
+      response.sendError 404
+    }
+
+    try {
+      brand.delete(flush:true)
+    }
+    catch(org.springframework.dao.DataIntegrityViolationException e) {
+      flash.message = "Could not delete brand $brand"
+    }
+
+    redirect acction:"show", id:brand.brandProduct.id
   }
 }
