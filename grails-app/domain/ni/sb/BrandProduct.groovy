@@ -4,7 +4,7 @@ class BrandProduct extends Product {
   List brands
 
   static constraints = {
-    brands minSize:1
+    brands nullable:false
   }
 
   static hasMany = [brands:Brand]

@@ -105,25 +105,54 @@ class ProductController {
     init {
       action {
         def provider = Provider.get params?.providerId
-        
+
         if (!provider) { response.sendError 404 }
 
         def brands = Brand.distinctBrands.list()
 
-        [provider:provider, brandsAndDetails:[], brands:brands]
+        [provider:provider, brands:brands]
       }
       on("success").to "createBrandProduct"
     }
 
     createBrandProduct {
-      on("addBrand") {
-        if (!flow.brandsAndDetails.find { it.containsKey(params?.brand) }) {
-          def map = [:]
+      on("add") {
+        params.provider = flow.provider
+        def brandProduct = new BrandProduct(params)
 
-          map.put(params?.brand, [])
-          flow.brandsAndDetails.add map
+        [brandProduct:brandProduct]
+      }.to "brandsAndDetails"
+
+      on("createProduct").to "createProduct"
+      on("createMedicine").to "createMedicine"
+      on("createBrandProduct").to "createBrandProduct"
+    }
+
+    brandsAndDetails {
+      on("add") {
+        def brandProductBrands = flow?.brandProduct?.brands
+        def availableBrands = flow.brands - brandProductBrands?.name
+
+        println brandProductBrands
+        println flow.brands
+
+        if (params?.brand && params?.details) {
+          def details = params?.details?.tokenize(",")
+          def brand = new Brand(name:params?.brand, details:details)
+
+          flow.brandProduct.addToBrands brand
         }
-      }.to "createBrandProduct"
+
+        [availableBrands:availableBrands, brandProductBrands:brandProductBrands]
+      }.to "brandsAndDetails"
+
+      on("delete") {
+        
+      }.to "brandsAndDetails"
+
+      on("confirm") {
+
+      }.to "done"
 
       on("createProduct").to "createProduct"
       on("createMedicine").to "createMedicine"
@@ -137,7 +166,11 @@ class ProductController {
     createProduct {
       redirect action:"createProduct", params:[providerId:flow.provider.id]
     }
-  }
+
+    done() {
+      redirect action:"brandList", params:[providerId:flow.provider.id]
+    }
+  } 
 
   def show(Integer id) {
   	def product = Product.get id
