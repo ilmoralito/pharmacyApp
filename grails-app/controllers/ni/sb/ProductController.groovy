@@ -117,6 +117,12 @@ class ProductController {
 
     createBrandProduct {
       on("add") {
+        //check if brandProduct does not exist in chosed provider
+        if (BrandProduct.findByNameAndProvider(params?.name?.capitalize(), flow.provider) || params?.name?.isEmpty()) {
+          flash.message = "El producto ya esta registrado o intentas agregar un producto si nombre"
+          return error()
+        }
+
         params.provider = flow.provider
         def brandProduct = new BrandProduct(params)
 

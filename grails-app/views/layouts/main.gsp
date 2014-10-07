@@ -10,15 +10,18 @@
 	<!--NAVBAR-->
 	<g:render template="/layouts/navbar"/>
 	<div class="container">
-		<!--SIDEBAR-->
 		<div class="col-md-2">
 			<g:render template="/layouts/sidebar"/>
 		</div>
-		<!--MAIN-->
 		<div class="col-md-10">
 			<g:layoutBody/>
-			<g:if test="${flash.message}">
-				<div class="message">${flash.message}</div>
+			<!--
+				The next code check is neccesary in order to display message 
+				from commons controlers and from webflow
+			-->
+			<g:set var="message" value="${message ?: flash.message}"/>
+			<g:if test="${message}">
+				<div class="message">${message}</div>
 			</g:if>
 		</div>
 	</div>
