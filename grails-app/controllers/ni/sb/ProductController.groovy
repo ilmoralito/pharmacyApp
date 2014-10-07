@@ -128,30 +128,34 @@ class ProductController {
       on("createBrandProduct").to "createBrandProduct"
     }
 
-    brandsAndDetails {
-      on("add") {
+    getBrandsAndDetails {
+      action {
         def brandProductBrands = flow?.brandProduct?.brands
         def availableBrands = flow.brands - brandProductBrands?.name
 
-        println brandProductBrands
-        println flow.brands
+        [availableBrands:availableBrands, brandProductBrands:brandProductBrands]
+      }
 
+      on("success").to "brandsAndDetails"
+      on(Exception).to "createBrandProduct"
+    }
+
+    brandsAndDetails {
+      on("add") {
         if (params?.brand && params?.details) {
           def details = params?.details?.tokenize(",")
           def brand = new Brand(name:params?.brand, details:details)
 
           flow.brandProduct.addToBrands brand
         }
-
-        [availableBrands:availableBrands, brandProductBrands:brandProductBrands]
-      }.to "brandsAndDetails"
+      }.to "getBrandsAndDetails"
 
       on("delete") {
         
       }.to "brandsAndDetails"
 
       on("confirm") {
-
+        flow.provider.addToProducts flow.brandProduct
       }.to "done"
 
       on("createProduct").to "createProduct"
