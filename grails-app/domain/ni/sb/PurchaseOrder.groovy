@@ -1,6 +1,7 @@
 package ni.sb
 
 class PurchaseOrder implements Serializable {
+  Provider provider
   Date dutyDate
   String invoiceNumber
   BigDecimal balance
@@ -11,6 +12,7 @@ class PurchaseOrder implements Serializable {
 	Date lastUpdated
 
   static constraints = {
+    provider nullable:false
     dutyDate nullable:false, validator: { dutyDate ->
       def today = new Date()
 
