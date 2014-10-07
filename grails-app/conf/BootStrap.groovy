@@ -110,7 +110,7 @@ class BootStrap {
           product:medicine1,
           presentation:presentation1,
           measure:presentation1.measures[1],
-          bash:today + 150,
+          bash:today + 89,
           quantity:50,
           purchasePrice:16,
           sellingPrice:16 + (16 * 0.25),
