@@ -142,7 +142,7 @@ class ProductController {
 
     brandsAndDetails {
       on("add") {
-        if (params?.brand && params?.details) {
+        if (params?.brand && !flow.brandProduct.brands.find { it.name == params?.brand } && params?.details) {
           def details = params?.details?.tokenize(",")
           def brand = new Brand(name:params?.brand, details:details)
 
