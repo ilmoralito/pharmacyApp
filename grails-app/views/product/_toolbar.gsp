@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<g:if test="${actionName in ['show', 'createProduct', 'createMedicine', 'createBrandProduct']}">
 			<!--TODO:I am not proud of this code but right now i need to move forward-->
-			<g:link action="${ actionName == 'createProduct' ? 'productList' : actionName == 'createMedicine' ? 'medicineList' : actionName in ['createBrandProduct', 'brandsAndDetails'] ? 'brandList' : 'productList' }" params="[status:product?.status, providerId: provider.id ?: providerId]" class="btn btn-default">
+			<g:link action="${ actionName == 'createProduct' ? 'productList' : actionName == 'createMedicine' ? 'medicineList' : actionName in ['createBrandProduct', 'brandsAndDetails'] ? 'brandList' : 'productList' }" params="[status:product?.status, providerId: provider?.id ?: providerId]" class="btn btn-default">
 				Regresar a lista de productos
 			</g:link>
 		</g:if>
