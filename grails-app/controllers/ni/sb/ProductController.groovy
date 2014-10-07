@@ -151,8 +151,12 @@ class ProductController {
       }.to "getBrandsAndDetails"
 
       on("delete") {
-        
-      }.to "brandsAndDetails"
+        def brand = flow.brandProduct.brands.find {
+          it.name == params?.name
+        }
+
+        flow.brandProduct.removeFromBrands brand
+      }.to "getBrandsAndDetails"
 
       on("confirm") {
         flow.provider.addToProducts flow.brandProduct

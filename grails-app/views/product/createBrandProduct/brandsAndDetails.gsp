@@ -13,6 +13,7 @@
 
 	<div class="row">
 		<div class="col-md-6">
+			<h4>${brandProduct}</h4>
 			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="brand" class="sr-only">Marca</label>
@@ -34,13 +35,14 @@
 		</div>
 		<div class="col-md-6">
 			<g:if test="${brandProductBrands}">
+				<h4>Marcas y detalles</h4>
 				<table class="table" style="margin: 5px 0 5px 0;">
 					<tbody>
 						<g:each in="${brandProductBrands}" var="brand" status="index">
 							<tr>
 								<td>${brand}</td>
 								<td width="1">
-									<g:link event="delete" id="${brand}" class="pull-right">
+									<g:link event="delete" params="[name:brand.name]" class="pull-right">
 										<span class="glyphicon glyphicon-trash"></span>
 									</g:link>
 								</td>
