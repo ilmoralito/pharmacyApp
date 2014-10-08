@@ -47,6 +47,18 @@
 	</table>
 </g:if>
 
+<g:if test="${brandProducts}">
+	<h4>Productos con marca</h4>
+	<table class="table table-hover">
+		<thead>
+			
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+</g:if>
+
 <g:if test="${medicines || products || brands}">
 	<g:link event="conplete" class="btn btn-primary">
 		Completar proceso con balance: <g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/>

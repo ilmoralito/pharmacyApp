@@ -67,7 +67,7 @@ class PurchaseOrderController {
       action {
         flow.medicines = []
         flow.products = []
-        flow.brands = []
+        flow.brandProducts = []
         flow.providers = Provider.findAllStatus true
       }
 
