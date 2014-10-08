@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar articulos</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, createPurchaseOrder, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, brandProduct, jquery-ui"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>

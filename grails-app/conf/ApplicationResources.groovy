@@ -8,6 +8,11 @@ modules = {
   	resource url:"js/application.js"
   }
 
+  brandProduct {
+    dependsOn "app"
+    resource url:"js/brandProduct.js"
+  }
+
   saleFilter {
   	dependsOn "app"
   	resource url:"js/saleFilter.js"

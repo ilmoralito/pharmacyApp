@@ -246,4 +246,36 @@ class PurchaseOrderController {
       }
     }
   }
+
+  //@id params is BrandProduct instanance id
+  def getBrandsByBrandProduct(Integer id) {
+    def brandProduct = BrandProduct.get id
+    def brands = brandProduct.brands
+
+    if (!brands) {
+      render(contentType:"application/json") {
+        status = false
+      }
+    } else {
+      render(contentType:"application/json") {
+        brands
+      }
+    }
+  }
+
+  //@id params is Brand instanance id
+  def getDetailsInBrand(Integer id) {
+    def brand = Brand.get id
+    def details = brand.details
+
+    if (!details) {
+      render(contentType:"application/json") {
+        status = false
+      }
+    } else {
+      render(contentType:"application/json") {
+        details
+      }
+    }
+  }
 }
