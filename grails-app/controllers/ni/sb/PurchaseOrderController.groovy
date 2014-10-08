@@ -14,7 +14,9 @@ class PurchaseOrderController {
     edit:"GET",
     editItem:"GET",
     getPresentationsByProduct:"GET",
-    getMeasuresByPresentation:"GET"
+    getMeasuresByPresentation:"GET",
+    getBrandsByBrandProduct:"GET",
+    getDetailsInBrand:"GET"
 	]
 
   def list() {
