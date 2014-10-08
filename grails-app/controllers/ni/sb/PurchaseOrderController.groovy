@@ -77,9 +77,11 @@ class PurchaseOrderController {
   	createPurchaseOrder {
   		on("confirm") {
   			def purchaseOrder = new PurchaseOrder(
+          provider:params?.provider.id,
           dutyDate:params?.dutyDate,
           invoiceNumber:params?.invoiceNumber,
-          typeOfPurchase:params?.typeOfPurchase
+          typeOfPurchase:params?.typeOfPurchase,
+          status:(params?.typeOfPurchase == "Contado") ? true : false //TODO:Implement this from purchaseOrder beforeInstance event
         )
 
         if (!purchaseOrder.validate()) {
