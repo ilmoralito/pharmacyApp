@@ -26,8 +26,11 @@
 	<g:if test="${orders}">
 		<table class="table">
 			<thead>
-				<th width="1">Facturas</th>
-				<th>Fecha de pedido</th>
+				<th width="1">#</th>
+				<th width="1">Pedido</th>
+				<th width="1">Tipo</th>
+				<th width="1">Estado</th>
+				<th>Proveedor</th>
 			</thead>
 			<tbody>
 				<g:each in="${orders}" var="order">
@@ -40,6 +43,9 @@
 						<td>
 							<g:formatDate date="${order.dateCreated}" formatName="custom.date.format"/>
 						</td>
+						<td>${order.typeOfPurchase}</td>
+						<td><pharmacyApp:purchaseOrderStatus status="${order.status}"/></td>
+						<td>${order.provider}</td>
 					</tr>
 				</g:each>
 			</tbody>

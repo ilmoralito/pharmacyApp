@@ -6,7 +6,7 @@ class PurchaseOrder implements Serializable {
   String invoiceNumber
   BigDecimal balance
   String typeOfPurchase
-  Boolean status = true
+  Boolean status
 
   Date dateCreated
 	Date lastUpdated
@@ -32,6 +32,11 @@ class PurchaseOrder implements Serializable {
 
   List items
   static hasMany = [items:Item]
+
+  def beforeInsert() {
+    //TODO
+    //status = (typeOfPurchase == "Contado") ? true : false
+  }
 
   String toString() { invoiceNumber }
 }
