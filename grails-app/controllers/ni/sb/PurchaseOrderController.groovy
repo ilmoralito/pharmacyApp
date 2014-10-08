@@ -106,9 +106,9 @@ class PurchaseOrderController {
             it.product == Product.get(params.int("product")) &&
             it.presentation == Presentation.get(params.int("presentation")) &&
             it.measure == params?.measure &&
-            it.bash == params.date("bash", "yyyy-MM-dd")
+            it.bash.clearTime() == params.date("bash", "yyyy-MM-dd").clearTime()
           }
-        
+
           if (medicineInstance) {
             flow.medicines -= medicineInstance
             flow.purchaseOrder.balance -= medicineInstance.total

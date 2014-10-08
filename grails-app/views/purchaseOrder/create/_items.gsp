@@ -1,6 +1,6 @@
 <g:if test="${medicines}">
 	<h4>Medicamentos</h4>
-	<table class="table table-striped">
+	<table class="table table-hover">
 		<thead>
 			<th>Producto</th>
 			<th>Present.</th>
