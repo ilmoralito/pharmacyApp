@@ -68,6 +68,7 @@ class PurchaseOrderController {
         flow.medicines = []
         flow.products = []
         flow.brands = []
+        flow.providers = Provider.findAllStatus true
       }
 
       on("success"). to "createPurchaseOrder"

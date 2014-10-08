@@ -1,4 +1,8 @@
 <div class="form-group">
+	<label for="provider" class="sr-only">Proveedor</label>
+	<g:select name="provider" from="${providers}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
+</div>
+<div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
 	<g:textField name="dutyDate" value="${g.formatDate(date:purchaseOrder?.dutyDate, formatName:'custom.date.format')}" class="form-control" placeholder="Fecha tope de pago"/>
 </div>
