@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label for="provider" class="sr-only">Proveedor</label>
-	<g:select name="provider.id" from="${providers}" optionKey="id" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
+	<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
 </div>
 <div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>

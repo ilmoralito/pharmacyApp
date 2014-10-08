@@ -77,7 +77,7 @@ class PurchaseOrderController {
   	createPurchaseOrder {
   		on("confirm") {
   			def purchaseOrder = new PurchaseOrder(
-          provider:params?.provider.id,
+          provider:params?.provider,
           dutyDate:params?.dutyDate,
           invoiceNumber:params?.invoiceNumber,
           typeOfPurchase:params?.typeOfPurchase,

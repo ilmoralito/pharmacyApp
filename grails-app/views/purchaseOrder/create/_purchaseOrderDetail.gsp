@@ -1,8 +1,8 @@
 <div class="well well-sm" style="margin-bottom:10px;">
 	<div class="row">
 		<div class="col-md-12">
-			<g:link event="editPurchaseOrder" class="btn btn-xs btn-primary btn-block">
-				Editar #${purchaseOrder?.invoiceNumber}
+			<g:link event="editPurchaseOrder" class="btn btn-xs btn-block btn-primary">
+				Editar orden #${purchaseOrder?.invoiceNumber} a ${purchaseOrder.provider}
 			</g:link>
 		</div>
 	</div>
