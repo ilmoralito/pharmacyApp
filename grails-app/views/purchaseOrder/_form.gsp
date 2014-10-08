@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label for="provider" class="sr-only">Proveedor</label>
-	<g:select name="provider" from="${providers}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
+	<g:select name="provider.id" from="${providers}" optionKey="id" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
 </div>
 <div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
@@ -18,6 +18,6 @@
 	<div class="form-group">
 		<label for="status" class="sr-only">Estado</label>
 		<!--Verifica si los valores en la lista values es el texto de el select y los valores en from son los datos pasados-->
-		<g:select name="status" from="[true, false]", values="['Activo', 'Inactivo']" value="${purchaseOrder?.status}" noSelection="['':'Seleccione un estado']" class="form-control"/>
+		<g:select name="status" from="[true, false]", values="['Pagado', 'Pendiente']" value="${purchaseOrder?.status}" noSelection="['':'Seleccione un estado']" class="form-control"/>
 	</div>
 </g:if>

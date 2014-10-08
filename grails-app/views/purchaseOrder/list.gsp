@@ -11,8 +11,8 @@
 		<div class="col-md-12">
 			<div class="pull-right">
 				<div class="btn-group">
-					<g:link action="list" params="[option:"true"]" class="btn btn-default">Activas</g:link>
-					<g:link action="list" params="[option:"false"]" class="btn btn-default">Inactivas</g:link>
+					<g:link action="list" params="[option:"true"]" class="btn btn-default">Pagados</g:link>
+					<g:link action="list" params="[option:"false"]" class="btn btn-default">Pendientes</g:link>
 				</div>
 				<div class="btn-group">
 					<g:link action="list" params="[option:"Credito"]" class="btn btn-default">Credito</g:link>
