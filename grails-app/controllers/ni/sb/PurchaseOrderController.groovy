@@ -145,7 +145,19 @@ class PurchaseOrderController {
       }.to "medicine"
 
       on("complete") {
-        
+        if (flow.medicines) {
+          flow.medicines.each { medicine ->
+            flow.purchaseOrder.addToItems medicine
+          }
+        }
+
+        if (flow.brandProductsOrders) {
+          flow.brandProductsOrders.each { brandProductOrder ->
+            flow.purchaseOrder.addToItems brandProductOrder
+          }
+        }
+
+        flow.purchaseOrder.save(flush:true)
       }.to "done"
 
       on("medicine").to "medicine"
@@ -238,7 +250,19 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("complete") {
-        
+        if (flow.medicines) {
+          flow.medicines.each { medicine ->
+            flow.purchaseOrder.addToItems medicine
+          }
+        }
+
+        if (flow.brandProductsOrders) {
+          flow.brandProductsOrders.each { brandProductOrder ->
+            flow.purchaseOrder.addToItems brandProductOrder
+          }
+        }
+
+        flow.purchaseOrder.save(flush:true)
       }.to "done"
 
       on("medicine").to "medicine"
