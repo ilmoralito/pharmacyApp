@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Notificaciones</title>
+	<r:require module="export"/>
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
@@ -11,7 +12,14 @@
 	<div class="col-md-12">
 		<g:if test="${infoInstance}">
 			<br>
-			<h4>Productos con 3 meses o menos por vencerse</h4>
+			<div class="col-md-9">
+				<h4>Productos con 3 meses o menos por vencerse</h4>
+			</div>
+			<div class="col-md-3">
+				<g:link controller="notifications" action="expire" params="[f:'pdf']" class="">
+					<span class="glyphicon glyphicon-print"></span> PDF
+				</g:link>
+			</div>
 			<table class="table">
 				<thead>
 					<tr>
@@ -43,5 +51,6 @@
 			</div>
 		</g:else>
 	</div>
+
 </body>
 </html>
