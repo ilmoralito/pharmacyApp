@@ -78,6 +78,15 @@
 					</td>
 				</tr>
 			</g:each>
+			<tr>
+				<td>TOTAL</td>
+				<td colspan="6">
+					<div class="pull-right">
+						<g:formatNumber number="${brandProductsOrders.total.sum() ?: 0}" formatName="default.number.decimal"/>
+					</div>
+				</td>
+				<td width="1"></td>
+			</tr>
 		</tbody>
 	</table>
 </g:if>
