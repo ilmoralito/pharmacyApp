@@ -8,13 +8,20 @@
 	</div>
 
 	<div class="row" style="padding:10px 0 5px 0;">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<span class="glyphicon glyphicon-calendar"></span>
+			<br>
 			<g:formatDate date="${purchaseOrder?.dutyDate}" formatName="custom.date.format"/>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<span class="glyphicon glyphicon-th"></span>
+			<br>
 			${purchaseOrder?.typeOfPurchase}
+		</div>
+		<div class="col-md-4">
+			<strong>Saldo</strong>
+			<br>
+			<g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/>
 		</div>
 	</div>
 </div>

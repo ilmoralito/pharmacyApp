@@ -93,6 +93,6 @@
 
 <g:if test="${medicines || products || brandProductsOrders}">
 	<g:link event="conplete" class="btn btn-primary">
-		Completar proceso con balance: <g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/>
+		Completar orden
 	</g:link>
 </g:if>
