@@ -92,7 +92,7 @@
 </g:if>
 
 <g:if test="${medicines || products || brandProductsOrders}">
-	<g:link event="conplete" class="btn btn-primary">
+	<g:link event="complete" class="btn btn-primary">
 		Completar orden
 	</g:link>
 </g:if>
