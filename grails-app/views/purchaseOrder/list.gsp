@@ -32,9 +32,46 @@
 				<g:each in="${orders}" var="order">
 					<tr>
 						<td>
-							<g:link action="show" params="[id:order.id]">
+							<a href="#" data-toggle="modal" data-target="#myModal">
 								${order.provider}, #${order.invoiceNumber}
-							</g:link>
+							</a>
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="myModalLabel">${order.invoiceNumber}</h4>
+										</div>
+										<div class="modal-body">
+											<table class="table">
+												<tr>
+													<td><strong>Proveedor: </strong></td>
+													<td>${order.provider}</td>
+												</tr>
+												<tr>
+													<td><strong>Fecha de pago: </strong></td>
+													<td><g:formatDate formatName="custom.date.format" date="${order.dutyDate}"/></td>
+												</tr>
+												<tr>
+													<td><strong>Saldo: </strong></td>
+													<td>${order.balance}</td>
+												</tr>
+												<tr>
+													<td><strong>Tipo de compra: </strong></td>
+													<td>${order.typeOfPurchase}</td>
+												</tr>
+												<tr>
+													<td><strong>Estado: </strong></td>
+													<td>${order.status}</td>
+												</tr>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<g:link action="show" class="btn btn-primary" params="[id:order.id]">Editar</g:link>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</td>
 					</tr>
 				</g:each>
