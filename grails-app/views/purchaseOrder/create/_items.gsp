@@ -6,8 +6,8 @@
 			<th>Present.</th>
 			<th>Med.</th>
 			<th>Cant.</th>
-			<th>Compra</th>
-			<th>Venta</th>
+			<th>PC</th>
+			<th>PV</th>
 			<th>FV</th>
 			<th>Total</th>
 			<th width="1"></th>
@@ -46,20 +46,43 @@
 		</tbody>
 	</table>
 </g:if>
-
-<g:if test="${brandProducts}">
+<g:if test="${brandProductsOrders}">
 	<h4>Productos con marca</h4>
 	<table class="table table-hover">
 		<thead>
-			
+			<th>Producto</th>
+			<th>Marca</th>
+			<th>Detalle</th>
+			<th>Cant.</th>
+			<th>PC</th>
+			<th>PV</th>
+			<th>Total</th>
+			<th></th>
 		</thead>
 		<tbody>
-			
+			<g:each in="${brandProductsOrders}" var="brandProductOrder" status="index">
+				<tr>
+					<td>${brandProductOrder.product}</td>
+					<td>${brandProductOrder.brand}</td>
+					<td>${brandProductOrder.detail}</td>
+					<td>${brandProductOrder.quantity}</td>
+					<td>${brandProductOrder.purchasePrice}</td>
+					<td>${brandProductOrder.sellingPrice}</td>
+					<td>
+						<g:formatNumber number="${brandProductOrder.total}" formatName="default.number.decimal"/>
+					</td>
+					<td>
+						<g:link event="deleteBrandProductOrder" params="[index:index]">
+							<span class="glyphicon glyphicon-trash"></span>
+						</g:link>
+					</td>
+				</tr>
+			</g:each>
 		</tbody>
 	</table>
 </g:if>
 
-<g:if test="${medicines || products || brands}">
+<g:if test="${medicines || products || brandProductsOrders}">
 	<g:link event="conplete" class="btn btn-primary">
 		Completar proceso con balance: <g:formatNumber number="${purchaseOrder?.balance ?: 0}" formatName="default.number.decimal"/>
 	</g:link>

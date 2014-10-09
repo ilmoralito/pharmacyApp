@@ -69,7 +69,7 @@ class PurchaseOrderController {
       action {
         flow.medicines = []
         flow.products = []
-        flow.brandProducts = []
+        flow.brandProductsOrders = []
         flow.providers = Provider.findAllStatus true
       }
 
@@ -179,10 +179,50 @@ class PurchaseOrderController {
     //BRAND
     brand {
       on("addItem") {
+        //proces
+        //1. Check if current brandProductOrder is already created if it is the case then delete it and update balance
+        //2. Calculate brandProductOrder total property
+        //3. Create new brandProductOrder
+        //4. Update purchaseOrder balance
+        //5. Add brandProductOrder to brandProductsOrders list
 
+        //1
+        if (flow.brandProductsOrders) {
+          def brandProductOrderInstance = flow.brandProductsOrders.find { 
+            it.product == Product.get(params.int("product")) &&
+            it.brand == Brand.get(params.int("brand")) &&
+            it.detail == params?.detail
+          }
+
+          if (brandProductOrderInstance) {
+            flow.brandProductsOrders -= brandProductOrderInstance
+            flow.purchaseOrder.balance -= brandProductOrderInstance.total
+          }
+        }
+
+        //2
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        //3
+        def brandProductOrder = new BrandProductOrder(params)
+
+        if (brandProductOrder.hasErrors()) {
+          brandProductOrder.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        //4
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + brandProductOrder.total
+
+        //5
+        flow.brandProductsOrders << brandProductOrder
       }.to "brand"
 
-      on("deleteItem") {
+      on("deleteBrandProductOrder") {
 
       }.to "brand"
 
