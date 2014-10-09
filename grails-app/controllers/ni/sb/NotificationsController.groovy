@@ -4,54 +4,48 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(["ROLE_ADMIN"])
 class NotificationsController {
 	static allowedMethods = [
-
+    quantity:"GET",
+    expire:"GET",
+    expired:"GET",
+    pendingOrders:"GET"
 	]
+
+  def generalService
 
   @Secured(['ROLE_ADMIN','ROLE_USER'])
   def quantity() {
-  	def c = Item.createCriteria()
-    def results = c.list {
-        le("quantity", 10)
-    }
+    def quantity = generalService.quantity()
+    def expire = generalService.expire()
+    def expired = generalService.expired()
+    def pendingOrders = generalService.pendingOrders()
 
-    [infoInstance:results, notif:results.size(), q:results.size()]
+    session["q"] = quantity.size()
+    session["ex"] = expire.size()
+    session["exd"] = expired.size()
+    session["po"] = pendingOrders.size()
+
+    if (quantity.size() > 0 || expire.size() > 0 || expired.seze() > 0 || pendingOrders.size() > 0) {
+      session["notif"] = "OK"
+    }
+    [infoInstance:quantity]
   }
 
   def expire(){
   	def today = new Date()
-  	def proyectionDate = new Date() + 90
-
-   	def c = MedicineOrder.createCriteria()
-    def results = c.list {
-        between("bash",today, proyectionDate)
-        order("bash", "desc")
-    }
-    [infoInstance:results, notif:results.size(), today:today, ex:results.size()]
+    def expire = generalService.expire()
+    [infoInstance:expire, today:today]
   }
 
   def expired(){
   	def today = new Date()
-  	def date = new Date() - 1
-
-  	def c = MedicineOrder.createCriteria()
-    def results = c.list {
-        le("bash",date)
-        order("bash", "desc")
-    }
-    [infoInstance:results, notif:results.size(), today:today, exd:results.size()]
+  	def expired = generalService.expired()
+    [infoInstance:expired, today:today]
   }
 
   def pendingOrders(){
   	def today = new Date()
-  	def date = new Date() + 7
-
-  	def c = PurchaseOrder.createCriteria()
-    def results = c.list {
-        le("dutyDate",date)
-        order("dutyDate", "desc")
-    }
-    println results
-    [infoInstance:results, notif:results.size(), today:today, pending:results.size()]
+  	def pendingOrders = generalService.pendingOrders()
+    [infoInstance:pendingOrders, today:today]
   }
 
 }
