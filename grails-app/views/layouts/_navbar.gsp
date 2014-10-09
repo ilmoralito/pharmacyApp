@@ -14,7 +14,7 @@
   			<li class="dropdown ${(controllerName == 'notifications') ? 'active' : ''}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <g:if test="${(session.notif)}">
-                <span class="badge notifications">OK</span>
+                <span class="badge notifications"><span class="glyphicon glyphicon-bell"></span></span>
               </g:if>
               Notificaciones <span class="caret"></span>
           </a>
