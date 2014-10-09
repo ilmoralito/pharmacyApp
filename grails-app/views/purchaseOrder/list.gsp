@@ -70,7 +70,7 @@
 				<g:each in="${orders}" var="order">
 					<tr>
 						<td>
-							<a href="#" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-dutyDate="${order.dutyDate}" data-balance="${order.balance}" data-typeOfPurchase="${order.typeOfPurchase}" data-status="${order.status}">
+							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-dutyDate="${order.dutyDate}" data-balance="${order.balance}" data-typeOfPurchase="${order.typeOfPurchase}" data-status="${order.status}">
 								${order.provider}, #${order.invoiceNumber}
 							</a>
 						</td>
