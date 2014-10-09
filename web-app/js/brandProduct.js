@@ -73,5 +73,9 @@ $(document).ready(function() {
 		ItemBuilder.getDetailsInBrand($(this).val())
 	})
 
+	$("#purchasePrice").on("blur", function(){
+		ItemBuilder.calcSellingPrice($(this).val() || 0)
+	})
+
 	$('[data-toggle=tooltip]').tooltip();
 });

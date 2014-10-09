@@ -37,7 +37,7 @@
 				<div class="form-group">
 					<label for="detail" class="sr-only">Detalle</label>
 					<g:select name="detail" from="${}" class="form-control"data-toggle="tooltip" data-placement="left" title="Detalle"/>
-				</div>		
+				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
 					<g:textField name="quantity" class="form-control" placeholder="Cantidad" data-toggle="tooltip" data-placement="left" title="Cantidad"/>
