@@ -223,7 +223,18 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("deleteBrandProductOrder") {
+        //1. Get index
+        //2. Actualizar purchaseOrder balance property
+        //3. Remove brandProductOrder from list by its index in List
 
+        //1
+        def index = params.int("index")
+
+        //2
+        flow.purchaseOrder.balance -= flow.brandProductsOrders[index].total
+
+        //3
+        flow.brandProductsOrders.remove index
       }.to "brand"
 
       on("complete") {
