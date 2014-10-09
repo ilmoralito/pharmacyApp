@@ -27,7 +27,12 @@ class BootStrap {
           def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
           medicine2.addToPresentations(presentation2)
 
-        def productsInProvider1 = [product1, product2, product3, medicine1, medicine2]
+        def brandProduct0 = new BrandProduct(name:"Papel higienico")
+          def brand0 = new Brand(name:"Colgate", details:["Pequeno", "Grande"])
+
+          brandProduct0.addToBrands(brand0)
+
+        def productsInProvider1 = [product1, product2, product3, medicine1, medicine2, brandProduct0]
 
         productsInProvider1.each { product ->
           provider1.addToProducts product
@@ -69,9 +74,9 @@ class BootStrap {
         }
 
         assert Provider.count() == 2
-        assert provider1.products.size() == 5
+        assert provider1.products.size() == 6
         assert provider2.products.size() == 4
-        assert BrandProduct.count() == 2
+        assert BrandProduct.count() == 3
         assert Medicine.count() == 2
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PROVIDERS
