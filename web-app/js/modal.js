@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("a").click(function() {
+	$("a #modalOrders").click(function() {
 
 		var varId =  $(this).data("id");
 	    $("#idModal").html(varId);
