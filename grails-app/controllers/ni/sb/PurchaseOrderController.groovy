@@ -20,12 +20,27 @@ class PurchaseOrderController {
 	]
 
   def list() {
-    def status = (params?.option == "true") ? true : (params?.option == "false") ? false : params?.option
+    def status = (!params?.option?true:"")
+
+    switch(params?.option) {
+      case "true":
+        status = true
+      break
+      case "false":
+        status = false
+      break
+      case "Contado":
+        status = params.option
+      break
+      case "Credito":
+        status = params.option
+      break
+    }
 
     if (status == true || status == false) {
-      [orders:PurchaseOrder.findAllByStatus(status)]
+      [orders:PurchaseOrder.findAllByStatus(status), option:status]
     } else {
-      [orders:PurchaseOrder.findAllByTypeOfPurchase(status)]
+      [orders:PurchaseOrder.findAllByTypeOfPurchase(status), option:status]
     }
   }
 
@@ -104,7 +119,7 @@ class PurchaseOrderController {
   		on("addItem") {
         //check if new medicine already exist. If it is true then delete it from flow.medicines and then recreate it
         if (flow.medicines) {
-          def medicineInstance = flow.medicines.find { 
+          def medicineInstance = flow.medicines.find {
             it.product == Product.get(params.int("product")) &&
             it.presentation == Presentation.get(params.int("presentation")) &&
             it.measure == params?.measure &&
@@ -116,7 +131,7 @@ class PurchaseOrderController {
             flow.purchaseOrder.balance -= medicineInstance.total
           }
         }
-        
+
         //calculate total
         params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
 
@@ -145,7 +160,7 @@ class PurchaseOrderController {
       }.to "medicine"
 
       on("complete") {
-        
+
       }.to "done"
 
       on("medicine").to "medicine"
@@ -166,7 +181,7 @@ class PurchaseOrderController {
       }.to "product"
 
       on("complete") {
-        
+
       }.to "done"
 
       on("medicine").to "medicine"
@@ -187,7 +202,7 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("complete") {
-        
+
       }.to "done"
 
       on("medicine").to "medicine"
