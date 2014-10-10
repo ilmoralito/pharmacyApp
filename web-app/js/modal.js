@@ -1,25 +1,25 @@
 $(document).ready(function() {
-	$("a #modalOrders").click(function() {
+	$("a#modalOrders").click(function() {
 
-		var varId =  $(this).data("id");
+		var varId =  $("a#modalOrders").data("id");
 	    $("#idModal").html(varId);
 
-		var varInvoice =  $(this).data("invoice");
+		var varInvoice =  $("a#modalOrders").data("invoice");
 	    $("#invoiceModal").html(varInvoice);
 
-	   	var varProvider =  $(this).data("provider");
+	   	var varProvider =  $("a#modalOrders").data("provider");
 	    $("#providerModal").html(varProvider);
 
-		var varDutyDate =  $(this).data("dutyDate");
+		var varDutyDate =  $("a#modalOrders").data("dutyDate");
 	    $("#dutyDateModal").html(varDutyDate);
 
-	    var varBalance =  $(this).data("balance");
+	    var varBalance =  $("a#modalOrders").data("balance");
 	    $("#balanceModal").html(varBalance);
 
-	    var varTypeOfPurchase =  $(this).data("typeOfPurchase");
+	    var varTypeOfPurchase =  $("a#modalOrders").data("typeOfPurchase");
 	    $("#typeOfPurchaseModal").html(varTypeOfPurchase);
 
-	    var varStatus =  $(this).data("status");
+	    var varStatus =  $("a#modalOrders").data("status");
 	    $("#statusModal").html(varStatus);
 
 	});
