@@ -145,19 +145,7 @@ class PurchaseOrderController {
       }.to "medicine"
 
       on("complete") {
-        if (flow.medicines) {
-          flow.medicines.each { medicine ->
-            flow.purchaseOrder.addToItems medicine
-          }
-        }
-
-        if (flow.brandProductsOrders) {
-          flow.brandProductsOrders.each { brandProductOrder ->
-            flow.purchaseOrder.addToItems brandProductOrder
-          }
-        }
-
-        flow.purchaseOrder.save(flush:true)
+        this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
 
       on("medicine").to "medicine"
@@ -254,19 +242,7 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("complete") {
-        if (flow.medicines) {
-          flow.medicines.each { medicine ->
-            flow.purchaseOrder.addToItems medicine
-          }
-        }
-
-        if (flow.brandProductsOrders) {
-          flow.brandProductsOrders.each { brandProductOrder ->
-            flow.purchaseOrder.addToItems brandProductOrder
-          }
-        }
-
-        flow.purchaseOrder.save(flush:true)
+        this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
 
       on("medicine").to "medicine"
@@ -356,6 +332,26 @@ class PurchaseOrderController {
     } else {
       render(contentType:"application/json") {
         details
+      }
+    }
+  }
+
+  private savePurchaseOrder(List medicines, List brandProductsOrders, List products, PurchaseOrder purchaseOrder) {
+    if (medicines) {
+      medicines.each { medicine ->
+        purchaseOrder.addToItems medicine
+      }
+    }
+
+    if (brandProductsOrders) {
+      brandProductsOrders.each { brandProductOrder ->
+        purchaseOrder.addToItems brandProductOrder
+      }
+    }
+
+    if (purchaseOrder.save(flush:true)) {
+      purchaseOrder.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"
       }
     }
   }
