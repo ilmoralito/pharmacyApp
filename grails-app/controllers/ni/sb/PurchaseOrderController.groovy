@@ -138,10 +138,7 @@ class PurchaseOrderController {
  			}.to "medicine"
 
       on("deleteMedicine") {
-        def index = params.int("index")
-
-        flow.purchaseOrder.balance -= flow.medicines[index].total
-        flow.medicines.remove index
+        this.deleteItem(params.int("index"), flow.medicines, flow.purchaseOrder)
       }.to "medicine"
 
       on("complete") {
@@ -227,18 +224,7 @@ class PurchaseOrderController {
       }.to "brand"
 
       on("deleteBrandProductOrder") {
-        //1. Get index
-        //2. Actualizar purchaseOrder balance property
-        //3. Remove brandProductOrder from list by its index in List
-
-        //1
-        def index = params.int("index")
-
-        //2
-        flow.purchaseOrder.balance -= flow.brandProductsOrders[index].total
-
-        //3
-        flow.brandProductsOrders.remove index
+        this.deleteItem(params.int("index"), flow.brandProductsOrders, flow.purchaseOrder)
       }.to "brand"
 
       on("complete") {
@@ -354,5 +340,10 @@ class PurchaseOrderController {
         log.error "[$error.field: $error.defaultMessage]"
       }
     }
+  }
+
+  private deleteItem(Integer index, List items, PurchaseOrder purchaseOrder) {
+    purchaseOrder.balance -= items[index].total
+    items.remove index
   }
 }
