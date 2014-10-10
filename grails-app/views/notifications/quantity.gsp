@@ -11,7 +11,14 @@
 	<div class="col-md-8">
 		<g:if test="${infoInstance}">
 			<br>
-			<h4>Productos con existencias bajas</h4>
+			<div class="col-md-9">
+				<h4>Productos con existencias bajas</h4>
+			</div>
+			<div class="col-md-3">
+				<g:link controller="notifications" action="quantity" params="[f:'pdf']" class="">
+					<span class="glyphicon glyphicon-print"></span> PDF
+				</g:link>
+			</div>
 			<table class="table">
 				<thead>
 					<tr>

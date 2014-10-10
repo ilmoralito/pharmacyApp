@@ -11,12 +11,12 @@
 		<div class="col-md-12">
 			<div class="pull-right">
 				<div class="btn-group">
-					<g:link action="list" params="[option:"true"]" class="btn btn-default">Pagados</g:link>
-					<g:link action="list" params="[option:"false"]" class="btn btn-default">Pendientes</g:link>
+					<g:link action="list" params="[option:"true"]" class="btn btn-default ${(option == true)?"active":""}">Pagados</g:link>
+					<g:link action="list" params="[option:"false"]" class="btn btn-default ${(option == false)?"active":""}">Pendientes</g:link>
 				</div>
 				<div class="btn-group">
-					<g:link action="list" params="[option:"Credito"]" class="btn btn-default">Credito</g:link>
-					<g:link action="list" params="[option:"Contado"]" class="btn btn-default">Contado</g:link>
+					<g:link action="list" params="[option:"Credito"]" class="btn btn-default ${(option == "Credito")?"active":""}">Credito</g:link>
+					<g:link action="list" params="[option:"Contado"]" class="btn btn-default ${(option == "Contado")?"active":""}">Contado</g:link>
 				</div>
 				<g:link action="create" class="btn btn-primary">Crear orden de compra</g:link>
 			</div>

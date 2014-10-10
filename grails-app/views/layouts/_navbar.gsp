@@ -13,42 +13,42 @@
   		<ul class="nav navbar-nav navbar-right">
   			<li class="dropdown ${(controllerName == 'notifications') ? 'active' : ''}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <g:if test="${notif > 0}">
-                <span class="badge notifications">${notif}</span>
+              <g:if test="${(session.notif)}">
+                <span class="badge notifications"><span class="glyphicon glyphicon-bell"></span></span>
               </g:if>
               Notificaciones <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
               <li>
                 <g:link controller="notifications" action="quantity">
-                    <g:if test="${quantity > 0}">
-                      <span class="badge notifications">${quantity}</span>
+                    <g:if test="${session.q > 0}">
+                      <span class="badge notifications">${session.q}</span>
                     </g:if>
                     Existencias bajas
                 </g:link>
               </li>
               <li>
                 <g:link controller="notifications" action="expire">
-                    <g:if test="${expire > 0}">
-                      <span class="badge notifications">${expire}</span>
+                    <g:if test="${session.ex > 0}">
+                      <span class="badge notifications">${session.ex}</span>
                     </g:if>
                     Por vencerse
                 </g:link>
               </li>
               <li>
                 <g:link controller="notifications" action="expired">
-                    <g:if test="${expired > 0}">
-                      <span class="badge notifications">${expired}</span>
+                    <g:if test="${session.exd > 0}">
+                      <span class="badge notifications">${session.exd}</span>
                     </g:if>
                     Vencidos
                 </g:link>
               </li>
               <li>
                 <g:link controller="notifications" action="pendingOrders">
-                    <g:if test="${pending > 0}">
-                      <span class="badge notifications">${pending}</span>
+                    <g:if test="${session.po > 0}">
+                      <span class="badge notifications">${session.po}</span>
                     </g:if>
-                    Vencidos
+                    Pedidos Pendientes
                 </g:link>
               </li>
           </ul>
