@@ -11,6 +11,8 @@ class NotificationsController {
 	]
 
   def generalService
+  def exportService
+  def grailsApplication  //inject GrailsApplication
 
   @Secured(['ROLE_ADMIN','ROLE_USER'])
   def quantity() {
@@ -27,24 +29,90 @@ class NotificationsController {
     if (quantity.size() > 0 || expire.size() > 0 || expired.seze() > 0 || pendingOrders.size() > 0) {
       session["notif"] = "OK"
     }
+
+    params.format = params.f
+
+    if(params?.format && params.format != "html"){
+
+      response.contentType = grailsApplication.config.grails.mime.types[params.format]
+      response.setHeader("Content-disposition", "attachment; filename=quantity")
+      List fields = ["product","product.provider.name", "quantity"]
+      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "quantity": "Cantidad"]
+
+      Map parameters = [title: "Productos con baja existencia", "title.font.size": "18",
+      "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11",
+      "separator.color": "color.RED" ]
+
+      exportService.export(params.format, response.outputStream,quantity, fields, labels,[:],parameters)
+    }
+
+
     [infoInstance:quantity]
   }
 
   def expire(){
   	def today = new Date()
     def expire = generalService.expire()
+
+    params.format = params.f
+    if(params?.format && params.format != "html"){
+
+      response.contentType = grailsApplication.config.grails.mime.types[params.format]
+      response.setHeader("Content-disposition", "attachment; filename=expire")
+      List fields = ["product","product.provider.name","bash", "quantity"]
+      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
+
+      Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
+      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11",
+      "separator.color": "color.RED" ]
+
+      exportService.export(params.format, response.outputStream,expire, fields, labels,[:],parameters)
+    }
+
     [infoInstance:expire, today:today]
   }
 
   def expired(){
   	def today = new Date()
   	def expired = generalService.expired()
+
+    params.format = params.f
+    if(params?.format && params.format != "html"){
+
+      response.contentType = grailsApplication.config.grails.mime.types[params.format]
+      response.setHeader("Content-disposition", "attachment; filename=expired")
+      List fields = ["product","product.provider.name","bash", "quantity"]
+      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
+
+      Map parameters = [title: "Productos vencidos", "title.font.size": "18",
+      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11",
+      "separator.color": "color.RED" ]
+
+      exportService.export(params.format, response.outputStream,expired, fields, labels,[:],parameters)
+    }
+
     [infoInstance:expired, today:today]
   }
 
   def pendingOrders(){
   	def today = new Date()
   	def pendingOrders = generalService.pendingOrders()
+
+    params.format = params.f
+    if(params?.format && params.format != "html"){
+
+      response.contentType = grailsApplication.config.grails.mime.types[params.format]
+      response.setHeader("Content-disposition", "attachment; filename=pendingOrders")
+      List fields = ["item.product.provider","dutyDate", "balance"]
+      Map labels = ["Proveedor": "item.product.provider", "Fecha de pago": "dutyDate", "Total a pagar": "balance"]
+
+      Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
+      "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11",
+      "separator.color": "color.RED" ]
+
+      exportService.export(params.format, response.outputStream,pendingOrders, fields, labels,[:],parameters)
+    }
+
     [infoInstance:pendingOrders, today:today]
   }
 

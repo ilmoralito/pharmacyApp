@@ -11,7 +11,14 @@
 	<div class="col-md-12">
 		<g:if test="${infoInstance}">
 			<br>
-			<h4>Pedidos pendientes de pago</h4>
+			<div class="col-md-9">
+				<h4>Pedidos pendientes de pago</h4>
+			</div>
+			<div class="col-md-3">
+				<g:link controller="notifications" action="pendingOrders" params="[f:'pdf']" class="">
+					<span class="glyphicon glyphicon-print"></span> PDF
+				</g:link>
+			</div>
 			<table class="table">
 				<thead>
 					<tr>
