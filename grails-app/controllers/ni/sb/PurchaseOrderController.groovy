@@ -192,11 +192,15 @@ class PurchaseOrderController {
     brand {
       on("addItem") {
         //proces
+        //0. check for quantity, purchasePrice and sellingPrice are in params
         //1. Check if current brandProductOrder is already created if it is the case then delete it and update balance
         //2. Calculate brandProductOrder total property
         //3. Create new brandProductOrder
         //4. Update purchaseOrder balance
         //5. Add brandProductOrder to brandProductsOrders list
+
+        //0
+        if (!params?.quantity || !params?.purchasePrice || !params?.sellingPrice) { return error() }
 
         //1
         if (flow.brandProductsOrders) {
@@ -218,7 +222,7 @@ class PurchaseOrderController {
         //3
         def brandProductOrder = new BrandProductOrder(params)
 
-        if (brandProductOrder.hasErrors()) {
+        if (!brandProductOrder.validate(["product", "brand", "detail", "quantity", "purchasePrice", "sellingPrice"])) {
           brandProductOrder.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
