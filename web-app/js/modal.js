@@ -1,26 +1,13 @@
 $(document).ready(function() {
-	$("a#modalOrders").click(function() {
-
-		var varId =  $("a#modalOrders").data("id");
-	    $("#idModal").html(varId);
-
-		var varInvoice =  $("a#modalOrders").data("invoice");
-	    $("#invoiceModal").html(varInvoice);
-
-	   	var varProvider =  $("a#modalOrders").data("provider");
-	    $("#providerModal").html(varProvider);
-
-		var varDutyDate =  $("a#modalOrders").data("dutyDate");
-	    $("#dutyDateModal").html(varDutyDate);
-
-	    var varBalance =  $("a#modalOrders").data("balance");
-	    $("#balanceModal").html(varBalance);
-
-	    var varTypeOfPurchase =  $("a#modalOrders").data("typeOfPurchase");
-	    $("#typeOfPurchaseModal").html(varTypeOfPurchase);
-
-	    var varStatus =  $("a#modalOrders").data("status");
-	    $("#statusModal").html(varStatus);
-
+	$("a#modalOrders").on("click", function(e) {
+		e.preventDefault();
+		var data = $(this).data();
+		$("a#idModal").attr("href", "/pharmacyApp/purchaseOrder/show/" + data.id);
+	    $("#invoiceModal").html(data.invoice);
+	    $("#providerModal").html(data.provider);
+	    $("#dutyDateModal").html((data.date).substr(0,10));
+	    $("#balanceModal").html(data.balance);
+	    $("#typeOfPurchaseModal").html(data.type);
+	    $("#statusModal").html(data.status);
 	});
 });
