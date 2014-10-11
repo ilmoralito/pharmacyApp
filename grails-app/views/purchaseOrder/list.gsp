@@ -31,36 +31,31 @@
 				</div>
 				<div class="modal-body">
 					<table class="table">
-						<tr>
-							<td><strong>Proveedor: </strong></td>
-							<td><div id="providerModal"></div></td>
-						</tr>
-						<tr>
-							<td><strong>Fecha de pago: </strong></td>
-							<td><div id="dutyDateModal"></div></td>
-						</tr>
-						<tr>
-							<td><strong>Saldo: </strong></td>
-							<td><div id="balanceModal"></div></td>
-						</tr>
-						<tr>
-							<td><strong>Tipo de compra: </strong></td>
-							<td><div id="typeOfPurchaseModal"></div></td>
-						</tr>
-						<tr>
-							<td><strong>Estado: </strong></td>
-							<td><div id="statusModal"></div></td>
-						</tr>
+						<thead>
+							<th><strong>Proveedor</strong></th>
+							<th><strong>Fecha de pago</strong></th>
+							<th><strong>Saldo</strong></th>
+							<th><strong>Tipo de compra</strong></th>
+							<th><strong>Estado</strong></th>
+						</thead>
+						<tbody>
+							<tr>
+								<td><div id="providerModal"></div></td>
+								<td><div id="dutyDateModal"></div></td>
+								<td><div id="balanceModal"></div></td>
+								<td><div id="typeOfPurchaseModal"></div></td>
+								<td><div id="statusModal"></div></td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<g:link action="show" params="[id:idModal]" class="btn btn-primary">Editar</g:link>
+					<a id="idModal" class="btn btn-primary">Editar</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="xxx"></div>
 	<g:if test="${orders}">
 		<table class="table">
 			<thead>
@@ -70,7 +65,7 @@
 				<g:each in="${orders}" var="order">
 					<tr>
 						<td>
-							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-dutyDate="${order.dutyDate}" data-balance="${order.balance}" data-typeOfPurchase="${order.typeOfPurchase}" data-status="${order.status}">
+							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
 								${order.provider}, #${order.invoiceNumber}
 							</a>
 						</td>
