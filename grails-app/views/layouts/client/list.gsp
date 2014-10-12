@@ -15,7 +15,7 @@
 			<g:render template="/layouts/sidebar"/>
 		</div>
 		<!--MAIN-->
-		<div class="col-md-8">
+		<div class="col-md-7">
 			<g:if test="${clients}">
 				<table class="table table-striped">
 					<thead>
@@ -39,7 +39,7 @@
 				<h1>...</h1>
 			</g:else>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<g:layoutBody/>
 			<g:if test="${flash.message}">
 				<small><br>${flash.message}</small>
