@@ -15,9 +15,11 @@
 		<table class="table table-hover">
 			<tbody>
 				<g:each in="${products}" var="product">
-					<tr>
-						<td><g:link action="show" params="[id:product.id]">${product.name}</g:link></td>
-					</tr>
+					<g:if test="${!(product instanceof ni.sb.Medicine || product instanceof ni.sb.BrandProduct)}">
+						<tr>
+							<td><g:link action="show" params="[id:product.id]">${product.name}</g:link></td>
+						</tr>
+					</g:if>
 				</g:each>
 			</tbody>
 		</table>

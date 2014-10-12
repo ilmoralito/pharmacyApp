@@ -23,7 +23,9 @@ class ProductController {
 
     if (!provider) { response.sendError 404 }
 
-    [products:Product.findAllByProviderAndStatus(provider, params?.status ?: true), provider:provider]
+    def products = Product.findAllByProviderAndStatus(provider, params?.status ?: true)
+
+    [products:products, provider:provider]
   }
 
   def medicineList(Integer providerId) {
