@@ -33,4 +33,8 @@ modules = {
     dependsOn "app"
     resource url:"js/productMedicine.js"
   }
+
+   modal {
+    resource url:"js/modal.js"
+  }
 }
