@@ -11,7 +11,7 @@
 			</div>
 			<g:set var="fixedActionName" value="${actionName.replaceAll('List', '').capitalize()}"/>
 			
-			<g:link action="create${ actionName == 'brandList' ? fixedActionName + 'Product' : fixedActionName}" params="[providerId:params?.providerId]" class="btn btn-default">
+			<g:link action="create${ actionName == 'brandList' ? fixedActionName + 'Product' : fixedActionName}" params="[providerId:params?.providerId]" class="btn btn-primary">
 				Crear
 			</g:link>
 		</div>
