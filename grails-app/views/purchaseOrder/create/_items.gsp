@@ -46,6 +46,48 @@
 		</tbody>
 	</table>
 </g:if>
+
+<g:if test="${products}">
+	<h4>Productos generales</h4>
+	<table class="table table-hover">
+		<thead>
+			<th>Producto</th>
+			<th>Cant.</th>
+			<th>PC</th>
+			<th>PV</th>
+			<th>Total</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<g:each in="${products}" var="product" status="index">
+				<tr>
+					<td>${product.product}</td>
+					<td>${product.quantity}</td>
+					<td>${product.purchasePrice}</td>
+					<td>${product.sellingPrice}</td>
+					<td>
+						<g:formatNumber number="${product.total}" formatName="default.number.decimal"/>
+					</td>
+					<td>
+						<g:link event="deleteItem" params="[index:index]">
+							<span class="glyphicon glyphicon-trash"></span>
+						</g:link>
+					</td>
+				</tr>
+			</g:each>
+			<tr>
+				<td>TOTAL</td>
+				<td colspan="4">
+					<div class="pull-right">
+						<g:formatNumber number="${products.total.sum() ?: 0}" formatName="default.number.decimal"/>
+					</div>
+				</td>
+				<td width="1"></td>
+			</tr>
+		</tbody>
+	</table>
+</g:if>
+
 <g:if test="${brandProductsOrders}">
 	<h4>Productos con marca</h4>
 	<table class="table table-hover">

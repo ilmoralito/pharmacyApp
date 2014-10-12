@@ -170,15 +170,43 @@ class PurchaseOrderController {
     //PRODUCT
     product {
       on("addItem") {
+        if (!params?.quantity || !params?.purchasePrice || !params?.sellingPrice) { return error() }
 
+        if (flow.products) {
+          def productInstance = flow.products.find { 
+            it.product == Product.get(params.int("product"))
+          }
+
+          if (productInstance) {
+            flow.products -= productInstance
+            flow.purchaseOrder.balance -= productInstance.total
+          }
+        }
+
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        def product = new Item(params)
+
+        if (!product.validate(["product", "quantity", "purchasePrice", "sellingPrice"])) {
+          product.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + product.total
+
+        flow.products << product
       }.to "product"
 
       on("deleteItem") {
-
+        this.deleteItem(params.int("index"), flow.products, flow.purchaseOrder)
       }.to "product"
 
       on("complete") {
-
+        this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
 
       on("medicine").to "medicine"
@@ -191,7 +219,7 @@ class PurchaseOrderController {
     //BRAND
     brand {
       on("addItem") {
-        //proces
+        //process
         //0. check for quantity, purchasePrice and sellingPrice are in params
         //1. Check if current brandProductOrder is already created if it is the case then delete it and update balance
         //2. Calculate brandProductOrder total property
@@ -341,6 +369,12 @@ class PurchaseOrderController {
     if (medicines) {
       medicines.each { medicine ->
         purchaseOrder.addToItems medicine
+      }
+    }
+
+    if (products) {
+      products.each { product ->
+        purchaseOrder.addToItems product
       }
     }
 
