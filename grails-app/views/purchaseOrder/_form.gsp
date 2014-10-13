@@ -1,6 +1,9 @@
 <div class="form-group">
 	<label for="provider" class="sr-only">Proveedor</label>
 	<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
+	<g:if test="${purchaseOrder?.provider?.id}">
+		<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span class="help-block">
+	</g:if>
 </div>
 <div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
