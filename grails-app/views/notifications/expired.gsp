@@ -15,16 +15,16 @@
 				<h4>Productos vencidos</h4>
 			</div>
 			<div class="col-md-3">
-				<g:link controller="notifications" action="expired" params="[f:'pdf']" class="">
+				<h4><g:link controller="notifications" action="expired" params="[f:'pdf']" class="">
 					<span class="glyphicon glyphicon-print"></span> PDF
-				</g:link>
+				</g:link></h4>
 			</div>
 			<table class="table">
 				<thead>
 					<tr>
 						<th>Producto</th>
-						<th>Vencimiento</th>
 						<th>proveedor</th>
+						<th>Vencimiento</th>
 						<th>Existencia</th>
 						<th>Dias Vencidos</th>
 					</tr>
@@ -33,8 +33,8 @@
 					<g:each in="${infoInstance}" var="info">
 						<tr>
 							<td><g:link action="" params="[id:info.id]">${info.product}</g:link></td>
-							<td>${info.bash.format("dd-MM-yyyy")}</td>
 							<td>${info.product.provider.name}</td>
+							<td>${info.bash.format("dd-MM-yyyy")}</td>
 							<td>${info.quantity}</td>
 							<td>${today - info.bash}</td>
 						</tr>

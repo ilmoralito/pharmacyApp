@@ -1,0 +1,160 @@
+10-13 14:20:58 jdbc[4]: null
+org.h2.message.DbException: La conexión no fue cerrada por la aplicación y esta siendo limpiada (garbage collected)
+The connection was not closed by the application and is garbage collected [90018-173]
+	at org.h2.message.DbException.get(DbException.java:171)
+	at org.h2.message.DbException.get(DbException.java:148)
+	at org.h2.message.DbException.get(DbException.java:137)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:171)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:116)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:90)
+	at org.h2.Driver.connect(Driver.java:73)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:656)
+	at org.h2.server.web.WebApp.login(WebApp.java:900)
+	at org.h2.server.web.WebApp.process(WebApp.java:205)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:164)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:125)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:161)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:646)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:441)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:242)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.executeFilterChainWithWrappedResponse(GrailsPageFilter.java:233)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:208)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:153)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at javax.servlet.FilterChain$doFilter.call(Unknown Source)
+	at org.grails.plugin.resource.DevModeSanityFilter.doFilter(DevModeSanityFilter.groovy:45)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:330)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:118)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at grails.plugin.springsecurity.web.filter.GrailsAnonymousAuthenticationFilter.doFilter(GrailsAnonymousAuthenticationFilter.java:53)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:146)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:154)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:199)
+	at grails.plugin.springsecurity.web.authentication.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:49)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at grails.plugin.springsecurity.web.authentication.logout.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:343)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:260)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:67)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:343)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:260)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:170)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:98)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1040)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:315)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: org.h2.jdbc.JdbcSQLException: La conexión no fue cerrada por la aplicación y esta siendo limpiada (garbage collected)
+The connection was not closed by the application and is garbage collected [90018-173]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:331)
+	... 85 more
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BRAND" no encontrada
+Table "BRAND" not found; SQL statement:
+alter table brand drop constraint FK59A4B8751D20CB7 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BRAND_DETAILS" no encontrada
+Table "BRAND_DETAILS" not found; SQL statement:
+alter table brand_details drop constraint FKF19E6D8ABCCEAAE [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "CLIENT_PHONES" no encontrada
+Table "CLIENT_PHONES" not found; SQL statement:
+alter table client_phones drop constraint FK1C50AFB92C9E2A06 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "ITEM" no encontrada
+Table "ITEM" not found; SQL statement:
+alter table item drop constraint FK317B13CE732E4B [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "ITEM" no encontrada
+Table "ITEM" not found; SQL statement:
+alter table item drop constraint FK317B13BCCEAAE [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "ITEM" no encontrada
+Table "ITEM" not found; SQL statement:
+alter table item drop constraint FK317B13482B4CAE [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "ITEM" no encontrada
+Table "ITEM" not found; SQL statement:
+alter table item drop constraint FK317B135E1862A6 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "PRESENTATION" no encontrada
+Table "PRESENTATION" not found; SQL statement:
+alter table presentation drop constraint FK298AFF1A972A04A6 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "PRODUCT" no encontrada
+Table "PRODUCT" not found; SQL statement:
+alter table product drop constraint FKED8DCCEF922AD546 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "PURCHASE_ORDER" no encontrada
+Table "PURCHASE_ORDER" not found; SQL statement:
+alter table purchase_order drop constraint FK71A56A90922AD546 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SALE" no encontrada
+Table "SALE" not found; SQL statement:
+alter table sale drop constraint FK35C047D6A94506 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SALE" no encontrada
+Table "SALE" not found; SQL statement:
+alter table sale drop constraint FK35C0472C9E2A06 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SALE_DETAIL" no encontrada
+Table "SALE_DETAIL" not found; SQL statement:
+alter table sale_detail drop constraint FK4D1FC7495D8BA006 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SALE_DETAIL" no encontrada
+Table "SALE_DETAIL" not found; SQL statement:
+alter table sale_detail drop constraint FK4D1FC7494E812386 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SALE_DETAIL" no encontrada
+Table "SALE_DETAIL" not found; SQL statement:
+alter table sale_detail drop constraint FK4D1FC7495E1862A6 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46A317E8126 [42102-173]
+10-13 14:23:23 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER_ROLE" no encontrada
+Table "USER_ROLE" not found; SQL statement:
+alter table user_role drop constraint FK143BF46AD6A94506 [42102-173]
