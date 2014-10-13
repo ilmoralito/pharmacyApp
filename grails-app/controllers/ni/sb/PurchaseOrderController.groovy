@@ -283,11 +283,22 @@ class PurchaseOrderController {
 
     editPurchaseOrder {
       on("confirm") {
+        //get current purchase order provider
+        def persistentValue = flow.purchaseOrder.provider
+
         flow.purchaseOrder.properties = params
 
         if (!flow.purchaseOrder.validate()) {
           flow.errors = flow.purchaseOrder
           return error()
+        }
+
+        //check if provider was changed if it is true then set to null items container
+        def provider = Provider.get params.int("provider")
+        if (persistentValue != provider) {
+          flow.medicines = []
+          flow.products = []
+          flow.brandProductsOrders = []
         }
 
         flow?.errors?.clearErrors()
