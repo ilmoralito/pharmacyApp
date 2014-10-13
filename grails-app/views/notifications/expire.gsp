@@ -16,9 +16,9 @@
 				<h4>Productos con 3 meses o menos por vencerse</h4>
 			</div>
 			<div class="col-md-3">
-				<g:link controller="notifications" action="expire" params="[f:'pdf']" class="">
+				<h4><g:link controller="notifications" action="expire" params="[f:'pdf']" class="">
 					<span class="glyphicon glyphicon-print"></span> PDF
-				</g:link>
+				</g:link></h4>
 			</div>
 			<table class="table">
 				<thead>

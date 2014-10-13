@@ -15,9 +15,9 @@
 				<h4>Productos vencidos</h4>
 			</div>
 			<div class="col-md-3">
-				<g:link controller="notifications" action="expired" params="[f:'pdf']" class="">
+				<h4><g:link controller="notifications" action="expired" params="[f:'pdf']" class="">
 					<span class="glyphicon glyphicon-print"></span> PDF
-				</g:link>
+				</g:link></h4>
 			</div>
 			<table class="table">
 				<thead>
