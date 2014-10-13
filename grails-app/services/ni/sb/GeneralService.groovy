@@ -32,8 +32,6 @@ class GeneralService {
         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
 
-    println results.product.provider
-
     results.each{ r ->
         r.remainingDays = r.bash - today
     }
@@ -44,12 +42,36 @@ class GeneralService {
   def expired(){
   	def today = new Date()
   	def date = new Date() - 1
+    def date2 = new Date() - 4
+
+    def pro = MedicineOrder.get(6)
+    pro.properties["bash"] = date2
+    if (!pro.save()) {
+      pro.errors.allErrors.each {
+        print it
+      }
+    }
+    
+
 
   	def c = MedicineOrder.createCriteria()
     def results = c.list {
         le("bash",date)
         order("bash", "desc")
+
+        projections {
+            property "bash", "bash"
+            property "product", "product"
+            property "quantity", "quantity"
+        }
+
+        resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.daysPastDue = today - r.bash
+    }
+
     return results
   }
 

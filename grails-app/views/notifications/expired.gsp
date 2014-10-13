@@ -23,8 +23,8 @@
 				<thead>
 					<tr>
 						<th>Producto</th>
-						<th>Vencimiento</th>
 						<th>proveedor</th>
+						<th>Vencimiento</th>
 						<th>Existencia</th>
 						<th>Dias Vencidos</th>
 					</tr>
@@ -33,8 +33,8 @@
 					<g:each in="${infoInstance}" var="info">
 						<tr>
 							<td><g:link action="" params="[id:info.id]">${info.product}</g:link></td>
-							<td>${info.bash.format("dd-MM-yyyy")}</td>
 							<td>${info.product.provider.name}</td>
+							<td>${info.bash.format("dd-MM-yyyy")}</td>
 							<td>${info.quantity}</td>
 							<td>${today - info.bash}</td>
 						</tr>

@@ -21,12 +21,12 @@ class NotificationsController {
     def expired = generalService.expired()
     def pendingOrders = generalService.pendingOrders()
 
-    session["q"] = quantity.size()
-    session["ex"] = expire.size()
-    session["exd"] = expired.size()
-    session["po"] = pendingOrders.size()
+    session["q"] = (quantity)?quantity.size():0
+    session["ex"] = (expire)?expire.size():0
+    session["exd"] = (expired)?expired.size():0
+    session["po"] = (pendingOrders)?pendingOrders.size():0
 
-    if (quantity.size() > 0 || expire.size() > 0 || expired.seze() > 0 || pendingOrders.size() > 0) {
+    if (session.q > 0 || session.ex > 0 || session.exd > 0 || session.po > 0) {
       session["notif"] = "OK"
     }
 
@@ -90,11 +90,11 @@ class NotificationsController {
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
       response.setHeader("Content-disposition", "attachment; filename=Productos-vencidos-${today.format("dd-MM-yyyy")}")
-      List fields = ["product","product.provider.name","bash", "quantity"]
-      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
+      List fields = ["product","product.provider.name","bash", "quantity", "daysPastDue"]
+      Map labels = ["product": "Producto", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Existencias", "daysPastDue": "Dias Vencidos"]
 
-      Map parameters = [title: "Productos vencidos", "title.font.size": "18",
-      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11"]
+      Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
+      "column.widths": [0.3, 0.3, 0.2,0.1,0.2], "header.font.size": "11", "text.font.size": "11"]
 
       def formatDate = { MedicineOrder, bash ->
         if(bash instanceof Date){
