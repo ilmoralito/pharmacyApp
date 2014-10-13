@@ -33,18 +33,20 @@
 					<table class="table">
 						<thead>
 							<th><strong>Proveedor</strong></th>
-							<th><strong>Fecha de pago</strong></th>
+							<th><strong>Fecha solicitud</strong></th>
+							<th><strong>Fecha pago</strong></th>
 							<th><strong>Saldo</strong></th>
-							<th><strong>Tipo de compra</strong></th>
+							<th><strong>Tipo compra</strong></th>
 							<th><strong>Estado</strong></th>
 						</thead>
 						<tbody>
 							<tr>
-								<td><div id="providerModal"></div></td>
-								<td><div id="dutyDateModal"></div></td>
-								<td><div id="balanceModal"></div></td>
-								<td><div id="typeOfPurchaseModal"></div></td>
-								<td><div id="statusModal"></div></td>
+								<td id="providerModal"></td>
+								<td id="payDateModal"></td>
+								<td id="dutyDateModal"></td>
+								<td id="balanceModal"></td>
+								<td id="typeOfPurchaseModal"></td>
+								<td id="statusModal"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -65,7 +67,7 @@
 				<g:each in="${orders}" var="order">
 					<tr>
 						<td>
-							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
 								${order.provider}, #${order.invoiceNumber}
 							</a>
 						</td>
