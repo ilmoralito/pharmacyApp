@@ -26,13 +26,16 @@ class GeneralService {
         projections {
             property "bash", "bash"
             property "product", "product"
+            property "quantity", "quantity"
         }
 
         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
 
+    println results.product.provider
+
     results.each{ r ->
-        r.remainingDay = r.bash - today
+        r.remainingDays = r.bash - today
     }
 
     return results

@@ -60,11 +60,11 @@ class NotificationsController {
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
       response.setHeader("Content-disposition", "attachment; filename=Productos-por-vencerse-${today.format("dd-MM-yyyy")}")
-      List fields = ["product","product.provider.name","bash", "quantity"]
-      Map labels = ["producto": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
+      List fields = ["product","product.provider.name","bash", "quantity", "remainingDays"]
+      Map labels = ["product": "Producto", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Existencias", "remainingDays": "Dias Restantes"]
 
       Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
-      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11"]
+      "column.widths": [0.3, 0.3, 0.2,0.1,0.2], "header.font.size": "11", "text.font.size": "11"]
 
       def formatDate = { MedicineOrder, bash ->
         if(bash instanceof Date){
