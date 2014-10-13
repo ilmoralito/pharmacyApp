@@ -16,6 +16,8 @@ class NotificationsController {
 
   @Secured(['ROLE_ADMIN','ROLE_USER'])
   def quantity() {
+    def today = new Date()
+
     def quantity = generalService.quantity()
     def expire = generalService.expire()
     def expired = generalService.expired()
@@ -35,16 +37,16 @@ class NotificationsController {
     if(params?.format && params.format != "html"){
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
-      response.setHeader("Content-disposition", "attachment; filename=quantity")
+      response.setHeader("Content-disposition", "attachment; filename=Productos-bajos-en-existencias-${today.format("dd-MM-yyyy")}")
       List fields = ["product","product.provider.name", "quantity"]
-      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "quantity": "Cantidad"]
+      Map labels = ["product": "Producto", "product.provider.name": "Proveedor", "quantity": "Existencia"]
 
       Map parameters = [title: "Productos con baja existencia", "title.font.size": "18",
       "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11",
       "separator.color": "color.RED" ]
 
 
-      exportService.export(params.format, response.outputStream,quantity, fields, labels,formatters,parameters)
+      exportService.export(params.format, response.outputStream,quantity, fields, labels,[:],parameters)
     }
 
 
@@ -120,11 +122,11 @@ class NotificationsController {
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
       response.setHeader("Content-disposition", "attachment; filename=Facturas-por-pagar-${today.format("dd-MM-yyyy")}")
-      List fields = ["item.product.provider","dutyDate", "balance"]
-      Map labels = ["Proveedor": "item.product.provider", "Fecha de pago": "dutyDate", "Total a pagar": "balance"]
+      List fields = ["provider","dutyDate", "remainingDays", "balance"]
+      Map labels = ["provider": "Proveedor", "dutyDate": "Fecha de Pago", "remainingDays": "Dias Restantes", "balance": "Total a pagar"]
 
-      Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
-      "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11"]
+      Map parameters = [title: "Facturas pendientes de pagar", "title.font.size": "18",
+      "column.widths": [0.3, 0.2, 0.2,0.2], "header.font.size": "11", "text.font.size": "11"]
 
       def formatDate = { PurchaseOrder, dutyDate ->
         if(dutyDate instanceof Date){

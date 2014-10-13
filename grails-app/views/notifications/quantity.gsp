@@ -23,6 +23,7 @@
 				<thead>
 					<tr>
 						<th>Producto</th>
+						<th>Proveedor</th>
 						<th>Existencia</th>
 					</tr>
 				</thead>
@@ -30,6 +31,7 @@
 					<g:each in="${infoInstance}" var="info">
 						<tr>
 							<td><g:link action="" params="[id:info.id]">${info.product}</g:link></td>
+							<td>${info.product.provider}</td>
 							<td>${info.quantity}</td>
 						</tr>
 						</g:each>

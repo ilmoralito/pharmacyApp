@@ -28,7 +28,6 @@ class GeneralService {
             property "product", "product"
             property "quantity", "quantity"
         }
-
         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
 
@@ -44,16 +43,6 @@ class GeneralService {
   	def date = new Date() - 1
     def date2 = new Date() - 4
 
-    def pro = MedicineOrder.get(6)
-    pro.properties["bash"] = date2
-    if (!pro.save()) {
-      pro.errors.allErrors.each {
-        print it
-      }
-    }
-    
-
-
   	def c = MedicineOrder.createCriteria()
     def results = c.list {
         le("bash",date)
@@ -64,7 +53,6 @@ class GeneralService {
             property "product", "product"
             property "quantity", "quantity"
         }
-
         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
 
@@ -83,7 +71,19 @@ class GeneralService {
     def results = c.list {
         le("dutyDate",date)
         order("dutyDate", "desc")
+
+         projections {
+            property "dutyDate", "dutyDate"
+            property "provider", "provider"
+            property "balance", "balance"
+        }
+         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.remainingDays = r.dutyDate - today
+    }
+
     return results
   }
 

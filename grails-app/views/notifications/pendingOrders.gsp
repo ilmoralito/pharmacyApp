@@ -31,7 +31,7 @@
 				<tbody>
 					<g:each in="${infoInstance}" var="info">
 						<tr>
-							<td><g:link action="" params="[id:info.id]">${info.items.product.provider}</g:link></td>
+							<td><g:link action="" params="[id:info.id]">${info.provider}</g:link></td>
 							<td>${info.dutyDate.format("dd-MM-yyyy")}</td>
 							<td>${info.dutyDate - today}</td>
 							<td>${info.balance}</td>
