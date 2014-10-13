@@ -29,7 +29,7 @@
 
 		<li class="${(actionName == 'pendingOrders') ? 'active' : ''}">
 			<g:link controller="notifications" action="pendingOrders">
-				<g:if test="${session.exd > 0}">
+				<g:if test="${session.po > 0}">
                     <span class="badge notifications">${session.exd}</span>
                 </g:if>
 				Pedidos pendientes
