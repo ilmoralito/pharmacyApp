@@ -43,7 +43,8 @@ class NotificationsController {
       "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11",
       "separator.color": "color.RED" ]
 
-      exportService.export(params.format, response.outputStream,quantity, fields, labels,[:],parameters)
+
+      exportService.export(params.format, response.outputStream,quantity, fields, labels,formatters,parameters)
     }
 
 
@@ -58,15 +59,23 @@ class NotificationsController {
     if(params?.format && params.format != "html"){
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
-      response.setHeader("Content-disposition", "attachment; filename=expire")
+      response.setHeader("Content-disposition", "attachment; filename=Productos-por-vencerse-${today.format("dd-MM-yyyy")}")
       List fields = ["product","product.provider.name","bash", "quantity"]
-      Map labels = ["product": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
+      Map labels = ["producto": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
 
       Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
-      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11",
-      "separator.color": "color.RED" ]
+      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11"]
 
-      exportService.export(params.format, response.outputStream,expire, fields, labels,[:],parameters)
+      def formatDate = { MedicineOrder, bash ->
+        if(bash instanceof Date){
+          return new java.text.SimpleDateFormat("dd-MM-yyyy").format(bash)
+        }
+        return bash
+      }
+
+      Map formatters = [bash:formatDate]
+
+      exportService.export(params.format, response.outputStream,expire, fields, labels,formatters,parameters)
     }
 
     [infoInstance:expire, today:today]
@@ -80,15 +89,23 @@ class NotificationsController {
     if(params?.format && params.format != "html"){
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
-      response.setHeader("Content-disposition", "attachment; filename=expired")
+      response.setHeader("Content-disposition", "attachment; filename=Productos-vencidos-${today.format("dd-MM-yyyy")}")
       List fields = ["product","product.provider.name","bash", "quantity"]
       Map labels = ["product": "Product", "product.provider.name": "Proveedor", "bash": "Vencimiento", "quantity": "Cantidad"]
 
       Map parameters = [title: "Productos vencidos", "title.font.size": "18",
-      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11",
-      "separator.color": "color.RED" ]
+      "column.widths": [0.3, 0.3, 0.2,0.1], "header.font.size": "11", "text.font.size": "11"]
 
-      exportService.export(params.format, response.outputStream,expired, fields, labels,[:],parameters)
+      def formatDate = { MedicineOrder, bash ->
+        if(bash instanceof Date){
+          return new java.text.SimpleDateFormat("dd-MM-yyyy").format(bash)
+        }
+        return bash
+      }
+
+      Map formatters = [bash:formatDate]
+
+      exportService.export(params.format, response.outputStream,expired, fields, labels,formatters,parameters)
     }
 
     [infoInstance:expired, today:today]
@@ -102,15 +119,23 @@ class NotificationsController {
     if(params?.format && params.format != "html"){
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
-      response.setHeader("Content-disposition", "attachment; filename=pendingOrders")
+      response.setHeader("Content-disposition", "attachment; filename=Facturas-por-pagar-${today.format("dd-MM-yyyy")}")
       List fields = ["item.product.provider","dutyDate", "balance"]
       Map labels = ["Proveedor": "item.product.provider", "Fecha de pago": "dutyDate", "Total a pagar": "balance"]
 
       Map parameters = [title: "Productos con fecha proxima de vencimiento", "title.font.size": "18",
-      "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11",
-      "separator.color": "color.RED" ]
+      "column.widths": [0.3, 0.3,0.1], "header.font.size": "11", "text.font.size": "11"]
 
-      exportService.export(params.format, response.outputStream,pendingOrders, fields, labels,[:],parameters)
+      def formatDate = { PurchaseOrder, dutyDate ->
+        if(dutyDate instanceof Date){
+          return new java.text.SimpleDateFormat("dd-MM-yyyy").format(dutyDate)
+        }
+        return dutyDate
+      }
+
+      Map formatters = [dutyDate:formatDate]
+
+      exportService.export(params.format, response.outputStream,pendingOrders, fields, labels,formatters,parameters)
     }
 
     [infoInstance:pendingOrders, today:today]

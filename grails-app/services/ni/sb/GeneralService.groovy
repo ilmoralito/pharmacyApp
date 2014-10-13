@@ -1,6 +1,7 @@
 package ni.sb
 
 import grails.transaction.Transactional
+import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Transactional
 class GeneralService {
@@ -21,7 +22,19 @@ class GeneralService {
     def results = c.list {
         between("bash",today, proyectionDate)
         order("bash", "desc")
+
+        projections {
+            property "bash", "bash"
+            property "product", "product"
+        }
+
+        resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.remainingDay = r.bash - today
+    }
+
     return results
   }
 
