@@ -9,10 +9,6 @@ class PurchaseOrderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:"GET",
-    show:"GET",
-    update:"POST",
-    edit:"GET",
-    editItem:"GET",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET",
     getBrandsByBrandProduct:"GET",
@@ -42,41 +38,6 @@ class PurchaseOrderController {
     } else {
       [orders:PurchaseOrder.findAllByTypeOfPurchase(status), option:status]
     }
-  }
-
-  def show(Integer id){
-    def purchaseOrder = PurchaseOrder.get id
-    if (!purchaseOrder) { response.sendError 404}
-    [purchaseOrder:purchaseOrder]
-  }
-
-  def update(Integer id){
-    def purchaseOrder = PurchaseOrder.get id
-    if (!purchaseOrder) { response.sendError 404}
-    purchaseOrder.properties = params
-
-    if (!purchaseOrder.save()) {
-      render(view:"show", model:[id:id, purchaseOrder:purchaseOrder])
-      return
-    }
-
-    flash.message = "Actualizado"
-    redirect action:"show", id:id
-  }
-
-  def edit(Integer id){
-    def purchaseOrder = PurchaseOrder.get id
-    if (!purchaseOrder) {response.sendError 404}
-    def itemInstance = Item.findAllByPurchaseOrder(purchaseOrder)
-    [itemInstance:itemInstance, purchaseOrder:purchaseOrder]
-  }
-
-  def editItem(Integer id){
-    def itemInstance = Item.get id
-    if (!itemInstance) {response.sendError 404}
-    def product = Product.get(itemInstance.product.id)
-    def presentations = Presentation.findAllByProduct(product)
-    [itemInstance:itemInstance, presentations:presentations]
   }
 
   def createFlow = {
