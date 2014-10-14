@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$("a#modalOrders").on("click", function(e) {
 		e.preventDefault();
+
 		var data = $(this).data();
+
 		$("a#idModal").attr("href", "/pharmacyApp/purchaseOrder/edit/" + data.id);
     $("#invoiceModal").html("Factura #" + data.invoice);
     $("#providerModal").html(data.provider);
@@ -9,9 +11,7 @@ $(document).ready(function() {
     $("#dutyDateModal").html((data.date).substr(0,10));
     $("#balanceModal").html(data.balance);
     $("#typeOfPurchaseModal").html(data.type);
-    if(data.status == true)
-    	$("#statusModal").html("Cancelado");
-    else
-    	$("#statusModal").html("Pendiente");
+
+    $("#statusModal").html((data.status) ? "Cancelado" : "Pendiente")
 	});
 });
