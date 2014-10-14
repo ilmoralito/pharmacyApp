@@ -266,6 +266,14 @@ class PurchaseOrderController {
     init {
       action {
         flow.purchaseOrder = PurchaseOrder.get params.int("id")
+
+        if (flow.purchaseOrder) {
+          response.sendError 404
+        }
+
+        flow.medicines = flow.purchaseOrder?.items?.findAll { it instanceof ni.sb.MedicineOrder }
+        flow.products = flow.purchaseOrder?.items?.findAll { !(it instanceof ni.sb.MedicineOrder) || !(it instanceof ni.sb.BrandProductOrder) }
+        flow.brandProductsOrders = flow.purchaseOrder?.items?.findAll { it instanceof ni.sb.BrandProductOrder }
       }
 
       on("success").to "medicine"
@@ -285,7 +293,7 @@ class PurchaseOrderController {
 
     editPurchaseOrder {
       on("confirm") {
-        
+
       }
     }
   }
