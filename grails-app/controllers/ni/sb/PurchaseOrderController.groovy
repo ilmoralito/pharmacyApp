@@ -262,6 +262,34 @@ class PurchaseOrderController {
   	}
   }
 
+  def editFlow = {
+    init {
+      action {
+        flow.purchaseOrder = PurchaseOrder.get params.int("id")
+      }
+
+      on("success").to "medicine"
+    }
+
+    medicine {
+
+    }
+
+    product {
+
+    }
+
+    brand {
+
+    }
+
+    editPurchaseOrder {
+      on("confirm") {
+        
+      }
+    }
+  }
+
   def getPresentationsByProduct(Integer id) {
     def results = presentationService.presentationsByProduct id
 
