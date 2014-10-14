@@ -278,7 +278,7 @@ class PurchaseOrderController {
       action {
         flow.purchaseOrder = PurchaseOrder.get params.int("id")
 
-        if (flow.purchaseOrder) {
+        if (!flow.purchaseOrder) {
           response.sendError 404
         }
 
