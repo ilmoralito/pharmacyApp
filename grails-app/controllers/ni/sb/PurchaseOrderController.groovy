@@ -277,6 +277,7 @@ class PurchaseOrderController {
     init {
       action {
         flow.purchaseOrder = PurchaseOrder.get params.int("id")
+        flow.providers = Provider.findAllStatus true
 
         if (!flow.purchaseOrder) {
           response.sendError 404
@@ -292,20 +293,39 @@ class PurchaseOrderController {
 
     medicine {
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
+      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("cancel").to "done"
     }
 
     product {
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
+      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("cancel").to "done"
     }
 
     brand {
 
+      on("medicine").to "medicine"
+      on("product").to "product"
+      on("brand").to "brand"
+      on("editPurchaseOrder").to "editPurchaseOrder"
+      on("cancel").to "done"
     }
 
     editPurchaseOrder {
       on("confirm") {
 
       }
+    }
+
+    done() {
+      redirect action:"list"
     }
   }
 
