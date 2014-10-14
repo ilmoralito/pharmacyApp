@@ -15,14 +15,15 @@
 				<h4>Productos con existencias bajas</h4>
 			</div>
 			<div class="col-md-3">
-				<g:link controller="notifications" action="quantity" params="[f:'pdf']" class="">
+				<h4><g:link controller="notifications" action="quantity" params="[f:'pdf']" class="">
 					<span class="glyphicon glyphicon-print"></span> PDF
-				</g:link>
+				</g:link></h4>
 			</div>
 			<table class="table">
 				<thead>
 					<tr>
 						<th>Producto</th>
+						<th>Proveedor</th>
 						<th>Existencia</th>
 					</tr>
 				</thead>
@@ -30,6 +31,7 @@
 					<g:each in="${infoInstance}" var="info">
 						<tr>
 							<td><g:link action="" params="[id:info.id]">${info.product}</g:link></td>
+							<td>${info.product.provider}</td>
 							<td>${info.quantity}</td>
 						</tr>
 						</g:each>

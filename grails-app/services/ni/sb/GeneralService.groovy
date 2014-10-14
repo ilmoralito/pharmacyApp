@@ -1,6 +1,7 @@
 package ni.sb
 
 import grails.transaction.Transactional
+import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Transactional
 class GeneralService {
@@ -21,19 +22,44 @@ class GeneralService {
     def results = c.list {
         between("bash",today, proyectionDate)
         order("bash", "desc")
+
+        projections {
+            property "bash", "bash"
+            property "product", "product"
+            property "quantity", "quantity"
+        }
+        resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.remainingDays = r.bash - today
+    }
+
     return results
   }
 
   def expired(){
   	def today = new Date()
   	def date = new Date() - 1
+    def date2 = new Date() - 4
 
   	def c = MedicineOrder.createCriteria()
     def results = c.list {
         le("bash",date)
         order("bash", "desc")
+
+        projections {
+            property "bash", "bash"
+            property "product", "product"
+            property "quantity", "quantity"
+        }
+        resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.daysPastDue = today - r.bash
+    }
+
     return results
   }
 
@@ -45,7 +71,19 @@ class GeneralService {
     def results = c.list {
         le("dutyDate",date)
         order("dutyDate", "desc")
+
+         projections {
+            property "dutyDate", "dutyDate"
+            property "provider", "provider"
+            property "balance", "balance"
+        }
+         resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
+
+    results.each{ r ->
+        r.remainingDays = r.dutyDate - today
+    }
+
     return results
   }
 

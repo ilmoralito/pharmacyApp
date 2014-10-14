@@ -15,9 +15,9 @@
 				<h4>Pedidos pendientes de pago</h4>
 			</div>
 			<div class="col-md-3">
-				<g:link controller="notifications" action="pendingOrders" params="[f:'pdf']" class="">
+				<h4><g:link controller="notifications" action="pendingOrders" params="[f:'pdf']" class="">
 					<span class="glyphicon glyphicon-print"></span> PDF
-				</g:link>
+				</g:link></h4>
 			</div>
 			<table class="table">
 				<thead>
@@ -31,7 +31,7 @@
 				<tbody>
 					<g:each in="${infoInstance}" var="info">
 						<tr>
-							<td><g:link action="" params="[id:info.id]">${info.items.product.provider}</g:link></td>
+							<td><g:link action="" params="[id:info.id]">${info.provider}</g:link></td>
 							<td>${info.dutyDate.format("dd-MM-yyyy")}</td>
 							<td>${info.dutyDate - today}</td>
 							<td>${info.balance}</td>
