@@ -28,7 +28,13 @@
 			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<g:select name="product" from="${ni.sb.Product.list()}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
+					<select name="product" id="product" class="form-control">
+						<g:each in="${ni.sb.Product.findAllByProviderAndStatus(purchaseOrder.provider, true)}" var="product">
+							<g:if test="${!(product instanceof ni.sb.Medicine) && !(product instanceof ni.sb.BrandProduct)}">
+								<option value="${product.id}">${product}</option>
+							</g:if>
+						</g:each>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
