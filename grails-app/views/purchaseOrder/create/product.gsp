@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar articulos</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app, calculateSellingPrice"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>

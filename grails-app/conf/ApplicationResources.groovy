@@ -37,4 +37,8 @@ modules = {
    modal {
     resource url:"js/modal.js"
   }
+
+  calculateSellingPrice {
+    resource url:"js/calculateSellingPrice.js"
+  }
 }
