@@ -11,6 +11,7 @@ modules = {
 
   brandProduct {
     dependsOn "app"
+    dependsOn "calculateSellingPrice"
     resource url:"js/brandProduct.js"
   }
 
