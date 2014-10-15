@@ -5,7 +5,8 @@ modules = {
 
   createPurchaseOrder {
   	dependsOn "app"
-  	resource url:"js/application.js"
+    dependsOn "calculateSellingPrice"
+    resource url:"js/application.js"
   }
 
   brandProduct {
