@@ -2,7 +2,7 @@
 	<label for="provider" class="sr-only">Proveedor</label>
 	<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
 	<g:if test="${purchaseOrder?.provider?.id}">
-		<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span class="help-block">
+		<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span>
 	</g:if>
 </div>
 <div class="form-group">
@@ -20,7 +20,12 @@
 <g:if test="${actionName != 'create'}">
 	<div class="form-group">
 		<label for="status" class="sr-only">Estado</label>
-		<!--Verifica si los valores en la lista values es el texto de el select y los valores en from son los datos pasados-->
-		<g:select name="status" from="[true, false]", values="['Pagado', 'Pendiente']" value="${purchaseOrder?.status}" noSelection="['':'Seleccione un estado']" class="form-control"/>
+		<select name="status" id="status" class="form-control">
+			<g:each in="${[true, false]}" var="option">
+				<option value="${option}" ${purchaseOrder?.status ? 'Selected' : ''}>
+					${option ? "Cancelado" : "Pendiente"}
+				</option>
+			</g:each>
+		</select>
 	</div>
 </g:if>
