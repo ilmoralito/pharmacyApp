@@ -28,6 +28,7 @@ class PurchaseOrder implements Serializable {
   static mapping = {
   	version false
     sort dateCreated: "desc"
+    items cascade: "all-delete-orphan"
   }
 
   List items

@@ -325,7 +325,7 @@ class PurchaseOrderController {
 
         flow.purchaseOrder.properties = params
 
-        if (!flow.purchaseOrder.validate()) {
+        if (!flow.purchaseOrder.save()) {
           flow.errors = flow.purchaseOrder
           return error()
         }
@@ -333,6 +333,10 @@ class PurchaseOrderController {
         //check if provider was changed if it is true then set to null items container
         def provider = Provider.get params.int("provider")
         if (persistentValue != provider) {
+          //delete all items from current purchaseOrder instance
+          //flow.purchaseOrder.items.clear()
+
+          //reset all list variables
           flow.medicines = []
           flow.products = []
           flow.brandProductsOrders = []
