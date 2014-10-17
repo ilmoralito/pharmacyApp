@@ -17,7 +17,7 @@ class BootStrap {
         def product1 = new Product(name:"product1")
         def product2 = new Product(name:"product2")
         def product3 = new Product(name:"product3")
-        def medicine1 = new Medicine(name:"Medicine1", code:"1234")
+        def medicine1 = new Medicine(name:"Medicine1", code:"1234", genericName:"someGenericName")
           
           def presentation1 = new Presentation(name:"Crema", measures:["5g", "15g"])
           medicine1.addToPresentations(presentation1)
