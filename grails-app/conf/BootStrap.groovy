@@ -96,9 +96,7 @@ class BootStrap {
 
         purchaseOrder1.addToItems(item1).addToItems(item2).addToItems(item3)
 
-        purchaseOrder1.balance += item1.total
-        purchaseOrder1.balance += item2.total
-        purchaseOrder1.balance += item3.total
+        purchaseOrder1.balance += [item1, item2, item3].sum { it.total }
 
         if (!purchaseOrder1.save()) {
           purchaseOrder1.errors.allErrors.each { error ->
@@ -124,9 +122,7 @@ class BootStrap {
 
         purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1)
 
-        purchaseOrder2.balance += item4.total
-        purchaseOrder2.balance += item5.total
-        purchaseOrder2.balance += m1.total
+        purchaseOrder2.balance += [item4, item5, m1].sum { it.total }
 
         if (!purchaseOrder2.save()) {
           purchaseOrder2.errors.allErrors.each { error ->
