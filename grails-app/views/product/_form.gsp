@@ -7,6 +7,10 @@
 		<label for="code" class="sr-only">Codigo</label>
 		<g:textField name="code" value="${product?.code}" class="form-control" placeholder="Codigo"/>
 	</div>
+	<div class="form-group">
+		<label for="genericName" class="sr-only">Nombre Generico</label>
+		<g:textField name="genericName" value="${product?.genericName}" class="form-control" placeholder="Nombre Generico"/>
+	</div>
 </g:if>
 <g:if test="${actionName == 'createBrandProduct' || product instanceof ni.sb.BrandProduct}">
 
