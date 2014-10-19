@@ -30,23 +30,32 @@
 					<h4 class="modal-title" id="myModalLabel"><div id="invoiceModal"></div></h4>
 				</div>
 				<div class="modal-body">
-					<table class="table">
-						<thead>
-							<th><strong>Proveedor</strong></th>
-							<th><strong>Fecha solicitud</strong></th>
-							<th><strong>Fecha pago</strong></th>
-							<th><strong>Saldo</strong></th>
-							<th><strong>Tipo compra</strong></th>
-							<th><strong>Estado</strong></th>
-						</thead>
+					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td id="providerModal"></td>
+								<td style="border:0;">Proveedor</td>
+								<td id="providerModal" style="border:0;"></td>
+							</tr>
+							<tr>
+								<td>Fecha de solicitud</td>
 								<td id="payDateModal"></td>
+							</tr>
+							<tr>
+								<td>Fecha de pago</td>
 								<td id="dutyDateModal"></td>
+							</tr>
+							<tr>
+								<td>Saldo</td>
 								<td id="balanceModal"></td>
+							</tr>
+							<tr>
+								<td>Tipo de compra</td>
 								<td id="typeOfPurchaseModal"></td>
+							</tr>
+							<tr>
+								<td>Estado</td>
 								<td id="statusModal"></td>
+							</tr>
 							</tr>
 						</tbody>
 					</table>
