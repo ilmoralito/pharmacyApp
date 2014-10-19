@@ -284,7 +284,7 @@ class PurchaseOrderController {
         }
 
         flow.medicines = flow.purchaseOrder?.items?.findAll { it instanceof ni.sb.MedicineOrder }
-        flow.products = flow.purchaseOrder?.items?.findAll { !(it instanceof ni.sb.MedicineOrder) || !(it instanceof ni.sb.BrandProductOrder) }
+        flow.products = flow.purchaseOrder?.items?.findAll { !(it in ni.sb.MedicineOrder) && !(it in ni.sb.BrandProductOrder) }
         flow.brandProductsOrders = flow.purchaseOrder?.items?.findAll { it instanceof ni.sb.BrandProductOrder }
       }
 
