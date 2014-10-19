@@ -517,6 +517,10 @@ class PurchaseOrderController {
   }
 
   private savePurchaseOrder(List medicines, List brandProductsOrders, List products, PurchaseOrder purchaseOrder) {
+    if (purchaseOrder?.items) {
+      purchaseOrder.items.clear()
+    }
+
     if (medicines) {
       medicines.each { medicine ->
         purchaseOrder.addToItems medicine
