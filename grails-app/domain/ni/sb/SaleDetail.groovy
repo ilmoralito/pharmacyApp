@@ -1,8 +1,6 @@
 package ni.sb
 
 class SaleDetail implements Serializable {
-  //def itemService
-
 	Item item
   Presentation presentation
   String measure
@@ -13,25 +11,6 @@ class SaleDetail implements Serializable {
 	Date lastUpdated
 
   static constraints = {
-    /*
-    product validator:{ product ->
-      if (!itemService.checkValidProduct(product)) {
-        "saleDetail.product.notMatch"
-      }
-    }
-
-    presentation validator:{ presentation, saleDetail ->
-      if (!saleDetail.product.presentations.contains(presentation)) {
-        "saleDetail.presentation.notFound"
-      }
-    }
-
-    measure validator: { measure, saleDetail ->
-      if (!saleDetail.presentation.measures.contains(measure)) {
-        "saleDetail.measure.notFound"
-      }
-    }
-    */
     item nullable:false
     presentation nullable:false
     measure blank:false
