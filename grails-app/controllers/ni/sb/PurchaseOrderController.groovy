@@ -292,6 +292,38 @@ class PurchaseOrderController {
     }
 
     medicine {
+      on("addItem") {
+        if (flow.medicines) {
+          def medicineInstance = flow.medicines.find {
+            it.product == Product.get(params.int("product")) &&
+            it.presentation == Presentation.get(params.int("presentation")) &&
+            it.measure == params?.measure &&
+            it.bash.clearTime() == params.date("bash", "yyyy-MM-dd").clearTime()
+          }
+
+          if (medicineInstance) {
+            flow.medicines -= medicineInstance
+            flow.purchaseOrder.balance -= medicineInstance.total
+          }
+        }
+
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        def medicine = new MedicineOrder(params)
+
+        if (!medicine.validate(["product", "presentation", "measure", "quantity", "purchasePrice", "sellingPrice", "bash"])) {
+          medicine.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + medicine.total
+
+        flow.medicines << medicine
+      }.to "medicine"
 
       on("medicine").to "medicine"
       on("product").to "product"
@@ -301,15 +333,82 @@ class PurchaseOrderController {
     }
 
     product {
+      on("addItem") {
+        if (!params?.quantity || !params?.purchasePrice || !params?.sellingPrice) { return error() }
+
+        if (flow.products) {
+          def productInstance = flow.products.find { 
+            it.product == Product.get(params.int("product"))
+          }
+
+          if (productInstance) {
+            flow.products -= productInstance
+            flow.purchaseOrder.balance -= productInstance.total
+          }
+        }
+
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        def product = new Item(params)
+
+        if (!product.validate(["product", "quantity", "purchasePrice", "sellingPrice"])) {
+          product.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + product.total
+
+        flow.products << product
+      }.to "product"
 
       on("medicine").to "medicine"
       on("product").to "product"
       on("brand").to "brand"
       on("editPurchaseOrder").to "editPurchaseOrder"
+      on("complete") {
+        this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
+      }.to "done"
       on("cancel").to "done"
     }
 
     brand {
+      on("addItem") {
+        if (!params?.quantity || !params?.purchasePrice || !params?.sellingPrice) { return error() }
+
+        if (flow.brandProductsOrders) {
+          def brandProductOrderInstance = flow.brandProductsOrders.find { 
+            it.product == Product.get(params.int("product")) &&
+            it.brand == Brand.get(params.int("brand")) &&
+            it.detail == params?.detail
+          }
+
+          if (brandProductOrderInstance) {
+            flow.brandProductsOrders -= brandProductOrderInstance
+            flow.purchaseOrder.balance -= brandProductOrderInstance.total
+          }
+        }
+
+        params.total = params.float("purchasePrice", 0) * params.int("quantity", 0)
+
+        def brandProductOrder = new BrandProductOrder(params)
+
+        if (!brandProductOrder.validate(["product", "brand", "detail", "quantity", "purchasePrice", "sellingPrice"])) {
+          brandProductOrder.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        def balance = flow.purchaseOrder.balance ?: 0
+        flow.purchaseOrder.balance = balance + brandProductOrder.total
+
+        flow.brandProductsOrders << brandProductOrder
+      }.to "brand"
 
       on("medicine").to "medicine"
       on("product").to "product"
