@@ -325,6 +325,10 @@ class PurchaseOrderController {
         flow.medicines << medicine
       }.to "medicine"
 
+      on("deleteMedicine") {
+        this.deleteItem(params.int("index"), flow.medicines, flow.purchaseOrder)
+      }.to "medicine"
+
       on("complete") {
         this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
@@ -373,6 +377,10 @@ class PurchaseOrderController {
         this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
 
+      on("deleteItem") {
+        this.deleteItem(params.int("index"), flow.products, flow.purchaseOrder)
+      }.to "product"
+
       on("medicine").to "medicine"
       on("product").to "product"
       on("brand").to "brand"
@@ -418,6 +426,10 @@ class PurchaseOrderController {
       on("complete") {
         this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
+
+      on("deleteBrandProductOrder") {
+        this.deleteItem(params.int("index"), flow.brandProductsOrders, flow.purchaseOrder)
+      }.to "brand"
 
       on("medicine").to "medicine"
       on("product").to "product"
