@@ -3,7 +3,12 @@ modules = {
     resource url:"css/main.css"
   }
 
-  createPurchaseOrder {
+  createAndUpdatePurchaseOrder {
+    dependsOn "app"
+    resource url:"js/createAndUpdatePurchaseOrder.js"
+  }
+
+  adminMedicine {
   	dependsOn "app"
     dependsOn "calculateSellingPrice"
     resource url:"js/application.js"
@@ -13,6 +18,10 @@ modules = {
     dependsOn "app"
     dependsOn "calculateSellingPrice"
     resource url:"js/brandProduct.js"
+  }
+
+  calculateSellingPrice {
+    resource url:"js/calculateSellingPrice.js"
   }
 
   saleFilter {
@@ -38,9 +47,5 @@ modules = {
 
    modal {
     resource url:"js/modal.js"
-  }
-
-  calculateSellingPrice {
-    resource url:"js/calculateSellingPrice.js"
   }
 }

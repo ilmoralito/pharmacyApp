@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Crear pedido</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, createPurchaseOrder, jquery-ui"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, createAndUpdatePurchaseOrder, jquery-ui"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>

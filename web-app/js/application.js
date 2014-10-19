@@ -1,9 +1,4 @@
 $(document).ready(function() {
-	$("#dutyDate").datepicker({
-	 	dateFormat: "yy-mm-dd",
-	 	minDate: +1
-	});
-
 	$("#bash").datepicker({
 	 	dateFormat: "yy-mm-dd",
 	 	minDate: +60
