@@ -11,8 +11,8 @@
 	<br><br>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-1">
-				<h1 class="pull-right">Santa Barbara</h1>
-				<p class="pull-right">Farmacia, Mina el Limon</p>
+				<h1>Santa Barbara</h1>
+				<p>Farmacia, Mina el Limon</p>
 			</div>
 			<div class="col-md-4">
 				<g:layoutBody/>
