@@ -26,9 +26,47 @@ class SaleController {
 
     items
   }
+
+  def createSaleToClientFlow = {
+    init {
+      action {
+        def clients = Client.where {
+          status == true
+        }
+
+        [clients:clients.list()]
+      }
+
+      on("success").to "selectCustomer"
+    }
+
+    selectCustomer {
+      on("confirm") { SelectCustomer command ->
+        if (command.hasErrors()) {
+          command.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+
+          return error()
+        }
+
+        [client:command.client, typeOfPurchase:command.typeOfPurchase]
+      }.to "managePurchase"
+
+      on("cancel").to "done"
+    }
+
+    managePurchase {
+      
+    }
+
+    done() {
+      redirect controller:"sale", action:"list"
+    }
+  }
 }
 
-class SaleToClientCommand implements Serializable {
+class SelectCustomer implements Serializable {
   Client client
   String typeOfPurchase
 
