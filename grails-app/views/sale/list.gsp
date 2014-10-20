@@ -11,7 +11,7 @@
 		<div class="col-md-12">
 			<div class="pull-right">
 				<g:link action="createGeneralSale" class="btn btn-primary">General</g:link>
-				<g:link action="createClientSale" class="btn btn-primary">A cliente</g:link>
+				<g:link action="createSaleToClient" class="btn btn-primary">A cliente</g:link>
 			</div>
 		</div>
 	</div>

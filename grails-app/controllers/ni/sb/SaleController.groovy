@@ -8,7 +8,7 @@ class SaleController {
 
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET",
+		list:"GET"
 	]
 
   def list() {
