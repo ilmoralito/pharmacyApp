@@ -57,7 +57,18 @@ class SaleController {
     }
 
     managePurchase {
+      action {
+        def medicines = MedicineOrder.list()
+
+        [medicines:medicines]
+      }
+
+      on("success").to "medicine"
+    }
+
+    medicine {
       on("selectCustomer").to "selectCustomer"
+      on("medicine").to "managePurchase"
     }
 
     done() {

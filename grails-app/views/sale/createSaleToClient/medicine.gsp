@@ -26,6 +26,19 @@
 				</tbody>
 			</table>
 			<g:link event="selectCustomer" class="btn btn-default btn-block">Cambiar datos</g:link>
+			<br>
+
+			<!--Tabs-->
+			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
+			  <li class="active">
+			  	<g:link event="medicine">Medicina</g:link>
+			  </li>
+			  <li><g:link event="product">Producto</g:link></li>
+			  <li><g:link event="brand">Marca</g:link></li>
+			</ul>
+
+			<!--Medicines-->
+			
 		</div>
 	</div>
 </body>
