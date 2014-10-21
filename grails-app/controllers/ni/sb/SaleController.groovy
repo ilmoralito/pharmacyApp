@@ -57,7 +57,7 @@ class SaleController {
     }
 
     managePurchase {
-      
+      on("selectCustomer").to "selectCustomer"
     }
 
     done() {

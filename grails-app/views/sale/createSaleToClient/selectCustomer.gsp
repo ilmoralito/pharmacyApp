@@ -14,7 +14,7 @@
 			<g:form>
 				<div class="form-group">
 					<label for="client">Cliente</label>
-					<g:select name="client.id" from="${clients}" value="${client}" optionKey="id" class="form-control"/>
+					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" class="form-control"/>
 				</div>
 
 				<div class="form-group">
