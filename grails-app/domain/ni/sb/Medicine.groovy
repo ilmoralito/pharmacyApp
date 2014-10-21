@@ -15,7 +15,7 @@ class Medicine extends Product {
 
   static constraints = {
     code blank:false
-    genericName unique:true, nullable:true
+    genericName nullable:true
     presentations nullable:false
   }
 
