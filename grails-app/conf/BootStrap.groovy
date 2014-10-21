@@ -22,7 +22,7 @@ class BootStrap {
           def presentation1 = new Presentation(name:"Crema", measures:["5g", "15g"])
           medicine1.addToPresentations(presentation1)
 
-        def medicine2 = new Medicine(name:"Medicine2", status:false, code:"1235")
+        def medicine2 = new Medicine(name:"Medicine2", code:"1235", genericName:"someGenericName")
           
           def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
           medicine2.addToPresentations(presentation2)
