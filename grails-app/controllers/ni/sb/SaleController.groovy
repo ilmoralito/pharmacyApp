@@ -58,9 +58,16 @@ class SaleController {
 
     managePurchase {
       action {
-        def medicines = MedicineOrder.list()
+        def criteria = MedicineOrder.createCriteria()
+        def medicines = criteria.list {
+          projections {
+            groupProperty "product"
+          }
+        }
 
-        [medicines:medicines]
+        def genericNames = medicines.groupBy { it.genericName }.keySet() as List
+
+        [medicines:medicines, genericNames:genericNames]
       }
 
       on("success").to "medicine"
@@ -73,6 +80,23 @@ class SaleController {
 
     done() {
       redirect controller:"sale", action:"list"
+    }
+  }
+
+  def filterMedicinesByGenericName(String genericName) {
+    def criteria = MedicineOrder.createCriteria()
+    def results = criteria.list {
+      product {
+        eq "genericName", genericName
+      }
+
+      projections {
+        groupProperty "product"
+      }
+    }
+
+    render(contentType:"application/json") {
+      results
     }
   }
 }
