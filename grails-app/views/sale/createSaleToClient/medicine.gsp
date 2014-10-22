@@ -46,7 +46,7 @@
 				<div class="form-group">
 					<g:select name="product" from="${medicines}" optionKey="id" class="form-control"/>
 				</div>
-				<g:submitButton name="search" value="Buscar" class="btn btn-primary"/>
+				<g:submitButton name="search" value="Filtrar" class="btn btn-primary"/>
 			</g:form>
 		</div>
 	</div>
