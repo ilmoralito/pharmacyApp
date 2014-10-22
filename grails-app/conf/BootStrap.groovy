@@ -27,12 +27,17 @@ class BootStrap {
           def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
           medicine2.addToPresentations(presentation2)
 
+        def medicine3 = new Medicine(name:"Medicine3", code:"1236", genericName:"anotherGenericName")
+          
+          def presentation3 = new Presentation(name:"Inyectable", measures:["20ml", "25ml"])
+          medicine3.addToPresentations(presentation3)
+
         def brandProduct0 = new BrandProduct(name:"Papel higienico")
           def brand0 = new Brand(name:"Colgate", details:["Pequeno", "Grande"])
 
           brandProduct0.addToBrands(brand0)
 
-        def productsInProvider1 = [product1, product2, product3, medicine1, medicine2, brandProduct0]
+        def productsInProvider1 = [product1, product2, product3, medicine1, medicine2, medicine3, brandProduct0]
 
         productsInProvider1.each { product ->
           provider1.addToProducts product
@@ -74,10 +79,10 @@ class BootStrap {
         }
 
         assert Provider.count() == 2
-        assert provider1.products.size() == 6
+        assert provider1.products.size() == 7
         assert provider2.products.size() == 4
         assert BrandProduct.count() == 3
-        assert Medicine.count() == 2
+        assert Medicine.count() == 3
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PROVIDERS
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -94,9 +99,20 @@ class BootStrap {
         def item2 = new Item(product:product2, quantity:100, purchasePrice:25, sellingPrice:25 + (25 * 0.25), total:100 * 25)
         def item3 = new Item(product:product4, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
 
-        purchaseOrder1.addToItems(item1).addToItems(item2).addToItems(item3)
+        def m0 = new MedicineOrder(
+          product:medicine1,
+          presentation:presentation1,
+          measure:presentation1.measures[1],
+          bash:today + 89,
+          quantity:50,
+          purchasePrice:16,
+          sellingPrice:16 + (16 * 0.25),
+          total:50 * 16
+        )
 
-        purchaseOrder1.balance += [item1, item2, item3].sum { it.total }
+        purchaseOrder1.addToItems(item1).addToItems(item2).addToItems(item3).addToItems(m0)
+
+        purchaseOrder1.balance += [item1, item2, item3, m0].sum { it.total }
 
         if (!purchaseOrder1.save()) {
           purchaseOrder1.errors.allErrors.each { error ->
@@ -120,9 +136,31 @@ class BootStrap {
           total:50 * 16
         )
 
-        purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1)
+        def m2 = new MedicineOrder(
+          product:medicine2,
+          presentation:presentation2,
+          measure:presentation2.measures[0],
+          bash:today + 89,
+          quantity:50,
+          purchasePrice:10,
+          sellingPrice:10 + (10 * 0.25),
+          total:50 * 10
+        )
 
-        purchaseOrder2.balance += [item4, item5, m1].sum { it.total }
+        def m3 = new MedicineOrder(
+          product:medicine3,
+          presentation:presentation3,
+          measure:presentation3.measures[1],
+          bash:today + 89,
+          quantity:50,
+          purchasePrice:5,
+          sellingPrice:5 + (5 * 0.25),
+          total:50 * 5
+        )
+
+        purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1).addToItems(m2).addToItems(m3)
+
+        purchaseOrder2.balance += [item4, item5, m1, m2, m3].sum { it.total }
 
         if (!purchaseOrder2.save()) {
           purchaseOrder2.errors.allErrors.each { error ->
@@ -131,9 +169,10 @@ class BootStrap {
         }
 
         assert PurchaseOrder.count() == 2
-        assert Item.count() == 6
-        assert purchaseOrder1.balance == 4500
-        assert purchaseOrder2.balance == 3025
+        assert Item.count() == 9
+        //println purchaseOrder1.balance
+        //assert purchaseOrder1.balance == 4500.00
+        assert purchaseOrder2.balance == 3775.00
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PURCHASE ORDER
