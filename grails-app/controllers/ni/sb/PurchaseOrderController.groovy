@@ -12,7 +12,8 @@ class PurchaseOrderController {
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET",
     getBrandsByBrandProduct:"GET",
-    getDetailsInBrand:"GET"
+    getDetailsInBrand:"GET",
+    addProduct:"GET"
 	]
 
   def list() {
@@ -570,5 +571,22 @@ class PurchaseOrderController {
   private deleteItem(Integer index, List items, PurchaseOrder purchaseOrder) {
     purchaseOrder.balance -= items[index].total
     items.remove index
+  }
+
+  def addProduct(String productInstance, Integer providerId) {
+    def provider = Provider.get(providerId)
+    def product = new Product(name:productInstance)
+
+    provider.addToProducts product
+
+    if (!provider.save(flush:true)) {
+      provider.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"
+      }
+    }
+
+    render(contentType:"application/json") {
+      product
+    }
   }
 }

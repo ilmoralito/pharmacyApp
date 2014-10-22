@@ -52,4 +52,8 @@ modules = {
   filterMedicinesByGenericName {
     resource url:"js/filterMedicinesByGenericName.js"
   }
+
+  adding {
+    resource url:"js/adding.js"
+  }
 }

@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar articulos</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app, calculateSellingPrice"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app, calculateSellingPrice, adding"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>
@@ -26,6 +26,18 @@
 			</ul>
 
 			<g:form autocomplete="off">
+				<a href="#" id="trigger" class="btn btn-link btn-xs">Agregar producto</a>
+				
+				<div id="box" style="display:none;">
+					<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
+
+					<div class="form-group">
+						<input type="text" id="newProduct" name="newProduct" class="form-control"/>
+					</div>
+
+					<a href="#" id="send" type="submit" class="btn btn-default">Agregar</a>
+				</div>
+
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
 					<select name="product" id="product" class="form-control">
