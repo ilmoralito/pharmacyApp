@@ -76,6 +76,10 @@ class SaleController {
     }
 
     medicine {
+      on("filter") {
+        
+      }.to "medicine"
+
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
     }
