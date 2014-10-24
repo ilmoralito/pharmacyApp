@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar venta</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, filterMedicinesByGenericName"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, saleMedicine"/>
 </head>
 <body>
 	<div class="row">
@@ -45,6 +45,12 @@
 			<g:form>
 				<div class="form-group">
 					<g:select name="product" from="${medicines}" optionKey="id" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<g:select name="presentation" from="${}" optionKey="id" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<g:select name="measure" from="${}" class="form-control"/>
 				</div>
 				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary"/>
 			</g:form>
