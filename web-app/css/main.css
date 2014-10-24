@@ -19,3 +19,11 @@ table { margin: 15px 0; }
 
 .measures { display: none; }
 
+#box {
+	display:none
+}
+
+.NewProducto { 
+	margin-top: -8px; 
+}
+
