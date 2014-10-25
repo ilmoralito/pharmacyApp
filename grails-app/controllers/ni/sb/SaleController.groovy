@@ -77,7 +77,14 @@ class SaleController {
 
     medicine {
       on("filter") {
-        
+        def criteria = MedicineOrder.createCriteria()
+        def results = criteria.list {
+          product {
+            eq "name", params?.product
+          }
+        }
+
+        [results:results, product:params?.product, genericName:params?.genericName]
       }.to "medicine"
 
       on("selectCustomer").to "selectCustomer"

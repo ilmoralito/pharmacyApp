@@ -1,5 +1,5 @@
 $(function() {
-	$("#grenericName").on("change", function(){
+	$("#genericName").on("change", function(){
 		var genericName = $(this).val()
 
 		$.ajax({
@@ -11,11 +11,11 @@ $(function() {
 				if (data.length) {
 					product.find("option").remove()
 
-					for (var i = 0; i < data.length; i++) {
-						var opt = $("<option>", { value:data[i].id, text:data[i].name });
+					$.each (data, function(index, medicine) {
+						var option = $("<option>", { value:medicine.name, text:medicine.name });
 
-						product.append(opt)
-					}
+						product.append(option)
+					})
 				}
 			}
 		})

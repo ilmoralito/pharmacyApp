@@ -37,23 +37,41 @@
 			  <li><g:link event="brand">Marca</g:link></li>
 			</ul>
 
-			<!--Medicines-->
-			<div class="form-group">
-				<g:select name="grenericName" from="${genericNames}" noSelection="['':'Nombres genericos']" class="form-control"/>
-			</div>
-
+			<!--Filter medicines-->
 			<g:form>
 				<div class="form-group">
-					<g:select name="product" from="${medicines}" optionKey="id" class="form-control"/>
+					<g:select name="genericName" from="${genericNames}" value="${genericName}" noSelection="['':'Nombres genericos']" class="form-control"/>
 				</div>
+
 				<div class="form-group">
-					<g:select name="presentation" from="${}" optionKey="id" class="form-control"/>
+					<g:select name="product" from="${medicines}" value="${product}" class="form-control"/>
 				</div>
-				<div class="form-group">
-					<g:select name="measure" from="${}" class="form-control"/>
-				</div>
+
 				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary"/>
 			</g:form>
+
+			<g:if test="${results}">
+				<hr>
+
+				<g:each in="${results}" var="medicine">
+					<div class="row">
+						<g:form>
+							<div class="col-md-3">
+								${medicine}
+							</div>
+							<div class="col-md-3">
+								${medicine.presentation}
+							</div>
+							<div class="col-md-3">
+								${medicine.measure}
+							</div>
+							<div class="col-md-3">
+								${medicine.quantity} ${medicine.bash}
+							</div>
+						</g:form>
+					</div>
+				</g:each>
+			</g:if>
 		</div>
 	</div>
 </body>
