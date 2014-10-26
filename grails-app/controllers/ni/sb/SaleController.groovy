@@ -84,7 +84,9 @@ class SaleController {
           }
         }
 
-        [results:results, product:params?.product, genericName:params?.genericName]
+        def medicinesGrouped = results.groupBy { it.presentation }
+
+        [results:medicinesGrouped, product:params?.product, genericName:params?.genericName]
       }.to "medicine"
 
       on("selectCustomer").to "selectCustomer"

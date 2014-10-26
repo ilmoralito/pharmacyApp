@@ -47,29 +47,38 @@
 					<g:select name="product" from="${medicines}" value="${product}" class="form-control"/>
 				</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
 
 			<g:if test="${results}">
-				<hr>
+				<g:each in="${results.keySet()}" var="presentation">
+					<h4>${presentation}</h4>
 
-				<g:each in="${results}" var="medicine">
-					<div class="row">
-						<g:form>
-							<div class="col-md-3">
-								${medicine}
-							</div>
-							<div class="col-md-3">
-								${medicine.presentation}
-							</div>
-							<div class="col-md-3">
-								${medicine.measure}
-							</div>
-							<div class="col-md-3">
-								${medicine.quantity} ${medicine.bash}
-							</div>
-						</g:form>
-					</div>
+					<g:each in="${results[presentation]}" var="medicine">
+						<table class="table" style="margin:0;">
+							<tbody>
+								<tr>
+									<g:form>
+										<g:hiddenField name="id" value="${medicine.id}"/>
+
+										<td style="vertical-align: middle;">${medicine.measure}</td>
+										<td style="vertical-align: middle;"><g:formatDate date="${medicine.bash}" formatName="fv.date.format"/></td>
+										<td style="vertical-align: middle;">${medicine.sellingPrice}</td>
+										<td style="vertical-align: middle;">
+											<g:set var="quantity" value="${medicine.quantity}"/>
+
+											<input type="number" min="1" max="${quantity}" class="form-control input-sm" placeholder="${quantity}"/>
+										</td>
+										<td style="vertical-align: middle;">
+											<button type="submit" name="addMedicine" class="btn btn-primary btn-xs">
+												<span class="glyphicon glyphicon-plus"></span>
+											</button>
+										</td>
+									</g:form>
+								</tr>
+							</tbody>
+						</table>
+					</g:each>
 				</g:each>
 			</g:if>
 		</div>
