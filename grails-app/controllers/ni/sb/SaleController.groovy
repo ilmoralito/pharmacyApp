@@ -86,7 +86,9 @@ class SaleController {
 
         def medicinesGrouped = results.groupBy { it.presentation }
 
-        [results:medicinesGrouped, product:params?.product, genericName:params?.genericName]
+        def medicinesFiltredByGenericName = params?.genericName ? flow.medicines.findAll { it.genericName == params?.genericName } : null
+
+        [results:medicinesGrouped, product:params?.product, genericName:params?.genericName, medicinesFiltredByGenericName:medicinesFiltredByGenericName]
       }.to "medicine"
 
       on("selectCustomer").to "selectCustomer"
