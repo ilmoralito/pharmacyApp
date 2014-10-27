@@ -56,7 +56,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<g:link event="selectCustomer" class="btn btn-default btn-block">Cambiar datos</g:link>
+			<g:link event="selectCustomer" class="btn btn-primary btn-block">Cambiar datos venta</g:link>
 			<br>
 
 			<!--Tabs-->
