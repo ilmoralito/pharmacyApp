@@ -37,6 +37,10 @@
 								</td>
 							</tr>
 						</g:each>
+						<tr>
+							<td colspan="4">TOTAL</td>
+							<td colspan="2">${medicinesToSale.total.sum()}</td>
+						</tr>
 					</tbody>
 				</table>
 			</g:if>
