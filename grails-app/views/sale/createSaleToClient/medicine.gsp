@@ -92,7 +92,8 @@
 										<td style="vertical-align: middle;"><g:formatDate date="${medicine.bash}" formatName="fv.date.format"/></td>
 										<td style="vertical-align: middle;">${medicine.sellingPrice}</td>
 										<td style="vertical-align: middle;">
-											<g:set var="quantity" value="${medicine.quantity}"/>
+											<g:set var="q" value="${medicinesToSale.find { it.item == medicine }?.quantity ?: 0}"/>
+											<g:set var="quantity" value="${medicinesToSale ? medicine.quantity - q : medicine.quantity}"/>
 
 											<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
 										</td>
