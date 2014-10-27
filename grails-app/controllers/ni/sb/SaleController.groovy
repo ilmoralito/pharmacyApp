@@ -36,7 +36,11 @@ class SaleController {
           status == true
         }
 
-        [clients:clients.list()]
+        def medicinesToSale = []
+        def productsToSale = []
+        def brandsToSale = []
+
+        [clients:clients.list(), medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
       }
 
       on("success").to "selectCustomer"
@@ -77,6 +81,7 @@ class SaleController {
 
     medicine {
       on("filter") {
+        def genericName = params?.genericName
         def criteria = MedicineOrder.createCriteria()
         def results = criteria.list {
           product {
@@ -85,10 +90,22 @@ class SaleController {
         }
 
         def medicinesGrouped = results.groupBy { it.presentation }
+        def medicinesFiltredByGenericName = genericName ? flow.medicines.findAll { it.genericName == genericName } : null
 
-        def medicinesFiltredByGenericName = params?.genericName ? flow.medicines.findAll { it.genericName == params?.genericName } : null
+        [results:medicinesGrouped, product:params?.product, genericName:genericName, medicinesFiltredByGenericName:medicinesFiltredByGenericName]
+      }.to "medicine"
 
-        [results:medicinesGrouped, product:params?.product, genericName:params?.genericName, medicinesFiltredByGenericName:medicinesFiltredByGenericName]
+      on("addItem") {
+        def item = Item.get params?.id
+
+        if (!item) { response.sendError 404 }
+
+        def quantity = params.int("quantity")
+        def totalToPay = item.sellingPrice * quantity
+
+        def saleDetail = new SaleDetail(item:item, quantity:quantity, total:totalToPay)
+
+        flow.medicinesToSale << saleDetail
       }.to "medicine"
 
       on("selectCustomer").to "selectCustomer"

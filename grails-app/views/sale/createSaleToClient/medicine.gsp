@@ -9,7 +9,34 @@
 <body>
 	<div class="row">
 		<div class="col-md-8">
-			
+			<!--Medicines-->
+			<g:if test="${medicinesToSale}">
+				<h4>Medicinas</h4>
+
+				<table class="table">
+					<thead>
+						<th>Nombre</th>
+						<th>Presentacion</th>
+						<th>Medida</th>
+						<th>Cantidad</th>
+						<th>Total a pagar</th>
+						<th width="1"></th>
+					</thead>
+					<tbody>
+						<g:each in="${medicinesToSale}" var="medicine">
+							<tr>
+								<td>${medicine.item.product.name}</td>
+								<td>${medicine.item.presentation}</td>
+								<td>${medicine.item.measure}</td>
+								<td>${medicine.quantity}</td>
+								<td>${medicine.total}</td>
+								<td><g:link event="deleteItem"><span class="glyphicon glyphicon-trash"></span></g:link></td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</g:if>
+
 		</div>
 		<div class="col-md-4">
 			<!--Datos de cliente-->
@@ -67,12 +94,10 @@
 										<td style="vertical-align: middle;">
 											<g:set var="quantity" value="${medicine.quantity}"/>
 
-											<input type="number" min="1" max="${quantity}" class="form-control input-sm" placeholder="${quantity}"/>
+											<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
 										</td>
 										<td style="vertical-align: middle;">
-											<button type="submit" name="addMedicine" class="btn btn-primary btn-xs">
-												<span class="glyphicon glyphicon-plus"></span>
-											</button>
+											<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
 										</td>
 									</g:form>
 								</tr>
