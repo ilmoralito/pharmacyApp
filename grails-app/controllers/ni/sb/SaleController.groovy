@@ -108,6 +108,12 @@ class SaleController {
         flow.medicinesToSale << saleDetail
       }.to "medicine"
 
+      on("deleteItem") {
+        def index = params.int("index")
+
+        flow.medicinesToSale.remove index
+      }.to "medicine"
+
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
     }

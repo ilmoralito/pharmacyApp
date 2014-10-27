@@ -23,14 +23,18 @@
 						<th width="1"></th>
 					</thead>
 					<tbody>
-						<g:each in="${medicinesToSale}" var="medicine">
+						<g:each in="${medicinesToSale}" var="medicine" status="index">
 							<tr>
 								<td>${medicine.item.product.name}</td>
 								<td>${medicine.item.presentation}</td>
 								<td>${medicine.item.measure}</td>
 								<td>${medicine.quantity}</td>
 								<td>${medicine.total}</td>
-								<td><g:link event="deleteItem"><span class="glyphicon glyphicon-trash"></span></g:link></td>
+								<td>
+									<g:link event="deleteItem" params="[index:index]">
+										<span class="glyphicon glyphicon-trash"></span>
+									</g:link>
+								</td>
 							</tr>
 						</g:each>
 					</tbody>
