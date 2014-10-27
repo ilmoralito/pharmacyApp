@@ -127,22 +127,8 @@ class SelectCustomer implements Serializable {
   }
 }
 
-class SelectProductCommand implements Serializable {
-  Product product
-
-  static constraints = {
-    product nullable:false, validator: { product ->
-      if (!product.status) {
-        "selectProductCommand.product.notValidProduct"
-      }
-    }
-  }
-}
-
 class SaleDetailCommand implements Serializable {
   Item item
-  Presentation presentation
-  String measure
   Integer quantity
   BigDecimal total = 1
 
