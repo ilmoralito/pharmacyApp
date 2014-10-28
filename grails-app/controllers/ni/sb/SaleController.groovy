@@ -100,18 +100,7 @@ class SaleController {
 
         if (!item) { response.sendError 404 }
 
-        def itemToSale = flow.medicinesToSale.find { it.item == item }
-
-        if (itemToSale) {
-          flow.medicinesToSale -= itemToSale
-        }
-
-        def quantity = params.int("quantity")
-        def totalToPay = item.sellingPrice * quantity
-
-        def saleDetail = new SaleDetail(item:item, quantity:quantity, total:totalToPay)
-
-        flow.medicinesToSale << saleDetail
+        flow.medicinesToSale = this.addItem(flow.medicinesToSale, item, params.int("quantity"))
       }.to "medicine"
 
       on("deleteItem") {
