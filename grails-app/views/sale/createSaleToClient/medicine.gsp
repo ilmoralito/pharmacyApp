@@ -63,6 +63,11 @@
 			<g:link event="selectCustomer" class="btn btn-primary btn-block">Cambiar datos venta</g:link>
 			<br>
 
+			<!--Balance-->
+			<div class="well well-sm">
+				Saldo: ${medicinesToSale?.total?.sum() ?: 0 + productsToSale?.total?.sum() ?: 0 + brandsToSale?.total?.sum() ?: 0}
+			</div>
+
 			<!--Tabs-->
 			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
 			  <li class="active">
