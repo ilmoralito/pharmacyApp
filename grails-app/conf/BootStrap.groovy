@@ -97,7 +97,7 @@ class BootStrap {
 
         def item1 = new Item(product:product1, quantity:100, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
         def item2 = new Item(product:product2, quantity:100, purchasePrice:25, sellingPrice:25 + (25 * 0.25), total:100 * 25)
-        def item3 = new Item(product:product4, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
+        def item3 = new Item(product:product3, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
 
         def m0 = new MedicineOrder(
           product:medicine1,
