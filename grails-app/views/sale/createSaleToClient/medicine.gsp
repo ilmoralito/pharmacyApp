@@ -9,71 +9,21 @@
 <body>
 	<div class="row">
 		<div class="col-md-8">
-			<!--Medicines-->
-			<g:if test="${medicinesToSale}">
-				<h4>Medicinas</h4>
-
-				<table class="table">
-					<thead>
-						<th>Nombre</th>
-						<th>Presentacion</th>
-						<th>Medida</th>
-						<th>Cantidad</th>
-						<th>Total a pagar</th>
-						<th width="1"></th>
-					</thead>
-					<tbody>
-						<g:each in="${medicinesToSale}" var="medicine" status="index">
-							<tr>
-								<td>${medicine.item.product.name}</td>
-								<td>${medicine.item.presentation}</td>
-								<td>${medicine.item.measure}</td>
-								<td>${medicine.quantity}</td>
-								<td>${medicine.total}</td>
-								<td>
-									<g:link event="deleteItem" params="[index:index]">
-										<span class="glyphicon glyphicon-trash"></span>
-									</g:link>
-								</td>
-							</tr>
-						</g:each>
-						<tr>
-							<td colspan="4">TOTAL</td>
-							<td colspan="2">${medicinesToSale.total.sum()}</td>
-						</tr>
-					</tbody>
-				</table>
-			</g:if>
-
+			<g:render template="createSaleToClient/saleDetails"/>
 		</div>
 		<div class="col-md-4">
-			<!--Datos de cliente-->
-			<table class="table" style="margin-bottom:10px;">
-				<tbody>
-					<tr>
-						<td style="border:0;">Cliente</td>
-						<td style="border:0;">${client}</td>
-					</tr>
-					<tr>
-						<td>Tipo de compra</td>
-						<td>${typeOfPurchase}</td>
-					</tr>
-				</tbody>
-			</table>
-			<g:link event="selectCustomer" class="btn btn-primary btn-block">Cambiar datos venta</g:link>
-			<br>
+			<!--Client data-->
+			<g:render template="createSaleToClient/clientData"/>
 
 			<!--Balance-->
-			<div class="well well-sm">
-				Saldo: ${medicinesToSale?.total?.sum() ?: 0 + productsToSale?.total?.sum() ?: 0 + brandsToSale?.total?.sum() ?: 0}
-			</div>
+			<g:render template="createSaleToClient/balance"/>
 
 			<!--Tabs-->
 			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
 			  <li class="active">
 			  	<g:link event="medicine">Medicina</g:link>
 			  </li>
-			  <li><g:link event="product">Producto</g:link></li>
+			  <li><g:link event="manageProducts">Producto</g:link></li>
 			  <li><g:link event="brand">Marca</g:link></li>
 			</ul>
 

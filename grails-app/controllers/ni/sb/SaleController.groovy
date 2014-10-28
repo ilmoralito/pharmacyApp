@@ -120,6 +120,24 @@ class SaleController {
         flow.medicinesToSale.remove index
       }.to "medicine"
 
+      on("manageProducts").to "manageProducts"
+      on("selectCustomer").to "selectCustomer"
+      on("medicine").to "managePurchase"
+    }
+
+    manageProducts {
+      action {
+        def items = Item.findAllByQuantityGreaterThan(0)
+
+        [items:items]
+      }
+
+      on("success").to "product"
+    }
+
+    product {
+
+      on("manageProducts").to "manageProducts"
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
     }
