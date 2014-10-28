@@ -100,6 +100,12 @@ class SaleController {
 
         if (!item) { response.sendError 404 }
 
+        def itemToSale = flow.medicinesToSale.find { it.item == item }
+
+        if (itemToSale) {
+          flow.medicinesToSale -= itemToSale
+        }
+
         def quantity = params.int("quantity")
         def totalToPay = item.sellingPrice * quantity
 
