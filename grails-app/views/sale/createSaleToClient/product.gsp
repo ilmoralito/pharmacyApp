@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar venta</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, saleMedicine"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse"/>
 </head>
 <body>
 	<div class="row">
@@ -27,8 +27,31 @@
 			  <li><g:link event="brand">Marca</g:link></li>
 			</ul>
 
-			
+			<!--Items-->
+			<table class="table">
+				<tbody>
+					<g:each in="${items}" var="item">
+						<g:if test="${!(item instanceof ni.sb.MedicineOrder) && !(item instanceof ni.sb.BrandProductOrder)}">
+							<g:form>
+								<g:hiddenField name="id" value="${item.id}"/>
 
+								<tr>
+									<td style="vertical-align: middle;">${item}</td>
+									<td style="vertical-align: middle;">
+										<g:set var="q" value="${productsToSale.find { it.item == item }?.quantity ?: 0}"/>
+										<g:set var="quantity" value="${productsToSale ? item.quantity - q : item.quantity}"/>
+
+										<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
+									</td>
+									<td style="vertical-align: middle;" width="1">
+										<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
+									</td>
+								</tr>
+							</g:form>
+						</g:if>
+					</g:each>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>

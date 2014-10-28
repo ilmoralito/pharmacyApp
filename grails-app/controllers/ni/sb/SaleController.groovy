@@ -136,6 +136,9 @@ class SaleController {
     }
 
     product {
+      on("addItem") {
+        
+      }.to "product"
 
       on("manageProducts").to "manageProducts"
       on("selectCustomer").to "selectCustomer"
