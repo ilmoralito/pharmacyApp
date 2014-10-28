@@ -24,7 +24,7 @@
 			  <li class="active">
 			  	<g:link event="manageProducts">Producto</g:link>
 			  </li>
-			  <li><g:link event="brand">Marca</g:link></li>
+			  <li><g:link event="manageBrands">Marca</g:link></li>
 			</ul>
 
 			<!--Items-->

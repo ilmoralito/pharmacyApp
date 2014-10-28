@@ -24,7 +24,7 @@
 			  	<g:link event="medicine">Medicina</g:link>
 			  </li>
 			  <li><g:link event="manageProducts">Producto</g:link></li>
-			  <li><g:link event="brand">Marca</g:link></li>
+			  <li><g:link event="manageBrands">Marca</g:link></li>
 			</ul>
 
 			<!--Filter medicines-->

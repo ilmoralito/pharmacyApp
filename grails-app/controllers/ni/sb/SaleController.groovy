@@ -109,9 +109,10 @@ class SaleController {
         flow.medicinesToSale.remove index
       }.to "medicine"
 
-      on("manageProducts").to "manageProducts"
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
+      on("manageProducts").to "manageProducts"
+      on("manageBrands").to "manageBrands"
     }
 
     manageProducts {
@@ -139,9 +140,26 @@ class SaleController {
         flow.productsToSale.remove index
       }.to "product"
 
-      on("manageProducts").to "manageProducts"
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
+      on("manageProducts").to "manageProducts"
+      on("manageBrands").to "manageBrands"
+    }
+
+    manageBrands {
+      action {
+
+      }
+
+      on("success").to "brand"
+    }
+
+    brand {
+
+      on("selectCustomer").to "selectCustomer"
+      on("medicine").to "managePurchase"
+      on("manageProducts").to "manageProducts"
+      on("manageBrands").to "manageBrands"
     }
 
     done() {
