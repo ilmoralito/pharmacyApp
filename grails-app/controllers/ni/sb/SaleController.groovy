@@ -137,7 +137,17 @@ class SaleController {
 
     product {
       on("addItem") {
-        
+        def item = Item.get params?.id
+
+        if (!item) { response.sendError 404 }
+
+        flow.productsToSale = this.addItem(flow.productsToSale, item, params.int("quantity"))
+      }.to "product"
+
+      on("deleteItem") {
+        def index = params.int("index")
+
+        flow.productsToSale.remove index
       }.to "product"
 
       on("manageProducts").to "manageProducts"
@@ -148,6 +158,22 @@ class SaleController {
     done() {
       redirect controller:"sale", action:"list"
     }
+  }
+
+  def addItem(def items, Item item, Integer quantity) {
+    def itemToSale = items.find { it.item == item }
+
+    if (itemToSale) {
+      items -= itemToSale
+    }
+
+    def totalToPay = item.sellingPrice * quantity
+
+    def saleDetail = new SaleDetail(item:item, quantity:quantity, total:totalToPay)
+
+    items << saleDetail
+
+    items
   }
 
   def filterMedicinesByGenericName(String genericName) {
