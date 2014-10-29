@@ -165,6 +165,12 @@ class SaleController {
         flow.brandsToSale = this.addItem(flow.brandsToSale, item, params.int("quantity"))
       }.to "brand"
 
+      on("deleteItem") {
+        def index = params.int("index")
+
+        flow.brandsToSale.remove index
+      }.to "product"
+
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
       on("manageProducts").to "manageProducts"
