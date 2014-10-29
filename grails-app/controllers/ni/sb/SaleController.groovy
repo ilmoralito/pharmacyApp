@@ -111,12 +111,22 @@ class SaleController {
       }.to "medicine"
 
       on("sell") {
+        //get all info
         def user = springSecurityService.currentUser
         def balance = saleService.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
         def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+
+        //add items to saleToClient instance
+        def items = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
+
+        items.each { item ->
+          def saleDetail = new SaleDetail(item:item.item, quantity:item.quantity, total:item.total)
+
+          saleToClient.addToSaleDetails saleDetail
+        }
 
         if (!saleToClient.save()) {
           return error()
