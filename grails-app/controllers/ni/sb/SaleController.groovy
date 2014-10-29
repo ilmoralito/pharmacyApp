@@ -120,15 +120,17 @@ class SaleController {
         def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
 
         //add items to saleToClient instance
-        def items = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
+        def saleDetails = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
 
-        items.each { item ->
-          def saleDetail = new SaleDetail(item:item.item, quantity:item.quantity, total:item.total)
-
+        saleDetails.each { saleDetail ->
           saleToClient.addToSaleDetails saleDetail
         }
 
         if (!saleToClient.save()) {
+          saleToClient.errors.allErrors.each { error ->
+            log.error "[$error.field: $error.defaultMessage]"
+          }
+          
           return error()
         }
       }.to "done"
