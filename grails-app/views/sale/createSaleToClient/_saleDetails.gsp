@@ -99,3 +99,7 @@
 		</tbody>
 	</table>
 </g:if>
+
+<g:if test="${medicinesToSale || productsToSale || brandsToSale}">
+	<g:link event="sell" class="btn btn-primary">Vender</g:link>
+</g:if>

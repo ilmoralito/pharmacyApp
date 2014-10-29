@@ -109,6 +109,19 @@ class SaleController {
         flow.medicinesToSale.remove index
       }.to "medicine"
 
+      on("sell") {
+        def user = springSecurityService.currentUser
+        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def client = flow.client
+        def typeOfPurchase = flow.typeOfPurchase
+
+        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+
+        if (!saleToClient.save()) {
+          return error()
+        }
+      }.to "done"
+
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
       on("manageProducts").to "manageProducts"
@@ -139,6 +152,19 @@ class SaleController {
 
         flow.productsToSale.remove index
       }.to "product"
+
+      on("sell") {
+        def user = springSecurityService.currentUser
+        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def client = flow.client
+        def typeOfPurchase = flow.typeOfPurchase
+
+        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+
+        if (!saleToClient.save()) {
+          return error()
+        }
+      }.to "done"
 
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
@@ -171,6 +197,19 @@ class SaleController {
         flow.brandsToSale.remove index
       }.to "product"
 
+      on("sell") {
+        def user = springSecurityService.currentUser
+        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def client = flow.client
+        def typeOfPurchase = flow.typeOfPurchase
+
+        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+
+        if (!saleToClient.save()) {
+          return error()
+        }
+      }.to "done"
+
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"
       on("manageProducts").to "manageProducts"
@@ -196,6 +235,16 @@ class SaleController {
     items << saleDetail
 
     items
+  }
+
+  def calcSaleBalance(def medicinesToSale, def productsToSale, def brandsToSale) {
+    def totalMedicine = medicinesToSale?.total?.sum() ?: 0
+    def totalProduct = productsToSale?.total?.sum() ?: 0
+    def totalBrand = brandsToSale?.total?.sum() ?: 0
+  
+    def total = totalMedicine + totalProduct + totalBrand
+
+    total
   }
 
   def filterMedicinesByGenericName(String genericName) {
