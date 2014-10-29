@@ -170,8 +170,7 @@ class BootStrap {
 
         assert PurchaseOrder.count() == 2
         assert Item.count() == 9
-        //println purchaseOrder1.balance
-        //assert purchaseOrder1.balance == 4500.00
+        assert purchaseOrder1.balance == 5300
         assert purchaseOrder2.balance == 3775.00
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
