@@ -5,6 +5,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class SaleController {
   def springSecurityService
+  def saleService
 
 	static defaultAction = "list"
 	static allowedMethods = [
@@ -111,7 +112,7 @@ class SaleController {
 
       on("sell") {
         def user = springSecurityService.currentUser
-        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def balance = saleService.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
@@ -155,7 +156,7 @@ class SaleController {
 
       on("sell") {
         def user = springSecurityService.currentUser
-        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def balance = saleService.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
@@ -199,7 +200,7 @@ class SaleController {
 
       on("sell") {
         def user = springSecurityService.currentUser
-        def balance = this.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
+        def balance = saleService.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
@@ -235,16 +236,6 @@ class SaleController {
     items << saleDetail
 
     items
-  }
-
-  def calcSaleBalance(def medicinesToSale, def productsToSale, def brandsToSale) {
-    def totalMedicine = medicinesToSale?.total?.sum() ?: 0
-    def totalProduct = productsToSale?.total?.sum() ?: 0
-    def totalBrand = brandsToSale?.total?.sum() ?: 0
-  
-    def total = totalMedicine + totalProduct + totalBrand
-
-    total
   }
 
   def filterMedicinesByGenericName(String genericName) {
