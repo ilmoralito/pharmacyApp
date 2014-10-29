@@ -148,7 +148,9 @@ class SaleController {
 
     manageBrands {
       action {
+        def brands = BrandProductOrder.findAllByQuantityGreaterThan(0).groupBy { it.brand }
 
+        [brands:brands]
       }
 
       on("success").to "brand"

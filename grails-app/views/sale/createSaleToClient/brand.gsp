@@ -28,7 +28,34 @@
 			</ul>
 
 			<!--Brands-->
-			
+			<table class="table">
+				<tbody>
+					<g:each in="${brands.keySet()}" var="brand">
+						<tr>
+							<td colspan="4" style="border:0;"><strong>${brand}</strong></td>
+						</tr>
+						<g:each in="${brands[brand]}" var="item" status="index">
+							<tr>
+								<g:form>
+									<g:hiddenField name="id" value="${item.id}"/>
+
+									<td style="vertical-align: middle;">${item}</td>
+									<td style="vertical-align: middle;">${item.detail}</td>
+									<td style="vertical-align: middle;">
+										<g:set var="q" value="${brandsToSale.find { it.item == item }?.quantity ?: 0}"/>
+										<g:set var="quantity" value="${brandsToSale ? item.quantity - q : item.quantity}"/>
+
+										<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
+									</td>
+									<td style="vertical-align: middle;">
+										<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
+									</td>
+								</g:form>
+							</tr>
+						</g:each>
+					</g:each>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>
