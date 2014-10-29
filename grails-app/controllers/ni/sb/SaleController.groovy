@@ -157,6 +157,13 @@ class SaleController {
     }
 
     brand {
+      on("addItem") {
+        def item = Item.get params?.id
+
+        if (!item) { response.sendError 404 }
+
+        flow.brandsToSale = this.addItem(flow.brandsToSale, item, params.int("quantity"))
+      }.to "brand"
 
       on("selectCustomer").to "selectCustomer"
       on("medicine").to "managePurchase"

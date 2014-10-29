@@ -64,3 +64,38 @@
 		</tbody>
 	</table>
 </g:if>
+
+<g:if test="${brandsToSale}">
+	<h4>Productos con marca</h4>
+
+	<table class="table">
+		<thead>
+			<th>Producto</th>
+			<th>Marca</th>
+			<th>Detalle</th>
+			<th>Cantidad</th>
+			<th>Total a pagar</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<g:each in="${brandsToSale}" var="brandItem" status="index">
+				<tr>
+					<td>${brandItem}</td>
+					<td>${brandItem.item.brand}</td>
+					<td>${brandItem.item.detail}</td>
+					<td>${brandItem.quantity}</td>
+					<td>${brandItem.total}</td>
+					<td width="1">
+						<g:link event="deleteItem" params="[index:index]">
+							<span class="glyphicon glyphicon-trash"></span>
+						</g:link>
+					</td>
+				</tr>
+			</g:each>
+			<tr>
+				<td colspan="4">TOTAL</td>
+				<td colspan="2">${brandsToSale.total.sum()}</td>
+			</tr>
+		</tbody>
+	</table>
+</g:if>
