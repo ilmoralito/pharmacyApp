@@ -9,7 +9,7 @@
 <body>
 	<div class="row">
 		<div class="col-md-8">
-			<g:render template="createSaleToClient/saleDetails"/>
+			<g:render template="saleDetail"/>
 		</div>
 		<div class="col-md-4">
 			<!--Client data-->
