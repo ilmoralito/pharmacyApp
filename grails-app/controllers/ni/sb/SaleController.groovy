@@ -107,7 +107,7 @@ class SaleController {
       on("deleteItem") {
         def index = params.int("index")
 
-        flow.medicinesToSale.remove index
+        flow[params.targetList].remove index
       }.to "medicine"
 
       on("sell") {
@@ -163,7 +163,7 @@ class SaleController {
       on("deleteItem") {
         def index = params.int("index")
 
-        flow.productsToSale.remove index
+       flow[params.targetList].remove index
       }.to "product"
 
       on("sell") {
@@ -207,7 +207,7 @@ class SaleController {
       on("deleteItem") {
         def index = params.int("index")
 
-        flow.brandsToSale.remove index
+        flow[params.targetList].remove index
       }.to "product"
 
       on("sell") {

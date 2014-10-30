@@ -20,7 +20,7 @@
 					<td>${medicine.quantity}</td>
 					<td>${medicine.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:"medicinesToSale", index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>
@@ -51,7 +51,7 @@
 					<td>${product.quantity}</td>
 					<td>${product.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:"productsToSale", index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>
@@ -86,7 +86,7 @@
 					<td>${brandItem.quantity}</td>
 					<td>${brandItem.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:"brandsToSale", index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>
