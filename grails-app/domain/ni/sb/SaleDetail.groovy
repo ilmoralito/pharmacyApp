@@ -2,8 +2,6 @@ package ni.sb
 
 class SaleDetail implements Serializable {
 	Item item
-  Presentation presentation
-  String measure
   Integer quantity
   BigDecimal total
 
@@ -12,8 +10,6 @@ class SaleDetail implements Serializable {
 
   static constraints = {
     item nullable:false
-    presentation nullable:false
-    measure blank:false
     quantity min:1, nullable:false
     total scale:2, min:0.1
   }

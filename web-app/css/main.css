@@ -13,9 +13,7 @@ table { margin: 15px 0; }
 
 .message { margin: 10px 0; }
 
-.notifications{
-	background: #FF003F;
-}
+.notifications{ background: #FF003F; }
 
 .measures { display: none; }
 
@@ -26,4 +24,3 @@ table { margin: 15px 0; }
 .NewProducto { 
 	margin-top: -8px; 
 }
-

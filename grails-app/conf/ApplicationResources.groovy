@@ -49,8 +49,8 @@ modules = {
     resource url:"js/modal.js"
   }
 
-  filterMedicinesByGenericName {
-    resource url:"js/filterMedicinesByGenericName.js"
+  saleMedicine {
+    resource url:"js/saleMedicine.js"
   }
 
   adding {

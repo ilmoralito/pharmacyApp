@@ -97,13 +97,13 @@ class BootStrap {
 
         def item1 = new Item(product:product1, quantity:100, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
         def item2 = new Item(product:product2, quantity:100, purchasePrice:25, sellingPrice:25 + (25 * 0.25), total:100 * 25)
-        def item3 = new Item(product:product4, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
+        def item3 = new Item(product:product3, quantity:50, purchasePrice:10, sellingPrice:55 + (55 * 0.25), total:50 * 10)
 
         def m0 = new MedicineOrder(
           product:medicine1,
           presentation:presentation1,
           measure:presentation1.measures[1],
-          bash:today + 89,
+          bash:today + 90,
           quantity:50,
           purchasePrice:16,
           sellingPrice:16 + (16 * 0.25),
@@ -129,7 +129,7 @@ class BootStrap {
           product:medicine1,
           presentation:presentation1,
           measure:presentation1.measures[1],
-          bash:today + 89,
+          bash:today + 160,
           quantity:50,
           purchasePrice:16,
           sellingPrice:16 + (16 * 0.25),
@@ -140,7 +140,7 @@ class BootStrap {
           product:medicine2,
           presentation:presentation2,
           measure:presentation2.measures[0],
-          bash:today + 89,
+          bash:today + 88,
           quantity:50,
           purchasePrice:10,
           sellingPrice:10 + (10 * 0.25),
@@ -151,7 +151,7 @@ class BootStrap {
           product:medicine3,
           presentation:presentation3,
           measure:presentation3.measures[1],
-          bash:today + 89,
+          bash:today + 99,
           quantity:50,
           purchasePrice:5,
           sellingPrice:5 + (5 * 0.25),
@@ -170,8 +170,7 @@ class BootStrap {
 
         assert PurchaseOrder.count() == 2
         assert Item.count() == 9
-        //println purchaseOrder1.balance
-        //assert purchaseOrder1.balance == 4500.00
+        assert purchaseOrder1.balance == 5300
         assert purchaseOrder2.balance == 3775.00
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
