@@ -16,8 +16,9 @@ class SaleController {
 
   def list() {
   	def today = new Date()
+    def users = User.list()
 
-  	[sales:Sale.salesFromTo(today, today + 1).list()]
+  	[sales:Sale.salesFromTo(today, today + 1).list(), users:users]
   }
 
   def getItemsByProduct(Product product) {

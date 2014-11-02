@@ -80,6 +80,16 @@
 					</label>
 				</div>
 
+				<h5>Vendedores</h5>
+				<g:each in="${users}" var="user">
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="users" value="${user.id}" checked="false"/>
+							${user.fullName}
+						</label>
+					</div>
+				</g:each>
+
 				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
 		</div>
