@@ -16,6 +16,8 @@ class SaleToClient extends Sale {
   }
 
   def beforeInsert() {
+    //TODO: This is not working if i create a saleToClient instance with out set all its properties
+    //println typeOfPurchase
     if (typeOfPurchase == "Contado") {
       status = "Cancelado"
     } else {
