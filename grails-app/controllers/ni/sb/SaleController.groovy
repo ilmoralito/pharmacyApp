@@ -224,7 +224,7 @@ class SaleController {
   }
   
   def sale(User user, def balance, Client client, String typeOfPurchase, def saleDetails) {
-    def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+    def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase, status:typeOfPurchase == "Contado" ? "Cancelado" : "Pendiente")
 
     saleDetails.each { saleDetail ->
       //update item quantity
