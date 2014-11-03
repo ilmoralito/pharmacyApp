@@ -9,7 +9,7 @@ class SaleController {
 
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET",
+		list:["GET", "POST"],
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
 	]
