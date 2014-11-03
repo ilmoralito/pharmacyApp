@@ -3,6 +3,7 @@ package ni.sb
 class Sale implements Serializable {
   User user
   BigDecimal balance = 0
+  Boolean canceled = false
 
 	Date dateCreated
 	Date lastUpdated
