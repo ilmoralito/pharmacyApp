@@ -179,6 +179,7 @@ class BootStrap {
         //PURCHASE ORDER
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
         //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -229,8 +230,26 @@ class BootStrap {
         assert User.count() == 1
         assert Role.count() == 2
         assert UserRole.count() == 1
-  		break
-  	}
+
+        //|||||||||||||||||||||||||||||||||||||||||||||||||||
+
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //SALES
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        def sale1 = new SaleToClient(user:user, balance:1, client:client1, typeOfPurchase:"Credito", status:"Pendiente")
+        def saleDetailItem1 = new SaleDetail(item:item1, quantity:5, total:item1.sellingPrice * 5)
+        item1.quantity -= saleDetailItem1.quantity
+
+        sale1.addToSaleDetails(saleDetailItem1)
+
+        if (!sale1.save()) {
+          sale1.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        assert saleDetailItem1.total == 93.75
+      break
+    }
   }
   def destroy = {
   }
