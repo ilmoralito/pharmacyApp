@@ -80,6 +80,14 @@
 					</label>
 				</div>
 
+				<h5>Anulado</h5>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="canceled" value="true" checked="false"/>
+						Esta anulado
+					</label>
+				</div>
+
 				<h5>Vendedores</h5>
 				<g:each in="${users}" var="user">
 					<div class="checkbox">
