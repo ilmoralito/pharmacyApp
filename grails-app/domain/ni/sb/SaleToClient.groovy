@@ -4,15 +4,17 @@ class SaleToClient extends Sale {
 	Client client
   String typeOfPurchase
   String status
+  List pays
 
   static constraints = {
     client nullable:false, validator:{ client ->
-    	if (!client.status) {
-    		"saleToClient.client.invalidClient"
-    	}
+      if (!client.status) {
+        "saleToClient.client.invalidClient"
+      }
     }
     typeOfPurchase inList:["Contado", "Credito"]
     status inList:["Pendiente", "Cancelado"], maxSize:255
+    pays nullable:true
   }
 
   def beforeInsert() {
@@ -26,8 +28,10 @@ class SaleToClient extends Sale {
   }
 
   static mapping = {
-  	version false
+    version false
   }
+
+  static hasMany = [pays:Pay]
 
   String toString() { client }
 }
