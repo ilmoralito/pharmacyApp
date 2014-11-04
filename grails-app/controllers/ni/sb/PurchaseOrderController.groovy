@@ -114,8 +114,11 @@ class PurchaseOrderController {
         flow.medicines << medicine
  			}.to "medicine"
 
-      on("deleteMedicine") {
-        this.deleteItem(params.int("index"), flow.medicines, flow.purchaseOrder)
+      on("deleteItem") {
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "medicine"
 
       on("complete") {
@@ -164,7 +167,10 @@ class PurchaseOrderController {
       }.to "product"
 
       on("deleteItem") {
-        this.deleteItem(params.int("index"), flow.products, flow.purchaseOrder)
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "product"
 
       on("complete") {
@@ -228,8 +234,11 @@ class PurchaseOrderController {
         flow.brandProductsOrders << brandProductOrder
       }.to "brand"
 
-      on("deleteBrandProductOrder") {
-        this.deleteItem(params.int("index"), flow.brandProductsOrders, flow.purchaseOrder)
+      on("deleteItem") {
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "brand"
 
       on("complete") {
@@ -326,8 +335,11 @@ class PurchaseOrderController {
         flow.medicines << medicine
       }.to "medicine"
 
-      on("deleteMedicine") {
-        this.deleteItem(params.int("index"), flow.medicines, flow.purchaseOrder)
+      on("deleteItem") {
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "medicine"
 
       on("complete") {
@@ -379,7 +391,10 @@ class PurchaseOrderController {
       }.to "done"
 
       on("deleteItem") {
-        this.deleteItem(params.int("index"), flow.products, flow.purchaseOrder)
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "product"
 
       on("medicine").to "medicine"
@@ -428,8 +443,11 @@ class PurchaseOrderController {
         this.savePurchaseOrder(flow.medicines, flow.brandProductsOrders, flow.products, flow.purchaseOrder)
       }.to "done"
 
-      on("deleteBrandProductOrder") {
-        this.deleteItem(params.int("index"), flow.brandProductsOrders, flow.purchaseOrder)
+      on("deleteItem") {
+        def index = params.int("index")
+        def targetList = params?.targetList
+
+        this.deleteItem(index, flow[targetList], flow.purchaseOrder)
       }.to "brand"
 
       on("medicine").to "medicine"

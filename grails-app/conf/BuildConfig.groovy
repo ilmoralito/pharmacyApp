@@ -88,7 +88,7 @@ grails.project.dependency.resolution = {
     compile ":spring-security-ui:1.0-RC2"
     compile ":mail:1.0.7"
     compile ":jquery-ui:1.10.3"
-    compile ":twitter-bootstrap:3.3.0"
+    runtime ":twitter-bootstrap:3.3.0"
     compile ":webflow:2.0.8.1"
     compile ":export:1.6"
   }

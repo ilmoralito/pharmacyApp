@@ -28,7 +28,7 @@
 						<g:formatNumber number="${medicine.total}" formatName="default.number.decimal"/>
 					</td>
 					<td>
-						<g:link event="deleteMedicine" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:'medicines', index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>
@@ -69,7 +69,7 @@
 						<g:formatNumber number="${product.total}" formatName="default.number.decimal"/>
 					</td>
 					<td>
-						<g:link event="deleteItem" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:'products', index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>
@@ -114,7 +114,7 @@
 						<g:formatNumber number="${brandProductOrder.total}" formatName="default.number.decimal"/>
 					</td>
 					<td>
-						<g:link event="deleteBrandProductOrder" params="[index:index]">
+						<g:link event="deleteItem" params="[targetList:'brandProductsOrders', index:index]">
 							<span class="glyphicon glyphicon-trash"></span>
 						</g:link>
 					</td>

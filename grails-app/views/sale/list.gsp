@@ -24,20 +24,32 @@
 				<table class="table table-striped table-hover">
 					<thead>
 						<th width="1">#</th>
-						<th>Fecha de compra</th>
-						<th>Saldo de venta</th>
-						<th>Atendido por</th>
+						<th>Fecha de venta</th>
+						<th>Cliente</th>
+						<th>Total de compra</th>
+						<th>Tipo de compra</th>
+						<th>Vendedor</th>
 					</thead>
 					<tbody>
 						<g:each in="${sales}" var="sale" status="index">
 							<tr>
-								<td>${index + 1}</td>
 								<td>
 									<g:link action="show" id="${sale.id}">
-										<g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/>
+										${index + 1}
 									</g:link>
 								</td>
+								<td><g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/></td>
+								<td>
+									<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
+										${sale.client}
+									</g:if>
+								</td>
 								<td>${sale.balance}</td>
+								<td>
+									<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
+										${sale.typeOfPurchase}
+									</g:if>
+								</td>
 								<td>${sale.user.fullName}</td>
 							</tr>
 						</g:each>
@@ -64,7 +76,7 @@
 				</div>
 				
 				<h5>Clientes</h5>
-				<g:select name="clients" from="${ni.sb.Client.findAllByStatus(true)}" class="form-control chosen-select" multiple tabindex="4" />
+				<g:select name="clients" from="${clients}" class="form-control chosen-select" multiple tabindex="4" />
 
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
@@ -79,6 +91,24 @@
 						Credito
 					</label>
 				</div>
+
+				<h5>Anulado</h5>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="canceled" value="true" checked="false"/>
+						Esta anulado
+					</label>
+				</div>
+
+				<h5>Vendedores</h5>
+				<g:each in="${users}" var="user">
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="users" value="${user.id}" checked="false"/>
+							${user.fullName}
+						</label>
+					</div>
+				</g:each>
 
 				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>

@@ -9,15 +9,21 @@ class SaleController {
 
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET",
+		list:["GET", "POST"],
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
 	]
 
   def list() {
   	def today = new Date()
+    def users = User.list()
+    def clients = Client.findAllByStatus(true)
 
-  	[sales:Sale.salesFromTo(today, today + 1).list()]
+    if (request.method == "POST") {
+      println params
+    }
+
+  	[sales:Sale.salesFromTo(today, today + 1).list(), users:users, clients:clients]
   }
 
   def getItemsByProduct(Product product) {
@@ -111,26 +117,14 @@ class SaleController {
       }.to "medicine"
 
       on("sell") {
-        //get all info
         def user = springSecurityService.currentUser
         def balance = saleService.calcSaleBalance(flow.medicinesToSale, flow.productsToSale, flow.brandsToSale)
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
-        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
-
-        //add items to saleToClient instance
         def saleDetails = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
 
-        saleDetails.each { saleDetail ->
-          saleToClient.addToSaleDetails saleDetail
-        }
-
-        if (!saleToClient.save()) {
-          saleToClient.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-          
+        if (!this.sale(user, balance, client, typeOfPurchase, saleDetails)) {
           return error()
         }
       }.to "done"
@@ -172,9 +166,9 @@ class SaleController {
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
-        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+        def saleDetails = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
 
-        if (!saleToClient.save()) {
+        if (!this.sale(user, balance, client, typeOfPurchase, saleDetails)) {
           return error()
         }
       }.to "done"
@@ -216,9 +210,9 @@ class SaleController {
         def client = flow.client
         def typeOfPurchase = flow.typeOfPurchase
 
-        def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase)
+        def saleDetails = flow.medicinesToSale + flow.productsToSale + flow.brandsToSale
 
-        if (!saleToClient.save()) {
+        if (!this.sale(user, balance, client, typeOfPurchase, saleDetails)) {
           return error()
         }
       }.to "done"
@@ -232,6 +226,28 @@ class SaleController {
     done() {
       redirect controller:"sale", action:"list"
     }
+  }
+  
+  def sale(User user, def balance, Client client, String typeOfPurchase, def saleDetails) {
+    def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase, status:typeOfPurchase == "Contado" ? "Cancelado" : "Pendiente")
+
+    saleDetails.each { saleDetail ->
+      //update item quantity
+      saleDetail.item.quantity -= saleDetail.quantity
+
+      //add saleDetail to Sale
+      saleToClient.addToSaleDetails saleDetail
+    }
+
+    if (!saleToClient.save()) {
+      saleToClient.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"
+      }
+
+      return false
+    }
+
+    true
   }
 
   def addItem(def items, Item item, Integer quantity) {
