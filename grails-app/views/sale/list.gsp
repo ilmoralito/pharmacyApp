@@ -76,7 +76,7 @@
 				</div>
 				
 				<h5>Clientes</h5>
-				<g:select name="clients" from="${ni.sb.Client.findAllByStatus(true)}" class="form-control chosen-select" multiple tabindex="4" />
+				<g:select name="clients" from="${clients}" class="form-control chosen-select" multiple tabindex="4" />
 
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">

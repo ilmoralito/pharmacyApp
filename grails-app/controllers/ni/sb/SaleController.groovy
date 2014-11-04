@@ -17,8 +17,13 @@ class SaleController {
   def list() {
   	def today = new Date()
     def users = User.list()
+    def clients = Client.findAllByStatus(true)
 
-  	[sales:Sale.salesFromTo(today, today + 1).list(), users:users]
+    if (request.method == "POST") {
+      println params
+    }
+
+  	[sales:Sale.salesFromTo(today, today + 1).list(), users:users, clients:clients]
   }
 
   def getItemsByProduct(Product product) {
