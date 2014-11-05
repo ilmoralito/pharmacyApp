@@ -28,13 +28,11 @@ class SaleController {
           le "dateCreated", params.date("to", "yyyy-MM-dd").clearTime() + 1
         }
 
-        /*
         if (params?.clients) {
-          client {
-            "eq" "fullName", params.list("clients")[0]
-          }
+          def clientsInstance = Client.getAll params.list("clients")
+
+          "in" "client", clientsInstance
         }
-        */
 
         if (params?.cash && params?.credit) {
           or {
