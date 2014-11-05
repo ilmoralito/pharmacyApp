@@ -207,29 +207,17 @@ class BootStrap {
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //USERS
-        def user = new User(
-          username:"me@gmail.com",
-          password:"123",
-          email:"me@gmail.com",
-          fullName:"Arnulfo Rolando Blandon"
-        )
-
-        if (!user.save()) {
-          user.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-        }
+        def user = new User(username:"me@gmail.com", password:"123", email:"me@gmail.com", fullName:"Arnulfo Blandon").save(failOnError:true)
+        def user1 = new User(username:"testuser@email.com", password:"123", email:"testuser@email.com", fullName:"Juan Perez").save(failOnError:true)
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
-        new Role(authority:"ROLE_USER").save()
-
-        assert Role.count() == 2
+        def userRole = new Role(authority:"ROLE_USER").save()
 
         UserRole.create user, adminRole, true
+        UserRole.create user1, userRole, true
 
-        assert User.count() == 1
+        assert User.count() == 2
         assert Role.count() == 2
-        assert UserRole.count() == 1
 
         //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -278,7 +266,7 @@ class BootStrap {
           sale3.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
         }
 
-        def sale4 = new SaleToClient(user:user, balance:1, client:client1, typeOfPurchase:"Credito", status:"Pendiente", canceled:true)
+        def sale4 = new SaleToClient(user:user1, balance:1, client:client1, typeOfPurchase:"Credito", status:"Pendiente", canceled:true)
         def saleDetailItem6 = new SaleDetail(item:item3, quantity:21, total:item3.sellingPrice * 21)
         item3.quantity -= saleDetailItem6.quantity
 
