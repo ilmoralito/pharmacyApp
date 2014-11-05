@@ -95,8 +95,8 @@
 				<h5>Anulado</h5>
 				<div class="checkbox">
 					<label>
-						<g:checkBox name="canceled" value="true" checked="false"/>
-						Esta anulado
+						<g:checkBox name="canceled" value="true" checked="${params?.canceled ? true : false}"/>
+						Anulado
 					</label>
 				</div>
 

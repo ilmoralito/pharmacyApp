@@ -49,11 +49,11 @@ class SaleController {
           eq "typeOfPurchase", typeOfPurchase
         }
 
-        /*
         if (params?.canceled) {
           eq "canceled", true
         }
 
+        /*
         if (params?.users) {
           'in'("user", params.list("users"))
         }
