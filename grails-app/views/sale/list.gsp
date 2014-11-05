@@ -81,13 +81,13 @@
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
 					<label>
-						<g:checkBox name="contado" value="Contado" checked="false"/>
+						<g:checkBox name="cash" value="Contado" checked="${params?.cash ? true : false}"/>
 						Contado
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<g:checkBox name="credito" value="Credito" checked="false"/>
+						<g:checkBox name="credit" value="Credito" checked="${params?.credit ? true : false}"/>
 						Credito
 					</label>
 				</div>

@@ -36,19 +36,18 @@ class SaleController {
         }
         */
 
-        if (params?.contado && params?.credito) {
+        if (params?.cash && params?.credit) {
           or {
-            eq "typeOfPurchase", params.contado
-            eq "typeOfPurchase", params.credito
+            eq "typeOfPurchase", params.cash
+            eq "typeOfPurchase", params.credit
           }
         }
 
-        if (params?.contado || params?.credito) {
-          def typeOfPurchase = params?.contado ?: params?.credito
+        if (params?.cash && !params?.credit || params?.credit && !params?.cash) {
+          def typeOfPurchase = params?.cash ?: params?.credit
 
           eq "typeOfPurchase", typeOfPurchase
         }
-
 
         /*
         if (params?.canceled) {
