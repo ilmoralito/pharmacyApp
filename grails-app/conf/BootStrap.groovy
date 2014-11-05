@@ -208,7 +208,7 @@ class BootStrap {
 
         //USERS
         def user = new User(username:"me@gmail.com", password:"123", email:"me@gmail.com", fullName:"Arnulfo Blandon").save(failOnError:true)
-        def user1 = new User(username:"testuser@email.com", password:"123", email:"testuser@email.com", fullName:"Juan Perez").save(failOnError:true)
+        def user1 = new User(username:"testuser@email.com", password:"123", email:"testuser@email.com", fullName:"John Doe").save(failOnError:true)
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
         def userRole = new Role(authority:"ROLE_USER").save()
