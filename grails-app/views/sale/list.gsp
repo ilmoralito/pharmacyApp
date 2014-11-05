@@ -57,7 +57,7 @@
 				</table>
 			</g:if>
 			<g:else>
-				<h4>Sin ventas...</h4>
+				<h4>Sin ventas que mostrar</h4>
 			</g:else>
 		</div>
 
@@ -68,11 +68,11 @@
 				<h5>Fechas</h5>
 				<div class="form-group">
 					<label for="from" class="sr-only">Desde</label>
-					<g:textField name="from" class="form-control" placeholder="Desde"/>
+					<g:textField name="from" value="${params?.from}" class="form-control" placeholder="Desde"/>
 				</div>
 				<div class="form-group">
 					<label for="to" class="sr-only">Hasta</label>
-					<g:textField name="to" class="form-control" placeholder="Hasta"/>
+					<g:textField name="to" value="${params?.to}" class="form-control" placeholder="Hasta"/>
 				</div>
 				
 				<h5>Clientes</h5>
@@ -81,13 +81,13 @@
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
 					<label>
-						<g:checkBox name="typeOfPurchase" value="Contado" checked="false"/>
+						<g:checkBox name="contado" value="Contado" checked="false"/>
 						Contado
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<g:checkBox name="typeOfPurchase" value="Credito" checked="false"/>
+						<g:checkBox name="credito" value="Credito" checked="false"/>
 						Credito
 					</label>
 				</div>

@@ -18,12 +18,53 @@ class SaleController {
   	def today = new Date()
     def users = User.list()
     def clients = Client.findAllByStatus(true)
+    def sales = []
 
     if (request.method == "POST") {
-      println params
+      def criteria = Sale.createCriteria()
+      sales = criteria.list {
+        if (params?.from && params?.to) {
+          ge "dateCreated", params.date("from", "yyyy-MM-dd").clearTime()
+          le "dateCreated", params.date("to", "yyyy-MM-dd").clearTime() + 1
+        }
+
+        /*
+        if (params?.clients) {
+          client {
+            "eq" "fullName", params.list("clients")[0]
+          }
+        }
+        */
+
+        if (params?.contado && params?.credito) {
+          or {
+            eq "typeOfPurchase", params.contado
+            eq "typeOfPurchase", params.credito
+          }
+        }
+
+        if (params?.contado || params?.credito) {
+          def typeOfPurchase = params?.contado ?: params?.credito
+
+          eq "typeOfPurchase", typeOfPurchase
+        }
+
+
+        /*
+        if (params?.canceled) {
+          eq "canceled", true
+        }
+
+        if (params?.users) {
+          'in'("user", params.list("users"))
+        }
+        */
+      }
+    } else {
+      sales = Sale.salesFromTo(today, today + 1).list()
     }
 
-  	[sales:Sale.salesFromTo(today, today + 1).list(), users:users, clients:clients]
+  	[sales: sales, users:users, clients:clients]
   }
 
   def getItemsByProduct(Product product) {
