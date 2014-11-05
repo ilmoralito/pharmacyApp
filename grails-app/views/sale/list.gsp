@@ -53,6 +53,10 @@
 								<td>${sale.user.fullName}</td>
 							</tr>
 						</g:each>
+						<tr>
+							<td colspan="3">Total vendido</td>
+							<td colspan="3">${sales.balance.sum()}</td>
+						</tr>
 					</tbody>
 				</table>
 			</g:if>
