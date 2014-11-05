@@ -21,7 +21,7 @@
 		<div class="col-md-9">
 			<g:if test="${sales}">
 				<h4>Ventas</h4>
-				<table class="table table-striped table-hover">
+				<table class="table table-hover">
 					<thead>
 						<th width="1">#</th>
 						<th>Fecha de venta</th>
@@ -32,7 +32,7 @@
 					</thead>
 					<tbody>
 						<g:each in="${sales}" var="sale" status="index">
-							<tr>
+							<tr class="${sale.canceled ? 'active' : ''}">
 								<td>
 									<g:link action="show" id="${sale.id}">
 										${index + 1}
