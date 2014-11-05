@@ -263,8 +263,37 @@ class BootStrap {
           sale2.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
         }
 
+        //canceled sale
+        def sale3 = new Sale(user:user, balance:1, canceled:true)
+        def saleDetailItem4 = new SaleDetail(item:item1, quantity:8, total:item1.sellingPrice * 8)
+        def saleDetailItem5 = new SaleDetail(item:item2, quantity:8, total:item1.sellingPrice * 8)
+        item1.quantity -= saleDetailItem4.quantity
+        item2.quantity -= saleDetailItem5.quantity
+
+        sale3.addToSaleDetails(saleDetailItem4).addToSaleDetails(saleDetailItem5)
+
+        sale3.balance = saleDetailItem4.total + saleDetailItem5.total
+
+        if (!sale3.save()) {
+          sale3.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        def sale4 = new SaleToClient(user:user, balance:1, client:client1, typeOfPurchase:"Credito", status:"Pendiente", canceled:true)
+        def saleDetailItem6 = new SaleDetail(item:item3, quantity:21, total:item3.sellingPrice * 21)
+        item3.quantity -= saleDetailItem6.quantity
+
+        sale4.addToSaleDetails(saleDetailItem6)
+
+        sale4.balance = saleDetailItem6.total
+
+        if (!sale4.save()) {
+          sale4.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
         assert sale1.balance == 93.75
         assert sale2.balance == 187.50
+        assert sale3.balance == 300.00
+        assert sale4.balance == 1443.75
       break
     }
   }
