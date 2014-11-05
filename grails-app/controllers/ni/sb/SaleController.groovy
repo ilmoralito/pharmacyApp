@@ -53,11 +53,11 @@ class SaleController {
           eq "canceled", true
         }
 
-        /*
         if (params?.users) {
-          'in'("user", params.list("users"))
+          def usersInstance = User.getAll params.list("users")
+
+          "in" "user", usersInstance
         }
-        */
       }
     } else {
       sales = Sale.salesFromTo(today, today + 1).list()
