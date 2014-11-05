@@ -243,11 +243,28 @@ class BootStrap {
 
         sale1.addToSaleDetails(saleDetailItem1)
 
+        sale1.balance = saleDetailItem1.total
+
         if (!sale1.save()) {
           sale1.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
         }
 
-        assert saleDetailItem1.total == 93.75
+        def sale2 = new SaleToClient(user:user, balance:1, client:client2, typeOfPurchase:"Contado", status:"Cancelado")
+        def saleDetailItem2 = new SaleDetail(item:item1, quantity:5, total:item1.sellingPrice * 5)
+        def saleDetailItem3 = new SaleDetail(item:item2, quantity:5, total:item1.sellingPrice * 5)
+        item1.quantity -= saleDetailItem1.quantity
+        item2.quantity -= saleDetailItem2.quantity
+
+        sale2.addToSaleDetails(saleDetailItem2).addToSaleDetails(saleDetailItem3)
+
+        sale2.balance = saleDetailItem2.total + saleDetailItem3.total
+
+        if (!sale2.save()) {
+          sale2.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        assert sale1.balance == 93.75
+        assert sale2.balance == 187.50
       break
     }
   }
