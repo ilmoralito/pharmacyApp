@@ -26,6 +26,8 @@ modules = {
 
   saleFilter {
   	dependsOn "app"
+    resource url:"css/bootstrap-multiselect.css"
+    resource url:"js/bootstrap-multiselect.js"
   	resource url:"js/saleFilter.js"
   }
 

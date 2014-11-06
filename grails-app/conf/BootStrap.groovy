@@ -207,29 +207,17 @@ class BootStrap {
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //USERS
-        def user = new User(
-          username:"me@gmail.com",
-          password:"123",
-          email:"me@gmail.com",
-          fullName:"Arnulfo Rolando Blandon"
-        )
-
-        if (!user.save()) {
-          user.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-        }
+        def user = new User(username:"me@gmail.com", password:"123", email:"me@gmail.com", fullName:"Arnulfo Blandon").save(failOnError:true)
+        def user1 = new User(username:"testuser@email.com", password:"123", email:"testuser@email.com", fullName:"John Doe").save(failOnError:true)
 
         def adminRole = new Role(authority:"ROLE_ADMIN").save()
-        new Role(authority:"ROLE_USER").save()
-
-        assert Role.count() == 2
+        def userRole = new Role(authority:"ROLE_USER").save()
 
         UserRole.create user, adminRole, true
+        UserRole.create user1, userRole, true
 
-        assert User.count() == 1
+        assert User.count() == 2
         assert Role.count() == 2
-        assert UserRole.count() == 1
 
         //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -243,11 +231,57 @@ class BootStrap {
 
         sale1.addToSaleDetails(saleDetailItem1)
 
+        sale1.balance = saleDetailItem1.total
+
         if (!sale1.save()) {
           sale1.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
         }
 
-        assert saleDetailItem1.total == 93.75
+        def sale2 = new SaleToClient(user:user, balance:1, client:client2, typeOfPurchase:"Contado", status:"Cancelado")
+        def saleDetailItem2 = new SaleDetail(item:item1, quantity:5, total:item1.sellingPrice * 5)
+        def saleDetailItem3 = new SaleDetail(item:item2, quantity:5, total:item1.sellingPrice * 5)
+        item1.quantity -= saleDetailItem1.quantity
+        item2.quantity -= saleDetailItem2.quantity
+
+        sale2.addToSaleDetails(saleDetailItem2).addToSaleDetails(saleDetailItem3)
+
+        sale2.balance = saleDetailItem2.total + saleDetailItem3.total
+
+        if (!sale2.save()) {
+          sale2.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        //canceled sale
+        def sale3 = new Sale(user:user, balance:1, canceled:true)
+        def saleDetailItem4 = new SaleDetail(item:item1, quantity:8, total:item1.sellingPrice * 8)
+        def saleDetailItem5 = new SaleDetail(item:item2, quantity:8, total:item1.sellingPrice * 8)
+        item1.quantity -= saleDetailItem4.quantity
+        item2.quantity -= saleDetailItem5.quantity
+
+        sale3.addToSaleDetails(saleDetailItem4).addToSaleDetails(saleDetailItem5)
+
+        sale3.balance = saleDetailItem4.total + saleDetailItem5.total
+
+        if (!sale3.save()) {
+          sale3.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        def sale4 = new SaleToClient(user:user1, balance:1, client:client1, typeOfPurchase:"Credito", status:"Pendiente", canceled:true)
+        def saleDetailItem6 = new SaleDetail(item:item3, quantity:21, total:item3.sellingPrice * 21)
+        item3.quantity -= saleDetailItem6.quantity
+
+        sale4.addToSaleDetails(saleDetailItem6)
+
+        sale4.balance = saleDetailItem6.total
+
+        if (!sale4.save()) {
+          sale4.errors.allErrors.each { error -> log.error "[$error.field:$error.defaultMessage]" }
+        }
+
+        assert sale1.balance == 93.75
+        assert sale2.balance == 187.50
+        assert sale3.balance == 300.00
+        assert sale4.balance == 1443.75
       break
     }
   }
