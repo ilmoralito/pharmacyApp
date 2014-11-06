@@ -123,6 +123,8 @@ class SaleController {
         [client:command.client, typeOfPurchase:command.typeOfPurchase]
       }.to "managePurchase"
 
+      on("confirmGeneralSale").to "managePurchase"
+
       on("cancel").to "done"
     }
 
@@ -286,18 +288,24 @@ class SaleController {
   }
   
   def sale(User user, def balance, Client client, String typeOfPurchase, def saleDetails) {
-    def saleToClient = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase, status:typeOfPurchase == "Contado" ? "Cancelado" : "Pendiente")
+    Sale sale
+
+    if (client && typeOfPurchase) {
+      sale = new SaleToClient(user:user, balance:balance, client:client, typeOfPurchase:typeOfPurchase, status:typeOfPurchase == "Contado" ? "Cancelado" : "Pendiente")
+    } else {
+      sale = new Sale(user:user, balance:balance, status:"Cancelado")
+    }
 
     saleDetails.each { saleDetail ->
       //update item quantity
       saleDetail.item.quantity -= saleDetail.quantity
 
       //add saleDetail to Sale
-      saleToClient.addToSaleDetails saleDetail
+      sale.addToSaleDetails saleDetail
     }
 
-    if (!saleToClient.save()) {
-      saleToClient.errors.allErrors.each { error ->
+    if (!sale.save()) {
+      sale.errors.allErrors.each { error ->
         log.error "[$error.field: $error.defaultMessage]"
       }
 

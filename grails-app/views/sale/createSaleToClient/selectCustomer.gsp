@@ -26,6 +26,10 @@
 				<g:link event="cancel" class="btn btn-default">Cancelar</g:link>
 			</g:form>
 		</div>
+		<div class="col-md-6">
+			<h4>Venta general</h4>
+			<g:link event="confirmGeneralSale" class="btn btn-primary">Confirmar venta general</g:link>
+		</div>
 	</div>
 </body>
 </html>
