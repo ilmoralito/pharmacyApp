@@ -23,17 +23,20 @@ class SaleController {
     if (request.method == "POST") {
       def criteria = Sale.createCriteria()
       sales = criteria.list {
+        //filter between dates
         if (params?.from && params?.to) {
           ge "dateCreated", params.date("from", "yyyy-MM-dd").clearTime()
           le "dateCreated", params.date("to", "yyyy-MM-dd").clearTime() + 1
         }
 
+        //filter by client(s)
         if (params?.clients) {
           def clientsInstance = Client.getAll params.list("clients")
 
           "in" "client", clientsInstance
         }
 
+        //filter by typeofpurchase
         if (params?.cash && params?.credit) {
           or {
             eq "typeOfPurchase", params.cash
@@ -47,10 +50,26 @@ class SaleController {
           eq "typeOfPurchase", typeOfPurchase
         }
 
+        //filter by status
+        if (params?.isPending && params?.isCanceled) {
+          or {
+            eq "status", params.isPending
+            eq "status", params.isCanceled
+          }
+        }
+
+        if (params?.isPending && !params?.isCanceled || params?.isCanceled && !params?.isPending) {
+          def status = params?.isPending ?: params?.isCanceled
+
+          eq "status", status
+        }
+
+        //filter by canceled
         if (params?.canceled) {
           eq "canceled", true
         }
 
+        //filter by users(sellers)
         if (params?.users) {
           def usersInstance = User.getAll params.list("users")
 

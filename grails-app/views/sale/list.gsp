@@ -15,7 +15,6 @@
 			</div>
 		</div>
 	</div>
-	<br>
 
 	<div class="row">
 		<div class="col-md-9">
@@ -93,6 +92,20 @@
 					<label>
 						<g:checkBox name="credit" value="Credito" checked="${params?.credit ? true : false}"/>
 						Credito
+					</label>
+				</div>
+
+				<h5>Estado</h5>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="isPending" value="Pendiente" checked="${params?.isPending ? true : false}"/>
+						Pendiente
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="isCanceled" value="Cancelado" checked="${params?.isCanceled ? true : false}"/>
+						Cancelado
 					</label>
 				</div>
 
