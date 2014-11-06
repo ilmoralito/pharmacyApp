@@ -121,7 +121,7 @@
 				<g:each in="${users}" var="user">
 					<div class="checkbox">
 						<label>
-							<g:checkBox name="users" value="${user.id}" checked="false"/>
+							<g:checkBox name="users" value="${user.id}" checked="${params?.users?.contains(user.id.toString()) ? true : false}"/>
 							${user.fullName}
 						</label>
 					</div>
