@@ -37,7 +37,7 @@
 							<td colspan="4" style="border:0;"><strong>${brand}</strong></td>
 						</tr>
 						<g:each in="${brands[brand]}" var="item" status="index">
-							<tr>
+							<tr style="font-size:0.9em;">
 								<g:form>
 									<g:hiddenField name="id" value="${item.id}"/>
 
@@ -49,6 +49,7 @@
 
 										<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
 									</td>
+									<td style="vertical-align: middle;"><small>${item.product.location}</small></td>
 									<td style="vertical-align: middle;">
 										<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
 									</td>

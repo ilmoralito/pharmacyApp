@@ -11,6 +11,7 @@ class BrandProductOrder extends Item {
 
   static mapping = {
   	version false
+    brand fetch: 'join'
   }
 
   String toString() { product }

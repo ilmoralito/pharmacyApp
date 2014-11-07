@@ -10,6 +10,7 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
+    show:"GET",
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
 	]
@@ -81,6 +82,17 @@ class SaleController {
     }
 
   	[sales: sales, users:users, clients:clients]
+  }
+
+  def show(Integer id) {
+    def sale = Sale.get id
+    def details = sale.saleDetails
+
+    def medicinesToSale = details.findAll { it.item.instanceOf(ni.sb.MedicineOrder) }
+    def productsToSale = details.findAll { !(it.item.instanceOf(ni.sb.MedicineOrder)) && !(it.item.instanceOf(ni.sb.BrandProductOrder)) }
+    def brandsToSale = details.findAll { it.item.instanceOf(ni.sb.BrandProductOrder) }
+
+    [sale:sale, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
   }
 
   def getItemsByProduct(Product product) {

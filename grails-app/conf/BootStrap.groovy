@@ -14,25 +14,25 @@ class BootStrap {
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         def provider1 = new Provider(name:"provider1", address:"address1", phone:"23114455")
 
-        def product1 = new Product(name:"product1")
-        def product2 = new Product(name:"product2")
-        def product3 = new Product(name:"product3")
-        def medicine1 = new Medicine(name:"Medicine1", code:"1234", genericName:"someGenericName")
+        def product1 = new Product(name:"product1", location:"E1-1")
+        def product2 = new Product(name:"product2", location:"E1-2")
+        def product3 = new Product(name:"product3", location:"E2-2")
+        def medicine1 = new Medicine(name:"Medicine1", code:"1234", genericName:"someGenericName", location:"E4-2")
           
           def presentation1 = new Presentation(name:"Crema", measures:["5g", "15g"])
           medicine1.addToPresentations(presentation1)
 
-        def medicine2 = new Medicine(name:"Medicine2", code:"1235", genericName:"someGenericName")
+        def medicine2 = new Medicine(name:"Medicine2", code:"1235", genericName:"someGenericName", location:"E4-2")
           
           def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
           medicine2.addToPresentations(presentation2)
 
-        def medicine3 = new Medicine(name:"Medicine3", code:"1236", genericName:"anotherGenericName")
+        def medicine3 = new Medicine(name:"Medicine3", code:"1236", genericName:"anotherGenericName", location:"V1-2")
           
           def presentation3 = new Presentation(name:"Inyectable", measures:["20ml", "25ml"])
           medicine3.addToPresentations(presentation3)
 
-        def brandProduct0 = new BrandProduct(name:"Papel higienico")
+        def brandProduct0 = new BrandProduct(name:"Papel higienico", location:"V1-2")
           def brand0 = new Brand(name:"Colgate", details:["Pequeno", "Grande"])
 
           brandProduct0.addToBrands(brand0)
@@ -43,23 +43,25 @@ class BootStrap {
           provider1.addToProducts product
         }
 
-        if (!provider1.save()) {
+        if (!provider1.save(failOnError:true)) {
+          /*
           provider1.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
+          */
         }
 
         def provider2 = new Provider(name:"provider2", address:"address2", phone:"23114488")
 
-        def product4 = new Product(name:"product4")
-        def product5 = new Product(name:"product5")
-        def brandProduct1 = new BrandProduct(name:"Pasta dental")
+        def product4 = new Product(name:"product4", location:"V1-2")
+        def product5 = new Product(name:"product5", location:"V1-3")
+        def brandProduct1 = new BrandProduct(name:"Pasta dental", location:"V1-2")
           def brand1 = new Brand(name:"Colgate", details:["Clasico", "Extreme"])
           def brand2 = new Brand(name:"Zoro", details:["Riorusen"])
 
           brandProduct1.addToBrands(brand1).addToBrands(brand2)
 
-        def brandProduct2 = new BrandProduct(name:"Jabon")
+        def brandProduct2 = new BrandProduct(name:"Jabon", location:"V1-2")
           def brand3 = new Brand(name:"Palmolive", details:["Clasico", "Moderno", "Contemporanio"])
           def brand4 = new Brand(name:"Dermacare", details:["1% Clotrimazol", "5% Water 7"])
           def brand5 = new Brand(name:"Colgate", details:["Detalle1", "Detalle2"])
@@ -72,10 +74,12 @@ class BootStrap {
           provider2.addToProducts product
         }
 
-        if (!provider2.save()) {
+        if (!provider2.save(failOnError:true)) {
+          /*
           provider2.errors.allErrors.each { error ->
             log.error "[$error.field: $error.defaultMessage]"
           }
+          */
         }
 
         assert Provider.count() == 2

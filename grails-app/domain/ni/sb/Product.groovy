@@ -1,12 +1,14 @@
 package ni.sb
 
 import org.grails.databinding.BindUsing
+import grails.util.Holders
 
 class Product implements Serializable {
   @BindUsing({ obj, source ->
     source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
 	String name
+  String location
   Boolean status = true
 
 	Date dateCreated
@@ -14,6 +16,7 @@ class Product implements Serializable {
 
   static constraints = {
     name blank:false, unique:true
+    location blank:false, inList:Holders.config.ni.sb.locations as List
   }
 
   static mapping = {

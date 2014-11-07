@@ -20,9 +20,11 @@
 					<td>${medicine.quantity}</td>
 					<td>${medicine.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[targetList:"medicinesToSale", index:index]">
-							<span class="glyphicon glyphicon-trash"></span>
-						</g:link>
+						<g:if test="${actionName != 'show'}">
+							<g:link event="deleteItem" params="[targetList:"medicinesToSale", index:index]">
+								<span class="glyphicon glyphicon-trash"></span>
+							</g:link>
+						</g:if>
 					</td>
 				</tr>
 			</g:each>
@@ -51,9 +53,11 @@
 					<td>${product.quantity}</td>
 					<td>${product.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[targetList:"productsToSale", index:index]">
-							<span class="glyphicon glyphicon-trash"></span>
-						</g:link>
+						<g:if test="${actionName != 'show'}">
+							<g:link event="deleteItem" params="[targetList:"productsToSale", index:index]">
+								<span class="glyphicon glyphicon-trash"></span>
+							</g:link>
+						</g:if>
 					</td>
 				</tr>
 			</g:each>
@@ -86,9 +90,11 @@
 					<td>${brandItem.quantity}</td>
 					<td>${brandItem.total}</td>
 					<td width="1">
-						<g:link event="deleteItem" params="[targetList:"brandsToSale", index:index]">
-							<span class="glyphicon glyphicon-trash"></span>
-						</g:link>
+						<g:if test="${actionName != 'show'}">
+								<g:link event="deleteItem" params="[targetList:"brandsToSale", index:index]">
+									<span class="glyphicon glyphicon-trash"></span>
+								</g:link>
+						</g:if>
 					</td>
 				</tr>
 			</g:each>
@@ -101,5 +107,7 @@
 </g:if>
 
 <g:if test="${medicinesToSale || productsToSale || brandsToSale}">
-	<g:link event="sell" class="btn btn-primary">Vender</g:link>
+	<g:if test="${actionName != 'show'}">
+		<g:link event="sell" class="btn btn-primary">Vender</g:link>
+	</g:if>
 </g:if>
