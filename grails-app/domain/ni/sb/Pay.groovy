@@ -11,7 +11,7 @@ class Pay {
 
   static constraints = {
     user nullable:false
-    receiptNumber nullable:false
+    receiptNumber nullable:false, unique:true
     payment nullable:false, scale:2
     change nullable:false, scale:2
   }
