@@ -86,8 +86,13 @@ class SaleController {
 
   def show(Integer id) {
     def sale = Sale.get id
+    def details = sale.saleDetails
 
-    [sale:sale]
+    def medicinesToSale = details.findAll { it.item.instanceOf(ni.sb.MedicineOrder) }
+    def productsToSale = details.findAll { !(it.item.instanceOf(ni.sb.MedicineOrder)) && !(it.item.instanceOf(ni.sb.BrandProductOrder)) }
+    def brandsToSale = details.findAll { it.item.instanceOf(ni.sb.BrandProductOrder) }
+
+    [sale:sale, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
   }
 
   def getItemsByProduct(Product product) {
