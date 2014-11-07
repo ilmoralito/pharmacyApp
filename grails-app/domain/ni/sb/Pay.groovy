@@ -2,6 +2,7 @@ package ni.sb
 
 class Pay {
   User user
+  Integer receiptNumber
   BigDecimal payment
   BigDecimal change
 
@@ -10,6 +11,7 @@ class Pay {
 
   static constraints = {
     user nullable:false
+    receiptNumber nullable:false
     payment nullable:false, scale:2
     change nullable:false, scale:2
   }
