@@ -12,6 +12,12 @@
 			<g:render template="saleDetail"/>
 		</div>
 		<div class="col-md-2">
+			<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
+				<g:if test="${sale.typeOfPurchase == 'Credito' && sale.status == 'Pendiente'}">
+					<g:link action="pay" id="${sale.id}" class="btn btn-info btn-block">Abonar</g:link>
+				</g:if>
+			</g:if>
+
 			<h4>Fecha de venta</h4>
 			<g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/>
 
