@@ -10,6 +10,7 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
+    show:"GET",
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
 	]
@@ -81,6 +82,12 @@ class SaleController {
     }
 
   	[sales: sales, users:users, clients:clients]
+  }
+
+  def show(Integer id) {
+    def sale = Sale.get id
+
+    [sale:sale]
   }
 
   def getItemsByProduct(Product product) {
