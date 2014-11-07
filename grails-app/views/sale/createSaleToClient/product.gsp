@@ -37,13 +37,18 @@
 							<g:form>
 								<g:hiddenField name="id" value="${item.id}"/>
 
-								<tr>
-									<td style="vertical-align: middle;">${item}</td>
+								<tr style="font-size:0.9em;">
+									<td style="vertical-align: middle;">
+										${item}
+									</td>
 									<td style="vertical-align: middle;">
 										<g:set var="q" value="${productsToSale.find { it.item == item }?.quantity ?: 0}"/>
 										<g:set var="quantity" value="${productsToSale ? item.quantity - q : item.quantity}"/>
 
 										<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
+									</td>
+									<td style="vertical-align: middle;">
+										${item.product.location}
 									</td>
 									<td style="vertical-align: middle;" width="1">
 										<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>

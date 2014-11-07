@@ -49,7 +49,7 @@
 					<g:each in="${results[presentation]}" var="medicine">
 						<table class="table" style="margin:0;">
 							<tbody>
-								<tr>
+								<tr style="font-size:0.9em;">
 									<g:form>
 										<g:hiddenField name="id" value="${medicine.id}"/>
 
@@ -61,6 +61,9 @@
 											<g:set var="quantity" value="${medicinesToSale ? medicine.quantity - q : medicine.quantity}"/>
 
 											<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
+										</td>
+										<td style="vertical-align: middle;">
+											${medicine.product.location}
 										</td>
 										<td style="vertical-align: middle;">
 											<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
