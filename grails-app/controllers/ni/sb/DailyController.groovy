@@ -16,9 +16,6 @@ class DailyController {
 
   		ge "date", today.clearTime()
   		le "date", today.clearTime() + 1
-
-  		//ge "dateCreated", from.clearTime()
-      //le "dateCreated", to.clearTime()
   	}
 
   	def dateCriteria = Daily.createCriteria()
