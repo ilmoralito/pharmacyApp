@@ -11,4 +11,7 @@
 	<li class="${controllerName == 'sale' ? 'active' : ''}">
 		<g:link controller="sale" action="list">Ventas</g:link>
 	</li>
+	<li class="${controllerName == 'daily' ? 'active' : ''}">
+		<g:link controller="daily" action="list">Diario</g:link>
+	</li>
 </ul>
