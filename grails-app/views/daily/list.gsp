@@ -32,6 +32,9 @@
 					</tbody>
 				</table>
 			</g:if>
+			<g:else>
+				<h4>...</h4>
+			</g:else>
 		</div>
 		<div class="col-md-2">
 			<g:form action="list">
