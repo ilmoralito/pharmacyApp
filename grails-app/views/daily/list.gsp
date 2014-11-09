@@ -47,7 +47,7 @@
 			</g:form>
 			<br>
 
-			<g:form action="addExpense">
+			<g:form action="addExpense" autocomplete="off">
 				<div class="form-group">
 					<label for="description" class="sr-only">Descripcion</label>
 					<g:textArea name="description" placeholder="Razon" class="form-control"/>
