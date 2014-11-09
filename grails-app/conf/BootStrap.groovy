@@ -286,6 +286,21 @@ class BootStrap {
         assert sale2.balance == 187.50
         assert sale3.balance == 300.00
         assert sale4.balance == 1443.75
+
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //DAILY
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        def date = new Date()
+        def daily1 = new Daily(date:date)
+
+        def e1 = new Expenses(description:"lorem ipsum dolor sit ament", quantity:50.0)
+        def e2 = new Expenses(description:"lorem oz dolor sit ament", quantity:10.0)
+        def e3 = new Expenses(description:"lorem  portgas de ace dolor sit ament", quantity:5.0)
+
+        daily1.addToExpenses(e1).addToExpenses(e2).addToExpenses(e3)
+
+        daily1.save(failOnError:true)
       break
     }
   }
