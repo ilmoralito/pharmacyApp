@@ -12,5 +12,12 @@ class Daily {
     expenses nullable:false
   }
 
+  static namedQueries = {
+    fromTo { from, to ->
+      ge "date", from.clearTime()
+      le "date", to.clearTime() + 1
+    }
+  }
+
   static hasMany = [expenses:Expenses]
 }
