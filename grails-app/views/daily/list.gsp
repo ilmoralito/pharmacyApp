@@ -37,7 +37,7 @@
 			<g:form action="list">
 				<div class="form-group">
 					<label for="date">Diarios</label>
-					<g:select name="date" from="${dates}" class="form-control"/>
+					<g:select name="date" from="${dates}" value="${dailyExpenses?.date?.format('yyyy-MM-dd')}" class="form-control"/>
 				</div>
 				<g:submitButton name="send" value="Buscar" class="btn btn-primary btn-block"/>
 			</g:form>
