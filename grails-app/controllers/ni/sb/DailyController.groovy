@@ -6,17 +6,13 @@ import grails.plugin.springsecurity.annotation.Secured
 class DailyController {
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:["GET", "POST"]
+		list:["GET", "POST"],
+		addExpense:"POST"
 	]
 
   def list() {
-  	def dailyExpensesCriteria = Daily.createCriteria()
-  	def dailyExpenses = dailyExpensesCriteria.get {
-  		def today = new Date()
-
-  		ge "date", today.clearTime()
-  		le "date", today.clearTime() + 1
-  	}
+ 		def date = (request.method == "POST" && params?.date) ? params.date("date", "yyyy-MM-dd") : new Date()
+  	def daily = Daily.fromTo(date, date).get()
 
   	def dateCriteria = Daily.createCriteria()
   	def dates = dateCriteria.list {
@@ -25,6 +21,31 @@ class DailyController {
   		}
   	}
 
-  	[dailyExpenses:dailyExpenses, dates:dates*.format("yyyy-MM-dd")]
+  	[daily:daily, dates:dates*.format("yyyy-MM-dd")]
+  }
+
+	def addExpense(ExpensesCommand command) {
+		if (command.hasErrors()) {
+			flash.message = "Datos incorrectos"
+		} else {
+			def today = new Date()
+			def daily = Daily.fromTo(today, today).get()
+			def expenses = new Expenses(description:command.description, quantity:command.quantity)
+
+			daily.addToExpenses expenses
+
+			daily.save()
+		}
+
+		redirect action:"list"
+	}
+}
+
+class ExpensesCommand {
+	String description
+  BigDecimal quantity
+
+  static constraints = {
+		importFrom Expenses
   }
 }
