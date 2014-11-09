@@ -34,7 +34,7 @@
 						<div class="form-group">
 							<input type="text" id="newProduct" name="newProduct" class="form-control" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
 						</div>
-						<a href="#" id="send" type="submit" class="btn btn-primary pull-right">Agregar</a>
+						<a href="#" id="sendProduct" type="submit" class="btn btn-primary pull-right">Agregar</a>
 						<br><br>
 					</div>
 				</div>
