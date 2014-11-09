@@ -301,6 +301,17 @@ class BootStrap {
         daily1.addToExpenses(e1).addToExpenses(e2).addToExpenses(e3)
 
         daily1.save(failOnError:true)
+
+        def daily2 = new Daily(date:date - 1)
+
+        def e4 = new Expenses(description:"lorem ipsum dolor sit ament", quantity:9.0)
+        def e5 = new Expenses(description:"lorem oz dolor sit ament", quantity:5.0)
+        def e6 = new Expenses(description:"lorem  portgas de ace dolor sit ament", quantity:5.0)
+        def e7 = new Expenses(description:"lorem  portgas de ace dolor sit ament", quantity:25.0)
+
+        daily2.addToExpenses(e4).addToExpenses(e5).addToExpenses(e6).addToExpenses(e7)
+
+        daily2.save(failOnError:true)
       break
     }
   }
