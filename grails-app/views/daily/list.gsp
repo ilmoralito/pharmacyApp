@@ -37,9 +37,10 @@
 			</g:else>
 		</div>
 		<div class="col-md-2">
+			<h4>Administrar</h4>
 			<g:form action="list">
 				<div class="form-group">
-					<label for="date">Diarios</label>
+					<label for="date" class="sr-only">Diarios</label>
 					<g:select name="date" from="${dates}" value="${daily?.date?.format('yyyy-MM-dd')}" class="form-control"/>
 				</div>
 				<g:submitButton name="send" value="Buscar" class="btn btn-primary btn-block"/>
