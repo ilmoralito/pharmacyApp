@@ -27,7 +27,9 @@
 								<td>${pay.payment}</td>
 								<td>${pay.change}</td>
 								<td width="1">
-									Eliminar.
+									<g:link action="delete" params="[idPay:"${pay.id}", id:"${saleInstance.id}"]" title="Eliminar">
+										<span class="glyphicon glyphicon-trash"></span>
+									</g:link>
 								</td>
 							</tr>
 							<g:set var="totalPayment" value="${totalPayment + pay.payment}"/>

@@ -108,7 +108,7 @@ class SaleController {
 
   def pay(Integer id){
     def saleInstance = Sale.get id
-    def payInstance = Pay.findAllBySaleToClient(saleInstance)
+    def payInstance = Pay.findAllBySaleToClient(saleInstance, [sort: "dateCreated", order: "desc"])
     def user = springSecurityService.currentUser
 
     if (request.method == 'GET') {
@@ -122,6 +122,18 @@ class SaleController {
         flash.message = "El abono fue registrado correctamente!!"
         redirect(action:"pay", params:[id:params.id])
       }
+    }
+  }
+
+  def delete(){
+    def payInstance = Pay.get(params.idPay)
+    def saleInstance = Sale.get(params.id)
+    if (request.method == 'GET') {
+      [payInstance:payInstance, saleInstance:saleInstance]
+    }else{
+      payInstance.delete(flush:true)
+      flash.message="El abono ha sido borrado correctamente!!"
+      redirect(action:"pay", params:[id:params.id])
     }
   }
 
