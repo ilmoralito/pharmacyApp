@@ -105,6 +105,12 @@ class SaleController {
     items
   }
 
+  def pay(Integer id){
+    def saleInstance = Sale.get id
+    def payInstance = Pay.findAllBySaleToClient(saleInstance)
+    [saleInstance:saleInstance, payInstance:payInstance]
+  }
+
   def createSaleToClientFlow = {
     init {
       action {
