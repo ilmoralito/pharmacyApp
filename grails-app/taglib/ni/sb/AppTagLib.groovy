@@ -25,7 +25,7 @@ class AppTagLib {
 	}
 
 	def calcReceiptNumber = { attrs ->
-		def payInstance = Pay.list(), lastPay, receiptNumber
+		def payInstance = Pay.list(sort: "receiptNumber", order: "asd"), lastPay, receiptNumber
 		if (payInstance.size() > 0) {
 			lastPay = payInstance.last()
 			receiptNumber = lastPay.receiptNumber + 1

@@ -9,11 +9,13 @@ $(function(){
 			$("#amountPayment").val('');
 			currentBalance = 0
 			$("#currentBalance").text(currentBalance);
+			$("#btnregistration").attr('disabled', 'disabled');
 		}else{
 			$("#info").text("Datos correctos");
 			$("#info").css({color: "#428BCA"})
 			currentBalance = balance - payment
 			$("#currentBalance").text(currentBalance);
+			$("#btnregistration").attr('disabled', false);
 		}
   	})
 
@@ -25,16 +27,19 @@ $(function(){
 			$("#info").text("Aviso: La cantidad con la que se paga es menor que el abono!!, debe corregir los datos.");
 			$("#info").css({color: "#D2322D"})
 			$("#changeLabel").text("0");
+			$("#btnregistration").attr('disabled', 'disabled');
 		}else{
 			$("#info").text("Datos correctos");
 			$("#info").css({color: "#428BCA"})
 			change = amountPayment - payment
+			$("#btnregistration").attr('disabled', false);
+			if (payment > balance) {
+				$("#btnregistration").attr('disabled', 'disabled');
+			}
 		}
 
 		$("#changeLabel").text(change);
 		$("#change").attr('value', change);
-		
-
   	})
 
 });
