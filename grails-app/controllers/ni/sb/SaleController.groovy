@@ -108,7 +108,11 @@ class SaleController {
   def pay(Integer id){
     def saleInstance = Sale.get id
     def payInstance = Pay.findAllBySaleToClient(saleInstance)
-    [saleInstance:saleInstance, payInstance:payInstance]
+    if (request.method == 'GET') {
+      [saleInstance:saleInstance, payInstance:payInstance]
+    }else{
+      
+    }
   }
 
   def createSaleToClientFlow = {
