@@ -10,6 +10,7 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
+    pay:["GET", "POST"],
     show:"GET",
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
@@ -108,10 +109,19 @@ class SaleController {
   def pay(Integer id){
     def saleInstance = Sale.get id
     def payInstance = Pay.findAllBySaleToClient(saleInstance)
+    def user = springSecurityService.currentUser
+
     if (request.method == 'GET') {
       [saleInstance:saleInstance, payInstance:payInstance]
     }else{
-      
+      def pay = new Pay(user:user, receiptNumber:params.receiptNumber, payment:params.payment, change:params.change, saleToClient:saleInstance)
+      if (!pay.save()) {
+        pay.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"}
+      }else{
+        flash.message = "El abono fue registrado correctamente!!"
+        redirect(action:"pay", params:[id:params.id])
+      }
     }
   }
 
@@ -327,7 +337,7 @@ class SaleController {
     }
 
     if (!sale.save()) {
-      sale.errors.allErrors.each { error ->
+        sale.errors.allErrors.each { error ->
         log.error "[$error.field: $error.defaultMessage]"
       }
 
