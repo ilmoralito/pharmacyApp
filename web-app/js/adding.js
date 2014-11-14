@@ -20,18 +20,20 @@ $(function(){
 
 		$.ajax({
 			url:"addClient/",
-			data:{fullName:fullName.val(), address:address.val(), identificationCard:identificationCard.val()},
+			data:{ fullName:fullName.val(), address:address.val(), identificationCard:identificationCard.val() },
 			success:function(data) {
 				if (data) {
 					var opt = $("<option>", { value:data.id, text:data.fullName, selected:true });
 
 					$("#client\\.id").append(opt);
+
+					fullName.val("");
+					address.val("");
+					identificationCard.val("");
 				}
 			}
 		})
 
-		fullName.val("");
-		address.val("");
-		identificationCard.val("");
+		fullName.focus()
 	})
 });
