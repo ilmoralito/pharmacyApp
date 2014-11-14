@@ -42,6 +42,20 @@ class PurchaseOrderController {
 
           eq "typeOfPurchase", typeOfPurchase
         }
+
+        //filter by status
+        if (params?.pending && params?.canceled) {
+          or {
+            eq "status", params.boolean("pending")
+            eq "status", params.boolean("canceled")
+          }
+        }
+
+        if (params?.pending && !params?.canceled || params?.canceled && !params?.pending) {
+          def status = params.boolean("pending") ?: params.boolean("canceled")
+
+          eq "status", status
+        }
       }
     } else {
       orders = PurchaseOrder.list()

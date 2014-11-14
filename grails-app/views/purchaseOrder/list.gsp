@@ -109,6 +109,20 @@
 					</label>
 				</div>
 
+				<h5>Estado</h5>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="pending" value="false" checked="${params?.pending ? 'true' : 'false'}"/>
+						Pendiente
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="canceled" value="true" checked="${params?.canceled ? 'true' : 'false'}"/>
+						Cancelado
+					</label>
+				</div>
+
 				<g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
 		</div>
