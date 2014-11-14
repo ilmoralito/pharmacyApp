@@ -12,24 +12,22 @@
 			<h4>Venta a cliente</h4>
 
 			<g:form>
-				<div class="newClient">
-					<div class="text-right"><a href="#" id="trigger" class="btn btn-link btn-xs">Agregar nuevo cliente</a></div>
-					<div id="box">
-						<div class="form-group">
-							<g:textField name="fullName" id="fullName" class="form-control" placeholder="Nombre completo" autofocus="true" data-toggle="tooltip" title="Nombre completo"/>
-						</div>
-						<div class="form-group">
-							<g:textField name="address" id="address" class="form-control" placeholder="Direccion" data-toggle="tooltip" title="Direccion"/>
-						</div>
-						<div class="form-group">
-							<g:textField name="identificationCard" id="identificationCard" class="form-control" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
-						</div>
-						<a href="#" id="sendClient" type="submit" class="btn btn-primary pull-right">Agregar</a>
-						<br>
+				<div id="box">
+					<div class="form-group">
+						<g:textField name="fullName" id="fullName" class="form-control" placeholder="Nombre completo" autofocus="true" data-toggle="tooltip" title="Nombre completo"/>
 					</div>
+					<div class="form-group">
+						<g:textField name="address" id="address" class="form-control" placeholder="Direccion" data-toggle="tooltip" title="Direccion"/>
+					</div>
+					<div class="form-group">
+						<g:textField name="identificationCard" id="identificationCard" class="form-control" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
+					</div>
+					<a href="#" id="sendClient" type="submit" class="btn btn-primary pull-right">Agregar</a>
+					<br><br>
 				</div>
+
 				<div class="form-group">
-					<label for="client">Cliente</label>
+					<label for="client">Selecciona cliente o <a href="#" id="trigger">Agregar nuevo cliente</a></label>
 					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" class="form-control"/>
 				</div>
 
