@@ -9,17 +9,7 @@
 <body>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="pull-right">
-				<div class="btn-group">
-					<g:link action="list" params="[option:"true"]" class="btn btn-default ${(option == true)?"active":""}">Pagados</g:link>
-					<g:link action="list" params="[option:"false"]" class="btn btn-default ${(option == false)?"active":""}">Pendientes</g:link>
-				</div>
-				<div class="btn-group">
-					<g:link action="list" params="[option:"Credito"]" class="btn btn-default ${(option == "Credito")?"active":""}">Credito</g:link>
-					<g:link action="list" params="[option:"Contado"]" class="btn btn-default ${(option == "Contado")?"active":""}">Contado</g:link>
-				</div>
-				<g:link action="create" class="btn btn-primary">Crear orden de compra</g:link>
-			</div>
+			<g:link action="create" class="btn btn-primary pull-right">Crear orden de compra</g:link>
 		</div>
 	</div>
 
@@ -67,26 +57,47 @@
 			</div>
 		</div>
 	</div>
-	<g:if test="${orders}">
-		<table class="table">
-			<thead>
-				<th>#</th>
-			</thead>
-			<tbody>
-				<g:each in="${orders}" var="order">
-					<tr>
-						<td>
-							<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
-								${order.provider}, #${order.invoiceNumber}
-							</a>
-						</td>
-					</tr>
+
+	<div class="row">
+		<div class="col-md-9">
+			<g:if test="${orders}">
+				<table class="table">
+					<thead>
+						<th>#</th>
+					</thead>
+					<tbody>
+						<g:each in="${orders}" var="order">
+							<tr>
+								<td>
+									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+										${order.provider}, #${order.invoiceNumber}
+									</a>
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</g:if>
+			<g:else>
+				<p>Nada que mostrar</p>
+			</g:else>
+		</div>
+		<div class="col-md-3">
+			<h4>Filtrar</h4>
+			<h5>Proveedores</h5>
+			<g:form action="list">
+				<g:each in="${providers}" var="provider">
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="providers" value="${provider.id}" checked="${params?.providers?.contains(provider.id.toString()) ? 'true' : 'false'}"/>
+							${provider}
+						</label>
+					</div>
 				</g:each>
-			</tbody>
-		</table>
-	</g:if>
-	<g:else>
-		<p>Nada que mostrar</p>
-	</g:else>
+
+				<g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
+			</g:form>
+		</div>
+	</div>
 </body>
 </html>

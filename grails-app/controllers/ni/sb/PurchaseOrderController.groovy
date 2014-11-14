@@ -8,7 +8,7 @@ class PurchaseOrderController {
 
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET",
+		list:["GET", "POST"],
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET",
     getBrandsByBrandProduct:"GET",
@@ -17,28 +17,22 @@ class PurchaseOrderController {
 	]
 
   def list() {
-    def status = (!params?.option?true:"")
+    def orders = []
 
-    switch(params?.option) {
-      case "true":
-        status = true
-      break
-      case "false":
-        status = false
-      break
-      case "Contado":
-        status = params.option
-      break
-      case "Credito":
-        status = params.option
-      break
-    }
+    if (request.method == "POST") {
+      def criteria = PurchaseOrder.createCriteria()
+      orders = criteria {
+        if (params?.providers) {
+          def providerInstances = Provider.getAll params.list("providers")
 
-    if (status == true || status == false) {
-      [orders:PurchaseOrder.findAllByStatus(status), option:status]
+          "in" "provider", providerInstances
+        }
+      }
     } else {
-      [orders:PurchaseOrder.findAllByTypeOfPurchase(status), option:status]
+      orders = PurchaseOrder.list()
     }
+
+    [orders:orders, providers:Provider.list()]
   }
 
   def createFlow = {
