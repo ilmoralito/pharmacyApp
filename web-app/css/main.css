@@ -4,7 +4,10 @@ table { margin: 15px 0; }
 
 #tableUsers, td, th { padding: 3px; }
 
+#box { display:none }
+
 .statusEnabled { background: #3071A9; color: white; border-radius: 3px; padding:2px; }
+
 .statusDisabled { background: #CE1010; color: white; border-radius: 3px; padding:2px; }
 
 .well { background: #FFF; }
@@ -17,14 +20,5 @@ table { margin: 15px 0; }
 
 .measures { display: none; }
 
-#box {
-	display:none
-}
+.newClient { margin-top: -15px; }
 
-.NewProducto { 
-	margin-top: -8px; 
-}
-
-.NewClient { 
-	margin-top: -15px; 
-}

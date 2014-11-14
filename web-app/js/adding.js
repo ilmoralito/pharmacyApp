@@ -5,42 +5,27 @@ $(function(){
 		$("#box").toggle()
 	})
 
-	$("#sendProduct").on("click", function(e){
-		e.preventDefault();
-		var product = $("#newProduct"), providerId = $("#providerId").val();
-
-		$.ajax({
-			url:"addProduct/",
-			data:{ productInstance:product.val(), providerId:providerId },
-			success:function(data) {
-				var opt = $("<option>", { value:data.id, text:data.name, selected:true });
-
-				$("#product").append(opt);
-			}
-		})
-
-		product.val("");
-	})
-
-
 	$("#sendClient").on("click", function(e){
 		e.preventDefault();
-		var fullName = $("#fullName").val();
-		var address = $("#address").val();
-		var identificationCard = $("#identificationCard").val();
+
+		var fullName = $("#fullName");
+		var address = $("#address");
+		var identificationCard = $("#identificationCard");
+
 		$.ajax({
 			url:"addClient/",
-			data:{fullName:fullName, address:address, identificationCard:identificationCard},
+			data:{fullName:fullName.val(), address:address.val(), identificationCard:identificationCard.val()},
 			success:function(data) {
 				if (data) {
-				  var opt = $("<option>", { value:data.id, text:data.fullName, selected:true });
-				  $("#client\\.id").append(opt);
+					var opt = $("<option>", { value:data.id, text:data.fullName, selected:true });
+
+					$("#client\\.id").append(opt);
 				}
 			}
 		})
-		$("#fullName").val("");
-		$("#address").val("");
-		$("#identificationCard").val("");
-	})
 
+		fullName.val("");
+		address.val("");
+		identificationCard.val("");
+	})
 });

@@ -12,7 +12,7 @@
 			<h4>Selecciona cliente y tipo de pago</h4>
 
 			<g:form>
-				<div class="NewClient">
+				<div class="newClient">
 					<div class="text-right"><a href="#" id="trigger" class="btn btn-link btn-xs">Agregar nuevo cliente</a></div>
 					<div id="box">
 						<div class="form-group">
@@ -25,7 +25,7 @@
 							<g:textField name="identificationCard" id="identificationCard" class="form-control" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
 						</div>
 						<a href="#" id="sendClient" type="submit" class="btn btn-primary pull-right">Agregar</a>
-						<br><br>
+						<br>
 					</div>
 				</div>
 				<div class="form-group">
