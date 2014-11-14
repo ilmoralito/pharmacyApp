@@ -32,14 +32,15 @@ $(function(){
 			url:"addClient/",
 			data:{fullName:fullName, address:address, identificationCard:identificationCard},
 			success:function(data) {
-				var opt = $("<option>", { value:data.id, text:data.name, selected:true });
-
-				$("#client.id").append(opt);
+				if (data) {
+				  var opt = $("<option>", { value:data.id, text:data.fullName, selected:true });
+				  $("#client\\.id").append(opt);
+				}
 			}
 		})
-		fullName.val("");
-		address.val("");
-		identificationCard.val("");
+		$("#fullName").val("");
+		$("#address").val("");
+		$("#identificationCard").val("");
 	})
 
 });
