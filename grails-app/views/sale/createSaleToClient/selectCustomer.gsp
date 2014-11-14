@@ -9,7 +9,7 @@
 <body>
 	<div class="row">
 		<div class="col-md-6">
-			<h4>Selecciona cliente y tipo de pago</h4>
+			<h4>Venta a cliente</h4>
 
 			<g:form>
 				<div class="newClient">
