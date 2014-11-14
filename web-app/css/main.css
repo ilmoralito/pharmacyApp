@@ -16,3 +16,15 @@ table { margin: 15px 0; }
 .notifications{ background: #FF003F; }
 
 .measures { display: none; }
+
+#box {
+	display:none
+}
+
+.NewProducto { 
+	margin-top: -8px; 
+}
+
+.NewClient { 
+	margin-top: -15px; 
+}
