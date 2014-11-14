@@ -105,6 +105,7 @@ class SaleController {
       client.errors.allErrors.each { error ->
         log.error "[$error.field: $error.defaultMessage]"
       }
+      return false
     }
 
     render(contentType:"application/json") {
