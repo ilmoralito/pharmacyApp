@@ -23,4 +23,16 @@ class AppTagLib {
 
 		out << saleService.calcSaleBalance(medicinesToSale, productsToSale, brandsToSale)
 	}
+
+	def calcReceiptNumber = { attrs ->
+		def payInstance = Pay.list(sort: "receiptNumber", order: "asd"), lastPay, receiptNumber
+		if (payInstance.size() > 0) {
+			lastPay = payInstance.last()
+			receiptNumber = lastPay.receiptNumber + 1
+		}else{
+			receiptNumber = 1
+		}
+
+		out << receiptNumber
+	}
 }

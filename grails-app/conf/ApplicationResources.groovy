@@ -58,4 +58,8 @@ modules = {
   adding {
     resource url:"js/adding.js"
   }
+
+  pay{
+    resource url:"js/pay.js"
+  }
 }

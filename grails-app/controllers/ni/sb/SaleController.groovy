@@ -10,6 +10,7 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
+    pay:["GET", "POST"],
     show:"GET",
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET"
@@ -103,6 +104,44 @@ class SaleController {
     def items = query.list()
 
     items
+  }
+
+  def pay(Integer id){
+    def saleInstance = SaleToClient.get id
+    def payInstance = Pay.findAllBySaleToClient(saleInstance, [sort: "dateCreated", order: "desc"])
+    def user = springSecurityService.currentUser
+
+    if (request.method == 'GET') {
+      [saleInstance:saleInstance, payInstance:payInstance]
+    }else{
+      def pay = new Pay(user:user, receiptNumber:params.receiptNumber, payment:params.payment, change:params.change, saleToClient:saleInstance)
+
+      if (!pay.save()) {
+        pay.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"}
+      }else{
+        flash.message = "El abono fue registrado correctamente!!"
+        if (params.balance.toBigDecimal() == params.payment.toBigDecimal()) {
+          saleInstance.properties["status"] = "Cancelado"
+        }
+        redirect(action:"pay", params:[id:params.id])
+      }
+
+    }
+  }
+
+  def delete(){
+    def payInstance = Pay.get(params.idPay)
+    def saleInstance = SaleToClient.get(params.id)
+
+    if (request.method == 'GET') {
+      [payInstance:payInstance, saleInstance:saleInstance]
+    }else{
+      payInstance.delete(flush:true)
+      saleInstance.properties["status"] = "Pendiente"
+      flash.message="El abono ha sido borrado correctamente!!"
+      redirect(action:"pay", params:[id:params.id])
+    }
   }
 
   def createSaleToClientFlow = {
@@ -298,7 +337,7 @@ class SaleController {
       redirect controller:"sale", action:"list"
     }
   }
-  
+
   def sale(User user, def balance, Client client, String typeOfPurchase, def saleDetails) {
     Sale sale
 
@@ -317,7 +356,7 @@ class SaleController {
     }
 
     if (!sale.save()) {
-      sale.errors.allErrors.each { error ->
+        sale.errors.allErrors.each { error ->
         log.error "[$error.field: $error.defaultMessage]"
       }
 
