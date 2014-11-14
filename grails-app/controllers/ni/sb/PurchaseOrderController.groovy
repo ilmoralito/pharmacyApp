@@ -9,6 +9,7 @@ class PurchaseOrderController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
+    stock:"GET",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET",
     getBrandsByBrandProduct:"GET",
@@ -62,6 +63,10 @@ class PurchaseOrderController {
     }
 
     [orders:orders, providers:Provider.list()]
+  }
+
+  def stock() {
+    
   }
 
   def createFlow = {

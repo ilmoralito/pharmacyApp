@@ -9,7 +9,10 @@
 <body>
 	<div class="row">
 		<div class="col-md-12">
-			<g:link action="create" class="btn btn-primary pull-right">Crear orden de compra</g:link>
+			<div class="pull-right">
+				<g:link action="stock" class="btn btn-default">Existencias</g:link>
+				<g:link action="create" class="btn btn-primary">Crear orden</g:link>
+			</div>
 		</div>
 	</div>
 
