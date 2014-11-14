@@ -64,10 +64,12 @@
 				<table class="table">
 					<thead>
 						<th>#</th>
+						<th></th>
 					</thead>
 					<tbody>
-						<g:each in="${orders}" var="order">
+						<g:each in="${orders}" var="order" status="index">
 							<tr>
+								<td width="1">${index + 1}</td>
 								<td>
 									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
 										${order.provider}, #${order.invoiceNumber}
