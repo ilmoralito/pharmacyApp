@@ -66,7 +66,9 @@ class PurchaseOrderController {
   }
 
   def stock() {
-    
+    def items = Item.findAllByQuantityGreaterThan(0)
+
+    [items:items]
   }
 
   def createFlow = {
