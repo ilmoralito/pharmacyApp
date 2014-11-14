@@ -84,8 +84,8 @@
 		</div>
 		<div class="col-md-3">
 			<h4>Filtrar</h4>
-			<h5>Proveedores</h5>
 			<g:form action="list">
+				<h5>Proveedores</h5>
 				<g:each in="${providers}" var="provider">
 					<div class="checkbox">
 						<label>
@@ -94,6 +94,20 @@
 						</label>
 					</div>
 				</g:each>
+
+				<h5>Tipo de pago</h5>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="cash" value="Contado" checked="${params?.cash ? 'true' : 'false'}"/>
+						Contado
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<g:checkBox name="credit" value="Credito" checked="${params?.credit ? 'true' : 'false'}"/>
+						Credito
+					</label>
+				</div>
 
 				<g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
