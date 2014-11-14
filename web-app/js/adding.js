@@ -2,7 +2,13 @@ $(function(){
 	$("#trigger").on("click", function(e){
 		e.preventDefault();
 
-		$("#box").toggle()
+		var box = $("#box");
+
+		box.toggle();
+
+		if (box.is(":visible")) {
+			$("#fullName").focus();
+		}
 	})
 
 	$("#sendClient").on("click", function(e){
