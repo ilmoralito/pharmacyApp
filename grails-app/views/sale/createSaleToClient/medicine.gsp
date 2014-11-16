@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar venta</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, filterMedicinesByGenericName"/>
 	<r:require modules="bootstrap-css, bootstrap-collapse, saleMedicine"/>
 </head>
 <body>
@@ -29,15 +28,6 @@
 			  <li><g:link event="manageProducts">Producto</g:link></li>
 			  <li><g:link event="manageBrands">Marca</g:link></li>
 			</ul>
-
-			<!--Medicines-->
-			<div class="form-group">
-				<g:select name="grenericName" from="${genericNames}" noSelection="['':'Nombres genericos']" class="form-control"/>
-			</div>
-
-			<g:form>
-				<div class="form-group">
-					<g:select name="product" from="${medicines}" optionKey="id" class="form-control"/>
 
 			<!--Filter medicines-->
 			<g:form>
