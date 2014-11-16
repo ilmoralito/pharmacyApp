@@ -152,9 +152,11 @@ class BootStrap {
           total:50 * 5
         )
 
-        purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1).addToItems(m2).addToItems(m3)
+        def p2item1 = new Item(product:product1, quantity:40, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
 
-        purchaseOrder2.balance += [item4, item5, m1, m2, m3].sum { it.total }
+        purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1).addToItems(m2).addToItems(m3).addToItems(p2item1)
+
+        purchaseOrder2.balance += [item4, item5, m1, m2, m3, p2item1].sum { it.total }
 
         if (!purchaseOrder2.save()) {
           purchaseOrder2.errors.allErrors.each { error ->
@@ -163,9 +165,9 @@ class BootStrap {
         }
 
         assert PurchaseOrder.count() == 2
-        assert Item.count() == 10
+        assert Item.count() == 11
         assert purchaseOrder1.balance == 5675
-        assert purchaseOrder2.balance == 3775.00
+        assert purchaseOrder2.balance == 5275.00
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PURCHASE ORDER
