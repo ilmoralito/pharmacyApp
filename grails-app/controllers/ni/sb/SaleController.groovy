@@ -25,7 +25,7 @@ class SaleController {
 
     if (request.method == "POST") {
       def criteria = Sale.createCriteria()
-      sales = criteria.list {
+      sales = criteria {
         //filter between dates
         if (params?.from && params?.to) {
           ge "dateCreated", params.date("from", "yyyy-MM-dd").clearTime()
@@ -78,9 +78,11 @@ class SaleController {
 
           "in" "user", usersInstance
         }
+
+        order "id", "desc"
       }
     } else {
-      sales = Sale.salesFromTo(today, today + 1).list(sort:"dateCreated", order:"desc")
+      sales = Sale.salesFromTo(today, today + 1).list(sort:"id", order:"desc")
     }
 
     def todaySaleAmount = Sale.salesFromTo(today, today + 1).list().balance.sum() ?: 0
