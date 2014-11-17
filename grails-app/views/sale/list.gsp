@@ -88,7 +88,7 @@
 				</tbody>
 			</table>
 
-			<h4>Filtar</h4>
+			<h4>Filtrar</h4>
 			<g:form action="list">
 				
 				<h5>Fechas</h5>
