@@ -55,11 +55,11 @@
 					<g:hiddenField name="change" value="change"/>
 					<div class="form-group">
 						<label for="payment">Cantidad a abonar</label>
-						<g:textField type="payment" class="form-control" name="payment" required=""/>
+						<g:textField type="payment" class="form-control" name="payment" required="" autocomplete='off'/>
 					</div>
 					<div class="form-group">
 						<label for="payment">Cantidad con la que paga</label>
-						<g:textField type="amountPayment" class="form-control" name="amountPayment" required=""/>
+						<g:textField type="amountPayment" class="form-control" name="amountPayment" required="" autocomplete='off'/>
 					</div>
 					<div class="panel panel-default">
 					  <div class="panel-body">
