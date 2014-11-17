@@ -9,7 +9,7 @@
 <body>
 	<!--NAVBAR-->
 	<g:render template="/layouts/navbar"/>
-	<div class="container">
+	<div class="container-fluid">
 		<!--SIDEBAR-->
 		<div class="col-md-2">
 			<g:render template="/layouts/sidebar"/>
