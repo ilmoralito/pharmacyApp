@@ -26,7 +26,7 @@
 							</tr>
 						</g:each>
 						<tr>
-							<td colspan="2">TOTAL</td>
+							<td colspan="2">TOTAL GASTOS</td>
 							<td>${daily.expenses.quantity.sum()}</td>
 						</tr>
 					</tbody>
@@ -55,7 +55,7 @@
 
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
-					<g:textField name="quantity" placeholder="Cantidad" class="form-control"/>
+					<g:textField name="quantity" placeholder="Monto" class="form-control"/>
 				</div>
 
 				<g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
