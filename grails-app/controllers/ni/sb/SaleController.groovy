@@ -80,7 +80,7 @@ class SaleController {
         }
       }
     } else {
-      sales = Sale.salesFromTo(today, today + 1).list()
+      sales = Sale.salesFromTo(today, today + 1).list(sort:"dateCreated", order:"desc")
     }
 
     def todaySaleAmount = Sale.salesFromTo(today, today + 1).list().balance.sum() ?: 0

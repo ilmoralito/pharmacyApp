@@ -54,7 +54,7 @@
 						<g:if test="${request.method == 'POST'}">
 							<tr>
 								<td colspan="3">MONTO TOTAL CON FILTRO</td>
-								<td colspan="3">456</td>
+								<td colspan="3">${sales.balance.sum()}</td>
 							</tr>
 						</g:if>
 					</tbody>
