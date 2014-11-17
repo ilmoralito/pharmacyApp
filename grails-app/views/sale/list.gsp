@@ -22,7 +22,14 @@
 				<table class="table table-hover">
 					<thead>
 						<th width="1">#</th>
-						<th>Fecha de venta</th>
+						<th>
+							<g:if test="${request.method == 'GET' || (!params?.from && !params?.to)}">
+								Hora
+							</g:if>
+							<g:else>
+								Fecha de venta
+							</g:else>
+						</th>
 						<th>Cliente</th>
 						<th>Total de compra</th>
 						<th>Tipo de compra</th>
@@ -36,7 +43,14 @@
 										${index + 1}
 									</g:link>
 								</td>
-								<td><g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/></td>
+								<td>
+									<g:if test="${request.method == 'GET' || (!params?.from && !params?.to)}">
+										<g:formatDate date="${sale.dateCreated}" formatName="hour.date.format"/>
+									</g:if>
+									<g:else>
+										<g:formatDate date="${sale.dateCreated}" formatName="custom.date.format"/>
+									</g:else>
+								</td>
 								<td>
 									<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
 										${sale.client}
