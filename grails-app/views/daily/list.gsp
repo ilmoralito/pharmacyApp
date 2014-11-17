@@ -13,20 +13,22 @@
 				<h4>Gastos de <g:formatDate date="${daily.date}" formatName="custom.date.format"/></h4>
 				<table class="table table-hover">
 					<thead>
+						<th width="1"></th>
 						<th width="1">Hora</th>
 						<th>Descripcion</th>
 						<th>Cantidad</th>
 					</thead>
 					<tbody>
-						<g:each in="${daily.expenses}" var="expense">
+						<g:each in="${daily.expenses}" var="expense" status="i">
 							<tr>
+								<td>${i+1}</td>
 								<td><g:formatDate date="${expense.dateCreated}" formatName="hour.date.format"/></td>
 								<td>${expense.description}</td>
 								<td>${expense.quantity}</td>
 							</tr>
 						</g:each>
 						<tr>
-							<td colspan="2">TOTAL GASTOS</td>
+							<td colspan="3">TOTAL GASTOS</td>
 							<td>${daily.expenses.quantity.sum()}</td>
 						</tr>
 					</tbody>
