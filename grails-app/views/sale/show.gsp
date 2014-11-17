@@ -16,6 +16,9 @@
 				<g:if test="${sale.typeOfPurchase == 'Credito' && sale.status == 'Pendiente'}">
 					<g:link action="pay" id="${sale.id}" class="btn btn-info btn-block">Abonar</g:link>
 				</g:if>
+				<g:else>
+					<g:link action="pay" id="${sale.id}" class="btn btn-primary btn-block">Ver Abonos</g:link>
+				</g:else>
 			</g:if>
 
 			<h4>Fecha de venta</h4>

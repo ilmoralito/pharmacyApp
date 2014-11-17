@@ -15,6 +15,7 @@
 				<h4>Abonos efectuados</h4>
 				<table class="table">
 					<thead>
+						<th>Fecha</th>
 						<th>Recibo</th>
 						<th>Pago</th>
 						<th>Vuelto</th>
@@ -23,6 +24,7 @@
 					<tbody>
 						<g:each in="${payInstance}" var="pay" status="index">
 							<tr>
+								<td>${pay.dateCreated.format("dd-MM-yyyy")}</td>
 								<td>${pay.receiptNumber}</td>
 								<td>${pay.payment}</td>
 								<td>${pay.change}</td>

@@ -2,7 +2,7 @@ $(function(){
 	var balance = parseFloat($("#balance").val()), currentBalance
 
 	payment.addEventListener("keyup", function(){
-		this.value = (this.value + '').replace(/[^0-9+\-Ee.]/g, '');
+		this.value = (this.value + '').replace(/[^0-9+.]/g, '');
 		var payment = parseFloat($("#payment").val())
 		if (payment > balance) {
 			$("#info").text("Aviso: La cantidad a bonar es mayor que la duda!!, debe corregir los datos.");
@@ -21,7 +21,7 @@ $(function(){
   	})
 
 	amountPayment.addEventListener("keyup", function(){
-		this.value = (this.value + '').replace(/[^0-9+\-Ee.]/g, '');
+		this.value = (this.value + '').replace(/[^0-9+.]/g, '');
 		var amountPayment = parseFloat(this.value), change
 		var payment = parseFloat($("#payment").val())
 
