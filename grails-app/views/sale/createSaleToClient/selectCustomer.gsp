@@ -4,16 +4,30 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Seleccionar cliente</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, adding, app"/>
 </head>
 <body>
 	<div class="row">
 		<div class="col-md-6">
-			<h4>Selecciona cliente y tipo de pago</h4>
+			<h4>Venta a cliente</h4>
 
 			<g:form>
+				<div id="box">
+					<div class="form-group">
+						<g:textField name="fullName" id="fullName" class="form-control" placeholder="Nombre completo" autofocus="true" data-toggle="tooltip" title="Nombre completo"/>
+					</div>
+					<div class="form-group">
+						<g:textField name="address" id="address" class="form-control" placeholder="Direccion" data-toggle="tooltip" title="Direccion"/>
+					</div>
+					<div class="form-group">
+						<g:textField name="identificationCard" id="identificationCard" class="form-control" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
+					</div>
+					<a href="#" id="sendClient" type="submit" class="btn btn-primary pull-right">Agregar</a>
+					<br><br>
+				</div>
+
 				<div class="form-group">
-					<label for="client">Cliente</label>
+					<label for="client">Selecciona cliente o <a href="#" id="trigger">Agregar nuevo cliente</a></label>
 					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" class="form-control"/>
 				</div>
 

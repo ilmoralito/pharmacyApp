@@ -13,7 +13,8 @@ class SaleController {
     pay:["GET", "POST"],
     show:"GET",
     getItemsByProduct:"GET",
-    filterMedicinesByGenericName:"GET"
+    filterMedicinesByGenericName:"GET",
+    addClient:"GET"
 	]
 
   def list() {
@@ -95,6 +96,24 @@ class SaleController {
 
     [sale:sale, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
   }
+
+
+
+  def addClient(String fullName, String address, String identificationCard) {
+    def client = new Client(fullName:fullName, address:address, identificationCard:identificationCard)
+
+    if (!client.save(flush:true)) {
+      client.errors.allErrors.each { error ->
+        log.error "[$error.field: $error.defaultMessage]"
+      }
+      return false
+    }
+
+    render(contentType:"application/json") {
+      client
+    }
+  }
+
 
   def getItemsByProduct(Product product) {
     def query = Item.where {
