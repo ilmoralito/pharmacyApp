@@ -83,7 +83,18 @@ class SaleController {
       sales = Sale.salesFromTo(today, today + 1).list()
     }
 
-  	[sales: sales, users:users, clients:clients]
+    def todaySaleAmount = Sale.salesFromTo(today, today + 1).list().balance.sum() ?: 0
+    def amountOfDailyExpenses = Daily.fromTo(today, today + 1).get().expenses.quantity.sum() ?: 0
+    def inBox = todaySaleAmount - amountOfDailyExpenses
+
+  	[
+      sales: sales,
+      users:users,
+      clients:clients,
+      todaySaleAmount:todaySaleAmount,
+      amountOfDailyExpenses:amountOfDailyExpenses,
+      inBox:inBox
+    ]
   }
 
   def show(Integer id) {
@@ -113,7 +124,6 @@ class SaleController {
       client
     }
   }
-
 
   def getItemsByProduct(Product product) {
     def query = Item.where {

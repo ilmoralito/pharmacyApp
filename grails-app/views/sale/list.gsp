@@ -51,10 +51,12 @@
 								<td>${sale.user.fullName}</td>
 							</tr>
 						</g:each>
-						<tr>
-							<td colspan="3">Total vendido</td>
-							<td colspan="3">${sales.balance.sum()}</td>
-						</tr>
+						<g:if test="${request.method == 'POST'}">
+							<tr>
+								<td colspan="3">MONTO TOTAL CON FILTRO</td>
+								<td colspan="3">456</td>
+							</tr>
+						</g:if>
 					</tbody>
 				</table>
 			</g:if>
@@ -64,6 +66,28 @@
 		</div>
 
 		<div class="col-md-3">
+			<h4>Diario</h4>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>Monto vendido</td>
+						<td>
+							<g:if test="${sales}">
+								${todaySaleAmount}
+							</g:if>
+						</td>
+					</tr>
+					<tr>
+						<td>Monto gasto diario</td>
+						<td>${amountOfDailyExpenses}</td>
+					</tr>
+					<tr>
+						<td>Monto en caja</td>
+						<td>${inBox}</td>
+					</tr>
+				</tbody>
+			</table>
+
 			<h4>Filtar</h4>
 			<g:form action="list">
 				
