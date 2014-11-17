@@ -8,7 +8,8 @@ class PurchaseOrderController {
 
 	static defaultAction = "list"
 	static allowedMethods = [
-		list:"GET",
+		list:["GET", "POST"],
+    stock:"GET",
     getPresentationsByProduct:"GET",
     getMeasuresByPresentation:"GET",
     getBrandsByBrandProduct:"GET",
@@ -17,28 +18,57 @@ class PurchaseOrderController {
 	]
 
   def list() {
-    def status = (!params?.option?true:"")
+    def orders = []
 
-    switch(params?.option) {
-      case "true":
-        status = true
-      break
-      case "false":
-        status = false
-      break
-      case "Contado":
-        status = params.option
-      break
-      case "Credito":
-        status = params.option
-      break
-    }
+    if (request.method == "POST") {
+      def criteria = PurchaseOrder.createCriteria()
+      orders = criteria {
+        //filter by providers
+        if (params?.providers) {
+          def providerInstances = Provider.getAll params.list("providers")
 
-    if (status == true || status == false) {
-      [orders:PurchaseOrder.findAllByStatus(status), option:status]
+          "in" "provider", providerInstances
+        }
+
+        //filter by typeofpurchase
+        if (params?.cash && params?.credit) {
+          or {
+            eq "typeOfPurchase", params.cash
+            eq "typeOfPurchase", params.credit
+          }
+        }
+
+        if (params?.cash && !params?.credit || params?.credit && !params?.cash) {
+          def typeOfPurchase = params?.cash ?: params?.credit
+
+          eq "typeOfPurchase", typeOfPurchase
+        }
+
+        //filter by status
+        if (params?.pending && params?.canceled) {
+          or {
+            eq "status", params.boolean("pending")
+            eq "status", params.boolean("canceled")
+          }
+        }
+
+        if (params?.pending && !params?.canceled || params?.canceled && !params?.pending) {
+          def status = params.boolean("pending") ?: params.boolean("canceled")
+
+          eq "status", status
+        }
+      }
     } else {
-      [orders:PurchaseOrder.findAllByTypeOfPurchase(status), option:status]
+      orders = PurchaseOrder.list()
     }
+
+    [orders:orders, providers:Provider.list()]
+  }
+
+  def stock() {
+    def items = Item.findAllByQuantityGreaterThan(0)
+
+    [items:items]
   }
 
   def createFlow = {

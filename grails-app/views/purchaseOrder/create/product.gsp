@@ -26,16 +26,17 @@
 			</ul>
 
 			<g:form autocomplete="off">
-				<a href="#" id="trigger" class="btn btn-link btn-xs">Agregar producto</a>
-				
-				<div id="box" style="display:none;">
-					<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
 
-					<div class="form-group">
-						<input type="text" id="newProduct" name="newProduct" class="form-control"/>
+				<div class="NewProducto">
+					<div class="text-right"><a href="#" id="trigger" class="btn btn-link btn-xs">Agregar nuevo producto</a></div>
+					<div id="box">
+						<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
+						<div class="form-group">
+							<input type="text" id="newProduct" name="newProduct" class="form-control" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
+						</div>
+						<a href="#" id="sendProduct" type="submit" class="btn btn-primary pull-right">Agregar</a>
+						<br><br>
 					</div>
-
-					<a href="#" id="send" type="submit" class="btn btn-default">Agregar</a>
 				</div>
 
 				<div class="form-group">

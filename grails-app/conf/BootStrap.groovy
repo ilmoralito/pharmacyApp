@@ -43,13 +43,7 @@ class BootStrap {
           provider1.addToProducts product
         }
 
-        if (!provider1.save(failOnError:true)) {
-          /*
-          provider1.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-          */
-        }
+        provider1.save(failOnError:true)
 
         def provider2 = new Provider(name:"provider2", address:"address2", phone:"23114488")
 
@@ -74,13 +68,7 @@ class BootStrap {
           provider2.addToProducts product
         }
 
-        if (!provider2.save(failOnError:true)) {
-          /*
-          provider2.errors.allErrors.each { error ->
-            log.error "[$error.field: $error.defaultMessage]"
-          }
-          */
-        }
+        provider2.save(failOnError:true)
 
         assert Provider.count() == 2
         assert provider1.products.size() == 7
@@ -182,7 +170,6 @@ class BootStrap {
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PURCHASE ORDER
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
         //|||||||||||||||||||||||||||||||||||||||||||||||||||
 
