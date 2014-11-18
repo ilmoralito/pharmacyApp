@@ -7,8 +7,7 @@
 	<r:layoutResources/>
 </head>
 <body id="background">
-	<div class="container-fluid" id="cont">
-	<img class="imgFarm" src="${resource(dir: 'images', file: 'farm5.jpg')}" alt="Farmacia"/>
+	<div class="container" id="cont">
 	<br><br>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-2">

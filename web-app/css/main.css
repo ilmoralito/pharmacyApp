@@ -31,7 +31,7 @@ table { margin: 15px 0; }
 #cont{ padding-left: 0px;}
 
 body#background{
-	background: url('img/fullBG.jpg') no-repeat 50% 50% fixed;
+	background: url(../images/farm5.jpg) no-repeat 50% 50% fixed;
 	background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
