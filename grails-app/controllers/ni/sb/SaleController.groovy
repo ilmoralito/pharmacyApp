@@ -153,7 +153,7 @@ class SaleController {
 
   def pay(Integer id){
     def saleInstance = SaleToClient.get id
-    def payInstance = Pay.findAllBySaleToClient(saleInstance, [sort: "dateCreated", order: "desc"])
+    def payInstance = Pay.findAllBySaleToClient(saleInstance, [sort: "dateCreated", order: "asc"])
     def user = springSecurityService.currentUser
 
     if (request.method == 'GET') {

@@ -19,3 +19,12 @@ table { margin: 15px 0; }
 .notifications{ background: #FF003F; }
 
 .measures { display: none; }
+
+.imgFarm{
+	max-width: 1500px;
+    width: 100%;
+    position: absolute;
+	height: 600px;
+	vertical-align: middle;border: 0 none;
+}
+#cont{padding-left: 0px;}

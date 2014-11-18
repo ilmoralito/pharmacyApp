@@ -7,10 +7,11 @@
 	<r:layoutResources/>
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid" id="cont">
+	<img class="imgFarm" src="${resource(dir: 'images', file: 'farm5.jpg')}" alt="Farmacia"/>
 	<br><br>
 		<div class="row">
-			<div class="col-md-4 col-md-offset-1">
+			<div class="col-md-4 col-md-offset-2">
 				<h1>Santa Barbara</h1>
 				<p>Farmacia, Mina el Limon</p>
 			</div>
