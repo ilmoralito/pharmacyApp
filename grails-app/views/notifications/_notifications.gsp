@@ -38,6 +38,9 @@
 
 		<li class="${(actionName == 'clientPayments') ? 'active' : ''}">
 			<g:link controller="notifications" action="clientPayments">
+				<g:if test="${session.cp > 0}">
+                    <span class="badge notifications">${session.cp}</span>
+                </g:if>
 				Pagos de clientes pendientes
 			</g:link>
 		</li>
