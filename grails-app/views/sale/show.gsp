@@ -12,6 +12,10 @@
 			<g:render template="saleDetail"/>
 		</div>
 		<div class="col-md-2">
+			<g:if test="${!sale.canceled}">
+				<g:link action="cancelSale" id="${sale.id}" class="btn btn-warning btn-block">Anular venta</g:link>
+			</g:if>
+
 			<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
 				<g:if test="${sale.typeOfPurchase == 'Credito' && sale.status == 'Pendiente'}">
 					<g:link action="pay" id="${sale.id}" class="btn btn-info btn-block">Abonar</g:link>

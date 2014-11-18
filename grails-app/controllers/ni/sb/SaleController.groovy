@@ -10,8 +10,9 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
-    pay:["GET", "POST"],
     show:"GET",
+    cancelSale:"GET",
+    pay:["GET", "POST"],
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET",
     addClient:"GET"
@@ -110,7 +111,20 @@ class SaleController {
     [sale:sale, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
   }
 
+  @Secured(["ROLE_ADMIN"])
+  def cancelSale(Integer id) {
+    def sale = Sale.get id
 
+    if (!sale || sale.canceled) {
+      response.sendError 404
+    }
+
+    sale.canceled = true
+
+    sale.save(flush:true)
+
+    redirect action:"show", id:id
+  }
 
   def addClient(String fullName, String address, String identificationCard) {
     def client = new Client(fullName:fullName, address:address, identificationCard:identificationCard)
