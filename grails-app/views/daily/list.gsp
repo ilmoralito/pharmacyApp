@@ -13,7 +13,7 @@
 				<h4>Gastos de <g:formatDate date="${daily.date}" formatName="custom.date.format"/></h4>
 				<table class="table table-hover">
 					<thead>
-						<th width="1"></th>
+						<th width="1">#</th>
 						<th width="1">Hora</th>
 						<th>Descripcion</th>
 						<th>Cantidad</th>
