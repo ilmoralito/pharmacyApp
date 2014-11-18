@@ -27,4 +27,13 @@ table { margin: 15px 0; }
 	height: 600px;
 	vertical-align: middle;border: 0 none;
 }
-#cont{padding-left: 0px;}
+
+#cont{ padding-left: 0px;}
+
+body#background{
+	background: url('img/fullBG.jpg') no-repeat 50% 50% fixed;
+	background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+}

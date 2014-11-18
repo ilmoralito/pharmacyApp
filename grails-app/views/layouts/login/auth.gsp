@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<r:layoutResources/>
 </head>
-<body>
+<body id="background">
 	<div class="container-fluid" id="cont">
 	<img class="imgFarm" src="${resource(dir: 'images', file: 'farm5.jpg')}" alt="Farmacia"/>
 	<br><br>
