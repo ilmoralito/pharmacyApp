@@ -25,7 +25,7 @@ class SaleController {
 
     if (request.method == "POST") {
       def criteria = Sale.createCriteria()
-      sales = criteria.list {
+      sales = criteria {
         //filter between dates
         if (params?.from && params?.to) {
           ge "dateCreated", params.date("from", "yyyy-MM-dd").clearTime()
@@ -78,12 +78,25 @@ class SaleController {
 
           "in" "user", usersInstance
         }
+
+        order "id", "desc"
       }
     } else {
-      sales = Sale.salesFromTo(today, today + 1).list()
+      sales = Sale.salesFromTo(today, today + 1).list(sort:"id", order:"desc")
     }
 
-  	[sales: sales, users:users, clients:clients]
+    def todaySaleAmount = Sale.salesFromTo(today, today + 1).list().balance.sum() ?: 0
+    def amountOfDailyExpenses = Daily.fromTo(today, today + 1).get().expenses.quantity.sum() ?: 0
+    def inBox = todaySaleAmount - amountOfDailyExpenses
+
+  	[
+      sales: sales,
+      users:users,
+      clients:clients,
+      todaySaleAmount:todaySaleAmount,
+      amountOfDailyExpenses:amountOfDailyExpenses,
+      inBox:inBox
+    ]
   }
 
   def show(Integer id) {
@@ -113,7 +126,6 @@ class SaleController {
       client
     }
   }
-
 
   def getItemsByProduct(Product product) {
     def query = Item.where {
