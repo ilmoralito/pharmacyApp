@@ -6,6 +6,8 @@ table { margin: 15px 0; }
 
 #box { display:none }
 
+#cont{ padding-left: 0px; }
+
 .statusEnabled { background: #3071A9; color: white; border-radius: 3px; padding:2px; }
 
 .statusDisabled { background: #CE1010; color: white; border-radius: 3px; padding:2px; }
@@ -20,11 +22,13 @@ table { margin: 15px 0; }
 
 .measures { display: none; }
 
-.imgFarm{
+.imgFarm {
 	max-width: 1500px;
-    width: 100%;
-    position: absolute;
+	width: 100%;
+	position: absolute;
 	height: 600px;
-	vertical-align: middle;border: 0 none;
+	vertical-align: middle;
+	border: 0 none;
 }
-#cont{padding-left: 0px;}
+
+
