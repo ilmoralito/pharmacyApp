@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</div>
-  	<div id="fo">
+  	<div id="footer">
   		<div class="col-md-6">
   			<h5>
   				<a href="mailto:amakenadog@gmail.com" class="contacto">
