@@ -5,8 +5,11 @@
 	<li class="${controllerName == 'client' ? 'active' : ''}">
 		<g:link controller="client" action="list">Clientes</g:link>
 	</li>
-	<li class="${controllerName == 'purchaseOrder' ? 'active' : ''}">
+	<li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
 		<g:link controller="purchaseOrder" action="list">Pedidos</g:link>
+	</li>
+	<li class="${controllerName == 'purchaseOrder' && actionName == 'stock' ? 'active' : ''}">
+		<g:link controller="purchaseOrder" action="stock">Inventario</g:link>
 	</li>
 	<li class="${controllerName == 'sale' ? 'active' : ''}">
 		<g:link controller="sale" action="list">Ventas</g:link>

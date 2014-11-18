@@ -10,9 +10,6 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="pull-right">
-				<!--
-				<g:link action="stock" class="btn btn-default">Existencias(en construccions)</g:link>
-				-->
 				<g:link action="create" class="btn btn-primary">Crear orden</g:link>
 			</div>
 		</div>
