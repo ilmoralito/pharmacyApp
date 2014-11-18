@@ -35,15 +35,4 @@ class AppTagLib {
 
 		out << receiptNumber
 	}
-
-	def calcTotalPayment = { attrs ->
-		def sale = attrs.sale
-		def payInstance = Pay.findAllBySaleToClient(sale)
-		BigDecimal total = 0
-
-		payInstance.each{
-			total = total + it.payment
-		}
-		out << total
-	}
 }
