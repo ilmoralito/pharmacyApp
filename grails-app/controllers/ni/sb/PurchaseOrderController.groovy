@@ -80,7 +80,17 @@ class PurchaseOrderController {
       resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
 
-    [items:items]
+    //medicines
+    def medicineOrderCriteria = MedicineOrder.createCriteria()
+    def medicines = medicineOrderCriteria.list {
+      gt "quantity", 0
+
+      projections {
+        groupProperty "product"
+      }
+    }
+
+    [items:items, medicines:medicines]
   }
 
   def createFlow = {
