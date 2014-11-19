@@ -61,6 +61,9 @@
 									<g:if test="${sale.instanceOf(ni.sb.SaleToClient)}">
 										${sale.typeOfPurchase}
 									</g:if>
+									<g:else>
+										Contado
+									</g:else>
 								</td>
 								<td>${sale.user.fullName}</td>
 							</tr>
