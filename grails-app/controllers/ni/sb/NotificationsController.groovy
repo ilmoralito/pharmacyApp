@@ -22,13 +22,15 @@ class NotificationsController {
     def expire = generalService.expire()
     def expired = generalService.expired()
     def pendingOrders = generalService.pendingOrders()
+    def clientPayments = generalService.clientPayments()
 
     session["q"] = (quantity)?quantity.size():0
     session["ex"] = (expire)?expire.size():0
     session["exd"] = (expired)?expired.size():0
     session["po"] = (pendingOrders)?pendingOrders.size():0
+    session["cp"] = (clientPayments)?clientPayments.size():0
 
-    if (session.q > 0 || session.ex > 0 || session.exd > 0 || session.po > 0) {
+    if (session.q > 0 || session.ex > 0 || session.exd > 0 || session.po > 0 || session.cp > 0) {
       session["notif"] = "OK"
     }
 
@@ -141,6 +143,44 @@ class NotificationsController {
     }
 
     [infoInstance:pendingOrders, today:today]
+  }
+
+  def clientPayments(){
+    def today = new Date()
+    def clientPayments = generalService.clientPayments()
+
+    params.format = params.f
+    if(params?.format && params.format != "html"){
+
+      response.contentType = grailsApplication.config.grails.mime.types[params.format]
+      response.setHeader("Content-disposition", "attachment; filename=Clientes-con-cuenta-por-vencer-${today.format("dd-MM-yyyy")}")
+      List fields = ["client","dateCreated", "proyectionDate", "totalPayment", "currentBalance", "balance"]
+      Map labels = ["client": "Cliente", "dateCreated": "Fecha de compra", "proyectionDate": "Fecha de pago", "totalPayment": "Abonado", "currentBalance": "Saldo Actual" , "balance": "Total a pagar"]
+
+      Map parameters = [title: "Clietes pendientes de pagar", "title.font.size": "18",
+      "column.widths": [0.3, 0.2, 0.2,0.2,0.2,0.2], "header.font.size": "11", "text.font.size": "11"]
+
+      def formatDate = { Sale, dateCreated ->
+        if(dateCreated instanceof Date){
+          return new java.text.SimpleDateFormat("dd-MM-yyyy").format(dateCreated)
+        }
+        return dateCreated
+      }
+
+      def formatDate2 = { Sale, proyectionDate ->
+        if(proyectionDate instanceof Date){
+          return new java.text.SimpleDateFormat("dd-MM-yyyy").format(proyectionDate)
+        }
+        return proyectionDate
+      }
+
+      Map formatters = [dateCreated:formatDate, proyectionDate:formatDate2]
+
+      exportService.export(params.format, response.outputStream,clientPayments, fields, labels,formatters,parameters)
+    }
+
+    [infoInstance:clientPayments, today:today]
+
   }
 
 }

@@ -31,8 +31,13 @@ $(function(){
 			$("#changeLabel").text("0");
 			$("#btnregistration").attr('disabled', 'disabled');
 		}else{
-			$("#info").text("Datos correctos");
-			$("#info").css({color: "#428BCA"})
+			if (payment < balance) {
+				$("#info").text("Datos correctos");
+				$("#info").css({color: "#428BCA"})
+			}else{
+				$("#info").text("Aviso: La cantidad a bonar es mayor que la duda!!, debe corregir los datos.");
+				$("#info").css({color: "#D2322D"})
+			}
 			change = amountPayment - payment
 			$("#btnregistration").attr('disabled', false);
 			if (payment > balance) {

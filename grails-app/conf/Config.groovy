@@ -120,6 +120,8 @@ log4j = {
          'net.sf.ehcache.hibernate'
 }
 
+grails.plugin.springsecurity.ui.forgotPassword.emailBody = '<h1>Hola,</h1> ${user.username} <br><br>' + 'usted ha hecho una solicitud, para restaura su contaseña, si en realidad desea cambiar por cualquier razon su contraseña, de click en el enlace siguiente: <br> <h4><a href="${url}">Restaurar Contraseña</a></h4>. <br> <h3>Esperamos esto soluciones sus dudas</h3>'
+grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Restauración de contraseña Aplicacion FSB'
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ni.sb.User'
@@ -136,7 +138,11 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/js/**':                      ['permitAll'],
 	'/**/css/**':                     ['permitAll'],
 	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
+	'/**/favicon.ico':                ['permitAll'],
+  '/register/forgotPassword/**':    ['permitAll'],
+  '/register/index/**':             ['permitAll'],
+  '/register/resetPassword/**':     ['permitAll'],
+  '/register/register/**':          ['permitAll']
 ]
 
 ni.sb.presentationsAndMeasures = [
@@ -191,3 +197,16 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
                       form: 'application/x-www-form-urlencoded',
                       multipartForm: 'multipart/form-data'
                     ]
+
+grails {
+   mail {
+     host = "smtp.gmail.com"
+     port = 465
+     username = "b2goldapps@gmail.com"
+     password = "tritonB2gold0"
+     props = ["mail.smtp.auth":"true",
+              "mail.smtp.socketFactory.port":"465",
+              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+              "mail.smtp.socketFactory.fallback":"false"]
+
+} }
