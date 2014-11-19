@@ -8,9 +8,14 @@
 	<r:layoutResources/>
 </head>
 <body  id="background">
-	<div class="container">
+	<div class="container" id="cont">
+	<br><br>
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-4 col-md-offset-2">
+				<h1 class="nameFarm">SANTA BARBARA</h1>
+				<p class="subName">Farmacia, Mina el Limon.</p>
+			</div>
+			<div class="col-md-4">
 				<g:layoutBody/>
 				<br>
 				<g:if test="${flash.message}">
@@ -32,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer">
+  	<div id="footer">
   		<div class="col-md-6">
   			<h5>
   				<a href="mailto:amakenadog@gmail.com" class="contacto">

@@ -6,17 +6,13 @@
 </head>
 
 <body>
-
-<p/>
-
 <g:form action='resetPassword' name='resetPasswordForm' autocomplete='off'>
 	<g:hiddenField name='t' value='${token}'/>
-		<br/>
 	<h3>Escriba su nueva contraseña</h3>
 	<p>La contraseña debe tener 8 caracteres de tamaño, al menos una letra, un número y un carácter especiales:! @ # $% ^ &</p>
 
 	<div class="form-group">
-        <g:passwordField class="form-control" name="password" placeholder="Nueva contraseña" value="${command?.password}" bean="${command}"/>
+        <g:passwordField class="form-control" name="password" placeholder="Nueva contraseña" value="${command?.password}" bean="${command}" autofocus="true"/>
     </div>
 
 	<div class="form-group">
@@ -28,13 +24,6 @@
 		Regresar
 	</g:link>	
 	<input type='submit' id="submit" class="btn btn-primary" value='Actualizar Contraseña'/>
-	</g:form>
-
-<script>
-$(document).ready(function() {
-	$('#password').focus();
-});
-</script>
-
+</g:form>
 </body>
 </html>
