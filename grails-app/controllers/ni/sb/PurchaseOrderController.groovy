@@ -90,7 +90,17 @@ class PurchaseOrderController {
       }
     }
 
-    [items:items, medicines:medicines]
+    //brands
+    def brandProductOrderCriteria = BrandProductOrder.createCriteria()
+    def brandProducts = brandProductOrderCriteria {
+      gt "quantity", 0
+
+      projections {
+        groupProperty "product"
+      }
+    }
+
+    [items:items, medicines:medicines, brandProducts:brandProducts]
   }
 
   def createFlow = {

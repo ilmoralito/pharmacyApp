@@ -9,8 +9,8 @@
 <body>
 	<h4>Medicinas</h4>
 	<g:each in="${medicines}" var="medicine" status="index">
-		<h5>${medicine}, ${medicine.location}</h5>
 		<table class="table table-hover">
+			<caption>${medicine}, ${medicine.location}</caption>
 			<colgroup>
 				<col span="1" style="width: 15%;">
 				<col span="1" style="width: 70%;">
@@ -59,5 +59,33 @@
 			</g:each>
 		</tbody>
 	</table>
+
+	<h4>Pruductos de marca</h4>
+	<g:each in="${brandProducts}" var="brandProduct" status="index">
+		<table class="table table-hover">
+			<caption>${brandProduct}, ${brandProduct.location}</caption>
+			<colgroup>
+				<col span="1" style="width: 15%;">
+				<col span="1" style="width: 70%;">
+				<col span="1" style="width: 15%;">
+			</colgroup>
+			<g:if test="${index == 0}">
+				<thead>
+					<th>Marca</th>
+					<th>Detalle</th>
+					<th>Cantidad</th>
+				</thead>
+			</g:if>
+			<tbody>
+				<g:each in="${ni.sb.BrandProductOrder.findAllByProduct(brandProduct)}" var="b">
+					<tr>
+						<td>${b.brand}</td>
+						<td>${b.detail}</td>
+						<td>${b.quantity}</td>
+					</tr>
+				</g:each>
+			</tbody>
+		</table>
+	</g:each>
 </body>
 </html>
