@@ -51,6 +51,14 @@
                     Pedidos Pendientes
                 </g:link>
               </li>
+              <li>
+                <g:link controller="notifications" action="clientPayments">
+                    <g:if test="${session.cp > 0}">
+                      <span class="badge notifications">${session.cp}</span>
+                    </g:if>
+                    Pago de clientes
+                </g:link>
+              </li>
           </ul>
         </li>
   			<li class="dropdown">

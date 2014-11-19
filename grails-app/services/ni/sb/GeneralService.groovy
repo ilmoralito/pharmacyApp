@@ -72,7 +72,7 @@ class GeneralService {
         le("dutyDate",date)
         order("dutyDate", "desc")
 
-         projections {
+        projections {
             property "dutyDate", "dutyDate"
             property "provider", "provider"
             property "balance", "balance"
@@ -85,6 +85,51 @@ class GeneralService {
     }
 
     return results
+  }
+
+  def clientPayments(){
+    def today = new Date() + 7
+
+    def c = SaleToClient.createCriteria()
+    def results = c.list {
+        eq("status","Pendiente")
+        order("dateCreated", "desc")
+
+        projections {
+            property "dateCreated", "dateCreated"
+            property "balance", "balance"
+            property "client", "client"
+            property "id", "id"
+        }
+        resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
+    }
+
+    results.each{ r ->
+       r.proyectionDate = r.dateCreated + 30
+    }
+
+    def payment = results.findAll{it.proyectionDate <= today}
+
+    payment.each{ p ->
+      def sale = SaleToClient.get(p.id)
+
+      def criteria = Pay.createCriteria()
+      def totalPayment = criteria.get{
+          eq("saleToClient", sale)
+            projections {
+              sum ('payment')
+            }
+      }
+
+      if (!totalPayment) {
+        totalPayment = 0
+      }
+
+      p.totalPayment = totalPayment
+      p.currentBalance = p.balance - totalPayment
+    }
+
+    return payment
   }
 
 }//fin del servicio
