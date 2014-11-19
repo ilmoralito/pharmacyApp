@@ -10,8 +10,9 @@ class SaleController {
 	static defaultAction = "list"
 	static allowedMethods = [
 		list:["GET", "POST"],
-    pay:["GET", "POST"],
     show:"GET",
+    cancelSale:"GET",
+    pay:["GET", "POST"],
     getItemsByProduct:"GET",
     filterMedicinesByGenericName:"GET",
     addClient:"GET"
@@ -85,7 +86,7 @@ class SaleController {
       sales = Sale.salesFromTo(today, today + 1).list(sort:"id", order:"desc")
     }
 
-    def todaySaleAmount = Sale.salesFromTo(today, today + 1).list().balance.sum() ?: 0
+    def todaySaleAmount = Sale.salesFromTo(today, today + 1).findAllByCanceled(false).balance.sum() ?: 0
     def amountOfDailyExpenses = Daily.fromTo(today, today + 1).get().expenses.quantity.sum() ?: 0
     def inBox = todaySaleAmount - amountOfDailyExpenses
 
@@ -110,7 +111,20 @@ class SaleController {
     [sale:sale, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
   }
 
+  @Secured(["ROLE_ADMIN"])
+  def cancelSale(Integer id) {
+    def sale = Sale.get id
 
+    if (!sale || sale.canceled) {
+      response.sendError 404
+    }
+
+    sale.canceled = true
+
+    sale.save(flush:true)
+
+    redirect action:"show", id:id
+  }
 
   def addClient(String fullName, String address, String identificationCard) {
     def client = new Client(fullName:fullName, address:address, identificationCard:identificationCard)
