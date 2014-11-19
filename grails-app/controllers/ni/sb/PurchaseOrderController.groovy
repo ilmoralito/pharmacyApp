@@ -1,6 +1,7 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
@@ -66,7 +67,18 @@ class PurchaseOrderController {
   }
 
   def stock() {
-    def items = Item.findAllByQuantityGreaterThan(0)
+    //items
+    def criteria = Item.createCriteria()
+    def items = criteria {
+      gt "quantity", 0L
+
+      projections {
+        groupProperty "product", "product"
+        sum "quantity", "quantity"
+      }
+
+      resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
+    }
 
     [items:items]
   }
