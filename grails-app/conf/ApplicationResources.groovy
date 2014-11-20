@@ -62,4 +62,8 @@ modules = {
   pay{
     resource url:"js/pay.js"
   }
+
+  filterStock {
+    resource url:"js/filterStock.js"
+  }
 }
