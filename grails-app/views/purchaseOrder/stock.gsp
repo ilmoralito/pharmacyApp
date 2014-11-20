@@ -62,7 +62,7 @@
 		</tbody>
 	</table>
 
-	<h4 id="brandProduct" style="cursor:pointer;">Pruductos de marca</h4>
+	<h4 id="brandProduct" style="cursor:pointer;">Productos de marca</h4>
 	<div id="brandProducts">
 		<g:each in="${brandProducts}" var="brandProduct" status="index">
 			<table class="table table-hover">
