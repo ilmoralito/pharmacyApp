@@ -83,10 +83,10 @@ class SaleController {
         order "id", "desc"
       }
     } else {
-      sales = Sale.salesFromTo(today, today + 1).list(sort:"id", order:"desc")
+      sales = Sale.fromTo(today, today + 1).list(sort:"id", order:"desc")
     }
 
-    def todaySaleAmount = Sale.salesFromTo(today, today + 1).findAllByCanceled(false).balance.sum() ?: 0
+    def todaySaleAmount = Sale.fromTo(today, today + 1).findAllByCanceled(false).balance.sum() ?: 0
     def amountOfDailyExpenses = Daily.fromTo(today, today + 1).get().expenses.quantity.sum() ?: 0
     def inBox = todaySaleAmount - amountOfDailyExpenses
 
@@ -96,7 +96,8 @@ class SaleController {
       clients:clients,
       todaySaleAmount:todaySaleAmount,
       amountOfDailyExpenses:amountOfDailyExpenses,
-      inBox:inBox
+      inBox:inBox,
+      amount:sales.findAll{ !it.canceled }.balance.sum()
     ]
   }
 
