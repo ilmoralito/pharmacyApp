@@ -9,6 +9,13 @@
 <body>
 	<div class="row">
 		<div class="col-md-10">
+			<!--Tabs-->
+			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
+			  <li class="active">
+			  	<g:link action="sales">Reporte de ventas</g:link>
+			  </li>
+			</ul>
+
 			<g:if test="${results}">
 				<table class="table table-hover">
 					<colgroup>
