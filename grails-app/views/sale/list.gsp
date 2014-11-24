@@ -70,8 +70,8 @@
 						</g:each>
 						<g:if test="${request.method == 'POST'}">
 							<tr>
-								<td colspan="3">MONTO TOTAL CON FILTRO</td>
-								<td colspan="3">${sales.balance.sum()}</td>
+								<td colspan="3">MONTO</td>
+								<td colspan="3">${amount}</td>
 							</tr>
 						</g:if>
 					</tbody>
@@ -89,9 +89,7 @@
 					<tr>
 						<td>Monto vendido</td>
 						<td>
-							<g:if test="${sales}">
-								${todaySaleAmount}
-							</g:if>
+							${todaySaleAmount}
 						</td>
 					</tr>
 					<tr>
