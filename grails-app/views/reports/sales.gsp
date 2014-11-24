@@ -4,13 +4,13 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Reporte de ventas</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, reports, jquery-ui"/>
 </head>
 <body>
 	<div class="row">
 		<div class="col-md-10">
 			<g:if test="${results}">
-				<table class="table">
+				<table class="table table-hover">
 					<colgroup>
 			       <col span="1" style="width: 25%;">
 			       <col span="1" style="width: 25%;">
@@ -41,7 +41,7 @@
 		</div>
 		<div class="col-md-2">
 			<h4>Filtrar</h4>
-			<g:form action="sales">
+			<g:form action="sales" autocomplete="off">
 				<div class="form-group">
 					<label for="from" class="sr-only">Desde</label>
 					<g:textField name="from" value="${params?.from}" class="form-control" placeholder="Desde..."/>

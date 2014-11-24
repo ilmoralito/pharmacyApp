@@ -66,4 +66,8 @@ modules = {
   filterStock {
     resource url:"js/filterStock.js"
   }
+
+  reports {
+    resource url:"js/reports.js"
+  }
 }
