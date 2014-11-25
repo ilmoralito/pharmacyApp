@@ -70,15 +70,7 @@ class PurchaseOrderController {
     //items
     def criteria = Item.createCriteria()
     def items = criteria {
-      gt "quantity", 0L
-
-      projections {
-        groupProperty "product", "product"
-        sum "quantity", "quantity"
-        property "sellingPrice", "sellingPrice"
-      }
-
-      resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
+      gt "quantity", 0
     }
 
     //medicines

@@ -152,7 +152,7 @@ class BootStrap {
           total:50 * 5
         )
 
-        def p2item1 = new Item(product:product1, quantity:40, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
+        def p2item1 = new Item(product:product1, quantity:40, purchasePrice:16, sellingPrice:16 + (16 * 0.25), total:100 * 16)
 
         purchaseOrder2.addToItems(item4).addToItems(item5).addToItems(m1).addToItems(m2).addToItems(m3).addToItems(p2item1)
 
@@ -167,7 +167,7 @@ class BootStrap {
         assert PurchaseOrder.count() == 2
         assert Item.count() == 11
         assert purchaseOrder1.balance == 5675
-        assert purchaseOrder2.balance == 5275.00
+        assert purchaseOrder2.balance == 5375.00
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PURCHASE ORDER
