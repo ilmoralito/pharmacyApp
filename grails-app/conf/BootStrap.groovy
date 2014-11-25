@@ -19,17 +19,17 @@ class BootStrap {
         def product3 = new Product(name:"product3", location:"E2-2")
         def medicine1 = new Medicine(name:"Medicine1", code:"1234", genericName:"someGenericName", location:"E4-2")
           
-          def presentation1 = new Presentation(name:"Crema", measures:["5g", "15g"])
+          def presentation1 = new Presentation(name:"Cremas", measures:["5g", "15g"])
           medicine1.addToPresentations(presentation1)
 
         def medicine2 = new Medicine(name:"Medicine2", code:"1235", genericName:"someGenericName", location:"E4-2")
           
-          def presentation2 = new Presentation(name:"Suspencion", measures:["360ml"])
+          def presentation2 = new Presentation(name:"AmpollasBebibles", measures:["5g/10ml"])
           medicine2.addToPresentations(presentation2)
 
         def medicine3 = new Medicine(name:"Medicine3", code:"1236", genericName:"anotherGenericName", location:"V1-2")
           
-          def presentation3 = new Presentation(name:"Inyectable", measures:["20ml", "25ml"])
+          def presentation3 = new Presentation(name:"AmpollasInyectables", measures:["2mg", "500mg/2ml"])
           medicine3.addToPresentations(presentation3)
 
         def brandProduct0 = new BrandProduct(name:"Papel higienico", location:"V1-2")

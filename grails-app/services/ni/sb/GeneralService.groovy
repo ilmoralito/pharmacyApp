@@ -76,6 +76,7 @@ class GeneralService {
             property "dutyDate", "dutyDate"
             property "provider", "provider"
             property "balance", "balance"
+            property "invoiceNumber", "invoiceNumber"
         }
          resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
     }
