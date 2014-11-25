@@ -75,6 +75,7 @@ class PurchaseOrderController {
       projections {
         groupProperty "product", "product"
         sum "quantity", "quantity"
+        property "sellingPrice", "sellingPrice"
       }
 
       resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)

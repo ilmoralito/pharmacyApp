@@ -11,17 +11,23 @@
 	<div id="medicines">
 		<g:each in="${medicines}" var="medicine" status="index">
 			<table class="table table-hover">
-				<caption>${medicine}, ${medicine.location}</caption>
+				<caption>
+					Nombre: ${medicine}, Codigo: #${medicine.code}, Ubicacion: ${medicine.location}, Laboratorio: ${medicine.provider}
+				</caption>
 				<colgroup>
-					<col span="1" style="width: 15%;">
-					<col span="1" style="width: 70%;">
-					<col span="1" style="width: 15%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
 				</colgroup>
 				<g:if test="${index == 0}">
 					<thead>
 						<th>Presentacion</th>
 						<th>Medida</th>
 						<th>Cantidad</th>
+						<th>Precio de venta</th>
+						<th>Total</th>
 					</thead>
 				</g:if>
 				<tbody>
@@ -30,6 +36,8 @@
 							<td>${m.presentation}</td>
 							<td>${m.measure}</td>
 							<td>${m.quantity}</td>
+							<td>${m.sellingPrice}</td>
+							<td>${m.sellingPrice * m.quantity}</td>
 						</tr>
 					</g:each>
 				</tbody>
@@ -40,22 +48,28 @@
 	<h4 id="item" style="cursor:pointer;">Productos</h4>
 	<table class="table table-hover" id="items">
 		<colgroup>
-			<col span="1" style="width: 15%;">
-			<col span="1" style="width: 70%;">
-			<col span="1" style="width: 15%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
 		</colgroup>
 		<thead>
 			<th>Producto</th>
-			<th>Cantidad</th>
 			<th>Ubicacion</th>
+			<th>Cantidad</th>
+			<th>Precio de venta</th>
+			<th>Total</th>
 		</thead>
 		<tbody>
 			<g:each in="${items}" var="item">
 				<tr>
 					<g:if test="${!(item.product.instanceOf(ni.sb.Medicine)) && !(item.product.instanceOf(ni.sb.BrandProduct))}">
 						<td>${item.product}</td>
-						<td>${item.quantity}</td>
 						<td>${item.product.location}</td>
+						<td>${item.quantity}</td>
+						<td>${item.sellingPrice}</td>
+						<td>${item.quantity * item.sellingPrice}</td>
 					</g:if>
 				</tr>
 			</g:each>
@@ -66,16 +80,20 @@
 	<div id="brandProducts">
 		<g:each in="${brandProducts}" var="brandProduct" status="index">
 			<table class="table table-hover">
-				<caption>${brandProduct}, ${brandProduct.location}</caption>
+				<caption>Nombre: ${brandProduct}, Ubicacion: ${brandProduct.location}</caption>
 				<colgroup>
-					<col span="1" style="width: 15%;">
-					<col span="1" style="width: 70%;">
-					<col span="1" style="width: 15%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
+					<col span="1" style="width: 20%;">
 				</colgroup>
 				<g:if test="${index == 0}">
 					<thead>
 						<th>Marca</th>
 						<th>Detalle</th>
+						<th>Cantidad</th>
+						<th>Cantidad</th>
 						<th>Cantidad</th>
 					</thead>
 				</g:if>
@@ -85,11 +103,19 @@
 							<td>${b.brand}</td>
 							<td>${b.detail}</td>
 							<td>${b.quantity}</td>
+							<td>${b.sellingPrice}</td>
+							<td>${b.quantity * b.sellingPrice}</td>
 						</tr>
 					</g:each>
 				</tbody>
 			</table>
 		</g:each>
 	</div>
+
+	<style>
+		caption {
+			color:#000;
+		}
+	</style>
 </body>
 </html>
