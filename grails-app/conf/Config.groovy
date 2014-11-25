@@ -146,7 +146,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 ]
 
 ni.sb.presentationsAndMeasures = [
-  Tableta:
+  Talco:
+    ["80gm"],
+  Tabletas:
     ["0.5 mg", "1mg", "2mg", "4mg", "5mg", "15mg", "20mg", "25mg", "20 mg + 10 mg", "40mg",
     "50mg", "50mg + 12mg + 3mg", "100 mg", "60mg + 50mg + 5mg", "6mg + 5mg + 3mg + 39 mg + 61mg + 10mg",
     "125mg + 1mg", "150mg", "120mg + 25mg + 10mg + 20mg + 1.5mg", "200mg", "200mg + 0.4mg", "200mg + 10mg + 6mg + 3mg",
