@@ -17,7 +17,7 @@
 		<div class="col-md-4">
 			<g:render template="create/purchaseOrderDetail"/>
 
-			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">
+			<ul class="nav nav-tabs" role="tablist">
 			  <li><g:link event="medicine">Medicina</g:link></li>
 			  <li class="active">
 			  	<g:link event="product">Producto</g:link>
@@ -26,17 +26,20 @@
 			</ul>
 
 			<g:form autocomplete="off">
-
-				<div class="NewProducto">
-					<div class="text-right"><a href="#" id="trigger" class="btn btn-link btn-xs">Agregar nuevo producto</a></div>
-					<div id="box">
-						<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
-						<div class="form-group">
-							<input type="text" id="newProduct" name="newProduct" class="form-control" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
-						</div>
-						<a href="#" id="sendProduct" type="submit" class="btn btn-primary pull-right">Agregar</a>
-						<br><br>
+				<div class="row">
+					<div class="col-md-12">
+						<a href="#" id="trigger" class="btn btn-link btn-xs pull-right">
+							Agregar nuevo producto
+						</a>
 					</div>
+				</div>
+				<div id="box">
+					<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
+					<div class="form-group">
+						<input type="text" id="newProduct" name="newProduct" class="form-control input-sm" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
+					</div>
+					<a href="#" id="sendProduct" type="submit" class="btn btn-sm btn-primary pull-right">Agregar</a>
+					<br><br>
 				</div>
 
 				<div class="form-group">
