@@ -9,11 +9,14 @@
 <body>
 	<g:render template="toolbar"/>
 	<g:render template="navbar"/>
-
-	<g:form action="createProduct" autocomplete="off">
-		<g:hiddenField name="providerId" value="${providerId}"/>
-		<g:render template="form"/>
-		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary"/>
-	</g:form>
+	<div class="row">
+		<div class="col-md-4">
+			<g:form action="createProduct" autocomplete="off">
+				<g:hiddenField name="providerId" value="${providerId}"/>
+				<g:render template="form"/>
+				<g:submitButton name="confirm" value="Agregar" class="btn btn-primary"/>
+			</g:form>
+		</div>
+	</div>
 </body>
 </html>
