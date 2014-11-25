@@ -12,32 +12,29 @@
 			<h4>Venta a cliente</h4>
 
 			<g:form>
-				<div id="box">
-					<div class="form-group">
-						<g:textField name="fullName" id="fullName" class="form-control" placeholder="Nombre completo" autofocus="true" data-toggle="tooltip" title="Nombre completo"/>
+				<div class="form-group">
+					<small class="help-block"><a href="#" id="trigger">Agregar nuevo cliente</a></small>
+					<div id="box">
+						<div class="form-group">
+							<g:textField name="fullName" id="fullName" class="form-control input-sm" placeholder="Nombre completo" autofocus="true" data-toggle="tooltip" title="Nombre completo"/>
+						</div>
+						<div class="form-group">
+							<g:textField name="address" id="address" class="form-control input-sm" placeholder="Direccion" data-toggle="tooltip" title="Direccion"/>
+						</div>
+						<div class="form-group">
+							<g:textField name="identificationCard" id="identificationCard" class="form-control input-sm" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
+						</div>
+						<a href="#" id="sendClient" type="submit" class="btn btn-sm btn-primary pull-right">Agregar</a>
+						<br><br>
 					</div>
-					<div class="form-group">
-						<g:textField name="address" id="address" class="form-control" placeholder="Direccion" data-toggle="tooltip" title="Direccion"/>
-					</div>
-					<div class="form-group">
-						<g:textField name="identificationCard" id="identificationCard" class="form-control" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
-					</div>
-					<a href="#" id="sendClient" type="submit" class="btn btn-primary pull-right">Agregar</a>
-					<br><br>
+					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" noSelection="[null:'Selecciona un cliente']" class="form-control"/>
 				</div>
 
 				<div class="form-group">
-					<label for="client">Selecciona cliente o <a href="#" id="trigger">Agregar nuevo cliente</a></label>
-					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" class="form-control"/>
-				</div>
-
-				<div class="form-group">
-					<label for="typeOfPurchase">Tipo de compra</label>
-					<g:select name="typeOfPurchase" from="['Contado', 'Credito']" value="${typeOfPurchase}" class="form-control"/>
+					<g:select name="typeOfPurchase" from="['Contado', 'Credito']" value="${typeOfPurchase}" noSelection="[null:'Selecciona un tipo de pago']" class="form-control"/>
 				</div>
 
 				<g:submitButton name="confirm" value="Confirmar" class="btn btn-primary"/>
-				<g:link event="cancel" class="btn btn-default">Cancelar</g:link>
 			</g:form>
 		</div>
 		<div class="col-md-6">
