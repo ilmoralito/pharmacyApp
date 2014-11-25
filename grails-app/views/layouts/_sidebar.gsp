@@ -8,14 +8,15 @@
 	<li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
 		<g:link controller="purchaseOrder" action="list">Pedidos</g:link>
 	</li>
-	<li class="${controllerName == 'purchaseOrder' && actionName == 'stock' ? 'active' : ''}">
-		<g:link controller="purchaseOrder" action="stock">Inventario</g:link>
-	</li>
 	<li class="${controllerName == 'sale' ? 'active' : ''}">
 		<g:link controller="sale" action="list">Ventas</g:link>
 	</li>
 	<li class="${controllerName == 'daily' ? 'active' : ''}">
 		<g:link controller="daily" action="list">Diario</g:link>
+	</li>
+	<br>
+	<li class="${controllerName == 'purchaseOrder' && actionName == 'stock' ? 'active' : ''}">
+		<g:link controller="purchaseOrder" action="stock">Inventario</g:link>
 	</li>
 	<li class="${controllerName == 'reports' ? 'active' : ''}">
 		<g:link controller="reports" action="sales">Reportes</g:link>
