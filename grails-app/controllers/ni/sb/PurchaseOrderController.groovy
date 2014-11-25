@@ -71,6 +71,8 @@ class PurchaseOrderController {
     def criteria = Item.createCriteria()
     def items = criteria {
       gt "quantity", 0
+
+      order "product"
     }
 
     //medicines
