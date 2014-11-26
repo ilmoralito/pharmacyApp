@@ -23,6 +23,7 @@
 				<thead>
 					<tr>
 						<th>Proveedor</th>
+						<th>Numero de Factura</th>
 						<th>Fecha de Pago</th>
 						<th>Dias Restantes</th>
 						<th>Total a Pagar</th>
@@ -32,6 +33,7 @@
 					<g:each in="${infoInstance}" var="info">
 						<tr>
 							<td><g:link action="" params="[id:info.id]">${info.provider}</g:link></td>
+							<td>${info.invoiceNumber}</td>
 							<td>${info.dutyDate.format("dd-MM-yyyy")}</td>
 							<td>${info.dutyDate - today}</td>
 							<td>${info.balance}</td>

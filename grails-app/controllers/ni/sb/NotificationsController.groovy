@@ -124,11 +124,11 @@ class NotificationsController {
 
       response.contentType = grailsApplication.config.grails.mime.types[params.format]
       response.setHeader("Content-disposition", "attachment; filename=Facturas-por-pagar-${today.format("dd-MM-yyyy")}")
-      List fields = ["provider","dutyDate", "remainingDays", "balance"]
-      Map labels = ["provider": "Proveedor", "dutyDate": "Fecha de Pago", "remainingDays": "Dias Restantes", "balance": "Total a pagar"]
+      List fields = ["invoiceNumber","provider","dutyDate", "remainingDays", "balance"]
+      Map labels = ["invoiceNumber": "Factura", "provider": "Proveedor", "dutyDate": "Fecha de Pago", "remainingDays": "Dias Restantes", "balance": "Total a pagar"]
 
       Map parameters = [title: "Facturas pendientes de pagar", "title.font.size": "18",
-      "column.widths": [0.3, 0.2, 0.2,0.2], "header.font.size": "11", "text.font.size": "11"]
+      "column.widths": [0.1, 0.3,0.2, 0.2,0.2], "header.font.size": "11", "text.font.size": "11"]
 
       def formatDate = { PurchaseOrder, dutyDate ->
         if(dutyDate instanceof Date){
@@ -141,7 +141,6 @@ class NotificationsController {
 
       exportService.export(params.format, response.outputStream,pendingOrders, fields, labels,formatters,parameters)
     }
-
     [infoInstance:pendingOrders, today:today]
   }
 
