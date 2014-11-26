@@ -4,8 +4,7 @@
 </div>
 
 <div class="form-group">
-	<label for="location">Ubicacion</label>
-	<g:select name="location" from="${grailsApplication.config.ni.sb.locations}" value="${product?.location}" class="form-control"/>
+	<g:select name="location" from="${grailsApplication.config.ni.sb.locations}" value="${product?.location}" class="form-control" noSelection="['':'Selecciona ubicacion']"/>
 </div>
 
 <g:if test="${actionName == 'createMedicine' || product instanceof ni.sb.Medicine}">
