@@ -1,6 +1,7 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class SaleController {
@@ -293,15 +294,36 @@ class SaleController {
 
     manageProducts {
       action {
-        def items = Item.findAllByQuantityGreaterThan(0)
+        def criteria = Item.createCriteria()
+        def items = criteria {
+          gt "quantity", 0
 
-        [items:items]
+          projections {
+            groupProperty "product", "product"
+          }
+
+          order "product"
+        }
+
+        [items:items.findAll { !(it.instanceOf(ni.sb.Medicine)) && !(it.instanceOf(ni.sb.BrandProduct))}]
       }
 
       on("success").to "product"
     }
 
     product {
+      on("filter") {
+        def p = params?.product
+        def criteria = Item.createCriteria()
+        def itemsByProductName = criteria {
+          product {
+            eq "name", p
+          }
+        }
+
+        [itemsByProductName:itemsByProductName, product:p]
+      }.to "product"
+
       on("addItem") {
         def item = Item.get params?.id
 
