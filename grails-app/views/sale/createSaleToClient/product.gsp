@@ -34,7 +34,7 @@
 					<g:select name="product" from="${items}" optionKey="name" value="${product}" class="form-control input-sm"/>
 				</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-sm"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block btn-sm"/>
 			</g:form>
 			
 			<!--Items-->

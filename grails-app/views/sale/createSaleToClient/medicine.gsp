@@ -32,14 +32,14 @@
 			<!--Filter medicines-->
 			<g:form>
 				<div class="form-group">
-					<g:select name="genericName" from="${genericNames}" value="${genericName}" noSelection="['':'Nombres genericos']" class="form-control"/>
+					<g:select name="genericName" from="${genericNames}" value="${genericName}" noSelection="['':'Nombres genericos']" class="form-control input-sm"/>
 				</div>
 
 				<div class="form-group">
-					<g:select name="product" from="${medicinesFiltredByGenericName ?: medicines}" optionKey="name" value="${product}" class="form-control"/>
+					<g:select name="product" from="${medicinesFiltredByGenericName ?: medicines}" optionKey="name" value="${product}" class="form-control input-sm"/>
 				</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block btn-sm"/>
 			</g:form>
 
 			<g:if test="${results}">
