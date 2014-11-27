@@ -64,19 +64,29 @@
 		<div class="col-md-9">
 			<g:if test="${orders}">
 				<table class="table">
+					<colgroup>
+						<col span="1" style="width: 5%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 42.5%;">
+						<col span="1" style="width: 42.5%;">
+					</colgroup>
 					<thead>
 						<th>#</th>
-						<th></th>
+						<th>Factura</th>
+						<th>Comprado a</th>
+						<th>Proveedor(es)</th>
 					</thead>
 					<tbody>
 						<g:each in="${orders}" var="order" status="index">
 							<tr>
-								<td width="1">${index + 1}</td>
+								<td>${index + 1}</td>
 								<td>
-									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
-										${order.provider}, #${order.invoiceNumber}
+									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+										#${order.invoiceNumber}
 									</a>
 								</td>
+								<td>${order.store}</td>
+								<td>${order.providers.name}</td>
 							</tr>
 						</g:each>
 					</tbody>
