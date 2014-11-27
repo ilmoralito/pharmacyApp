@@ -23,6 +23,7 @@ class PurchaseOrder implements Serializable {
     invoiceNumber blank:false, unique:true
     balance nullable:true
     typeOfPurchase inList:["Contado", "Credito"], maxSize:255
+    providers minSize:1
   }
 
   static mapping = {

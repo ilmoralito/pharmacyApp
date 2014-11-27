@@ -1,6 +1,24 @@
 <div class="form-group">
-	<label for="provider" class="sr-only">Proveedor</label>
-	<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>
+	<div class="form-group">
+		<label for="store" class="sr-only">Comprado en</label>
+		<g:textField name="store" class="form-control" placeholder="Comprado en" list="stores" autofocus="true"/>
+		<datalist id="stores">
+			<g:each in="${stores}" var="provider">
+				<option value="${provider}">
+			</g:each>
+		</datalist>
+	</div>
+
+	<label for="providers" class="sr-only">Proveedores</label>
+	<!--<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>-->
+	<g:each in="${providers}" var="provider">
+		<div class="checkbox">
+			<label>
+				<g:checkBox name="providers" value="${provider}" checked="false"/>
+				${provider}
+			</label>
+		</div>
+	</g:each>
 	<g:if test="${purchaseOrder?.provider?.id}">
 		<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span>
 	</g:if>

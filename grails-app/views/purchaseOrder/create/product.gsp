@@ -34,7 +34,10 @@
 					</div>
 				</div>
 				<div id="box">
-					<input type="hidden" name="providerId" id="providerId" value="${purchaseOrder?.provider?.id}"/>
+					<div class="form-group">
+						<label class="sr-only">Proveedor</label>
+						<g:select name="providerId" from="${providers}" optionKey="id" noSelection="[null:'Selecciona un proveedor']" class="form-control input-sm"/>
+					</div>
 					<div class="form-group">
 						<input type="text" id="newProduct" name="newProduct" class="form-control input-sm" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
 					</div>
@@ -44,13 +47,7 @@
 
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<select name="product" id="product" class="form-control">
-						<g:each in="${ni.sb.Product.findAllByProviderAndStatus(purchaseOrder.provider, true)}" var="product">
-							<g:if test="${!(product instanceof ni.sb.Medicine) && !(product instanceof ni.sb.BrandProduct)}">
-								<option value="${product.id}">${product}</option>
-							</g:if>
-						</g:each>
-					</select>
+					<g:select name="product" from="${ni.sb.Product.findAllByProviderInListAndStatus(purchaseOrder.providers, true).findAll {!(it.instanceOf(ni.sb.Medicine)) && !(it.instanceOf(ni.sb.BrandProduct))}}" optionKey="id" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="quantity" class="sr-only">Cantidad</label>
