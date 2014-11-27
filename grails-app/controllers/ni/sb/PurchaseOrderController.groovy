@@ -24,6 +24,7 @@ class PurchaseOrderController {
     if (request.method == "POST") {
       def criteria = PurchaseOrder.createCriteria()
       orders = criteria {
+        /*
         //filter by providers
         if (params?.providers) {
           def providerInstances = Provider.getAll params.list("providers")
@@ -38,6 +39,7 @@ class PurchaseOrderController {
             eq "typeOfPurchase", params.credit
           }
         }
+        */
 
         if (params?.cash && !params?.credit || params?.credit && !params?.cash) {
           def typeOfPurchase = params?.cash ?: params?.credit

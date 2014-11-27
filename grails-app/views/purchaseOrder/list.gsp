@@ -103,6 +103,7 @@
 		<div class="col-md-3">
 			<h4>Filtrar</h4>
 			<g:form action="list">
+				<!--
 				<h5>Proveedores</h5>
 				<g:each in="${providers}" var="provider">
 					<div class="checkbox">
@@ -112,6 +113,7 @@
 						</label>
 					</div>
 				</g:each>
+				-->
 
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
