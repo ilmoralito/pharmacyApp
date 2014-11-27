@@ -25,8 +25,12 @@
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td style="border:0;">Proveedor</td>
-								<td id="providerModal" style="border:0;"></td>
+								<td style="border:0;">Comprado a</td>
+								<td id="storeModal" style="border:0;"></td>
+							</tr>
+							<tr>
+								<td>Proveedor</td>
+								<td id="providerModal"></td>
 							</tr>
 							<tr>
 								<td>Fecha de solicitud</td>
@@ -81,7 +85,7 @@
 							<tr>
 								<td>${index + 1}</td>
 								<td>
-									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+									<a href="#" id="modalOrders" data-store="${order.store}" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.providers}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
 										#${order.invoiceNumber}
 									</a>
 								</td>
