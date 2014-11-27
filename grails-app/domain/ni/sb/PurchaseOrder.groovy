@@ -1,7 +1,7 @@
 package ni.sb
 
 class PurchaseOrder implements Serializable {
-  Provider provider
+  String store
   Date dutyDate
   String invoiceNumber
   BigDecimal balance
@@ -12,7 +12,7 @@ class PurchaseOrder implements Serializable {
 	Date lastUpdated
 
   static constraints = {
-    provider nullable:false
+    store blank:false
     dutyDate nullable:false, validator: { dutyDate ->
       def today = new Date()
 
@@ -23,6 +23,7 @@ class PurchaseOrder implements Serializable {
     invoiceNumber blank:false, unique:true
     balance nullable:true
     typeOfPurchase inList:["Contado", "Credito"], maxSize:255
+    providers minSize:1
   }
 
   static mapping = {
@@ -32,7 +33,8 @@ class PurchaseOrder implements Serializable {
   }
 
   List items
-  static hasMany = [items:Item]
+  List providers
+  static hasMany = [items:Item, providers:Provider]
 
   def beforeInsert() {
     //TODO

@@ -85,7 +85,8 @@ class BootStrap {
         //PURCHASE ORDER
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         def today = new Date()
-        def purchaseOrder1 = new PurchaseOrder(provider:provider1, dutyDate:today + 31, invoiceNumber:"001", typeOfPurchase:"Contado", balance:0, status:true)
+        def purchaseOrder1 = new PurchaseOrder(store:provider1.name, dutyDate:today + 31, invoiceNumber:"001", typeOfPurchase:"Contado", balance:0, status:true)
+        purchaseOrder1.addToProviders provider1
 
         def item1 = new Item(product:product1, quantity:100, purchasePrice:15, sellingPrice:15 + (15 * 0.25), total:100 * 15)
         def item2 = new Item(product:product2, quantity:100, purchasePrice:25, sellingPrice:25 + (25 * 0.25), total:100 * 25)
@@ -114,7 +115,8 @@ class BootStrap {
           }
         }
 
-        def purchaseOrder2 = new PurchaseOrder(provider:provider2 ,dutyDate:today + 60, invoiceNumber:"002", typeOfPurchase:"Contado", balance:0, status:true)
+        def purchaseOrder2 = new PurchaseOrder(store:provider2.name, dutyDate:today + 60, invoiceNumber:"002", typeOfPurchase:"Contado", balance:0, status:true)
+        purchaseOrder2.addToProviders provider2
 
         def item4 = new Item(product:product4, quantity:150, purchasePrice:9.50, sellingPrice:9.50 + (9.50 * 0.25), total:150 * 9.50)
         def item5 = new Item(product:product5, quantity:50, purchasePrice:16, sellingPrice:16 + (16 * 0.25), total:50 * 16)

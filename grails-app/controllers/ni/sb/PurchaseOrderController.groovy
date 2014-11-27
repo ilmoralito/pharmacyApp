@@ -24,6 +24,7 @@ class PurchaseOrderController {
     if (request.method == "POST") {
       def criteria = PurchaseOrder.createCriteria()
       orders = criteria {
+        /*
         //filter by providers
         if (params?.providers) {
           def providerInstances = Provider.getAll params.list("providers")
@@ -38,6 +39,7 @@ class PurchaseOrderController {
             eq "typeOfPurchase", params.credit
           }
         }
+        */
 
         if (params?.cash && !params?.credit || params?.credit && !params?.cash) {
           def typeOfPurchase = params?.cash ?: params?.credit
@@ -105,6 +107,9 @@ class PurchaseOrderController {
         flow.products = []
         flow.brandProductsOrders = []
         flow.providers = Provider.findAllStatus true
+
+        def providersAndStores = flow.providers.name + PurchaseOrder.list().store
+        flow.stores = providersAndStores.unique()
       }
 
       on("success"). to "createPurchaseOrder"
@@ -112,13 +117,23 @@ class PurchaseOrderController {
 
   	createPurchaseOrder {
   		on("confirm") {
-  			def purchaseOrder = new PurchaseOrder(
-          provider:params?.provider,
+        //create purchase order
+  			def purchaseOrder = new PurchaseOrder (
+          store:params?.store,
           dutyDate:params?.dutyDate,
           invoiceNumber:params?.invoiceNumber,
           typeOfPurchase:params?.typeOfPurchase,
-          status:(params?.typeOfPurchase == "Contado") ? true : false //TODO:Implement this from purchaseOrder beforeInstance event
+          status:(params?.typeOfPurchase == "Contado") ? true : false
         )
+
+        //add providers to purchase order instance
+        params.list("providers").each { provider ->
+          def providerInstance = Provider.findByName provider
+
+          if (provider) {
+            purchaseOrder.addToProviders providerInstance
+          }
+        }
 
         if (!purchaseOrder.validate()) {
           flow.errors = purchaseOrder
@@ -127,7 +142,9 @@ class PurchaseOrderController {
 
         flow?.errors?.clearErrors()
 
-  			[purchaseOrder:purchaseOrder]
+        def medicineList = ni.sb.Medicine.findAllByProviderInListAndStatus(purchaseOrder.providers, true)
+
+  			[purchaseOrder:purchaseOrder, medicineList:medicineList]
   		}.to "medicine"
 
   		on("cancel").to "done"

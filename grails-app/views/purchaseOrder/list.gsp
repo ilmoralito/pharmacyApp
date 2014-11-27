@@ -25,8 +25,12 @@
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td style="border:0;">Proveedor</td>
-								<td id="providerModal" style="border:0;"></td>
+								<td style="border:0;">Comprado a</td>
+								<td id="storeModal" style="border:0;"></td>
+							</tr>
+							<tr>
+								<td>Proveedor</td>
+								<td id="providerModal"></td>
 							</tr>
 							<tr>
 								<td>Fecha de solicitud</td>
@@ -64,19 +68,29 @@
 		<div class="col-md-9">
 			<g:if test="${orders}">
 				<table class="table">
+					<colgroup>
+						<col span="1" style="width: 5%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 42.5%;">
+						<col span="1" style="width: 42.5%;">
+					</colgroup>
 					<thead>
 						<th>#</th>
-						<th></th>
+						<th>Factura</th>
+						<th>Comprado a</th>
+						<th>Proveedor(es)</th>
 					</thead>
 					<tbody>
 						<g:each in="${orders}" var="order" status="index">
 							<tr>
-								<td width="1">${index + 1}</td>
+								<td>${index + 1}</td>
 								<td>
-									<a href="#" id="modalOrders" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.provider}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
-										${order.provider}, #${order.invoiceNumber}
+									<a href="#" id="modalOrders" data-store="${order.store}" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.providers}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+										#${order.invoiceNumber}
 									</a>
 								</td>
+								<td>${order.store}</td>
+								<td>${order.providers.name}</td>
 							</tr>
 						</g:each>
 					</tbody>
@@ -89,6 +103,7 @@
 		<div class="col-md-3">
 			<h4>Filtrar</h4>
 			<g:form action="list">
+				<!--
 				<h5>Proveedores</h5>
 				<g:each in="${providers}" var="provider">
 					<div class="checkbox">
@@ -98,6 +113,7 @@
 						</label>
 					</div>
 				</g:each>
+				-->
 
 				<h5>Tipo de pago</h5>
 				<div class="checkbox">
