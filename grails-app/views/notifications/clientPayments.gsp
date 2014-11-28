@@ -33,7 +33,7 @@
 				<tbody>
 					<g:each in="${infoInstance}" var="info">
 						<tr>
-							<td><g:link action="" params="[id:info.id]">${info.client}</g:link></td>
+							<td>${info.client}</td>
 							<td>${info.dateCreated.format("dd-MM-yyyy")}</td>
 							<td>${info.proyectionDate.format("dd-MM-yyyy")}</td>
 							<td>${info.totalPayment}</td>
