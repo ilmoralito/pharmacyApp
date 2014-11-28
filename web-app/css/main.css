@@ -49,3 +49,9 @@ body#background {
 
 .contacto:hover{color:white;text-decoration: none;}
 
+.capStock{
+	padding: 8px;
+	border-radius: 5px;
+	margin-bottom: 2px;
+}
+

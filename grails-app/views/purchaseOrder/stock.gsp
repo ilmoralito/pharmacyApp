@@ -4,15 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Inventario</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, filterStock"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, filterStock, app"/>
 </head>
 <body>
 	<h4 id="medicine" style="cursor:pointer;">Medicinas</h4>
 	<div id="medicines">
 		<g:each in="${medicines}" var="medicine" status="index">
 			<table class="table table-hover">
-				<caption>
-					Nombre: ${medicine}, Codigo: #${medicine.code}, Ubicacion: ${medicine.location}, Laboratorio: ${medicine.provider}
+				<caption class="bg-info capStock">
+					<strong>Nombre:</strong> ${medicine} - <strong>Codigo:</strong> #${medicine.code} - <strong>Ubicacion:</strong> ${medicine.location} - <strong>Laboratorio:</strong> ${medicine.provider}
 				</caption>
 				<colgroup>
 					<col span="1" style="width: 20%;">
@@ -80,7 +80,7 @@
 	<div id="brandProducts">
 		<g:each in="${brandProducts}" var="brandProduct" status="index">
 			<table class="table table-hover">
-				<caption>Nombre: ${brandProduct}, Ubicacion: ${brandProduct.location}</caption>
+				<caption class="bg-info capStock"><strong>Nombre:</strong> ${brandProduct} - <strong>Ubicacion:</strong> ${brandProduct.location}</caption>
 				<colgroup>
 					<col span="1" style="width: 20%;">
 					<col span="1" style="width: 20%;">
