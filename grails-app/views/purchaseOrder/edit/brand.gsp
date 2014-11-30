@@ -28,7 +28,7 @@
 			<g:form autocomplete="off">
 				<div class="form-group">
 					<label for="product" class="sr-only">Producto</label>
-					<g:select name="product" from="${ni.sb.BrandProduct.findAllByProviderAndStatus(purchaseOrder.provider, true)}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
+					<g:select name="product" from="${ni.sb.BrandProduct.findAllByProviderInListAndStatus(purchaseOrder.providers, true)}" optionKey="id" optionValue="name" class="form-control"data-toggle="tooltip" data-placement="left" title="Producto"/>
 				</div>
 				<div class="form-group">
 					<label for="brand" class="sr-only">Marca</label>
