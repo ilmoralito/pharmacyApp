@@ -674,7 +674,7 @@ class PurchaseOrderController {
       }
     }
 
-    if (purchaseOrder.save(flush:true)) {
+    if (!purchaseOrder.save(flush:true)) {
       purchaseOrder.errors.allErrors.each { error ->
         log.error "[$error.field: $error.defaultMessage]"
       }
