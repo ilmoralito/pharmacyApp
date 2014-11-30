@@ -30,7 +30,7 @@
 				<tbody>
 					<g:each in="${infoInstance}" var="info">
 						<tr>
-							<td><g:link action="" params="[id:info.id]">${info.product}</g:link></td>
+							<td>${info.product}</td>
 							<td>${info.product.provider}</td>
 							<td>${info.quantity}</td>
 						</tr>

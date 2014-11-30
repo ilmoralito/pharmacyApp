@@ -49,3 +49,17 @@ body#background {
 
 .contacto:hover{color:white;text-decoration: none;}
 
+.capStock{
+	padding: 8px;
+	border-radius: 5px;
+	margin-bottom: 2px;
+}
+
+.totalStock{
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	margin-bottom: 7px;
+	font-size: 20px;
+}
+

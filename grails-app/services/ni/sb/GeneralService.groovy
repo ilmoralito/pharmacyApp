@@ -74,7 +74,7 @@ class GeneralService {
 
         projections {
             property "dutyDate", "dutyDate"
-            property "provider", "provider"
+            property "store", "provider"
             property "balance", "balance"
             property "invoiceNumber", "invoiceNumber"
         }
