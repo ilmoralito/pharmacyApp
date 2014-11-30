@@ -35,13 +35,10 @@
 				</tr>
 			</g:each>
 			<tr>
-				<td>TOTAL</td>
-				<td colspan="7">
-					<div class="pull-right">
+				<td colspan="7">TOTAL</td>
+				<td colspan="2">
 						<g:formatNumber number="${medicines.total.sum() ?: 0}" formatName="default.number.decimal"/>
-					</div>
 				</td>
-				<td width="1"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -56,7 +53,7 @@
 			<th>PC</th>
 			<th>PV</th>
 			<th>Total</th>
-			<th></th>
+			<th width="1"></th>
 		</thead>
 		<tbody>
 			<g:each in="${products}" var="product" status="index">
@@ -76,13 +73,10 @@
 				</tr>
 			</g:each>
 			<tr>
-				<td>TOTAL</td>
-				<td colspan="4">
-					<div class="pull-right">
-						<g:formatNumber number="${products.total.sum() ?: 0}" formatName="default.number.decimal"/>
-					</div>
+				<td colspan="4">TOTAL</td>
+				<td colspan="2">
+					<g:formatNumber number="${products.total.sum() ?: 0}" formatName="default.number.decimal"/>
 				</td>
-				<td width="1"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -99,7 +93,7 @@
 			<th>PC</th>
 			<th>PV</th>
 			<th>Total</th>
-			<th></th>
+			<th width="1"></th>
 		</thead>
 		<tbody>
 			<g:each in="${brandProductsOrders}" var="brandProductOrder" status="index">
@@ -121,13 +115,10 @@
 				</tr>
 			</g:each>
 			<tr>
-				<td>TOTAL</td>
-				<td colspan="6">
-					<div class="pull-right">
-						<g:formatNumber number="${brandProductsOrders.total.sum() ?: 0}" formatName="default.number.decimal"/>
-					</div>
+				<td colspan="6">TOTAL</td>
+				<td colspan="2">
+					<g:formatNumber number="${brandProductsOrders.total.sum() ?: 0}" formatName="default.number.decimal"/>
 				</td>
-				<td width="1"></td>
 			</tr>
 		</tbody>
 	</table>
