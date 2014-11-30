@@ -328,26 +328,47 @@ class PurchaseOrderController {
 
     editPurchaseOrder {
       on("confirm") {
-        //get current purchase order provider
-        def persistentValue = flow.purchaseOrder.provider
+        def currentPurchaseOrderProviders = flow.purchaseOrder.providers.name
+        def chosenProviders = params.list("providers")
 
-        flow.purchaseOrder.properties = params
+        //update properties
+        flow.purchaseOrder.properties["store", "dutyDate", "invoiceNumber", "typeOfPurchase"] = params
 
         if (!flow.purchaseOrder.validate()) {
           flow.errors = flow.purchaseOrder
           return error()
         }
 
-        //check if provider was changed if it is true then set to null items container
-        def provider = Provider.get params.int("provider")
-        if (persistentValue != provider) {
-          flow.medicines = []
-          flow.products = []
-          flow.brandProductsOrders = []
+        if (chosenProviders) {
+          if (currentPurchaseOrderProviders != chosenProviders) {
+
+            if (currentPurchaseOrderProviders.size() > chosenProviders.size()) {
+              //delete providers and items from chosen provider
+              def providersToRemove = currentPurchaseOrderProviders - chosenProviders
+
+              currentPurchaseOrderProviders.each { current ->
+                if (current in providersToRemove) {
+                  def targetProvider = Provider.findByName(current)
+
+                  flow.medicines.removeAll { item -> item.product.provider == targetProvider }
+                  flow.products.removeAll { item -> item.product.provider == targetProvider }
+                  flow.brandProductsOrders.removeAll { item -> item.product.provider == targetProvider }
+
+                  flow.purchaseOrder.removeFromProviders targetProvider
+                }
+              }
+            } else {
+              //add new provider
+              chosenProviders.findAll { !(it in currentPurchaseOrderProviders) }.each { instance ->
+                flow.purchaseOrder.addToProviders Provider.findByName(instance)
+              }
+            }
+          }
+        } else {
+          flash.message = "Selecciona al menos un proveedor para continuar"
         }
 
-        flow?.errors?.clearErrors()
-      }.to "medicine"
+      }.to "editPurchaseOrder"
 
       on("cancel").to "medicine"
     }

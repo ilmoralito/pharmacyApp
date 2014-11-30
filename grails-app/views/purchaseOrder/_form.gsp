@@ -1,28 +1,25 @@
 <div class="form-group">
-	<div class="form-group">
-		<label for="store" class="sr-only">Comprado en</label>
-		<g:textField name="store" class="form-control" placeholder="Comprado en" list="stores" autofocus="true"/>
-		<datalist id="stores">
-			<g:each in="${stores}" var="provider">
-				<option value="${provider}">
-			</g:each>
-		</datalist>
-	</div>
-
-	<label for="providers" class="sr-only">Proveedores</label>
-	<!--<g:select name="provider" from="${providers}" optionKey="id" value="${purchaseOrder?.provider?.id}" noSelection="[null:'Selecciona proveedor']" class="form-control"/>-->
-	<g:each in="${providers}" var="provider">
-		<div class="checkbox">
-			<label>
-				<g:checkBox name="providers" value="${provider}" checked="false"/>
-				${provider}
-			</label>
-		</div>
-	</g:each>
-	<g:if test="${purchaseOrder?.provider?.id}">
-		<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span>
-	</g:if>
+	<label for="store" class="sr-only">Comprado en</label>
+	<g:textField name="store" class="form-control" value="${purchaseOrder?.store}" placeholder="Comprado en" list="stores" autofocus="true"/>
+	<datalist id="stores">
+		<g:each in="${stores}" var="provider">
+			<option value="${provider}">
+		</g:each>
+	</datalist>
 </div>
+
+<label for="providers" class="sr-only">Proveedores</label>
+<g:each in="${providers}" var="provider">
+	<div class="checkbox">
+		<label>
+			<g:checkBox name="providers" value="${provider}" checked="${provider in purchaseOrder?.providers ?: false}"/>
+			${provider}
+		</label>
+	</div>
+</g:each>
+<g:if test="${purchaseOrder?.providers}">
+	<span class="help-block">Si cambia de proveedor los productos deberan ser reiniciados</span>
+</g:if>
 <div class="form-group">
 	<label for="dutyDate" class="sr-only">Fecha tope de pago</label>
 	<g:textField name="dutyDate" value="${g.formatDate(date:purchaseOrder?.dutyDate, formatName:'custom.date.format')}" class="form-control" placeholder="Fecha tope de pago"/>
