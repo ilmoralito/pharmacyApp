@@ -107,9 +107,7 @@ class PurchaseOrderController {
         flow.products = []
         flow.brandProductsOrders = []
         flow.providers = Provider.findAllStatus true
-
-        def providersAndStores = flow.providers.name + PurchaseOrder.list().store
-        flow.stores = providersAndStores.unique()
+        flow.dealers = flow.providers.name + Distributor.list().name
       }
 
       on("success"). to "createPurchaseOrder"
@@ -383,6 +381,7 @@ class PurchaseOrderController {
       action {
         flow.purchaseOrder = PurchaseOrder.get params.int("id")
         flow.providers = Provider.findAllStatus true
+        flow.dealers = flow.providers.name + Distributor.list().name
 
         if (!flow.purchaseOrder) {
           response.sendError 404
