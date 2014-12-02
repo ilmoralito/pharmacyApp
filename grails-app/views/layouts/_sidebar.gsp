@@ -1,4 +1,7 @@
 <ul class="nav nav-pills nav-stacked">
+<li class="${controllerName == 'distributor' ? 'active' : ''}">
+		<g:link controller="distributor" action="list">Distribuidores</g:link>
+	</li>
 	<li class="${controllerName in ['provider', 'product', 'presentation', 'brand'] ? 'active' : ''}">
 		<g:link controller="provider" action="list">Proveedores</g:link>
 	</li>

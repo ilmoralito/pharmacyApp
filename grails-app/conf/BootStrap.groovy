@@ -10,6 +10,23 @@ class BootStrap {
     switch(Environment.current) {
       case Environment.DEVELOPMENT:
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        //DISTRIBUTOR
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
+        def distributor1 = new Distributor(
+          name:"distributor numero 1",
+          telephones:["23114455", "23115856"]
+        )
+
+        distributor1.save(failOnError:true)
+
+        def distributor2 = new Distributor(
+          name:"distributor2",
+          telephones:["88458696", "88557744"]
+        )
+
+        distributor2.save(failOnError:true)
+
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++
         //PROVIDERS
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         def provider1 = new Provider(name:"provider1", address:"address1", phone:"23114455")
