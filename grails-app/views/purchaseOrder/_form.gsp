@@ -1,11 +1,6 @@
 <div class="form-group">
-	<label for="store" class="sr-only">Comprado en</label>
-	<g:textField name="store" class="form-control" value="${purchaseOrder?.store}" placeholder="Comprado en" list="stores" autofocus="true"/>
-	<datalist id="stores">
-		<g:each in="${stores}" var="provider">
-			<option value="${provider}">
-		</g:each>
-	</datalist>
+	<label for="dealers" class="sr-only">Distribuidor</label>
+	<g:select name="store" from="${dealers.sort()}" value="${purchaseOrder?.store}" class="form-control"/>
 </div>
 
 <label for="providers" class="sr-only">Proveedores</label>

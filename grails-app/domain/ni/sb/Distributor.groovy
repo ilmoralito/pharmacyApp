@@ -4,7 +4,7 @@ import org.grails.databinding.BindUsing
 import groovy.transform.ToString
 
 @ToString(includeNames=true, includeFields=true)
-class Distributor {
+class Distributor implements Serializable {
   @BindUsing({
     obj, source -> source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
