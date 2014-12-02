@@ -9,13 +9,14 @@ class Distributor {
     obj, source -> source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
 	String name
+  List telephones
 
 	Date dateCreated
 	Date lastUpdated
 
   static constraints = {
     name blank:false, unique:true
-    telephones minSize:1
+    telephones min:1, nullable:false
   }
 
   static mapping = {

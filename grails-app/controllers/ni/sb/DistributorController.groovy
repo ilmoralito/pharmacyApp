@@ -10,6 +10,16 @@ class DistributorController {
 	]
 
   def list() {
+  	if (request.method == "POST") {
+  		def distributor = new Distributor(params)
+
+  		if (!distributor.save()) {
+  			distributor.errors.allErrors.each { error ->
+  				log.error "[$error.field: $error.defaultMessage]"
+  			}
+  		}
+  	}
+
   	def dealers = Distributor.list()
   	[dealers:dealers]
   }

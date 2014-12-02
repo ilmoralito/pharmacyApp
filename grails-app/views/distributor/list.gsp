@@ -26,7 +26,19 @@
 			
 		</div>
 		<div class="col-md-2">
-			
+			<g:form action="list" autocomplete="off">
+				<div class="form-group">
+					<label for="name" class="sr-only">Nombre</label>
+					<g:textField name="name" class="form-control" placeholder="Nombre"/>
+				</div>
+
+				<div class="form-group">
+					<label for="telephones" class="sr-only">Telefonos</label>
+					<g:textField name="telephones" class="form-control" placeholder="Telefono"/>
+				</div>
+
+				<g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
+			</g:form>
 		</div>
 	</div>
 </body>
