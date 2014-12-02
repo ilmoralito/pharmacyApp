@@ -63,3 +63,7 @@ body#background {
 	font-size: 20px;
 }
 
+#newTelephone ul{
+	margin:3px 0px 0px 0px; 
+	padding:3px 0px 0px 0px;
+}	
