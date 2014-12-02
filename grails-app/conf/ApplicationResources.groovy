@@ -70,4 +70,9 @@ modules = {
   reports {
     resource url:"js/reports.js"
   }
+
+  distributor {
+    dependsOn "app"
+    resource url:"js/distributor.js"
+  }
 }
