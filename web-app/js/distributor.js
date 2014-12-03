@@ -1,5 +1,5 @@
 $(document).ready(function() {
 	$("#addTelephone").on("click", function(){	
-	    $(".form-control:last").clone().appendTo("#newTelephone").val("");
+	    $(".form-group:last").clone().appendTo("#newTelephone").find("#telephones").val("");
 	});
 });
