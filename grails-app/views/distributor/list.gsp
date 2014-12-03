@@ -33,10 +33,8 @@
 				</div>
 				<div class="form-group">
 					<div id="newTelephone">
-						<ul>
-							<label for="telephones" class="sr-only">Telefonos</label>
-							<g:textField name="telephones" class="form-control" placeholder="Telefono"/>
-						</ul>
+						<label for="telephones" class="sr-only">Telefonos</label>
+						<g:textField name="telephones" class="form-control" placeholder="Telefono"/>
 					</div>
 					<h6><a href="#" id="addTelephone">Agregar otro telefono</a></h6>
 				</div>
