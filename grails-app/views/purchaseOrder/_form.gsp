@@ -27,15 +27,11 @@
 	<label for="typeOfPurchase" class="sr-only">Tipo de compra</label>
 	<g:select name="typeOfPurchase" from="['Contado', 'Credito']" value="${purchaseOrder?.typeOfPurchase}" noSelection="['':'Seleccione un tipo de pago']" class="form-control"/>
 </div>
+<!--
 <g:if test="${actionName != 'create'}">
 	<div class="form-group">
 		<label for="status" class="sr-only">Estado</label>
-		<select name="status" id="status" class="form-control">
-			<g:each in="${[true, false]}" var="option">
-				<option value="${option}" ${purchaseOrder?.status ? 'Selected' : ''}>
-					${option ? "Cancelado" : "Pendiente"}
-				</option>
-			</g:each>
-		</select>
+		<g:select name="status" from="${['Pendiente', 'Cancelado']}" keys="[true, false]" value="${purchaseOrder?.status}" class="form-control"/>
 	</div>
 </g:if>
+-->
