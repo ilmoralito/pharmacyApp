@@ -72,7 +72,6 @@ modules = {
   }
 
   distributor {
-    dependsOn "app"
     resource url:"js/distributor.js"
   }
 }
