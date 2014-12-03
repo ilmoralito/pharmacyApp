@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Distribuidores</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, distributor"/>
 </head>
 <body>
 	<div class="row">
@@ -31,12 +31,13 @@
 					<label for="name" class="sr-only">Nombre</label>
 					<g:textField name="name" class="form-control" placeholder="Nombre"/>
 				</div>
-
-				<div class="form-group">
-					<label for="telephones" class="sr-only">Telefonos</label>
-					<g:textField name="telephones" class="form-control" placeholder="Telefono"/>
+				<div id="newTelephone">
+				    <h6><a href="#" id="addTelephone">Agregar otro telefono</a></h6>
+				    <div class="form-group">
+					    <label for="telephones" class="sr-only">Telefonos</label>
+						<g:textField name="telephones" class="form-control" placeholder="Telefono"/>
+				    </div>
 				</div>
-
 				<g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
 			</g:form>
 		</div>
