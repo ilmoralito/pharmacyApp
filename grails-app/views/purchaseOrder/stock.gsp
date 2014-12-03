@@ -48,43 +48,38 @@
 		<div class="col-md-12 bg-primary totalStock">
 			<h4 class="pull-right">TOTAL PRODUCTOS DE MEDICINA: C$ ${totalStock}</h4>
 		</div>
-
 	</div>
-
 
 	<h4 id="item" style="cursor:pointer;">Productos</h4>
 	<table class="table table-hover" id="items">
 		<colgroup>
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 20%;">
+			<col span="1" style="width: 20%;">
+			<col span="1" style="width: 20%;">
+			<col span="1" style="width: 20%;">
+			<col span="1" style="width: 20%;">
 		</colgroup>
 		<thead>
 			<th>Producto</th>
 			<th>Ubicacion</th>
 			<th>Cantidad</th>
 			<th>Precio de venta</th>
-			<th>Total</th>
+			<th>Monto total</th>
 		</thead>
 		<tbody>
-			<g:set var="totalStock" value="${0}"/>
 			<g:each in="${items}" var="item">
 				<tr>
-					<g:if test="${!(item.product.instanceOf(ni.sb.Medicine)) && !(item.product.instanceOf(ni.sb.BrandProduct))}">
-						<td>${item.product}</td>
-						<td>${item.product.location}</td>
-						<td>${item.quantity}</td>
-						<td>${item.sellingPrice}</td>
-						<td>${item.quantity * item.sellingPrice}</td>
-					</g:if>
+					<td>${item.product}</td>
+					<td>${item.location}</td>
+					<td>${item.quantity}</td>
+					<td>${item.sellingPrice}</td>
+					<td>${item.total}</td>
 				</tr>
-				<g:set var="totalStock" value="${totalStock + (item.quantity * item.sellingPrice)}"/>
 			</g:each>
-				<tr>
-					<td colspan="5" class="bg-primary totalStock"><div class="pull-right">TOTAL PRODUCTOS: C$ ${totalStock}</div></td>
-				</tr>
+			<tr>
+				<td colspan="4">Monto en productos</td>
+				<td colspan="1">${items.total.sum()}</td>
+			</tr>
 		</tbody>
 	</table>
 

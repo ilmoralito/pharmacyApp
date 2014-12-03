@@ -71,10 +71,26 @@ class PurchaseOrderController {
   def stock() {
     //items
     def criteria = Item.createCriteria()
-    def items = criteria {
-      gt "quantity", 0
+    def result = criteria {
+      gt "quantity", 0L
+
+      projections {
+        groupProperty "product", "product"
+        sum "quantity", "quantity"
+      }
 
       order "product"
+      resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
+    }
+
+    def items = result.findAll { !(it.product.instanceOf(ni.sb.Medicine)) && !(it.product.instanceOf(ni.sb.BrandProduct)) }
+
+    items.collect { item ->
+      def target = Item.findByProduct (item.product)
+
+      item["sellingPrice"] = target.sellingPrice
+      item["location"] = target.product.location
+      item["total"] = target.sellingPrice * item.quantity
     }
 
     //medicines
