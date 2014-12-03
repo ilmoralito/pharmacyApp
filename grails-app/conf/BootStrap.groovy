@@ -41,12 +41,12 @@ class BootStrap {
 
         def medicine2 = new Medicine(name:"Medicine2", code:"1235", genericName:"someGenericName", location:"E4-2")
           
-          def presentation2 = new Presentation(name:"AmpollasBebibles", measures:["5g/10ml"])
+          def presentation2 = new Presentation(name:"Ampollas Bebibles", measures:["5g/10ml"])
           medicine2.addToPresentations(presentation2)
 
         def medicine3 = new Medicine(name:"Medicine3", code:"1236", genericName:"anotherGenericName", location:"V1-2")
           
-          def presentation3 = new Presentation(name:"AmpollasInyectables", measures:["2mg", "500mg/2ml"])
+          def presentation3 = new Presentation(name:"Ampollas Inyectables", measures:["2mg", "500mg/2ml"])
           medicine3.addToPresentations(presentation3)
 
         def brandProduct0 = new BrandProduct(name:"Papel higienico", location:"V1-2")
