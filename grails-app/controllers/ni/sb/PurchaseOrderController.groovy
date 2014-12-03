@@ -668,24 +668,45 @@ class PurchaseOrderController {
   }
 
   private savePurchaseOrder(List medicines, List brandProductsOrders, List products, PurchaseOrder purchaseOrder) {
+    //delete all items associated whit current purchase order instance
     if (purchaseOrder?.items) {
       purchaseOrder.items.clear()
     }
 
+    //add each item instance to current purchase order
     if (medicines) {
       medicines.each { medicine ->
+        //update item instance sellingPrice property
+        def query = MedicineOrder.where {
+          product == medicine.product && presentation == medicine.presentation && measure == medicine.measure
+        }
+
+        log.info query.updateAll(sellingPrice:medicine.sellingPrice)
+
         purchaseOrder.addToItems medicine
       }
     }
 
     if (products) {
       products.each { product ->
+        def query = Item.where {
+          product == product.product
+        }
+
+        log.info query.updateAll(sellingPrice:product.sellingPrice)
+
         purchaseOrder.addToItems product
       }
     }
 
     if (brandProductsOrders) {
       brandProductsOrders.each { brandProductOrder ->
+        def query = BrandProductOrder.where {
+          product == brandProductOrder.product && brand == brandProductOrder.brand && detail == brandProductOrder.detail
+        }
+
+        log.info query.updateAll(sellingPrice:brandProductOrder.sellingPrice)
+
         purchaseOrder.addToItems brandProductOrder
       }
     }
