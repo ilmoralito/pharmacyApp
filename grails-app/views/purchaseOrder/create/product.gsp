@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Administrar articulos</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app, calculateSellingPrice, adding"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tooltip, app, calculateSellingPrice, addProduct"/>
 </head>
 <body>
 	<g:render template="create/toolbar"/>
@@ -40,6 +40,9 @@
 					</div>
 					<div class="form-group">
 						<input type="text" id="newProduct" name="newProduct" class="form-control input-sm" placeholder="Nombre del producto" data-toggle="tooltip" title="Nombre del producto"/>
+					</div>
+					<div class="form-group">
+						<g:select name="location" from="${grailsApplication.config.ni.sb.locations}" class="form-control input-sm" noSelection="['':'Selecciona ubicacion']"/>
 					</div>
 					<a href="#" id="sendProduct" type="submit" class="btn btn-sm btn-primary pull-right">Agregar</a>
 					<br><br>

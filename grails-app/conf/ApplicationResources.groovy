@@ -70,4 +70,8 @@ modules = {
   reports {
     resource url:"js/reports.js"
   }
+
+  addProduct {
+    resource url:"js/addProduct.js"
+  }
 }
