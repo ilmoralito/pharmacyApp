@@ -9,19 +9,17 @@ class Distributor implements Serializable {
     obj, source -> source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
   })
 	String name
-  List telephones
+  Map telephones
 
 	Date dateCreated
 	Date lastUpdated
 
   static constraints = {
     name blank:false, unique:true
-    telephones min:1, nullable:false
   }
 
   static mapping = {
   	version false
   }
 
-  static hasMany = [telephones:String]
 }

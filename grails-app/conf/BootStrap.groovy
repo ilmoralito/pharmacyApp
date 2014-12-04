@@ -14,14 +14,14 @@ class BootStrap {
         //+++++++++++++++++++++++++++++++++++++++++++++++++++
         def distributor1 = new Distributor(
           name:"distributor numero 1",
-          telephones:["23114455", "23115856"]
+          telephones:["convencional":"23115856"]
         )
 
         distributor1.save(failOnError:true)
 
         def distributor2 = new Distributor(
           name:"distributor2",
-          telephones:["88458696", "88557744"]
+          telephones:["claro":"88458696", "movistar":"88557744"]
         )
 
         distributor2.save(failOnError:true)

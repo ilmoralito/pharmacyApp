@@ -11,7 +11,10 @@ class DistributorController {
 
   def list() {
   	if (request.method == "POST") {
-  		def distributor = new Distributor(params)
+  		def distributor = new Distributor(
+        name:params?.name,
+        telephones:params.subMap(["convencional", "movistar", "claro"]).findAll { it.value }
+      )
 
   		if (!distributor.save()) {
   			distributor.errors.allErrors.each { error ->
