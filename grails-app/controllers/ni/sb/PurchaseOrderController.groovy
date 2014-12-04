@@ -739,9 +739,9 @@ class PurchaseOrderController {
     items.remove index
   }
 
-  def addProduct(String productInstance, Integer providerId) {
+  def addProduct(String productInstance, Integer providerId, String locationInstance) {
     def provider = Provider.get(providerId)
-    def product = new Product(name:productInstance)
+   def product = new Product(name:productInstance, location:locationInstance)
 
     provider.addToProducts product
 
