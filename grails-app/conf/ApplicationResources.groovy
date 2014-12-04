@@ -74,4 +74,8 @@ modules = {
   distributor {
     resource url:"js/distributor.js"
   }
+
+   addProduct {
+    resource url:"js/addProduct.js"
+  }
 }
