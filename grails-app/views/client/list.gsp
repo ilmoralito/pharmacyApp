@@ -8,7 +8,15 @@
 <body>
 	<g:form action="save" autocomplete="off">
 		<g:render template="form"/>
-		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block"/>
+		
+		<div class="form-group" style="margin-bottom:0;">
+			<label for="phones" class="sr-only">Telefono</label>
+			<g:textField name="phones" class="form-control" placeholder="Telefono"/>
+		</div>
+
+		<a href="#"><small>Agregar telefono</small></a>
+
+		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block" style="margin-top:5px;"/>
 	</g:form>
 	<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
 	<br>
