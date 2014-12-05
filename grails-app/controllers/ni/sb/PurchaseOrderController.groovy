@@ -350,7 +350,7 @@ class PurchaseOrderController {
 
     editPurchaseOrder {
       on("confirm") {
-        def currentPurchaseOrderProviders = flow.purchaseOrder.providers.name
+        def currentPurchaseOrderProviders = flow?.purchaseOrder?.providers?.name
         def chosenProviders = params.list("providers")
 
         //update properties
