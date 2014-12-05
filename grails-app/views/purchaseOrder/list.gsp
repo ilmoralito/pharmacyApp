@@ -101,8 +101,16 @@
 			</g:else>
 		</div>
 		<div class="col-md-3">
-			<h4>Filtrar</h4>
 			<g:form action="list">
+				<h5>Distribuidor</h5>
+				<div class="form-group">
+					<select name="stores" id="stores" class="form-control" multiple>
+						<g:each in="${stores}" var="store">
+							<option value="${store}" ${store in params?.stores ? 'selected' : ''}>${store}</option>
+						</g:each>
+					</select>
+				</div>
+
 				<!--
 				<h5>Proveedores</h5>
 				<g:each in="${providers}" var="provider">

@@ -24,6 +24,11 @@ class PurchaseOrderController {
     if (request.method == "POST") {
       def criteria = PurchaseOrder.createCriteria()
       orders = criteria {
+        //filter by store name
+        if (params?.stores) {
+          "in" "store", params?.stores
+        }
+
         /*
         //filter by providers
         if (params?.providers) {
@@ -65,7 +70,10 @@ class PurchaseOrderController {
       orders = PurchaseOrder.list()
     }
 
-    [orders:orders, providers:Provider.list()]
+    def providers = Provider.findAllByStatus(true)
+    def stores = Distributor.list().name + providers.name
+
+    [orders:orders, providers:providers, stores:stores]
   }
 
   def stock() {
