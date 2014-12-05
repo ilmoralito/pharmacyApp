@@ -17,27 +17,29 @@
 		<!--MAIN-->
 		<div class="col-md-8">
 			<g:if test="${clients}">
-				<table class="table">
+				<table class="table table-hover">
+					<colgroup>
+						<col span="1" style="width: 25%;">
+						<col span="1" style="width: 45%;">
+						<col span="1" style="width: 30%;">
+					</colgroup>
 					<thead>
-						<th width="1">#</th>
 						<th>Nombre</th>
 						<th>Direccion</th>
+						<th>Telefonos</th>
 					</thead>
 					<tbody>
-						<g:each in="${clients}" var="client" status="index">
+						<g:each in="${clients}" var="client">
 							<tr>
-								<td>${ index + 1 }</td>
-								<td><g:link action="show" id="${client.id}">
-									${client.fullName}</g:link>
-								</td>
+								<td><g:link action="show" id="${client.id}">${client.fullName}</g:link></td>
 								<td>${client.address}</td>
+								<td>${client.phones}</td>
 							</tr>
 						</g:each>
 					</tbody>
 				</table>
 			</g:if>
 			<g:else>
-				<!--TODO: Add something more usefull here-->
 				<h1>...</h1>
 			</g:else>
 		</div>
