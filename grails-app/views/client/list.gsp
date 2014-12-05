@@ -12,7 +12,14 @@
 	</g:form>
 	<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
 	<br>
-	<g:link action="list" class="btn btn-default btn-block ${!params?.status || paras?.status == true ? 'active' : ''}">Activos</g:link>
-	<g:link action="list" params="[status:false]" class="btn btn-default btn-block ${params?.status == 'false' ? 'active' : ''}">Inhactivos</g:link>
+	
+	<div class="btn-group btn-group-justified">
+		<g:link action="list" class="btn btn-default ${!params?.status || paras?.status == true ? 'active' : ''}">
+			Activos
+		</g:link>
+		<g:link action="list" params="[status:false]" class="btn btn-default ${params?.status == 'false' ? 'active' : ''}">
+			Inactivos
+		</g:link>
+	</div>
 </body>
 </html>
