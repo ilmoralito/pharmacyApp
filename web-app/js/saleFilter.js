@@ -14,15 +14,12 @@ $(document).ready(function() {
 		numberDisplayed: 3
 	});
 
-	if (localStorage.Filter == "true") {
-	$("#filterSales").show()
-	} else {
-		$("#filterSales").hide()
-	}
+	localStorage.Filter === "true" ? $("#filterSales").show() : $("#filterSales").hide()
 
 	$("#filterSale").on("click", function() {
-	var target = $("#filterSales")
-	target.toggle()
-	localStorage.Filter = target.is(':visible')
+		var target = $("#filterSales")
+
+		target.toggle()
+		localStorage.Filter = target.is(':visible')
 	})
 });
