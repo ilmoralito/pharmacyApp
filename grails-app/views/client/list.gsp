@@ -11,7 +11,7 @@
 		
 		<div class="form-group" style="margin-bottom:0;">
 			<label for="phones" class="sr-only">Telefono</label>
-			<g:textField name="phones" class="form-control" placeholder="Telefono"/>
+			<input type="tel" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto" name="phones" id="phones" class="form-control" placeholder="Telefono">
 		</div>
 
 		<a href="#"><small>Agregar telefono</small></a>
