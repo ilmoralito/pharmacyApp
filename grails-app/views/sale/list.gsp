@@ -103,70 +103,72 @@
 				</tbody>
 			</table>
 
-			<h4>Filtrar</h4>
-			<g:form action="list">
-				
-				<h5>Fechas</h5>
-				<div class="form-group">
-					<label for="from" class="sr-only">Desde</label>
-					<g:textField name="from" value="${params?.from}" class="form-control" placeholder="Desde"/>
-				</div>
-				<div class="form-group">
-					<label for="to" class="sr-only">Hasta</label>
-					<g:textField name="to" value="${params?.to}" class="form-control" placeholder="Hasta"/>
-				</div>
-				
-				<h5>Clientes</h5>
-				<g:select name="clients" from="${clients}" optionKey="id" multiple="true" class="form-control"/>
+			<h4 id="filterSale" style="cursor:pointer;">Filtrar</h4>
+			<div id="filterSales">
+				<g:form action="list" >
+					
+					<h5>Fechas</h5>
+					<div class="form-group">
+						<label for="from" class="sr-only">Desde</label>
+						<g:textField name="from" value="${params?.from}" class="form-control" placeholder="Desde"/>
+					</div>
+					<div class="form-group">
+						<label for="to" class="sr-only">Hasta</label>
+						<g:textField name="to" value="${params?.to}" class="form-control" placeholder="Hasta"/>
+					</div>
+					
+					<h5>Clientes</h5>
+					<g:select name="clients" from="${clients}" optionKey="id" multiple="true" class="form-control"/>
 
-				<h5>Tipo de pago</h5>
-				<div class="checkbox">
-					<label>
-						<g:checkBox name="cash" value="Contado" checked="${params?.cash ? true : false}"/>
-						Contado
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<g:checkBox name="credit" value="Credito" checked="${params?.credit ? true : false}"/>
-						Credito
-					</label>
-				</div>
-
-				<h5>Estado</h5>
-				<div class="checkbox">
-					<label>
-						<g:checkBox name="isPending" value="Pendiente" checked="${params?.isPending ? true : false}"/>
-						Pendiente
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<g:checkBox name="isCanceled" value="Cancelado" checked="${params?.isCanceled ? true : false}"/>
-						Cancelado
-					</label>
-				</div>
-
-				<h5>Anulado</h5>
-				<div class="checkbox">
-					<label>
-						<g:checkBox name="canceled" value="true" checked="${params?.canceled ? true : false}"/>
-						Anulado
-					</label>
-				</div>
-
-				<h5>Vendedores</h5>
-				<g:each in="${users}" var="user">
+					<h5>Tipo de pago</h5>
 					<div class="checkbox">
 						<label>
-							<g:checkBox name="users" value="${user.id}" checked="${params?.users?.contains(user.id.toString()) ? true : false}"/>
-							${user.fullName}
+							<g:checkBox name="cash" value="Contado" checked="${params?.cash ? true : false}"/>
+							Contado
 						</label>
 					</div>
-				</g:each>
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="credit" value="Credito" checked="${params?.credit ? true : false}"/>
+							Credito
+						</label>
+					</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
-			</g:form>
+					<h5>Estado</h5>
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="isPending" value="Pendiente" checked="${params?.isPending ? true : false}"/>
+							Pendiente
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="isCanceled" value="Cancelado" checked="${params?.isCanceled ? true : false}"/>
+							Cancelado
+						</label>
+					</div>
+
+					<h5>Anulado</h5>
+					<div class="checkbox">
+						<label>
+							<g:checkBox name="canceled" value="true" checked="${params?.canceled ? true : false}"/>
+							Anulado
+						</label>
+					</div>
+
+					<h5>Vendedores</h5>
+					<g:each in="${users}" var="user">
+						<div class="checkbox">
+							<label>
+								<g:checkBox name="users" value="${user.id}" checked="${params?.users?.contains(user.id.toString()) ? true : false}"/>
+								${user.fullName}
+							</label>
+						</div>
+					</g:each>
+
+					<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
+				</g:form>
+			</div>
 		</div>
 	</div>
 </body>

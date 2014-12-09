@@ -13,4 +13,13 @@ $(document).ready(function() {
 		allSelectedText: "Todos seleccionados",
 		numberDisplayed: 3
 	});
+
+	localStorage.Filter === "true" ? $("#filterSales").show() : $("#filterSales").hide()
+
+	$("#filterSale").on("click", function() {
+		var target = $("#filterSales")
+
+		target.toggle()
+		localStorage.Filter = target.is(':visible')
+	})
 });
