@@ -3,6 +3,10 @@ modules = {
     resource url:"css/main.css"
   }
 
+  addTelefone {
+    resource url:"js/addTelefone.js"
+  }
+
   createAndUpdatePurchaseOrder {
     dependsOn "app"
     resource url:"js/createAndUpdatePurchaseOrder.js"

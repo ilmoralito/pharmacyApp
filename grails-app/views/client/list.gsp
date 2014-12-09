@@ -3,18 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Clientes</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, addTelefone"/>
 </head>
 <body>
 	<g:form action="save" autocomplete="off">
 		<g:render template="form"/>
 		
-		<div class="form-group" style="margin-bottom:0;">
+		<div class="form-group">
 			<label for="phones" class="sr-only">Telefono</label>
 			<input type="tel" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto" name="phones" id="phones" class="form-control" placeholder="Telefono">
 		</div>
 
-		<a href="#"><small>Agregar telefono</small></a>
+		<a href="#" id="trigger"><small>Agregar telefono</small></a>
 
 		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block" style="margin-top:5px;"/>
 	</g:form>
