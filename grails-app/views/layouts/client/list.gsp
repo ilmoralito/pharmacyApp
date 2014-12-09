@@ -19,9 +19,9 @@
 			<g:if test="${clients}">
 				<table class="table table-hover">
 					<colgroup>
+						<col span="1" style="width: 35%;">
+						<col span="1" style="width: 40%;">
 						<col span="1" style="width: 25%;">
-						<col span="1" style="width: 45%;">
-						<col span="1" style="width: 30%;">
 					</colgroup>
 					<thead>
 						<th>Nombre</th>
