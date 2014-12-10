@@ -68,9 +68,9 @@
   	  		<g:else><sec:username/></g:else>
           <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><g:link controller="user" action="profile">Perfil</g:link></li>
+            <li class="${actionName == 'profile' ? 'active' : ''}"><g:link controller="user" action="profile">Perfil</g:link></li>
             <sec:ifAllGranted roles="ROLE_ADMIN">
-            	<li><g:link controller="user" action="list">Administrar usuarios</g:link></li>
+            	<li class="${actionName == 'list' ? 'active' : ''}"><g:link controller="user" action="list">Administrar usuarios</g:link></li>
             </sec:ifAllGranted>
             <li class="divider"></li>
             <li><g:link controller="logout" action="index">Salir</g:link></li>
