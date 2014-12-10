@@ -22,7 +22,7 @@ class SaleController {
   def list() {
   	def today = new Date()
     def users = User.list()
-    def clients = Client.findAllByStatus(true)
+    def clients = Client.findAllByStatus(true, [sort:"fullName", order:"asc"])
     def sales = []
 
     if (request.method == "POST") {
@@ -194,15 +194,13 @@ class SaleController {
   def createSaleToClientFlow = {
     init {
       action {
-        def clients = Client.where {
-          status == true
-        }
+        def clients = Client.findAllByStatus(true, [sort:"fullName", order:"asc"])
 
         def medicinesToSale = []
         def productsToSale = []
         def brandsToSale = []
 
-        [clients:clients.list(), medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
+        [clients:clients, medicinesToSale:medicinesToSale, productsToSale:productsToSale, brandsToSale:brandsToSale]
       }
 
       on("success").to "selectCustomer"
