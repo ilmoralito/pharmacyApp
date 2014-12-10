@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Clave de Usuario</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse"/>
 </head>
 <body>
 	<div class="col-md-6">
