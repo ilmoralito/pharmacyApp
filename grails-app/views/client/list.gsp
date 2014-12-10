@@ -10,14 +10,14 @@
 		<g:render template="form"/>
 		
 		<g:if test="${client?.phones?.size() <= 1}">
-			<div class="form-group">
+			<div class="form-group clientPhones">
 				<label for="phones" class="sr-only">Telefono</label>
 				<input type="tel" name="phones" value="${client?.phones?.getAt(0)}" class="form-control" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
 			</div>
 		</g:if>
 		<g:else>
 			<g:each in="${client?.phones}" var="phone">
-				<div class="form-group">
+				<div class="form-group clientPhones">
 					<label for="phones" class="sr-only">Telefono</label>
 					<input type="tel" name="phones" value="${phone}" class="form-control" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
 				</div>
