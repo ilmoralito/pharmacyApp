@@ -33,7 +33,7 @@
 							<tr>
 								<td><g:link action="show" id="${client.id}">${client.fullName}</g:link></td>
 								<td>${client.address}</td>
-								<td>${client.phones}</td>
+								<td>${client.phones.join(", ")}</td>
 							</tr>
 						</g:each>
 					</tbody>
