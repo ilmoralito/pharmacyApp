@@ -17,10 +17,16 @@ $(function(){
 		var fullName = $("#fullName");
 		var address = $("#address");
 		var identificationCard = $("#identificationCard");
+		var phones = [];
+		$(".phones").each(function(){
+        if(this.value) {
+	            phones.push(this.value)
+	        }
+	    })
 
 		$.ajax({
 			url:"addClient/",
-			data:{ fullName:fullName.val(), address:address.val(), identificationCard:identificationCard.val() },
+			data:{ fullName:fullName.val(), address:address.val(), identificationCard:identificationCard.val(), phones:phones.join(", ") },
 			success:function(data) {
 				if (data) {
 					var opt = $("<option>", { value:data.id, text:data.fullName, selected:true });
@@ -30,6 +36,8 @@ $(function(){
 					fullName.val("");
 					address.val("");
 					identificationCard.val("");
+					$(".phones").val("");
+
 				}
 			}
 		})
