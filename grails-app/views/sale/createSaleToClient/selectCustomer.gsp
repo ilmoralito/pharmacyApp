@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Seleccionar cliente</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, adding, app"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, adding, app, addTelephoneSale"/>
 </head>
 <body>
 	<div class="row">
@@ -24,9 +24,15 @@
 						<div class="form-group">
 							<g:textField name="identificationCard" id="identificationCard" class="form-control input-sm" placeholder="Cedula" data-toggle="tooltip" title="Cedula"/>
 						</div>
+						<a href="#" id="triggerTelephone"><small>Agregar telefono</small></a>
+						<div class="form-group clientPhones">
+							<label for="phones" class="sr-only">Telefono</label>
+							<input type="tel" name="phones" class="form-control phones" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
+						</div>
 						<a href="#" id="sendClient" type="submit" class="btn btn-sm btn-primary pull-right">Agregar</a>
 						<br><br>
 					</div>
+
 					<g:select name="client.id" from="${clients}" value="${client?.id}" optionKey="id" noSelection="[null:'Selecciona un cliente']" class="form-control"/>
 				</div>
 
