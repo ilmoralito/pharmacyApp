@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="layout" content="main">
 	<title>Seleccionar cliente</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, adding, app, addTelephoneSale"/>
+	<r:require modules="bootstrap-css, bootstrap-collapse, adding, app"/>
 </head>
 <body>
 	<div class="row">
@@ -27,7 +27,7 @@
 						<a href="#" id="triggerTelephone"><small>Agregar telefono</small></a>
 						<div class="form-group clientPhones">
 							<label for="phones" class="sr-only">Telefono</label>
-							<input type="tel" name="phones" class="form-control phones" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
+							<input type="tel" name="phones" class="form-control input-sm phones" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
 						</div>
 						<a href="#" id="sendClient" type="submit" class="btn btn-sm btn-primary pull-right">Agregar</a>
 						<br><br>
