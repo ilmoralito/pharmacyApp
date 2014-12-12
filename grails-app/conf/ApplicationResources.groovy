@@ -78,4 +78,8 @@ modules = {
   addProduct {
     resource url:"js/addProduct.js"
   }
+
+  addTelephoneSale {
+    resource url:"js/addTelephoneSale.js"
+  }
 }
