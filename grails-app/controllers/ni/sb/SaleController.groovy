@@ -128,8 +128,8 @@ class SaleController {
     redirect action:"show", id:id
   }
 
-  def addClient(String fullName, String address, String identificationCard) {
-    def client = new Client(fullName:fullName, address:address, identificationCard:identificationCard)
+  def addClient(String fullName, String address, String identificationCard, String phones) {
+    def client = new Client(fullName:fullName, address:address, identificationCard:identificationCard, phones:params.list("phones"))
 
     if (!client.save(flush:true)) {
       client.errors.allErrors.each { error ->
