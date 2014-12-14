@@ -9,45 +9,47 @@
 <body>
 	<h4 id="medicine" style="cursor:pointer;">Medicinas</h4>
 	<div id="medicines">
-		<g:set var="totalStock" value="${0}"/>
-		<g:each in="${medicines}" var="medicine" status="index">
-			<table class="table table-hover">
-				<caption class="bg-info capStock">
-					<strong>Nombre:</strong> ${medicine} - <strong>Codigo:</strong> #${medicine.code} - <strong>Ubicacion:</strong> ${medicine.location} - <strong>Laboratorio:</strong> ${medicine.provider}
-				</caption>
-				<colgroup>
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-				</colgroup>
-				<g:if test="${index == 0}">
-					<thead>
-						<th>Presentacion</th>
-						<th>Medida</th>
-						<th>Cantidad</th>
-						<th>Precio de venta</th>
-						<th>Total</th>
-					</thead>
-				</g:if>
-				<tbody>
-					<g:each in="${ni.sb.MedicineOrder.findAllByProduct(medicine)}" var="m">
-						<tr>
-							<td>${m.presentation}</td>
-							<td>${m.measure}</td>
-							<td>${m.quantity}</td>
-							<td>${m.sellingPrice}</td>
-							<td>${m.sellingPrice * m.quantity}</td>
-							<g:set var="totalStock" value="${totalStock + (m.sellingPrice * m.quantity)}"/>
-						</tr>
-					</g:each>
-				</tbody>
-			</table>
+		<g:each in="${medicines}" var="medicine">
+			<g:each in="${medicine}" var="collection">
+				<h5>${collection.key}</h5>
+				<g:each in="${collection.value}" var="presentation">
+					<h5>${presentation.key}</h5>
+					<table class="table table-hover">
+						<colgroup>
+							<col span="1" style="width: 20%;">
+							<col span="1" style="width: 20%;">
+							<col span="1" style="width: 20%;">
+							<col span="1" style="width: 20%;">
+							<col span="1" style="width: 20%;">
+						</colgroup>
+						<thead>
+							<th>Nombre</th>
+							<th>Ubicacion</th>
+							<th>Cantidad</th>
+							<th>Precion venta</th>
+							<th>Total</th>
+						</thead>
+						<tbody>
+							<g:each in="${presentation.value}" var="m">
+								<tr>
+									<td>${m}</td>
+									<td>${m.product.location}</td>
+									<td>${m.quantity}</td>
+									<td>${m.sellingPrice}</td>
+									<td>${m.sellingPrice * m.quantity}</td>
+								</tr>
+							</g:each>
+							<tr>
+								<td colspan="4"></td>
+								<td>
+									${presentation.value.collect { it.sellingPrice * it.quantity }.sum()}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</g:each>
+			</g:each>
 		</g:each>
-		<div class="col-md-12 bg-primary totalStock">
-			<h4 class="pull-right">TOTAL PRODUCTOS DE MEDICINA: C$ ${totalStock}</h4>
-		</div>
 	</div>
 
 	<h4 id="item" style="cursor:pointer;">Productos</h4>
