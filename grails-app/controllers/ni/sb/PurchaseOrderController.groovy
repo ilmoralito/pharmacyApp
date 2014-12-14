@@ -102,13 +102,8 @@ class PurchaseOrderController {
     }
 
     //medicines
-    def medicineOrderCriteria = MedicineOrder.createCriteria()
-    def medicines = medicineOrderCriteria.list {
-      gt "quantity", 0
-
-      projections {
-        groupProperty "product"
-      }
+    def medicines = MedicineOrder.findAllByQuantityGreaterThan(0).groupBy { it.product.provider }.collect { provider, drugs ->
+      [(provider): drugs.groupBy { drug -> drug.presentation }]
     }
 
     //brands
