@@ -7,49 +7,38 @@
 	<r:require modules="bootstrap-css, bootstrap-collapse, filterStock, app"/>
 </head>
 <body>
-	<h4 id="medicine" style="cursor:pointer;">Medicinas</h4>
+	<h4 id="medicine" style="cursor:pointer; margin-bottom:0;">Medicinas</h4>
 	<div id="medicines">
-		<g:each in="${medicines}" var="medicine">
-			<g:each in="${medicine}" var="collection">
-				<h5>${collection.key}</h5>
-				<g:each in="${collection.value}" var="presentation">
-					<h5>${presentation.key}</h5>
-					<table class="table table-hover">
-						<colgroup>
-							<col span="1" style="width: 20%;">
-							<col span="1" style="width: 20%;">
-							<col span="1" style="width: 20%;">
-							<col span="1" style="width: 20%;">
-							<col span="1" style="width: 20%;">
-						</colgroup>
-						<thead>
-							<th>Nombre</th>
-							<th>Ubicacion</th>
-							<th>Cantidad</th>
-							<th>Precion venta</th>
-							<th>Total</th>
-						</thead>
-						<tbody>
-							<g:each in="${presentation.value}" var="m">
-								<tr>
-									<td>${m}</td>
-									<td>${m.product.location}</td>
-									<td>${m.quantity}</td>
-									<td>${m.sellingPrice}</td>
-									<td>${m.sellingPrice * m.quantity}</td>
-								</tr>
-							</g:each>
-							<tr>
-								<td colspan="4"></td>
-								<td>
-									${presentation.value.collect { it.sellingPrice * it.quantity }.sum()}
-								</td>
-							</tr>
-						</tbody>
-					</table>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="btn-group pull-right">
+					<g:link action="stock" class="btn btn-sm btn-default ${!params?.reportTypeMedicine ? 'active' : ''}">
+						Agrupados por proveeder
+					</g:link>
+					<g:link action="stock" params="[reportTypeMedicine:true]" class="btn btn-sm btn-default ${params?.reportTypeMedicine ? 'active' : ''}">
+						Sin agrupar
+					</g:link>
+				</div>
+			</div>
+		</div>
+
+		<g:if test="${!params?.reportTypeMedicine}">
+			<g:each in="${medicines}" var="medicine">
+				<g:each in="${medicine}" var="collection">
+					<h5>${collection.key}</h5>
+					<g:each in="${collection.value}" var="presentation">
+						<h5>${presentation.key}</h5>
+						<g:render template="medicinesInStock" model="[list:presentation.value]"/>
+					</g:each>
 				</g:each>
 			</g:each>
-		</g:each>
+		</g:if>
+		<g:else>
+			<g:each in="${medicines}" var="m">
+				<h5>${m.key}</h5>
+				<g:render template="medicinesInStock" model="[list:m.value]"/>
+			</g:each>
+		</g:else>
 	</div>
 
 	<h4 id="item" style="cursor:pointer;">Productos</h4>

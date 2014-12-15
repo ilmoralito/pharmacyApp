@@ -76,7 +76,7 @@ class PurchaseOrderController {
     [orders:orders, providers:providers, stores:stores]
   }
 
-  def stock() {
+  def stock(String reportTypeMedicine) {
     //items
     def criteria = Item.createCriteria()
     def result = criteria {
@@ -102,8 +102,12 @@ class PurchaseOrderController {
     }
 
     //medicines
-    def medicines = MedicineOrder.findAllByQuantityGreaterThan(0).groupBy { it.product.provider }.collect { provider, drugs ->
-      [(provider): drugs.groupBy { drug -> drug.presentation }]
+    def medicines = {
+      if (!reportTypeMedicine) {
+        MedicineOrder.findAllByQuantityGreaterThan(0).groupBy ({ it.product.provider }, { it.presentation.name })
+      } else {
+        MedicineOrder.findAllByQuantityGreaterThan(0).groupBy { it.presentation.name }
+      }
     }
 
     //brands
@@ -116,7 +120,7 @@ class PurchaseOrderController {
       }
     }
 
-    [items:items, medicines:medicines, brandProducts:brandProducts]
+    [items:items, medicines:medicines.call(), brandProducts:brandProducts]
   }
 
   def createFlow = {
