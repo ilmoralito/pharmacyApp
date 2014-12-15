@@ -16,7 +16,7 @@
 						<th width="1">#</th>
 						<th width="1">Hora</th>
 						<th>Descripcion</th>
-						<th>Cantidad</th>
+						<th width="1">Monto</th>
 					</thead>
 					<tbody>
 						<g:each in="${daily.expenses}" var="expense" status="i">
@@ -28,7 +28,7 @@
 							</tr>
 						</g:each>
 						<tr>
-							<td colspan="3">TOTAL GASTOS</td>
+							<td colspan="3"></td>
 							<td>${daily.expenses.quantity.sum()}</td>
 						</tr>
 					</tbody>
