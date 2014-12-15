@@ -85,12 +85,12 @@
 							<tr>
 								<td>${index + 1}</td>
 								<td>
-									<a href="#" id="modalOrders" data-store="${order.store}" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.providers}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
+									<a href="#" id="modalOrders" data-store="${order.store}" data-id="${order.id}" data-invoice="${order.invoiceNumber}" data-toggle="modal" data-target="#myModal" data-provider="${order.providers.join(', ')}" data-paydata="${order.dateCreated}" data-date="${order.dutyDate}" data-balance="${order.balance}" data-type="${order.typeOfPurchase}" data-status="${order.status}">
 										#${order.invoiceNumber}
 									</a>
 								</td>
 								<td>${order.store}</td>
-								<td>${order.providers.name}</td>
+								<td>${order.providers.name.join(", ")}</td>
 							</tr>
 						</g:each>
 					</tbody>
