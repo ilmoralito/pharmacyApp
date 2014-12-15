@@ -111,14 +111,7 @@ class PurchaseOrderController {
     }
 
     //brands
-    def brandProductOrderCriteria = BrandProductOrder.createCriteria()
-    def brandProducts = brandProductOrderCriteria {
-      gt "quantity", 0
-
-      projections {
-        groupProperty "product"
-      }
-    }
+    def brandProducts = BrandProductOrder.findAllByQuantityGreaterThan(0).groupBy ({ it.brand.name }, { it.detail })
 
     [items:items, medicines:medicines.call(), brandProducts:brandProducts]
   }

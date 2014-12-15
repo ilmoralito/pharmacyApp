@@ -76,49 +76,43 @@
 
 	<h4 id="brandProduct" style="cursor:pointer;">Productos de marca</h4>
 	<div id="brandProducts">
-		<g:set var="totalStock" value="${0}"/>
-		<g:each in="${brandProducts}" var="brandProduct" status="index">
-			<table class="table table-hover">
-				<caption class="bg-info capStock"><strong>Nombre:</strong> ${brandProduct} - <strong>Ubicacion:</strong> ${brandProduct.location}</caption>
-				<colgroup>
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-					<col span="1" style="width: 20%;">
-				</colgroup>
-				<g:if test="${index == 0}">
+		<g:each in="${brandProducts}" var="brandProduct">
+			<h5><strong>${brandProduct.key}</strong></h5>
+			<g:each in="${brandProduct.value}" var="detail">
+				<h5>${detail.key}</h5>
+				<table class="table table-hover">
+					<colgroup>
+						<col span="1" style="width: 20%;">
+						<col span="1" style="width: 20%;">
+						<col span="1" style="width: 20%;">
+						<col span="1" style="width: 20%;">
+						<col span="1" style="width: 20%;">
+					</colgroup>
 					<thead>
-						<th>Marca</th>
-						<th>Detalle</th>
+						<th>Nombre</th>
+						<th>Ubicacion</th>
 						<th>Cantidad</th>
-						<th>Cantidad</th>
-						<th>Cantidad</th>
+						<th>Precio de venta</th>
+						<th>Total</th>
 					</thead>
-				</g:if>
-				<tbody>
-					<g:each in="${ni.sb.BrandProductOrder.findAllByProduct(brandProduct)}" var="b">
+					<tbody>
+						<g:each in="${detail.value}" var="b">
+							<tr>
+								<td>${b}</td>
+								<td>${b.product.location}</td>
+								<td>${b.quantity}</td>
+								<td>${b.sellingPrice}</td>
+								<td>${b.sellingPrice * b.quantity}</td>
+							</tr>
+						</g:each>
 						<tr>
-							<td>${b.brand}</td>
-							<td>${b.detail}</td>
-							<td>${b.quantity}</td>
-							<td>${b.sellingPrice}</td>
-							<td>${b.quantity * b.sellingPrice}</td>
+							<td colspan="4"></td>
+							<td>${detail.value.collect { it.sellingPrice * it.quantity }.sum()}</td>
 						</tr>
-						<g:set var="totalStock" value="${totalStock + (b.quantity * b.sellingPrice)}"/>
-					</g:each>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</g:each>
 		</g:each>
-		<div class="col-md-12 bg-primary totalStock">
-			<h4 class="pull-right">TOTAL PRODUCTOS DE MARCA: C$ ${totalStock}</h4>
-		</div>
 	</div>
-
-	<style>
-		caption {
-			color:#000;
-		}
-	</style>
 </body>
 </html>
