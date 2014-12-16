@@ -357,15 +357,34 @@ class SaleController {
 
     manageBrands {
       action {
-        def brands = BrandProductOrder.findAllByQuantityGreaterThan(0).groupBy { it.brand }
+        def c = BrandProductOrder.createCriteria()
+        def brandProductOrders = c {
+          projections {
+            groupProperty "product"
+          }
+        }
 
-        [brands:brands]
+        //i do not know why but this fix the problem
+        println brandProductOrders
+
+        [brandProductOrders:brandProductOrders]
       }
-
       on("success").to "brand"
     }
 
     brand {
+      on("filter") {
+        def p = params?.product
+        def criteria = BrandProductOrder.createCriteria()
+        def brandProductOrderByBrand = criteria {
+          product {
+            eq "name", p
+          }
+        }.groupBy ({ it.brand }, { it.product.name })
+
+        [brandProductOrderByBrand:brandProductOrderByBrand, product:p]
+      }.to "brand"
+
       on("addItem") {
         def item = Item.get params?.id
 

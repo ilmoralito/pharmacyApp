@@ -30,36 +30,55 @@
 			</ul>
 
 			<!--Brands-->
-			<table class="table">
-				<tbody>
-					<g:each in="${brands.keySet()}" var="brand">
-						<tr>
-							<td colspan="4" style="border:0;"><strong>${brand}</strong></td>
-						</tr>
-						<g:each in="${brands[brand]}" var="item" status="index">
-							<tr style="font-size:0.85em;">
-								<g:form>
-									<g:hiddenField name="id" value="${item.id}"/>
+			<g:form>
+				<div class="form-group">
+					<g:select name="product" from="${brandProductOrders}" optionKey="name" value="${product}" class="form-control input-sm"/>
+				</div>
 
-									<td style="vertical-align: middle;">${item}</td>
-									<td style="vertical-align: middle;">${item.detail}</td>
-									<td style="vertical-align: middle;"><small>${item.product.location}</small></td>
-									<td style="vertical-align: middle;">
-										<g:set var="q" value="${brandsToSale.find { it.item == item }?.quantity ?: 0}"/>
-										<g:set var="quantity" value="${brandsToSale ? item.quantity - q : item.quantity}"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block btn-sm"/>
+			</g:form>
+			<br>
 
-										<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
-									</td>
-									<td style="vertical-align: middle;">
-										<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
-									</td>
-								</g:form>
+			<!--Filter results-->
+			<g:if test="${brandProductOrderByBrand}">
+				<table class="table table-hover">
+					<tbody>
+						<g:each in="${brandProductOrderByBrand}" var="brand">
+							<tr>
+								<td colspan="5"><strong>${brand.key}</strong></td>
 							</tr>
+							<g:each in="${brand.value}" var="item">
+								<tr>
+									<td colspan="5">${item.key}</td>
+								</tr>
+								<g:each in="${item.value}" var="b">
+									<g:form>
+										<g:hiddenField name="id" value="${b.id}"/>
+
+										<tr style="font-size:0.85em;">
+											<td>${b.detail}</td>
+											<td>${b.sellingPrice}</td>
+											<td>${b.product.location}</td>
+											<td>
+												<g:set var="q" value="${brandsToSale.find { it.item == b }?.quantity ?: 0}"/>
+												<g:set var="quantity" value="${brandsToSale ? b.quantity - q : b.quantity}"/>
+
+												<input type="number" name="quantity" min="1" max="${quantity}" required class="form-control input-sm" placeholder="${quantity}"/>
+											</td>
+											<td>
+												<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
+											</td>
+										</tr>
+									</g:form>
+								</g:each>
+							</g:each>
 						</g:each>
-					</g:each>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</g:if>
 		</div>
 	</div>
+
+	
 </body>
 </html>
