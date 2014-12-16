@@ -46,12 +46,9 @@
 							<g:hiddenField name="id" value="${item.id}"/>
 
 							<tr style="font-size:0.85em;">
-								<td style="vertical-align: middle;">
-									${item}
-								</td>
-								<td style="vertical-align: middle;">
-									${item.product.location}
-								</td>
+								<td style="vertical-align: middle;">${item}</td>
+								<td style="vertical-align: middle;">${item.sellingPrice}</td>
+								<td style="vertical-align: middle;">${item.product.location}</td>
 								<td style="vertical-align: middle;">
 									<g:set var="q" value="${productsToSale.find { it.item == item }?.quantity ?: 0}"/>
 									<g:set var="quantity" value="${productsToSale ? item.quantity - q : item.quantity}"/>
