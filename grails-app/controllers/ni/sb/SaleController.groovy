@@ -228,6 +228,8 @@ class SaleController {
       action {
         def criteria = MedicineOrder.createCriteria()
         def medicines = criteria.list {
+          gt "quantity", 0
+          
           projections {
             groupProperty "product"
           }
