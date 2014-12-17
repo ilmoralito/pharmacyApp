@@ -229,7 +229,7 @@ class SaleController {
         def criteria = MedicineOrder.createCriteria()
         def medicines = criteria.list {
           gt "quantity", 0
-          
+
           projections {
             groupProperty "product"
           }
@@ -246,17 +246,16 @@ class SaleController {
     medicine {
       on("filter") {
         def genericName = params?.genericName
-        def criteria = MedicineOrder.createCriteria()
-        def results = criteria.list {
+        def c = MedicineOrder.createCriteria()
+        def results = c {
           product {
             eq "name", params?.product
           }
-        }
+        }.groupBy({ it.presentation }, { it.measure })
 
-        def medicinesGrouped = results.groupBy { it.presentation }
         def medicinesFiltredByGenericName = genericName ? flow.medicines.findAll { it.genericName == genericName } : null
 
-        [results:medicinesGrouped, product:params?.product, genericName:genericName, medicinesFiltredByGenericName:medicinesFiltredByGenericName]
+        [results:results, product:params?.product, genericName:genericName, medicinesFiltredByGenericName:medicinesFiltredByGenericName]
       }.to "medicine"
 
       on("addItem") {

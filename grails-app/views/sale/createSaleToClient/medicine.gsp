@@ -43,43 +43,7 @@
 			</g:form>
 
 			<g:if test="${results}">
-				<g:each in="${results.keySet()}" var="presentation">
-					<h4>${presentation}</h4>
-
-					<g:each in="${results[presentation]}" var="medicine">
-						<table class="table" style="margin:0;">
-							<tbody>
-								<tr style="font-size:0.85em;">
-									<g:form>
-										<g:hiddenField name="id" value="${medicine.id}"/>
-
-										<td style="vertical-align: middle;">
-											${medicine.measure}
-										</td>
-										<td style="vertical-align: middle;">
-											<g:formatDate date="${medicine.bash}" formatName="fv.date.format"/>
-										</td>
-										<td style="vertical-align: middle;">
-											${medicine.sellingPrice}
-										</td>
-										<td style="vertical-align: middle;">
-											${medicine.product.location}
-										</td>
-										<td style="vertical-align: middle;">
-											<g:set var="q" value="${medicinesToSale.find { it.item == medicine }?.quantity ?: 0}"/>
-											<g:set var="quantity" value="${medicinesToSale ? medicine.quantity - q : medicine.quantity}"/>
-
-											<input type="number" name="quantity" id="quantity" min="1" max="${quantity}" required x-moz-errormessage="Requerido" class="form-control input-sm" placeholder="${quantity}"/>
-										</td>
-										<td style="vertical-align: middle;">
-											<g:submitButton name="addItem" value="Ir" class="btn btn-primary btn-xs"/>
-										</td>
-									</g:form>
-								</tr>
-							</tbody>
-						</table>
-					</g:each>
-				</g:each>
+				<g:render template="createSaleToClient/items" model="[results:results, items:medicinesToSale]"/>
 			</g:if>
 		</div>
 	</div>
