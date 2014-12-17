@@ -16,9 +16,7 @@
 			<g:render template="createSaleToClient/clientData"/>
 
 			<!--Balance-->
-			<div class="well well-sm">
-				Saldo: <pharmacyApp:getSaleBalance medicinesToSale="${medicinesToSale}" productsToSale="${productsToSale}" brandsToSale="${brandsToSale}"/>
-			</div>
+			<pharmacyApp:getSaleBalance medicinesToSale="${medicinesToSale}" productsToSale="${productsToSale}" brandsToSale="${brandsToSale}"/>
 
 			<!--Tabs-->
 			<ul class="nav nav-tabs" role="tablist" style="margin-bottom:10px;">

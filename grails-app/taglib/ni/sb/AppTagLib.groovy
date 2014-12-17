@@ -3,8 +3,8 @@ package ni.sb
 class AppTagLib {
 	def saleService
 
-  static defaultEncodeAs = 'html'
-  //static encodeAsForTags = [tagName: 'raw']
+  static defaultEncodeAs = "html"
+  static encodeAsForTags = [getSaleBalance: 'raw']
 
   static namespace = "pharmacyApp"
 
@@ -17,11 +17,9 @@ class AppTagLib {
 	}
 
 	def getSaleBalance = { attrs ->
-		def medicinesToSale = attrs.medicinesToSale
-		def productsToSale = attrs.productsToSale
-		def brandsToSale = attrs.brandsToSale
+		def balance = saleService.calcSaleBalance(attrs.medicinesToSale, attrs.productsToSale, attrs.brandsToSale)
 
-		out << saleService.calcSaleBalance(medicinesToSale, productsToSale, brandsToSale)
+		out << render(template:"createSaleToClient/balanceTemplate", model:[balance:balance])
 	}
 
 	def calcReceiptNumber = { attrs ->
