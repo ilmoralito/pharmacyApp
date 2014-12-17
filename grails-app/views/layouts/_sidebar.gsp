@@ -17,7 +17,6 @@
 	<li class="${controllerName == 'daily' ? 'active' : ''}">
 		<g:link controller="daily" action="list">Diario</g:link>
 	</li>
-	<br>
 	<li class="${controllerName == 'purchaseOrder' && actionName == 'stock' ? 'active' : ''}">
 		<g:link controller="purchaseOrder" action="stock">Inventario</g:link>
 	</li>
