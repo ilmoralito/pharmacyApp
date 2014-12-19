@@ -29,10 +29,10 @@
 
 			<g:form>
 				<div class="form-group">
-					<g:select name="product" from="${items}" optionKey="name" value="${product}" class="form-control input-sm"/>
+					<g:select name="product" from="${items}" optionKey="name" value="${product}" class="form-control"/>
 				</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block btn-sm"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
 			
 			<!--Items-->
@@ -43,7 +43,7 @@
 						<g:form>
 							<g:hiddenField name="id" value="${item.id}"/>
 
-							<tr style="font-size:0.85em;">
+							<tr>
 								<td style="vertical-align: middle;">${item}</td>
 								<td style="vertical-align: middle;">${item.sellingPrice}</td>
 								<td style="vertical-align: middle;">${item.product.location}</td>

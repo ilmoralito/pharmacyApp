@@ -12,7 +12,7 @@
 					<g:form>
 						<g:hiddenField name="id" value="${b.id}"/>
 
-						<tr style="font-size:0.85em;">
+						<tr>
 							<td style="vertical-align:middle;">${b.sellingPrice}</td>
 							<td style="vertical-align:middle;">${b.product.location}</td>
 							<td>

@@ -30,10 +30,10 @@
 			<!--Brands-->
 			<g:form>
 				<div class="form-group">
-					<g:select name="product" from="${brandProductOrders}" optionKey="name" value="${product}" class="form-control input-sm"/>
+					<g:select name="product" from="${brandProductOrders}" optionKey="name" value="${product}" class="form-control"/>
 				</div>
 
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block btn-sm"/>
+				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
 			</g:form>
 
 			<!--Filter results-->
