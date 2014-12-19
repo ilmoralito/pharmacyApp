@@ -27,13 +27,8 @@
 			  <li><g:link event="manageBrands">Marca</g:link></li>
 			</ul>
 
-			<g:form>
-				<div class="form-group">
-					<g:select name="product" from="${items}" optionKey="name" value="${product}" class="form-control"/>
-				</div>
-
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
-			</g:form>
+			<!--Filter-->
+			<g:render template="createSaleToClient/saleForm" model="[items:items]"/>
 			
 			<!--Items-->
 			<table class="table table-hover">

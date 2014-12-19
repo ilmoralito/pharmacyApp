@@ -28,17 +28,7 @@
 			</ul>
 
 			<!--Filter medicines-->
-			<g:form>
-				<div class="form-group">
-					<g:select name="genericName" from="${genericNames}" value="${genericName}" noSelection="['':'Nombres genericos']" class="form-control"/>
-				</div>
-
-				<div class="form-group">
-					<g:select name="product" from="${medicinesFiltredByGenericName ?: medicines}" optionKey="name" value="${product}" class="form-control"/>
-				</div>
-
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
-			</g:form>
+			<g:render template="createSaleToClient/saleForm" model="[items:medicinesFiltredByGenericName ?: medicines, genericNames:genericNames]"/>
 
 			<g:if test="${results}">
 				<g:render template="createSaleToClient/items" model="[results:results, items:medicinesToSale]"/>

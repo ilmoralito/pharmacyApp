@@ -27,14 +27,8 @@
 			  </li>
 			</ul>
 
-			<!--Brands-->
-			<g:form>
-				<div class="form-group">
-					<g:select name="product" from="${brandProductOrders}" optionKey="name" value="${product}" class="form-control"/>
-				</div>
-
-				<g:submitButton name="filter" value="Filtrar" class="btn btn-primary btn-block"/>
-			</g:form>
+			<!--Filter-->
+			<g:render template="createSaleToClient/saleForm" model="[items:brandProductOrders]"/>
 
 			<!--Filter results-->
 			<g:if test="${brandProductOrderByBrand}">
