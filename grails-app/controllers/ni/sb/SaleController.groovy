@@ -381,7 +381,7 @@ class SaleController {
           product {
             eq "name", p
           }
-        }.groupBy ({ it.brand }, { it.product.name })
+        }.groupBy ({ it.brand }, { it.detail })
 
         [brandProductOrderByBrand:brandProductOrderByBrand, product:p]
       }.to "brand"
