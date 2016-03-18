@@ -43,6 +43,20 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 2
 
+        // DEALER
+        List<Distributor> dealers = []
+        dealers << builder.distributor(name: "Dealer1", telephoneNumber: "23114455")
+        dealers << builder.distributor(name: "Dealer2", telephoneNumber: "23111234")
+        dealers << builder.distributor(name: "Dealer3", telephoneNumber: "23117788")
+        dealers << builder.distributor(name: "Dealer4", telephoneNumber: "23118745")
+        dealers << builder.distributor(name: "Dealer5", telephoneNumber: "23112258")
+
+        dealers.each { dealer ->
+            dealer.save failOnError: true
+        }
+
+        assert Distributor.count() == 5
+
         // EXPENSE
         new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amot", quantity: 40, user: user).save failOnError: true
