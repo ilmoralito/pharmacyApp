@@ -1,4 +1,4 @@
-body { padding-bottom: 70px; }
+body { padding-top: 70px; }
 
 table { margin: 15px 0; }
 
@@ -21,30 +21,3 @@ table { margin: 15px 0; }
 .notifications{ background: #FF003F; }
 
 .measures { display: none; }
-
-.imgFarm {
-	max-width: 1500px;
-	width: 100%;
-	position: absolute;
-	height: 600px;
-	vertical-align: middle;
-	border: 0 none;
-}
-
-body#background {
-	background: url(../images/farm5.jpg) no-repeat 50% 50% fixed;
-	background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	-webkit-background-size: cover;
-}
-
-.footer {
-	padding-top:10px;
-	background-color: #444;
-	color:#FFF;
-}
-
-.contacto{color:#467330;}
-
-.contacto:hover{color:white;text-decoration: none;}

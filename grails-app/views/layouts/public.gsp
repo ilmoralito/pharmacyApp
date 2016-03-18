@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><g:layoutTitle default="Welcome"/></title>
+    <title><g:layoutTitle default="Hello"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <r:layoutResources/>
 </head>
@@ -15,6 +15,7 @@
                 <g:layoutBody/>
 
                 <g:if test="${flash.message}">
+                    <br>
                     <p>${flash.message}</p>
                 </g:if>
             </div>

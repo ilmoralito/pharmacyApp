@@ -48,11 +48,5 @@
 
 </s2ui:form>
 
-<script>
-$(document).ready(function() {
-	$('#username').focus();
-});
-</script>
-
 </body>
 </html>
