@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${dealers}">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                     <th>Distribuidor</th>
                     <th>Contacto</th>

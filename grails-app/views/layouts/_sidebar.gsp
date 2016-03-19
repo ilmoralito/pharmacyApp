@@ -3,7 +3,7 @@
         <g:link controller="distributor" action="list">Distribuidores</g:link>
     </li>
     <li class="${controllerName in ['provider', 'product', 'presentation', 'brand'] ? 'active' : ''}">
-        <g:link controller="provider" action="list">Proveedores</g:link>
+        <g:link controller="provider" action="list" params="[status: true]">Proveedores</g:link>
     </li>
     <li class="${controllerName == 'client' ? 'active' : ''}">
         <g:link controller="client" action="list">Clientes</g:link>

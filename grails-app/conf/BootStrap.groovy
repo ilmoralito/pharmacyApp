@@ -57,6 +57,46 @@ class BootStrap {
 
         assert Distributor.count() == 5
 
+        // PROVIDER
+        List<Provider> providers = []
+
+        providers << builder.provider(
+            name: "Provider1",
+            address: "Lorem ipsum dolor sit ament",
+            telephoneNumber: "23114455"
+        )
+
+        providers << builder.provider(
+            name: "Provider2",
+            address: "Lorem ipsum dolor sit amext",
+            telephoneNumber: "23113355"
+        )
+
+        providers << builder.provider(
+            name: "Provider3",
+            address: "Lorem ipsum dolor sit amelt",
+            telephoneNumber: "23884455"
+        )
+
+        providers << builder.provider(
+            name: "Provider4",
+            address: "Lorem ipsum dolor sit amept",
+            telephoneNumber: "23994455"
+        )
+
+        providers << builder.provider(
+            name: "Provider5",
+            address: "Lorem ipsum dolor sit ameet",
+            telephoneNumber: "23994451",
+            status: false
+        )
+
+        providers.each { provider ->
+            provider.save failOnError: true
+        }
+
+        assert Provider.count() == 5
+
         // EXPENSE
         new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amot", quantity: 40, user: user).save failOnError: true

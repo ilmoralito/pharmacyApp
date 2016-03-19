@@ -1,24 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="layout" content="main">
-	<title>Proveedor</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
-</head>
-<body>
-	<g:render template="toolbar"/>
+<g:applyLayout name="twoColumns">
+    <head>
+        <title>Proveedores</title>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+    </head>
 
-	<div class="row">
-		<div class="col-md-6">
-			<g:form action="update" autocomplete="off">
-				<g:hiddenField name="id" value="${params?.id}"/>
-				<g:render template="form"/>
-				<g:submitButton name="confirm" value="Confirmar" class="btn btn-primary"/>
-			</g:form>
+    <content tag="main">
+        <div class="row">
+            <div class="col-md-4">
+                <g:form action="update" autocomplete="off">
+                    <g:hiddenField name="id" value="${params?.id}"/>
+                    <g:render template="form"/>
 
-			<g:render template="/layouts/errorsMessage" model="[instance:provider]"/>
-		</div>
-	</div>
-</body>
-</html>
+                    <g:submitButton name="send" value="Actualizar" class="btn btn-primary"/>
+                </g:form>
+
+                <g:render template="/layouts/errorsMessage" model="[instance:provider]"/>
+            </div>
+        </div>
+    </content>
+</g:applyLayout>
