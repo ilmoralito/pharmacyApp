@@ -13,21 +13,20 @@ class DistributorController {
 
     def list() {
         if (request.method == "POST") {
-            def distributor = new Distributor(
-                name:params.name,
-                telephones:params.subMap(["convencional", "movistar", "claro"]).findAll { it.value }
-            )
+            Distributor dealer = new Distributor(params)
 
-            if (!distributor.save()) {
-                distributor.errors.allErrors.each { error ->
+            if (!dealer.save()) {
+                dealer.errors.allErrors.each { error ->
                     log.error "[$error.field: $error.defaultMessage]"
                 }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
             }
         }
 
         List<Distributor> dealers = Distributor.list()
 
-        [dealers:dealers]
+        [dealers: dealers]
     }
 
     def show(Integer id) {
@@ -50,6 +49,6 @@ class DistributorController {
         dealer.properties = params
         dealer.save()
 
-        redirect action:"show", id:id
+        redirect action:"show", id: id
     }
 }

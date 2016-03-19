@@ -6,9 +6,26 @@
 
     <content tag="main">
         <g:if test="${dealers}">
-            <g:each in="${dealers}" var="dealer">
-                
-            </g:each>
+            <table class="table">
+                <thead>
+                    <th>Distribuidor</th>
+                    <th>Contacto</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <g:each in="${dealers}" var="dealer">
+                        <tr>
+                            <td>
+                                <g:link action="show" id="${dealer.id}">
+                                    ${dealer.name}
+                                </g:link>
+                            </td>
+                            <td>${dealer.telephoneNumber}</td>
+                            <td></td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
         </g:if>
         <g:else>
             <p>Nada que mostrar</p>
