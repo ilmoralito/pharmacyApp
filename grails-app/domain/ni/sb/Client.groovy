@@ -27,9 +27,10 @@ class Client implements Serializable {
     static mapping = {
         version false
         sort dateCreated: "desc"
+        telephones cascade: "all-delete-orphan"
     }
 
-    List<Telephone> telephones 
+    List<Telephone> telephones
     static hasMany = [telephones: Telephone]
 
     String toString() { fullName }

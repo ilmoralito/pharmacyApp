@@ -8,6 +8,8 @@ class ClientController {
     static allowedMethods = [
         list: ["GET", "POST"],
         show: "GET",
+        update: "POST",
+        removeTelephone: "GET"
     ]
 
     def list() {
@@ -50,31 +52,40 @@ class ClientController {
 
     def update(Integer id) {
         Client client = Client.get id
-        List telephones = params.list("telephones")?.findAll { it != "" }
 
         if (!client) {
             response.sendError 404
         }
 
+        List<String> telephones = params.list("telephones")?.findAll { it != "" }
+
         client.fullName = params.fullName
         client.address = params.address
         client.identificationCard = params.identificationCard
+        client.status = params.boolean("status")
 
-        List telephonesTmp = []
-        telephonesTmp = client.telephones
+        if (!client.save()) {
+            client.errors.allErrors.each { error ->
+                log.error "[$error.field: $error.defaultMessage]"
+            }
 
-        telephonesTmp.each { t ->
-            client.removeFromTelephones(Telephone.findByTelephoneNumber(t.telephoneNumber))
-        }
-
-        //log.info "$affectedTelephones deleted"
-
-        telephones.each { telephone ->
-            Telephone telephoneInstance = new Telephone(telephoneNumber: telephone)
-
-            client.addToTelephones telephoneInstance
+            flash.message = "A ocurrido un error. Intentalo otravez"
         }
 
         redirect action: "show", id: id
+    }
+
+    def removeTelephone(Long clientId, Long id) {
+        Client client = Client.get clientId
+        Telephone telephone = Telephone.get id
+
+        if (!client || !telephone) {
+            response.sendError 404
+        }
+
+        client.removeFromTelephones telephone
+        client.save()
+
+        redirect action: "show", id: clientId
     }
 }

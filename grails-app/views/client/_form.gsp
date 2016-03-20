@@ -22,33 +22,6 @@
         placeholder="Cedula"/>
 </div>
 
-<a href="#" id="triggerAddTelephone" class="btn btn-link btn-xs">
-    Agregar telefono
-</a>
-
-<g:if test="${!client?.telephones}">
-    <div class="form-group">
-        <g:textField
-            name="telephones"
-            value="${client?.telephones}"
-            class="form-control telephones"
-            placeholder="Telefono"
-            />
-    </div>
-</g:if>
-<g:else>
-    <g:each in="${client.telephones}" var="telephone">
-        <div class="form-group">
-            <g:textField
-                name="telephones"
-                value="${telephone}"
-                class="form-control telephones"
-                placeholder="Telefono"
-                />
-        </div>
-    </g:each>
-</g:else>
-
 <g:if test="${actionName == 'show'}">
     <div class="form-group">
         <g:select
@@ -57,5 +30,21 @@
             keys="[true, false]"
             value="${client?.status}"
             class="form-control"/>
+    </div>
+</g:if>
+
+<g:if test="${!client?.telephones}">
+    <a href="#" id="triggerAddTelephone" class="btn btn-link btn-xs">
+        Agregar telefono
+    </a>
+
+    <div class="form-group">
+        <input
+            type="telephone"
+            id="telephones"
+            name="telephones"
+            class="form-control telephones"
+            maxlength="8"
+            placeholder="Telefono">
     </div>
 </g:if>
