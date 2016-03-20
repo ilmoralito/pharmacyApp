@@ -1,153 +1,96 @@
 package ni.sb
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(['ROLE_ADMIN'])
+@Secured(["ROLE_ADMIN"])
 class UserController {
-	def springSecurityService
-	def passwordEncoder
+    def springSecurityService
 
-  static allowedMethods = [
-    list:["GET", "POST"],
-    create:["GET", "POST"],
-    edit:["GET", "POST"],
-    profile:"GET",
-    updateProfile:"POST",
-    password:"GET",
-    updatePassword:"POST"
-  ]
+    static allowedMethods = [
+        list: ["GET", "POST"],
+        show: "GET",
+        update: "POST",
+        profile: ["GET", "POST"],
+        password: ["GET", "POST"],
+    ]
 
-  def list(){
-    if (request.method == "GET") {
-      [userInstance:User.list()]
-    }else{
-      def userInstance = new User(
-        username:params?.username,
-        email:params?.username,
-        password:"farmaciaSB",
-        fullName:params?.fullName,
-      )
+    def list(){
+        if (request.method == "POST") {
+            
+        }
 
-      if (!userInstance.save(flush:true)) {
-        render(view:"list", model:[user:userInstance, userInstance:User.list()])
-        return false
-      }
-
-      def role = Role.findByAuthority(params?.authority)
-      UserRole.create userInstance, role, true
-      flash.message = "Usuario creado correctamente!!"
-      redirect(action:"list")
-    }
-  }
-
-  def edit(){
-    def userInstance = User.get(params.id)
-    if (!userInstance) { response.sendError 404 }
-
-    if (request.method == "GET") {
-      [userInstance:userInstance]
-    }else{
-      params.email = params.username
-
-      userInstance.properties = params
-
-      if (!userInstance.save()) {
-        render(view:"edit", model:[userInstance:userInstance])
-        return false
-      }
-
-      def r = UserRole.findByUser(userInstance)
-
-      if (r.role.authority != params.authority) {
-        def roleDelete = Role.findByAuthority(r.role.authority)
-        UserRole.remove userInstance, roleDelete, true
-
-        def role = Role.findByAuthority(params.authority)
-        UserRole.create userInstance, role, true
-      }
-
-      redirect(action:"edit", params:[id:params.id])
-      flash.message = "Datos de usuario actualiados correctamente!!"
-    }
-  }
-
-  def enabled(){
-    def userInstance = User.get(params.id)
-    if (!userInstance) { response.sendError 404 }
-
-    userInstance.properties = params
-
-    redirect(action:"edit", params:[id:params.id])
-    flash.message = "La cuanta fue actualizada correctamente!!"
-  }
-
-	@Secured(['ROLE_ADMIN','ROLE_USER'])
-  def profile(){
-    def userInstance = springSecurityService.currentUser
-    [userInstance:userInstance]
-  }
-
-  @Secured(['ROLE_ADMIN','ROLE_USER'])
-  def updateProfile(){
-    def userInstance = User.get(params.id)
-
-    userInstance.properties = params
-
-    if (!userInstance.save()) {
-      render(view:'profile', model:[userInstance:userInstance])
-      return false
-    }else {
-      springSecurityService.reauthenticate userInstance.username
-      flash.message = "Datos Actualizados!!"
-      redirect(action:"profile")
-    }
-  }
-
-  @Secured(['ROLE_ADMIN','ROLE_USER'])
-  def password(){
-    def userInstance = springSecurityService.currentUser
-
-    [userInstance:userInstance]
-  }
-
-  @Secured(['ROLE_ADMIN','ROLE_USER'])
-  def updatePassword(passwordChangeCommand cmd){
-    def userInstance = springSecurityService.currentUser
-
-    if (cmd.hasErrors()) {
-    	flash.message = "Las contraseñas no coinciden, intentelo nuevamente!!"
-      redirect (action:"password")
-      return false
+        [users: User.list()]
     }
 
-    String currentPassword = cmd.currentPassword
-    String password = cmd.password
-    String confirmPassword = cmd.confirmPassword
-
-    if (passwordEncoder.isPasswordValid(userInstance.password, currentPassword, null)) {
-      userInstance.properties["password"] = params
-      if (userInstance.save(flush:true)) {
-        flash.message = "Su contraseña fue cambiada exitosamente"
-        redirect (action:"password")
-        return false
-      }
-    } else {
-      flash.message = "La contraseña actual que ingreso no es correcta, intentelo nuevamente!!"
-      redirect action:"password"
-      return false
+    def show(Long id) {
+        
     }
-  }
+
+    def update(Long id) {
+        
+    }
+
+    @Secured(["ROLE_ADMIN", "ROLE_USER"])
+    def profile(){
+        User user = springSecurityService.currentUser
+
+        if (request.method == "POST") {
+            user.properties["username", "email", "fullName"] = params
+
+            if (!user.save()) {
+                user.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+            }
+        }
+
+        [user: user]
+    }
+
+
+    @Secured(["ROLE_ADMIN", "ROLE_USER"])
+    def password(UpdatePasswordCommand command){
+        if (request.method == "POST") {
+
+            if (command.hasErrors()) {
+                command.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+                return
+            }
+
+            User currentUser = springSecurityService.currentUser
+            currentUser.properties["password"] = command.newPassword
+
+            if (!currentUser.save()) {
+                return
+            }
+
+            flash.message = "Clave actualizada"
+        }
+    }
 }
 
-class passwordChangeCommand {
-  def springSecurityService
+class UpdatePasswordCommand {
+    def springSecurityService
+    def passwordEncoder
 
-  String currentPassword
-  String password
-  String confirmPassword
+    String currentPassword
+    String newPassword
+    String repeatNewPassword
 
-  static constraints = {
-    password validator:{ val, obj ->
-      val == obj.confirmPassword
+    static constraints = {
+        currentPassword blank: false, validator: { currentPassword, obj ->
+            String currentUserPassword = obj.springSecurityService.currentUser.password
+
+            obj.passwordEncoder.isPasswordValid(currentUserPassword, currentPassword, null)
+        }
+        newPassword blank:false
+        repeatNewPassword blank: false, validator: { repeatNewPassword, obj ->
+            repeatNewPassword == obj.newPassword
+        }
     }
-  }
 }
