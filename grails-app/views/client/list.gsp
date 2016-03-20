@@ -1,43 +1,50 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Clientes</title>
-	<r:require modules="bootstrap-css, bootstrap-collapse, addTelefone"/>
-</head>
-<body>
-	<g:form action="save" autocomplete="off">
-		<g:render template="form"/>
-		
-		<g:if test="${client?.phones?.size() <= 1}">
-			<div class="form-group clientPhones">
-				<label for="phones" class="sr-only">Telefono</label>
-				<input type="tel" name="phones" value="${client?.phones?.getAt(0)}" class="form-control" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
-			</div>
-		</g:if>
-		<g:else>
-			<g:each in="${client?.phones}" var="phone">
-				<div class="form-group clientPhones">
-					<label for="phones" class="sr-only">Telefono</label>
-					<input type="tel" name="phones" value="${phone}" class="form-control" placeholder="Telefono" maxlength="8" minlength="8" pattern="\d{8}" x-moz-errormessage="Dato incorrecto">
-				</div>
-			</g:each>
-		</g:else>
+<g:applyLayout name="threeColumns">
+    <head>
+        <title>Clientes</title>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, addTelefone"/>
+    </head>
 
-		<a href="#" id="trigger"><small>Agregar telefono</small></a>
+    <content tag="main">
+        <g:if test="${clients}">
+            <table class="table table-hover">
+                <colgroup>
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 45%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th>Direccion</th>
+                    <th>Telefonos</th>
+                </thead>
+                <tbody>
+                    <g:each in="${clients}" var="client">
+                        <tr>
+                            <td>
+                                <g:link action="show" id="${client.id}">
+                                    ${client.fullName}
+                                </g:link>
+                            </td>
+                            <td>${client.identificationCard}</td>
+                            <td>${client.address}</td>
+                            <td>${client?.telephones?.join(", ")}</td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
+        <g:else>
+            <p>Nada que mostrar</p>
+        </g:else>
+    </content>
 
-		<g:submitButton name="confirm" value="Agregar" class="btn btn-primary btn-block" style="margin-top:5px;"/>
-	</g:form>
-	<g:render template="/layouts/errorsMessage" model="[instance:client]"/>
-	<br>
-	
-	<div class="btn-group btn-group-justified">
-		<g:link action="list" class="btn btn-default ${!params?.status || paras?.status == true ? 'active' : ''}">
-			Activos
-		</g:link>
-		<g:link action="list" params="[status:false]" class="btn btn-default ${params?.status == 'false' ? 'active' : ''}">
-			Inactivos
-		</g:link>
-	</div>
-</body>
-</html>
+    <content tag="col1">
+        <g:form action="list" autocomplete="off">
+            <g:render template="form"/>
+
+            <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+        </g:form>
+    </content>
+</g:applyLayout>

@@ -4,89 +4,77 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class ClientController {
-	static defaultAction = "list"
-	static allowedMethods = [
-		list:"GET",
-		save:"POST",
-    show:"GET",
-    addTelephone:"POST",
-    deletePhone:"GET"
-	]
+    static defaultAction = "list"
+    static allowedMethods = [
+        list: ["GET", "POST"],
+        show: "GET",
+    ]
 
-  def list() {
-    def status = params?.status ?: true
-  	[clients:Client.findAllByStatus(status, [sort:"fullName", order:"asc"])]
-  }
+    def list() {
+        Boolean status = params?.status ?: true
 
-  def save() {
-  	def client = new Client(params)
+        if (request.method == "POST") {
+            List telephones = params.list("telephones")?.findAll { it != "" }
+            Client client = new Client(
+                fullName: params.fullName,
+                address: params.address,
+                identificationCard: params.identificationCard
+            )
 
-  	if (!client.save()) {
-      chain action:"list", model:[client:client]
-    } else {
-      flash.message = "Cliente creado!"
-      redirect action:"list"
+            telephones.each { telephone ->
+                client.addToTelephones(new Telephone(telephoneNumber: telephone))
+            }
+
+            if (!client.save()) {
+                client.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+            }
+        }
+
+        [clients: Client.findAllByStatus(status)]
     }
-  }
 
-  def show(Integer id) {
-    def client = Client.get id
 
-    if (!client) { response.sendError 404 }
+    def show(Integer id) {
+        Client client = Client.get id
 
-    [client:client]
-  }
+        if (!client) {
+            response.sendError 404
+        }
 
-  def update(Integer id) {
-    def client = Client.get id
-
-    if (!client) { response.sendError 404 }
-
-    client.properties = params
-
-    if (!client.save()) {
-      chain action:"show", params:[id:id], model:[client:client]
-    } else {
-      flash.message = "Actualizado"
-      redirect action:"show", id:id
+        [client: client]
     }
-  }
 
-  def addTelephone(Integer id, AddTelephoneCommand cmd) {
-    def client = Client.get id
+    def update(Integer id) {
+        Client client = Client.get id
+        List telephones = params.list("telephones")?.findAll { it != "" }
 
-    if (!client) { response.sendError 404 }
+        if (!client) {
+            response.sendError 404
+        }
 
-    if (cmd.hasErrors()) {
-      chain action:"show", params:[id:id], model:[cmd:cmd]
-    } else {
-      client.addToPhones cmd.phone
+        client.fullName = params.fullName
+        client.address = params.address
+        client.identificationCard = params.identificationCard
 
-      client.save()
+        List telephonesTmp = []
+        telephonesTmp = client.telephones
 
-      redirect action:"show", id:id
+        telephonesTmp.each { t ->
+            client.removeFromTelephones(Telephone.findByTelephoneNumber(t.telephoneNumber))
+        }
+
+        //log.info "$affectedTelephones deleted"
+
+        telephones.each { telephone ->
+            Telephone telephoneInstance = new Telephone(telephoneNumber: telephone)
+
+            client.addToTelephones telephoneInstance
+        }
+
+        redirect action: "show", id: id
     }
-  }
-
-  def deletePhone(Integer id, String phone) {
-    def client = Client.get id
-
-    if (!client) { response.sendError 404 }
-
-    client.removeFromPhones phone
-
-    redirect action:"show", id:id
-  }
-}
-
-class AddTelephoneCommand {
-  String phone
-
-  static constraints = {
-    phone blank:false, maxSize:8, minSize: 8, validator: { phone ->
-      if (!phone.isNumber()) {
-        "notMatch"
-      }
-    }
-  }
 }

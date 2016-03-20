@@ -97,6 +97,60 @@ class BootStrap {
 
         assert Provider.count() == 5
 
+        // CLIENT
+        List<Client> clients = []
+
+        clients << builder.client(
+            fullName: "client one",
+            address: "Lorem ipsum dolor sit amet",
+            identificationCard: "2312901800001w"
+        ) {
+            telephone(telephoneNumber: "23114455")
+            telephone(telephoneNumber: "23114433")
+            telephone(telephoneNumber: "23114458")
+        }
+
+        clients << builder.client(
+            fullName: "client two",
+            address: "Lorem ipsum dolor sit amit",
+            identificationCard: "2312901800002w"
+        ) {
+            telephone(telephoneNumber: "23114423")
+        }
+
+        clients << builder.client(
+            fullName: "client three",
+            address: "Lorem ipsum dolor sit amat",
+            identificationCard: "2312901800003w"
+        ) {
+            telephone(telephoneNumber: "23112333")
+        }
+
+        clients << builder.client(
+            fullName: "client four",
+            address: "Lorem ipsum dolor sit ania",
+            identificationCard: "2312901800004w"
+        ) {
+            telephone(telephoneNumber: "23111233")
+            telephone(telephoneNumber: "12345678")
+            telephone(telephoneNumber: "87654321")
+            telephone(telephoneNumber: "11112222")
+        }
+
+        clients << builder.client(
+            fullName: "client five",
+            address: "Lorem ipsum dolor sit naruto",
+            identificationCard: "2312901800005w"
+        ) {
+            telephone(telephoneNumber: "12344321")
+        }
+
+        clients.each { client ->
+            client.save failOnError: true
+        }
+
+        assert Client.count() == 5
+
         // EXPENSE
         new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amot", quantity: 40, user: user).save failOnError: true

@@ -1,11 +1,18 @@
-$("#trigger").on("click", function(e) {
-	e.preventDefault();
-	var _this = $(this),
-			len = $('.clientPhones').length;
+$("#triggerAddTelephone").on("click", function(e) {
+    e.preventDefault();
 
-	$(".form-group:last").clone().insertBefore(_this).find("input").val("").focus()
+    var context = $(this),
+        len = $('.telephones').length;
 
-	if (len >= 2){
-		_this.off('click')
-	}
+    $(".telephones:last")
+        .parent()
+        .clone()
+        .insertAfter(context)
+        .find("input")
+        .val("")
+        .focus()
+
+    if (len >= 2){
+        context.off('click')
+    }
 })

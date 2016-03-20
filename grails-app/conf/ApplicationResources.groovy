@@ -4,6 +4,7 @@ modules = {
     }
 
     addTelefone {
+        dependsOn "app"
         resource url:"js/addTelefone.js"
     }
 
