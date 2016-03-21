@@ -3,32 +3,32 @@ package ni.sb
 import org.grails.databinding.BindUsing
 
 class Brand implements Serializable {
-  @BindUsing({obj, source ->
-    source['name']?.capitalize()
-  })
-  String name
+    @BindUsing({obj, source ->
+        source['name']?.capitalize()
+    })
+    String name
 
-  Date dateCreated
+    Date dateCreated
 
-  static constraints = {
-    name blank:false, unique:"brandProduct"
-  }
+    static constraints = {
+        name blank: false, unique: "brandProduct"
+    }
 
-  static namedQueries = {
-  	distinctBrands {
-  		projections {
-        groupProperty "name"
-      }
-  	}
-  }
+    static namedQueries = {
+        distinctBrands {
+            projections {
+                groupProperty "name"
+            }
+        }
+    }
 
-  static belongsTo = [brandProduct:BrandProduct]
-  static hasMany = [details:String]
+  static belongsTo = [brandProduct: BrandProduct]
+  static hasMany = [details: String]
 
-  static mapping = {
-    version false
-    sort dateCreated: "desc"
-  }
+    static mapping = {
+        version false
+        sort dateCreated: "desc"
+    }
 
-  String toString() { name }
+    String toString() { name }
 }

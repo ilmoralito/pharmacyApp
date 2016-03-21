@@ -3,27 +3,27 @@ package ni.sb
 import org.grails.databinding.BindUsing
 
 class Medicine extends Product {
-  @BindUsing({obj, source ->
-    source["code"]?.toUpperCase() 
-  })
-	String code
+    @BindUsing({obj, source ->
+        source["code"]?.toUpperCase() 
+    })
+    String code
 
-  @BindUsing({obj, source ->
-    source["genericName"]?.capitalize()
-  })
-  String genericName
+    @BindUsing({obj, source ->
+        source["genericName"]?.capitalize()
+    })
+    String genericName
 
-  static constraints = {
-    code blank:false
-    genericName nullable:true
-    presentations nullable:false
-  }
+    static constraints = {
+        code blank: false
+        genericName nullable: true
+        presentations nullable: false
+    }
 
-  static mapping = {
-  	version false
-  }
+    static mapping = {
+        version false
+    }
 
-  static hasMany = [presentations:Presentation]
+    static hasMany = [presentations: Presentation]
 
-  String toString() { name }
+    String toString() { name }
 }
