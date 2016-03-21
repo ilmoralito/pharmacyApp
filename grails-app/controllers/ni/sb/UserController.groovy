@@ -7,26 +7,72 @@ class UserController {
 
     static allowedMethods = [
         list: ["GET", "POST"],
+        changeEnabledState: "GET",
         show: "GET",
         update: "POST",
         profile: ["GET", "POST"],
-        password: ["GET", "POST"],
+        password: ["GET", "POST"]
     ]
 
-    def list(){
+    def list() {
         if (request.method == "POST") {
-            
+            User user = new User(params)
+
+            if (!user.save()) {
+                user.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+                return
+            } else {
+                Role role = Role.findByAuthority(params?.authority)
+                UserRole.create user, role, true
+                
+            }
         }
 
         [users: User.list()]
     }
 
+    def changeEnabledState(Long id) {
+        User user = User.get(id)
+
+        if (!user) {
+            response.sendError 404
+        }
+
+        user.properties["enabled"] = !user.enabled
+        user.save()
+
+        redirect action: "list"
+    }
+
     def show(Long id) {
-        
+        User user = User.get(id)
+
+        if (!user) {
+            response.sendError 404
+        }
+
+        [user: user]
     }
 
     def update(Long id) {
-        
+        User user = User.get(id)
+
+        if (!user) {
+            response.sendError 404
+        }
+
+        user.properties["email", "fullName"] = params
+
+        UserRole.removeAll user, true
+
+        Role role = Role.findByAuthority(params?.authority)
+        UserRole.create user, role, true
+
+        redirect action: "show", id: id
     }
 
     @Secured(["ROLE_ADMIN", "ROLE_USER"])

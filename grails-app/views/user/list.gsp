@@ -6,11 +6,17 @@
 
     <content tag="main">
         <table class="table table-hover">
+            <colgroup>
+               <col span="1" style="width: 45%;">
+               <col span="1" style="width: 35%;">
+               <col span="1" style="width: 5%;">
+               <col span="1" style="width: 15%;">
+            </colgroup>
             <thead>
                 <th>Nombre</th>
-                <th>Login</th>
                 <th>Email</th>
                 <th>Rol</th>
+                <th>Estado</th>
             </thead>
             <tbody>
                 <g:each in="${users}" var="user">
@@ -20,9 +26,18 @@
                                 ${user.fullName}
                             </g:link>
                         </td>
-                        <td>${user.username}</td>
                         <td>${user.email}</td>
-                        <td>${user.getAuthorities().authority.join(", ")}</td>
+                        <td>${user.getAuthorities().authority.join(", ").tokenize("_")[1]}</td>
+                        <td>
+                            <g:link action="changeEnabledState" id="${user.id}">
+                                <g:if test="${user.enabled}">
+                                    Habilitado
+                                </g:if>
+                                <g:else>
+                                    No habilitado
+                                </g:else>
+                            </g:link>
+                        </td>
                     </tr>
                 </g:each>
             </tbody>
@@ -30,33 +45,10 @@
     </content>
 
     <content tag="col1">
-        <g:form controller="user" action="list">
-            <div class="form-group">
-                <g:textField
-                    type="text"
-                    class="form-control"
-                    name="username"
-                    placeHolder="Correo electrónico"
-                    required=""/>
-            </div>
-            <div class="form-group">
-                <g:textField
-                    type="text"
-                    class="form-control"
-                    name="fullName"
-                    placeHolder="Nombre completo"
-                    required=""/>
-            </div>
-            <div class="form-group">
-                <g:select
-                    name="authority"
-                    from="${['Administrador', 'Usuario']}"
-                    keys="['ROLE_ADMIN', 'ROLE_USER']"
-                    noSelection="[null:'Selecciona rol del usuario']"
-                    class="form-control"/>
-            </div>
+        <g:form controller="user" action="list" autocomplete="off">
+            <g:render template="form"/>
 
-            <input type="submit" class="btn btn-primary" value="Agregar"/>
+            <input type="submit" class="btn btn-primary btn-block" value="Agregar"/>
         </g:form>
     </content>
 </g:applyLayout>

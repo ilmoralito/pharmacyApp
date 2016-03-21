@@ -6,8 +6,7 @@ class User implements Serializable {
 
     transient springSecurityService
 
-    String username
-    String password
+    String password = "temporal"
     boolean enabled = true
     boolean accountExpired
     boolean accountLocked
@@ -21,7 +20,6 @@ class User implements Serializable {
     static transients = ['springSecurityService']
 
     static constraints = {
-        username blank: false, unique: true
         password blank: false
         email email:true, blank:false, unique:true
         fullName nullable:true

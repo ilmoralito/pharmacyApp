@@ -20,14 +20,12 @@ class BootStrap {
 
         // USERS
         User admin = new User(
-            username: "admin",
             password: "password",
             email: "admin@domain.com",
             fullName: "admin user"
         ).save failOnError: true
 
         User user = new User(
-            username: "user",
             password: "password",
             email: "user@domain.com",
             fullName: "user user"
