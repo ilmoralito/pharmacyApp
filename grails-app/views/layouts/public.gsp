@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <r:layoutResources/>
 </head>
-<body id="background">
+<body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4"></div>

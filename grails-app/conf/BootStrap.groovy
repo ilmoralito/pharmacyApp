@@ -31,15 +31,22 @@ class BootStrap {
             fullName: "user user"
         ).save failOnError: true
 
+        User test = new User(
+            password: "temporal",
+            email: "test@domain.com",
+            fullName: "test test"
+        ).save failOnError: true
+
         Role adminRole = new Role(authority: "ROLE_ADMIN").save failOnError: true
         Role userRole = new Role(authority: "ROLE_USER").save failOnError: true
 
         UserRole.create admin, adminRole, true
         UserRole.create user, userRole, true
+        UserRole.create test, userRole, true
 
-        assert User.count() == 2
+        assert User.count() == 3
         assert Role.count() == 2
-        assert UserRole.count() == 2
+        assert UserRole.count() == 3
 
         // DEALER
         List<Distributor> dealers = []
