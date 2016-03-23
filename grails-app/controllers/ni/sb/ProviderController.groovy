@@ -12,7 +12,7 @@ class ProviderController {
         update: "POST"
     ]
 
-    def list(Boolean status) {
+    def list(Boolean enabled, Boolean filtered) {
         if (request.method == "POST") {
             Provider provider = new Provider(params)
 
@@ -21,15 +21,17 @@ class ProviderController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error"
+                flash.message = "A ocurrido un error. Intentalo otravez"
+
+                return [providers: Provider.findAllByEnabled(enabled), provider: provider]
             }
         }
 
-        [providers: Provider.findAllByStatus(status)]
+        [providers: Provider.findAllByEnabled(enabled)]
     }
 
     def show(Integer id) {
-        Provider provider = Provider.get id
+        Provider provider = Provider.get(id)
 
         if (!provider) {
             response.sendError 404

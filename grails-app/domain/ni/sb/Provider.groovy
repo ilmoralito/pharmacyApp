@@ -9,8 +9,7 @@ class Provider implements Serializable {
     String name
     String address
     String telephoneNumber
-    // TODO: change status for enabled
-    Boolean status = true
+    Boolean enabled = true
 
     Date dateCreated
     Date lastUpdated

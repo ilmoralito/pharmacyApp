@@ -6,7 +6,7 @@
             </g:link>
         </li>
         <li class="${controllerName in ['provider', 'product', 'presentation', 'brand'] ? 'active' : ''}">
-            <g:link controller="provider" params="[status: true]">
+            <g:link controller="provider" params="[enabled: true]">
                 Laboratorios
             </g:link>
         </li>

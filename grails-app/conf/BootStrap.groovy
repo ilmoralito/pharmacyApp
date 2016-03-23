@@ -83,7 +83,7 @@ class BootStrap {
             name: "Provider5",
             address: "Lorem ipsum dolor sit ameet",
             telephoneNumber: "23994451",
-            status: false,
+            enabled: false,
             id: "PROVIDER5"
         )
 
