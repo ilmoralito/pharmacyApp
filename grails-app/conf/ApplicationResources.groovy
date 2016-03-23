@@ -3,6 +3,12 @@ modules = {
         resource url:"css/main.css"
     }
 
+    // EMPLOYEE
+    employees {
+        dependsOn "app"
+        resource url: "js/filter-table.js"
+    }
+
     addTelefone {
         dependsOn "app"
         resource url:"js/addTelefone.js"
@@ -64,7 +70,7 @@ modules = {
         resource url:"js/adding.js"
     }
 
-    pay{
+    pay {
         resource url:"js/pay.js"
     }
 

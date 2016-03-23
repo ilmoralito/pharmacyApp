@@ -9,8 +9,8 @@ class Provider implements Serializable {
     String name
     String address
     String telephoneNumber
+    // TODO: change status for enabled
     Boolean status = true
-    List products
 
     Date dateCreated
     Date lastUpdated
@@ -23,10 +23,10 @@ class Provider implements Serializable {
                 ["notMatch"]
             }
         }
-
         products nullable: true
     }
 
+    List<Product> products
     static hasMany = [products: Product]
 
     static mapping = {

@@ -50,11 +50,40 @@ class BootStrap {
 
         // DEALER
         List<Distributor> dealers = []
-        dealers << builder.distributor(name: "Dealer1", telephoneNumber: "23114455")
-        dealers << builder.distributor(name: "Dealer2", telephoneNumber: "23111234")
-        dealers << builder.distributor(name: "Dealer3", telephoneNumber: "23117788")
-        dealers << builder.distributor(name: "Dealer4", telephoneNumber: "23118745")
-        dealers << builder.distributor(name: "Dealer5", telephoneNumber: "23112258")
+        dealers << builder.distributor(
+            name: "Dealer1",
+            telephoneNumber: "23114455"
+        ) {
+            contact(fullName: "contact1", email: "contact1@domain.com", telephoneNumber: "87878987")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer2",
+            telephoneNumber: "23111234"
+        ) {
+            contact(fullName: "contact2", email: "contact2@domain.com", telephoneNumber: "67765654")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer3",
+            telephoneNumber: "23117788"
+        ) {
+            contact(fullName: "contact3", email: "contact3@domain.com", telephoneNumber: "76676545")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer4",
+            telephoneNumber: "23118745"
+        ) {
+            contact(fullName: "contact4", email: "contact4@domain.com", telephoneNumber: "56764576")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer5",
+            telephoneNumber: "23112258"
+        ) {
+            contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")
+        }
 
         dealers.each { dealer ->
             dealer.save failOnError: true
@@ -155,6 +184,49 @@ class BootStrap {
         }
 
         assert Client.count() == 5
+
+        // COMPANY
+        List<Company> companies = []
+
+        companies << builder.company(
+            name: "company1",
+            city: "Leon",
+            address: "Lorem ipsum dolor sit amet",
+            telephoneNumber: "23114455",
+            contactFullName: "contact1 name",
+            contactTelephoneNumber: "88776678",
+            contactEmail: "contact1.name@company1.com.ni",
+            enabled: true
+        ) {
+            employee(fullName: "employee1", inss: "123456789")
+            employee(fullName: "employee2", inss: "123456788")
+            employee(fullName: "employee3", inss: "623456787")
+            employee(fullName: "employee4", inss: "523456787")
+            employee(fullName: "employee5", inss: "423456787")
+            employee(fullName: "employee6", inss: "323456787")
+        }
+
+        companies << builder.company(
+            name: "company2",
+            city: "Chinandega",
+            address: "Lorem ipsum dolor sit amot",
+            telephoneNumber: "23124455",
+            contactFullName: "contact2 name",
+            contactTelephoneNumber: "76776678",
+            contactEmail: "contact2.name@company1.com.ni",
+            enabled: true
+        ) {
+            employee(fullName: "employee7", inss: "123346789")
+            employee(fullName: "employee8", inss: "123566788")
+            employee(fullName: "employee9", inss: "623676787")
+            employee(fullName: "employee0", inss: "323676787")
+        }
+
+        companies.each { company ->
+            company.save failOnError: true
+        }
+
+        assert Company.count() == 2
 
         // EXPENSE
         new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true

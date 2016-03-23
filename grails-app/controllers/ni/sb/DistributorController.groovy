@@ -11,7 +11,11 @@ class DistributorController {
         update:"POST"
     ]
 
-    def list() {
+    def list(Boolean enabled, Boolean filtered) {
+        def query = Distributor.where {
+            enabled == enabled
+        }
+
         if (request.method == "POST") {
             Distributor dealer = new Distributor(params)
 
@@ -21,16 +25,16 @@ class DistributorController {
                 }
 
                 flash.message = "A ocurrido un error. Intentalo otravez"
+
+                return [dealers: query.list(), dealer: dealer]
             }
         }
 
-        List<Distributor> dealers = Distributor.list()
-
-        [dealers: dealers]
+        [dealers: query.list()]
     }
 
     def show(Integer id) {
-        Distributor dealer = Distributor.get id
+        Distributor dealer = Distributor.get(id)
 
         if (!dealer) {
             response.sendError 404

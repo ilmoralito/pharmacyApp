@@ -10,13 +10,16 @@ class Distributor implements Serializable {
     })
     String name
     String telephoneNumber
+    Boolean enabled = true
+    Contact contact
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
-        name blank:false, unique:true
-        telephoneNumber blank:false, unique:true
+        name blank: false, unique: true
+        telephoneNumber blank: false, unique: true
+        contact nullable: false
     }
 
     static mapping = {
