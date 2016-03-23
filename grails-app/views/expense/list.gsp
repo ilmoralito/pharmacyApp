@@ -94,7 +94,7 @@
 
             <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
                 <g:form action="list" autocomplete="off">
-                    <label>Fechas</label>
+                    <p>Fechas</p>
                     <div class="form-group">
                         <g:textField
                             name="from"
@@ -110,19 +110,23 @@
                             placeholder="Hasta"/>
                     </div>
 
-                    <label>Usuarios</label>
-                    <g:each in="${users}" var="user">
-                        <div class="checkbox">
-                            <label>
-                                <g:checkBox
-                                    name="usersList"
-                                    value="${user.id}"
-                                    checked="${user.id in params.list('usersList')*.toLong()}"/>
-                                ${user.fullName}
-                            </label>
-                        </div>
-                    </g:each>
-
+                    <p>Usuarios</p>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <g:each in="${users}" var="user">
+                                <tr>
+                                    <td width="1">
+                                        <g:checkBox
+                                            name="usersList"
+                                            value="${user.id}"
+                                            checked="${user.id in params.list('usersList')*.toLong()}"/>
+                                    </td>
+                                    <td>${user.fullName}</td>
+                                </tr>
+                            </g:each>
+                        </tbody>
+                    </table>
+                    
                     <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />
                 </g:form>
             </div>
