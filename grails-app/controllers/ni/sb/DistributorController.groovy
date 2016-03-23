@@ -8,7 +8,8 @@ class DistributorController {
     static allowedMethods = [
         list:["GET", "POST"],
         show:"GET",
-        update:"POST"
+        update:"POST",
+        addRemoveProvider: "POST"
     ]
 
     def list(Boolean enabled, Boolean filtered) {
@@ -35,12 +36,13 @@ class DistributorController {
 
     def show(Integer id) {
         Distributor dealer = Distributor.get(id)
+        List<Provider> providers = Provider.list()
 
         if (!dealer) {
             response.sendError 404
         }
 
-        [dealer: dealer]
+        [dealer: dealer, providers: providers]
     }
 
     def update(Integer id) {
@@ -54,5 +56,37 @@ class DistributorController {
         dealer.save()
 
         redirect action:"show", id: id
+    }
+
+    def addRemoveProvider(Long id) {
+        Distributor dealer = Distributor.get(id)
+
+        if (!dealer) {
+            response.sendError 404
+        }
+
+        // Remove all providers from dealer
+        dealer.providers.clear()
+
+        // Add new provider
+        List<Integer> providers = params.list("providers")
+
+        providers.each { providerId ->
+            Provider provider = Provider.get(providerId)
+
+            dealer.addToProviders(provider)
+        }
+
+        if (!dealer.save()) {
+            dealer.errors.allErrors.each { error ->
+                log.error "[$error.field: $error.defaultMessage]"
+            }
+
+            flash.message = "A ocurrido un error. Intentalo otravez"
+        } else {
+            flash.message = "Laboratorios agregados correctamente"
+        }
+
+        redirect action: "show", id: id
     }
 }

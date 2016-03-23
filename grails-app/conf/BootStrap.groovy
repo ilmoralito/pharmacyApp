@@ -48,12 +48,60 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 3
 
+        // PROVIDER
+        List<Provider> providers = []
+
+        providers << builder.provider(
+            name: "Provider1",
+            address: "Lorem ipsum dolor sit ament",
+            telephoneNumber: "23114455",
+            id: "PROVIDER1"
+        )
+
+        providers << builder.provider(
+            name: "Provider2",
+            address: "Lorem ipsum dolor sit amext",
+            telephoneNumber: "23113355",
+            id: "PROVIDER2"
+        )
+
+        providers << builder.provider(
+            name: "Provider3",
+            address: "Lorem ipsum dolor sit amelt",
+            telephoneNumber: "23884455",
+            id: "PROVIDER3"
+        )
+
+        providers << builder.provider(
+            name: "Provider4",
+            address: "Lorem ipsum dolor sit amept",
+            telephoneNumber: "23994455",
+            id: "PROVIDER4"
+        )
+
+        providers << builder.provider(
+            name: "Provider5",
+            address: "Lorem ipsum dolor sit ameet",
+            telephoneNumber: "23994451",
+            status: false,
+            id: "PROVIDER5"
+        )
+
+        providers.each { provider ->
+            provider.save failOnError: true
+        }
+
+        assert Provider.count() == 5
+
         // DEALER
         List<Distributor> dealers = []
         dealers << builder.distributor(
             name: "Dealer1",
             telephoneNumber: "23114455"
         ) {
+            provider(refId: "PROVIDER1")
+            provider(refId: "PROVIDER2")
+            provider(refId: "PROVIDER3")
             contact(fullName: "contact1", email: "contact1@domain.com", telephoneNumber: "87878987")
         }
 
@@ -61,6 +109,8 @@ class BootStrap {
             name: "Dealer2",
             telephoneNumber: "23111234"
         ) {
+            provider(refId: "PROVIDER1")
+            provider(refId: "PROVIDER5")
             contact(fullName: "contact2", email: "contact2@domain.com", telephoneNumber: "67765654")
         }
 
@@ -68,6 +118,8 @@ class BootStrap {
             name: "Dealer3",
             telephoneNumber: "23117788"
         ) {
+            provider(refId: "PROVIDER3")
+            provider(refId: "PROVIDER4")
             contact(fullName: "contact3", email: "contact3@domain.com", telephoneNumber: "76676545")
         }
 
@@ -75,12 +127,17 @@ class BootStrap {
             name: "Dealer4",
             telephoneNumber: "23118745"
         ) {
+            provider(refId: "PROVIDER1")
+            provider(refId: "PROVIDER2")
+            provider(refId: "PROVIDER3")
+            provider(refId: "PROVIDER4")
             contact(fullName: "contact4", email: "contact4@domain.com", telephoneNumber: "56764576")
         }
 
         dealers << builder.distributor(
             name: "Dealer5",
-            telephoneNumber: "23112258"
+            telephoneNumber: "23112258",
+            enabled: false
         ) {
             contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")
         }
@@ -90,46 +147,6 @@ class BootStrap {
         }
 
         assert Distributor.count() == 5
-
-        // PROVIDER
-        List<Provider> providers = []
-
-        providers << builder.provider(
-            name: "Provider1",
-            address: "Lorem ipsum dolor sit ament",
-            telephoneNumber: "23114455"
-        )
-
-        providers << builder.provider(
-            name: "Provider2",
-            address: "Lorem ipsum dolor sit amext",
-            telephoneNumber: "23113355"
-        )
-
-        providers << builder.provider(
-            name: "Provider3",
-            address: "Lorem ipsum dolor sit amelt",
-            telephoneNumber: "23884455"
-        )
-
-        providers << builder.provider(
-            name: "Provider4",
-            address: "Lorem ipsum dolor sit amept",
-            telephoneNumber: "23994455"
-        )
-
-        providers << builder.provider(
-            name: "Provider5",
-            address: "Lorem ipsum dolor sit ameet",
-            telephoneNumber: "23994451",
-            status: false
-        )
-
-        providers.each { provider ->
-            provider.save failOnError: true
-        }
-
-        assert Provider.count() == 5
 
         // CLIENT
         List<Client> clients = []

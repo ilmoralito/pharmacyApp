@@ -27,11 +27,8 @@ class Provider implements Serializable {
     }
 
     List<Product> products
-    static hasMany = [products: Product]
-
-    static mapping = {
-        version false
-    }
+    static belongsTo = Distributor
+    static hasMany = [products: Product, dealers: Distributor]
 
     String contactInformation() {
         "$address, $telephoneNumber"
