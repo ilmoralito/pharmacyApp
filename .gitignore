@@ -18,3 +18,4 @@ stacktrace.log
 /.link_to_grails_plugins/
 /target-eclipse/
 todo
+.info
