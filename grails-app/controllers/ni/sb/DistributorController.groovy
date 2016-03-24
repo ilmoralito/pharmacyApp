@@ -36,7 +36,9 @@ class DistributorController {
 
     def show(Integer id) {
         Distributor dealer = Distributor.get(id)
-        List<Provider> providers = Provider.findAllByEnabled(true)
+        List<Provider> providers = Provider.where {
+            enabled == true && products.size() > 0
+        }.list()
 
         if (!dealer) {
             response.sendError 404

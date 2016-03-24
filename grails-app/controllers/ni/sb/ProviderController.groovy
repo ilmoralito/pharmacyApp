@@ -51,10 +51,34 @@ class ProviderController {
 
         if (!provider.save()) {
             render view: "show", model: [id: id, provider: provider]
+
             return
         }
 
-        flash.message = "Actualizado"
+        // If provider enabled property is set to false
+        // then remove provider from Distributors that
+        // has current provider
+        Closure updateDistributors = {
+            List<Distributor> dealers = []
+
+            if (provider.enabled == false) {
+                dealers = Distributor.list().findAll { 
+                    it.providers.contains(provider)
+                }
+
+                dealers.each { dealer ->
+                    dealer.removeFromProviders(provider)
+
+                    dealer.save()
+                }
+            }
+
+            dealers?.size()
+        }
+
+        Integer distributorsAffected = updateDistributors()
+        flash.message = distributorsAffected ? "$distributorsAffected distribuidores afectados" : "Actualizacion correcta"
+
         redirect action:"show", id: id
     }
 }

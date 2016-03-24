@@ -13,29 +13,38 @@
         </g:form>
     </content>
     <content tag="col1">
-        <p>Laboratorios</p>
-        <table class="table table-hover">
-            <tbody>
-                <g:each in="${providers}" var="provider">
-                    <tr>
-                        <td width="1">
-                            <g:checkBox
-                                name="providers"
-                                form="form"
-                                value="${provider.id}"
-                                checked="${provider in dealer?.providers ?: false}"
-                                class="providers"/>
-                        </td>
-                        <td>${provider}</td>
-                    </tr>
-                </g:each>
-            </tbody>
-        </table>
+        <g:if test="${providers}">
+            <p>Laboratorios</p>
+            <table class="table table-hover">
+                <tbody>
+                    <g:each in="${providers}" var="provider">
+                        <tr>
+                            <td width="1">
+                                <g:checkBox
+                                    name="providers"
+                                    form="form"
+                                    value="${provider.id}"
+                                    checked="${provider in dealer?.providers ?: false}"
+                                    class="providers"/>
+                            </td>
+                            <td>${provider}</td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
 
-        <g:form action="addRemoveProvider" name="form">
-            <g:hiddenField name="id" value="${dealer.id}"/>
+            <g:form action="addRemoveProvider" name="form">
+                <g:hiddenField name="id" value="${dealer.id}"/>
 
-            <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
-        </g:form>
+                <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
+            </g:form>
+        </g:if>
+        <g:else>
+            <p>
+                Nada que mostrar
+                <br>
+                <small>Solo se mostraran laboratorios habilitados y que posean productos</small>
+            </p>
+        </g:else>
     </content>
 </g:applyLayout>

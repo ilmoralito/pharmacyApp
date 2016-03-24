@@ -110,7 +110,7 @@ class BootStrap {
             telephoneNumber: "23111234"
         ) {
             provider(refId: "PROVIDER1")
-            provider(refId: "PROVIDER5")
+            provider(refId: "PROVIDER4")
             contact(fullName: "contact2", email: "contact2@domain.com", telephoneNumber: "67765654")
         }
 

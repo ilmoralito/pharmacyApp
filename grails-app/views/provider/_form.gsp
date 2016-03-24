@@ -19,7 +19,8 @@
         name="telephoneNumber"
         value="${provider?.telephoneNumber}"
         class="form-control"
-        placeholder="Numero telefonico"/>
+        placeholder="Numero telefonico"
+        maxLength="8"/>
 </div>
 
 <g:if test="${actionName == 'show'}">
@@ -30,5 +31,3 @@
         </label>
     </div>
 </g:if>
-
-
