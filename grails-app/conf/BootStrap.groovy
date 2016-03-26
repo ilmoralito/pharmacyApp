@@ -1,7 +1,6 @@
 import ni.sb.*
 import grails.util.Environment
 import grails.util.DomainBuilder
-import grails.util.Holders
 
 class BootStrap {
     def itemService
@@ -9,6 +8,10 @@ class BootStrap {
     def init = { servletContext ->
         if (Environment.current == Environment.DEVELOPMENT) {
             development()
+        }
+
+        if (Environment.current == Environment.PRODUCTION) {
+            production()
         }
     }
 
@@ -47,106 +50,6 @@ class BootStrap {
         assert User.count() == 3
         assert Role.count() == 2
         assert UserRole.count() == 3
-
-        // PROVIDER
-        List<Provider> providers = []
-
-        providers << builder.provider(
-            name: "Provider1",
-            address: "Lorem ipsum dolor sit ament",
-            telephoneNumber: "23114455",
-            id: "PROVIDER1"
-        )
-
-        providers << builder.provider(
-            name: "Provider2",
-            address: "Lorem ipsum dolor sit amext",
-            telephoneNumber: "23113355",
-            id: "PROVIDER2"
-        )
-
-        providers << builder.provider(
-            name: "Provider3",
-            address: "Lorem ipsum dolor sit amelt",
-            telephoneNumber: "23884455",
-            id: "PROVIDER3"
-        )
-
-        providers << builder.provider(
-            name: "Provider4",
-            address: "Lorem ipsum dolor sit amept",
-            telephoneNumber: "23994455",
-            id: "PROVIDER4"
-        )
-
-        providers << builder.provider(
-            name: "Provider5",
-            address: "Lorem ipsum dolor sit ameet",
-            telephoneNumber: "23994451",
-            enabled: false,
-            id: "PROVIDER5"
-        )
-
-        providers.each { provider ->
-            provider.save failOnError: true
-        }
-
-        assert Provider.count() == 5
-
-        // DEALER
-        List<Distributor> dealers = []
-        dealers << builder.distributor(
-            name: "Dealer1",
-            telephoneNumber: "23114455"
-        ) {
-            provider(refId: "PROVIDER1")
-            provider(refId: "PROVIDER2")
-            provider(refId: "PROVIDER3")
-            contact(fullName: "contact1", email: "contact1@domain.com", telephoneNumber: "87878987")
-        }
-
-        dealers << builder.distributor(
-            name: "Dealer2",
-            telephoneNumber: "23111234"
-        ) {
-            provider(refId: "PROVIDER1")
-            provider(refId: "PROVIDER4")
-            contact(fullName: "contact2", email: "contact2@domain.com", telephoneNumber: "67765654")
-        }
-
-        dealers << builder.distributor(
-            name: "Dealer3",
-            telephoneNumber: "23117788"
-        ) {
-            provider(refId: "PROVIDER3")
-            provider(refId: "PROVIDER4")
-            contact(fullName: "contact3", email: "contact3@domain.com", telephoneNumber: "76676545")
-        }
-
-        dealers << builder.distributor(
-            name: "Dealer4",
-            telephoneNumber: "23118745"
-        ) {
-            provider(refId: "PROVIDER1")
-            provider(refId: "PROVIDER2")
-            provider(refId: "PROVIDER3")
-            provider(refId: "PROVIDER4")
-            contact(fullName: "contact4", email: "contact4@domain.com", telephoneNumber: "56764576")
-        }
-
-        dealers << builder.distributor(
-            name: "Dealer5",
-            telephoneNumber: "23112258",
-            enabled: false
-        ) {
-            contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")
-        }
-
-        dealers.each { dealer ->
-            dealer.save failOnError: true
-        }
-
-        assert Distributor.count() == 5
 
         // CLIENT
         List<Client> clients = []
@@ -245,6 +148,163 @@ class BootStrap {
 
         assert Company.count() == 2
 
+        // MEASURE
+        List<Measure> measures = []
+
+        measures << builder.measure(name: "measure#1", id: "MEASURE#1")
+        measures << builder.measure(name: "measure#2", id: "MEASURE#2")
+        measures << builder.measure(name: "measure#3", id: "MEASURE#3")
+        measures << builder.measure(name: "measure#4", id: "MEASURE#4")
+        measures << builder.measure(name: "measure#5", id: "MEASURE#5")
+        measures << builder.measure(name: "measure#6", id: "MEASURE#6")
+
+        measures.each { measure ->
+            measure.save failOnError: true
+        }
+
+        assert Measure.count() == 6
+
+        // PRESENTATION
+        List<Presentation> presentations = []
+
+        presentations << builder.presentation(name: "presentation#1", id: "PRESENTATION#1") {
+            measure(refId: "MEASURE#1")
+            measure(refId: "MEASURE#2")
+            measure(refId: "MEASURE#3")
+        }
+        presentations << builder.presentation(name: "presentation#2", id: "PRESENTATION#2") {
+            measure(refId: "MEASURE#4")
+            measure(refId: "MEASURE#5")
+        }
+        presentations << builder.presentation(name: "presentation#3", id: "PRESENTATION#3") {
+            measure(refId: "MEASURE#1")
+            measure(refId: "MEASURE#2")
+        }
+        presentations << builder.presentation(name: "presentation#4", id: "PRESENTATION#4") {
+            measure(refId: "MEASURE#4")
+            measure(refId: "MEASURE#5")
+            measure(refId: "MEASURE#6")
+        }
+
+        presentations.each { presentation ->
+            presentation.save failOnError: true
+        }
+
+        assert Presentation.count() == 4
+
+        // PROVIDER
+        List<Provider> providers = []
+
+        providers << builder.provider(
+            name: "Laboratory1",
+            address: "Lorem ipsum dolor sit ament",
+            telephoneNumber: "23114455",
+            id: "LABORATORY1"
+        ) {
+            product(name: "product#1")
+            product(name: "product#2")
+            product(name: "product#3")
+            product(name: "product#4", enabled: false)
+        }
+
+        providers << builder.provider(
+            name: "Laboratory2",
+            address: "Lorem ipsum dolor sit amext",
+            telephoneNumber: "23113355",
+            id: "LABORATORY2"
+        ) {
+            product(name: "product#2")
+            product(name: "product#4")
+            product(name: "product#5")
+        }
+
+        providers << builder.provider(
+            name: "Laboratory3",
+            address: "Lorem ipsum dolor sit amelt",
+            telephoneNumber: "23884455",
+            id: "LABORATORY3"
+        )
+
+        providers << builder.provider(
+            name: "Laboratory4",
+            address: "Lorem ipsum dolor sit amept",
+            telephoneNumber: "23994455",
+            id: "LABORATORY4"
+        ) {
+            product(name: "product#6")
+            product(name: "product#7")
+            product(name: "product#8")
+        }
+
+        providers << builder.provider(
+            name: "Laboratory5",
+            address: "Lorem ipsum dolor sit ameet",
+            telephoneNumber: "23994451",
+            enabled: false,
+            id: "LABORATORY5"
+        )
+
+        providers.each { provider ->
+            provider.save failOnError: true
+        }
+
+        assert Provider.count() == 5
+
+        // DEALER
+        List<Distributor> dealers = []
+        dealers << builder.distributor(
+            name: "Dealer1",
+            telephoneNumber: "23114455"
+        ) {
+            provider(refId: "LABORATORY1")
+            provider(refId: "LABORATORY2")
+            provider(refId: "LABORATORY3")
+            contact(fullName: "contact1", email: "contact1@domain.com", telephoneNumber: "87878987")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer2",
+            telephoneNumber: "23111234"
+        ) {
+            provider(refId: "LABORATORY1")
+            provider(refId: "LABORATORY4")
+            contact(fullName: "contact2", email: "contact2@domain.com", telephoneNumber: "67765654")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer3",
+            telephoneNumber: "23117788"
+        ) {
+            provider(refId: "LABORATORY3")
+            provider(refId: "LABORATORY4")
+            contact(fullName: "contact3", email: "contact3@domain.com", telephoneNumber: "76676545")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer4",
+            telephoneNumber: "23118745"
+        ) {
+            provider(refId: "LABORATORY1")
+            provider(refId: "LABORATORY2")
+            provider(refId: "LABORATORY3")
+            provider(refId: "LABORATORY4")
+            contact(fullName: "contact4", email: "contact4@domain.com", telephoneNumber: "56764576")
+        }
+
+        dealers << builder.distributor(
+            name: "Dealer5",
+            telephoneNumber: "23112258",
+            enabled: false
+        ) {
+            contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")
+        }
+
+        dealers.each { dealer ->
+            dealer.save failOnError: true
+        }
+
+        assert Distributor.count() == 5
+
         // EXPENSE
         new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amot", quantity: 40, user: user).save failOnError: true
@@ -252,8 +312,9 @@ class BootStrap {
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: admin).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: admin).save failOnError: true
+        new Expense(description: "Lorem ipsum dolor sit amut", quantity: 5, user: test).save failOnError: true
 
-        assert Expense.count() == 6
+        assert Expense.count() == 7
     }
 
     private production() {

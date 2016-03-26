@@ -7,7 +7,6 @@
 	<r:require modules="bootstrap-css, bootstrap-collapse, app"/>
 </head>
 <body>
-	<g:render template="toolbar"/>
 	<g:render template="listNavbar"/>
 	<g:render template="listToolbar"/>
 

@@ -61,7 +61,6 @@
 			<g:each in="${items}" var="item">
 				<tr>
 					<td>${item.product}</td>
-					<td>${item.location}</td>
 					<td>${item.quantity}</td>
 					<td>${item.sellingPrice}</td>
 					<td>${item.total}</td>
@@ -99,7 +98,6 @@
 						<g:each in="${detail.value}" var="b">
 							<tr>
 								<td>${b}</td>
-								<td>${b.product.location}</td>
 								<td>${b.quantity}</td>
 								<td>${b.sellingPrice}</td>
 								<td>${b.sellingPrice * b.quantity}</td>

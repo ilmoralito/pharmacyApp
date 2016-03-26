@@ -33,7 +33,7 @@
                                 <g:link
                                     controller="product"
                                     action="productList"
-                                    params="[providerId: provider.id]">
+                                    params="[providerId: provider.id, enabled: true]">
                                     Productos
                                 </g:link>
                                 <g:if test="${!provider.products}">*</g:if>

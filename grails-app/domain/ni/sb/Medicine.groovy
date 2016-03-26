@@ -16,7 +16,7 @@ class Medicine extends Product {
     static constraints = {
         code blank: false
         genericName nullable: true
-        presentations nullable: false
+        presentations minSize: 1
     }
 
     static mapping = {

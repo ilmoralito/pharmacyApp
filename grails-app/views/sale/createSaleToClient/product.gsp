@@ -39,7 +39,6 @@
 
 							<tr>
 								<td style="vertical-align: middle; border:0;">${item.sellingPrice}</td>
-								<td style="vertical-align: middle; border:0;">${item.product.location}</td>
 								<td style="vertical-align: middle; border:0;">
 									<g:set var="q" value="${productsToSale.find { it.item == item }?.quantity ?: 0}"/>
 									<g:set var="quantity" value="${productsToSale ? item.quantity - q : item.quantity}"/>

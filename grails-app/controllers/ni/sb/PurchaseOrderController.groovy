@@ -97,7 +97,6 @@ class PurchaseOrderController {
       def target = Item.findByProduct (item.product)
 
       item["sellingPrice"] = target.sellingPrice
-      item["location"] = target.product.location
       item["total"] = target.sellingPrice * item.quantity
     }
 

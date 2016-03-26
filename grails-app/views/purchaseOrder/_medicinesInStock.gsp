@@ -20,7 +20,6 @@
 			<tr>
 				<td>${m}</td>
 				<td>${m.measure}</td>
-				<td>${m.product.location}</td>
 				<td>${m.quantity}</td>
 				<td>${m.sellingPrice}</td>
 				<td>${m.sellingPrice * m.quantity}</td>
