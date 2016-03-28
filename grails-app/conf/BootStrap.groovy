@@ -64,8 +64,12 @@ class BootStrap {
             contactEmail: "contact1.name@company1.com.ni",
             enabled: true
         ) {
-            employee(fullName: "employee1", inss: "123456789")
-            employee(fullName: "employee2", inss: "123456788")
+            10.times {
+                employee(
+                    fullName: "employee#$it",
+                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
+                )
+            }
         }
 
         companies << builder.company(
@@ -78,7 +82,12 @@ class BootStrap {
             contactEmail: "contact2.name@company1.com.ni",
             enabled: true
         ) {
-            employee(fullName: "employee7", inss: "123346789")
+            20.times {
+                employee(
+                    fullName: "employee#$it",
+                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
+                )
+            }
         }
 
         companies.each { company ->

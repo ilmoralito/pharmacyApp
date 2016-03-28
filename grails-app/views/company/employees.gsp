@@ -9,12 +9,12 @@
         <br>
 
         <g:if test="${employees}">
-            <h4>Empleados de ${company}</h4>
+            <p><br>Empleados de ${company}</p>
 
-            <table id="employees" class="table table-hover">
+            <table id="employees" class="table table-hover table-striped">
                 <colgroup>
-                    <col span="1" style="width: 50%;">
-                    <col span="1" style="width: 45%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 65%;">
                     <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
@@ -25,13 +25,20 @@
                 <tbody>
                     <g:each in="${employees}" var="employee">
                         <tr>
+                            <td class="hide data">
+                                ${employee.fullName} ${employee.inss}
+                            </td>
                             <td>
-                                <g:link action="show" id="${employee.id}">
+                                <g:link
+                                    action="showEmployee"
+                                    id="${employee.id}">
                                     ${employee.fullName}
                                 </g:link>
                             </td>
-                            <td>${employee.inss}</td>
                             <td>
+                                ${employee.inss}
+                            </td>
+                            <td class="text-center">
                                 <g:link
                                     action="removeEmployee"
                                     params="[id: company.id, employeeId: employee.id]">
@@ -67,22 +74,7 @@
             <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
                 <g:form action="addEmployee" autocomplete="off">
                     <g:hiddenField name="id" value="${company.id}"/>
-
-                    <div class="form-group">
-                        <g:textField
-                            name="fullName"
-                            value="${employee?.fullName}"
-                            class="form-control"
-                            placeholder="Nombre del empleado"/>
-                    </div>
-
-                    <div class="form-group">
-                        <g:textField
-                            name="inss"
-                            value="${employee?.inss}"
-                            class="form-control"
-                            placeholder="Numero de INSS"/>
-                    </div>
+                    <g:render template="formEmployee"/>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
                 </g:form>

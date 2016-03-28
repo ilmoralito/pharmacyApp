@@ -3,6 +3,9 @@ package ni.sb
 import org.grails.databinding.BindUsing
 
 class Company {
+    @BindUsing({ obj, source ->
+        source["name"]?.capitalize()
+    })
     String name
     String city
     String address
@@ -32,6 +35,7 @@ class Company {
     static hasMany = [employees: Employee]
 
     static mapping = {
+        sort "name"
         employees cascade: "all-delete-orphan"
     }
 

@@ -15,8 +15,8 @@ class ProductController {
         update: "POST"
     ]
 
-    def productList(Integer providerId, Boolean enabled, Boolean filtered) {
-        def provider = Provider.get(providerId)
+    def productList(Long providerId, Boolean enabled, Boolean filtered) {
+        Provider provider = Provider.get(providerId)
 
         if (!provider) {
             response.sendError 404

@@ -56,3 +56,12 @@
         class="form-control"
         placeholder="Email de contacto"/>
 </div>
+
+<g:if test="${actionName == 'show'}">
+    <div class="checkbox">
+        <label>
+            <g:checkBox name="enabled" value="${company?.enabled}"/>
+        </label>
+        Habilitado
+    </div>
+</g:if>

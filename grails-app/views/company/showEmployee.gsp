@@ -1,15 +1,21 @@
 <g:applyLayout name="twoColumns">
     <head>
-        <title>Empresa</title>
+        <title>Empleado</title>
         <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
     <content tag="main">
         <div class="row">
             <div class="col-md-6">
-                <g:form action="update" autocomplete="off">
+                <p>
+                    <g:link action="employees" id="${employee.company.id}">
+                        Regresar
+                    </g:link>
+                </p>
+
+                <g:form action="updateEmployee" autocomplete="off">
                     <g:hiddenField name="id" value="${params?.id}"/>
-                    <g:render template="form"/>
+                    <g:render template="formEmployee"/>
 
                     <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
                 </g:form>

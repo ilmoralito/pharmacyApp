@@ -6,17 +6,26 @@ import grails.plugin.springsecurity.annotation.Secured
 class CompanyController {
     static defaultAction = "list"
     static allowedMethods = [
-        list: "GET",
+        list: ["GET", "POST"],
         show: "GET",
         update: "POST",
-        updateEnabledState: "GET",
         employees: ["GET", "POST"],
+        showEmployee: "GET",
+        updateEmployee: "POST",
         addEmployee: "POST",
         removeEmployee: "GET"
     ]
 
-    def list() {
-        if (request.method == "POST") {
+    def list(Boolean enabled) {
+        Closure getCompanies = {
+            if (enabled == null) {
+                enabled = true
+            }
+
+            Company.findAllByEnabled(enabled)
+        }
+
+        if (request.post) {
             Company company = new Company(params)
 
             if (!company.save()) {
@@ -26,13 +35,11 @@ class CompanyController {
 
                 flash.message = "A ocurrido un error. Intentalo otravez"
 
-                return [companies: Company.list(), company: company]
+                return [companies: getCompanies(), company: company]
             }
         }
 
-        List<Company> companies = Company.list()
-
-        [companies: companies]
+        [companies: getCompanies()]
     }
 
     def show(Long id) {
@@ -65,19 +72,6 @@ class CompanyController {
         redirect action: "show", id: id
     }
 
-    def updateEnabledState(Long id) {
-        Company company = Company.get(id)
-
-        if (!company) {
-            response.sendError 404
-        }
-
-        company.properties["enabled"] = !company.enabled
-        company.save()
-
-        redirect action: "list"
-    }
-
     def employees(Long id) {
         Company company = Company.get(id)
 
@@ -86,6 +80,39 @@ class CompanyController {
         }
 
         [employees: company.employees, company: company]
+    }
+
+    def showEmployee(Long id) {
+        Employee employee = Employee.get(id)
+
+        if (!employee) {
+            response.sendError 404
+        }
+
+        [employee: employee]
+    }
+
+    def updateEmployee(Long id) {
+        Employee employee = Employee.get(id)
+
+        if (!employee) {
+            response.sendError 404
+        }
+
+        employee.properties = params
+
+        if (!employee.save()) {
+            employee.errors.allErrors.each { error ->
+                log.error "[$error.field: $error.defaultMessage]"
+            }
+
+            flash.message = "A ocurrido un error. Intentalo otravez"
+
+            chain action: "showEmployee", params: [id: id], model: [employee: employee]
+            return
+        }
+
+        redirect action: "showEmployee", id: id
     }
 
     def addEmployee(Long id) {

@@ -14,7 +14,11 @@ class Employee {
 
     static constraints = {
         fullName blank: false
-        inss blank: false // TODO: implement inss number validation
+        inss blank: false, unique: true // TODO: implement inss number validation
+    }
+
+    static mapping = {
+        sort "fullName"
     }
 
     static belongsTo = [company: Company]

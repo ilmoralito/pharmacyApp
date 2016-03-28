@@ -21,7 +21,9 @@
             </g:link>
         </li>
         <li class="${controllerName == 'company' ? 'active' : ''}">
-            <g:link controller="company">Empresas</g:link>
+            <g:link controller="company" params="[enabled: true]">
+                Empresas
+            </g:link>
         </li>
         <!--
         <li class="${controllerName == 'client' ? 'active' : ''}">

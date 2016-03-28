@@ -6,18 +6,16 @@
 
     <content tag="main">
         <g:if test="${companies}">
-            <table class="table table-hover">
+            <table class="table table-hover table-striped">
                 <colgroup>
-                    <col span="1" style="width: 68%;">
-                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 90%;">
                     <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 19%;">
+                    <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
                     <th>Nombre</th>
                     <th>Telefono</th>
                     <th>Empleados</th>
-                    <th></th>
                 </thead>
                 <tbody>
                     <g:each in="${companies}" var="company">
@@ -33,16 +31,6 @@
                                     Empleados
                                 </g:link>
                             </td>
-                            <td>
-                                <g:link action="updateEnabledState" id="${company.id}">
-                                    <g:if test="${company.enabled}">
-                                        Habilitado
-                                    </g:if>
-                                    <g:else>
-                                        No habilitado
-                                    </g:else>
-                                </g:link>
-                            </td>
                         </tr>
                     </g:each>
                 </tbody>
@@ -54,10 +42,47 @@
     </content>
 
     <content tag="col1">
-        <g:form action="list" autocomplete="off">
-            <g:render template="form"/>
+        <g:set var="isFiltered" value="${params.boolean('filtered') ?: false}"/>
+        <g:set var="isEnabled" value="${params.boolean('enabled')}"/>
 
-            <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-        </g:form>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="${!isFiltered ? 'active' : 'no-active'}">
+                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
+                    Crear
+                </a>
+            </li>
+            <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
+                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
+                    Filtrar
+                </a>
+            </li>
+        </ul>
+        <br>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="create">
+                <g:form action="list" autocomplete="off">
+                    <g:render template="form"/>
+
+                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+                </g:form>
+            </div>
+
+            <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="filter">
+                <g:link
+                    action="list"
+                    params="[enabled: true, filtered: true]"
+                    class="btn btn-block btn-${isEnabled ? 'primary' : 'default'}">
+                    Activos
+                </g:link>
+
+                <g:link
+                    action="list"
+                    params="[enabled: false, filtered: true]"
+                    class="btn btn-block btn-${!isEnabled ? 'primary' : 'default'}">
+                    No activos
+                </g:link>
+            </div>
+        </div>
     </content>
 </g:applyLayout>
