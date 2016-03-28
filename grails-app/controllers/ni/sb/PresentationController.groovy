@@ -76,16 +76,12 @@ class PresentationController {
         }
 
         List measures = params.list("measures")
-        List measuresTemporal = []
 
-        measuresTemporal.addAll(presentation.measures)
-
-        measuresTemporal.each { measure ->
-            presentation.removeFromMeasures(measure)
-        }
+        presentation.measures.clear()
 
         measures.each { measure ->
             presentation.addToMeasures(Measure.get(measure))
+            presentation.save()
         }
 
         redirect action: "show", id: id

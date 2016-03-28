@@ -7,11 +7,11 @@ class Medicine extends Product {
     static constraints = {
         code blank: false
         genericName blank: false
-        presentations minSize: 1
+        presentations nullable: false, minSize: 1
     }
 
     static mapping = {
-        presentations cascade: "all-delete-orphan"
+        sort "name"
     }
 
     List<Presentation> presentations

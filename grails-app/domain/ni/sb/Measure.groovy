@@ -2,7 +2,7 @@ package ni.sb
 
 import org.grails.databinding.BindUsing
 
-class Measure {
+class Measure implements Serializable {
     @BindUsing({ obj, source ->
         source["name"]?.capitalize()
     })
@@ -16,7 +16,6 @@ class Measure {
     }
 
     static mapping = {
-        version false
         sort "name"
     }
 

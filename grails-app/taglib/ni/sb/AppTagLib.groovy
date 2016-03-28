@@ -36,15 +36,15 @@ class AppTagLib {
                         input(checkboxParams)
                     }
 
-                    span {
+                    span(class: "presentations", style: "cursor: pointer;") {
                         mkp.yield(presentation.name)
                     }
-                }
 
-                ul(class: "hide") {
-                    presentation.measures.each { measure ->
-                        li {
-                            mkp.yield measure
+                    ol(class: "hide") {
+                        presentation.measures.each { measure ->
+                            li {
+                                mkp.yield measure
+                            }
                         }
                     }
                 }

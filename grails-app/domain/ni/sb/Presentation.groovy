@@ -14,11 +14,12 @@ class Presentation implements Serializable {
     }
 
     static mapping = {
-        measures cascade: "all-delete-orphan"
         sort "name"
     }
 
     static belongsTo = Medicine
+
+    List<Measure> measures
     static hasMany = [medicines: Medicine, measures: Measure]
 
     String toString() { name }

@@ -13,7 +13,7 @@
             <table class="table table-hover table-striped">
                 <thead>
                     <th width="1" class="text-center">#</th>
-                    <th>Nombre</th>
+                    <th>Medicina</th>
                 </thead>
                 <tbody>
                     <g:each in="${medicines}" var="medicine" status="index">
@@ -81,5 +81,11 @@
                 </g:link>
             </div>
         </div>
+
+        <g:javascript>
+            $('.presentations').on('click', function() {
+                $(this).next().toggleClass('show');
+            });
+        </g:javascript>
     </content>
 </g:applyLayout>
