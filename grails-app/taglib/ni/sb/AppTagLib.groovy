@@ -10,7 +10,8 @@ class AppTagLib {
         getSaleBalance: "raw",
         presentations: "raw",
         productBackLick: "raw",
-        measures: "raw"
+        measures: "raw",
+        users: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -104,6 +105,37 @@ class AppTagLib {
 
                     span {
                         mkp.yield measure
+                    }
+                }
+            }
+        }
+    }
+
+    def users = { attrs ->
+        List<Long> userList = attrs.userList*.toLong()
+        List<User> users = User.list()
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map checkboxParams = [type: "checkbox", name: "users"]
+
+        builder.div {
+            users.each { user ->
+                checkboxParams.value = user.id
+
+                if (userList) {
+                    if (userList.contains(user.id)) {
+                        checkboxParams.checked = true
+                    } else {
+                        checkboxParams.remove "checked"
+                    }
+                }
+
+                div(class: "checkbox") {
+                    label {
+                        input(checkboxParams)
+                    }
+
+                    span {
+                        mkp.yield user.fullName
                     }
                 }
             }

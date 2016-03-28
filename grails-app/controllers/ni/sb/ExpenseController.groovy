@@ -15,23 +15,21 @@ class ExpenseController {
 
     def list(String from, String to) {
         Boolean filtered = request.method == "POST"
-        List<User> users = User.list()
 
         Closure expenses = {
-            List<Expense> expenses = []
             Date fromDate = params.date("from", "yyyy-MM-dd") ?: new Date()
             Date toDate = params.date("to", "yyyy-MM-dd") ?: new Date()
 
             if (request.method == "GET") {
-                expenses = Expense.fromTo(fromDate, toDate).list()
+                Expense.fromTo(fromDate, toDate).list()
             } else {
-                List<Long> usersList = params.list("usersList")*.toLong()
+                List users = params.list("users")*.toLong()
 
-                expenses = Expense.fromTo(fromDate, toDate).byUser(usersList).list()
+                Expense.fromTo(fromDate, toDate).byUser(users).list()
             }
         }
 
-        [expenses: expenses(), filtered: filtered, users: users]
+        [expenses: expenses(), filtered: filtered]
     }
 
     def create() {

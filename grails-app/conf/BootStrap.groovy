@@ -51,33 +51,6 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 3
 
-        // CLIENT
-        List<Client> clients = []
-
-        clients << builder.client(
-            fullName: "client one",
-            address: "Lorem ipsum dolor sit amet",
-            identificationCard: "2312901800001w"
-        ) {
-            telephone(telephoneNumber: "23114455")
-            telephone(telephoneNumber: "23114433")
-            telephone(telephoneNumber: "23114458")
-        }
-
-        clients << builder.client(
-            fullName: "client two",
-            address: "Lorem ipsum dolor sit amit",
-            identificationCard: "2312901800002w"
-        ) {
-            telephone(telephoneNumber: "23114423")
-        }
-
-        clients.each { client ->
-            client.save failOnError: true
-        }
-
-        assert Client.count() == 2
-
         // COMPANY
         List<Company> companies = []
 
@@ -167,9 +140,9 @@ class BootStrap {
             telephoneNumber: "23114455",
             id: "LABORATORY1"
         ) {
-            product(name: "product#1")
-            product(name: "product#2")
-            product(name: "product#3")
+            4.times {
+                product(name: "product#$it")
+            }
             product(name: "product#4", enabled: false)
         }
 
@@ -179,9 +152,9 @@ class BootStrap {
             telephoneNumber: "23113355",
             id: "LABORATORY2"
         ) {
-            product(name: "product#2")
-            product(name: "product#4")
-            product(name: "product#5")
+            (4..10).each { n ->
+                product(name: "product#$n")
+            }
         }
 
         providers << builder.provider(

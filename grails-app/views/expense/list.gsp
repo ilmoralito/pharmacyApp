@@ -7,7 +7,7 @@
     <content tag="main">
         <g:if test="${expenses}">
             <h4>Gasto diario</h4>
-            <table class="table table-hover">
+            <table class="table table-hover table-striped">
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 5%;">
@@ -111,22 +111,8 @@
                     </div>
 
                     <p>Usuarios</p>
-                    <table class="table table-condensed">
-                        <tbody>
-                            <g:each in="${users}" var="user">
-                                <tr>
-                                    <td width="1">
-                                        <g:checkBox
-                                            name="usersList"
-                                            value="${user.id}"
-                                            checked="${user.id in params.list('usersList')*.toLong()}"/>
-                                    </td>
-                                    <td>${user.fullName}</td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                    
+                    <pharmacyApp:users userList="${params.list('users')}"/>
+
                     <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />
                 </g:form>
             </div>

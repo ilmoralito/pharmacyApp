@@ -24,9 +24,9 @@ class Expense {
             le "dateCreated", to.clearTime() + 1
         }
 
-        byUser { usersList ->
+        byUser { users ->
             user {
-                "in" "id", usersList
+                "in" "id", users
             }
         }
     }
