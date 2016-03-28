@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${providers}">
-            <table class="table table-hover">
+            <table class="table table-hover striped">
                 <colgroup>
                     <col span="1" style="width: 25%;">
                     <col span="1" style="width: 55%;">

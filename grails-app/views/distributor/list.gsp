@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${dealers}">
-            <table class="table table-hover">
+            <table class="table table-hover table-striped">
                 <colgroup>
                     <col span="1" style="width: 20%;">
                     <col span="1" style="width: 5%;">
