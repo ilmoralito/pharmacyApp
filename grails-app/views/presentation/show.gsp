@@ -1,7 +1,7 @@
 <g:applyLayout name="twoColumns">
     <head>
         <title>Presentacion</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, measures"/>
     </head>
 
     <content tag="main">
