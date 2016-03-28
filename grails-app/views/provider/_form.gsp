@@ -24,10 +24,10 @@
 </div>
 
 <g:if test="${actionName == 'show'}">
-    <p>Habilitado</p>
     <div class="checkbox">
         <label>
             <g:checkBox name="enabled" value="${provider?.enabled}"/>
         </label>
+        Habilitado
     </div>
 </g:if>

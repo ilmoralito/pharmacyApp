@@ -36,7 +36,7 @@
             </table>
         </g:if>
         <g:else>
-            <p>Nada que mostrar</p>
+            <p><br>Nada que mostrar</p>
         </g:else>
     </content>
 

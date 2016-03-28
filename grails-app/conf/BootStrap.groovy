@@ -72,38 +72,11 @@ class BootStrap {
             telephone(telephoneNumber: "23114423")
         }
 
-        clients << builder.client(
-            fullName: "client three",
-            address: "Lorem ipsum dolor sit amat",
-            identificationCard: "2312901800003w"
-        ) {
-            telephone(telephoneNumber: "23112333")
-        }
-
-        clients << builder.client(
-            fullName: "client four",
-            address: "Lorem ipsum dolor sit ania",
-            identificationCard: "2312901800004w"
-        ) {
-            telephone(telephoneNumber: "23111233")
-            telephone(telephoneNumber: "12345678")
-            telephone(telephoneNumber: "87654321")
-            telephone(telephoneNumber: "11112222")
-        }
-
-        clients << builder.client(
-            fullName: "client five",
-            address: "Lorem ipsum dolor sit naruto",
-            identificationCard: "2312901800005w"
-        ) {
-            telephone(telephoneNumber: "12344321")
-        }
-
         clients.each { client ->
             client.save failOnError: true
         }
 
-        assert Client.count() == 5
+        assert Client.count() == 2
 
         // COMPANY
         List<Company> companies = []
@@ -120,10 +93,6 @@ class BootStrap {
         ) {
             employee(fullName: "employee1", inss: "123456789")
             employee(fullName: "employee2", inss: "123456788")
-            employee(fullName: "employee3", inss: "623456787")
-            employee(fullName: "employee4", inss: "523456787")
-            employee(fullName: "employee5", inss: "423456787")
-            employee(fullName: "employee6", inss: "323456787")
         }
 
         companies << builder.company(
@@ -137,9 +106,6 @@ class BootStrap {
             enabled: true
         ) {
             employee(fullName: "employee7", inss: "123346789")
-            employee(fullName: "employee8", inss: "123566788")
-            employee(fullName: "employee9", inss: "623676787")
-            employee(fullName: "employee0", inss: "323676787")
         }
 
         companies.each { company ->
@@ -306,15 +272,12 @@ class BootStrap {
         assert Distributor.count() == 5
 
         // EXPENSE
-        new Expense(description: "Lorem ipsum dolor sit amet", quantity: 10, user: user).save failOnError: true
-        new Expense(description: "Lorem ipsum dolor sit amot", quantity: 40, user: user).save failOnError: true
-        new Expense(description: "Lorem ipsum dolor sit amat", quantity: 30, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: user).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: admin).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amit", quantity: 20, user: admin).save failOnError: true
         new Expense(description: "Lorem ipsum dolor sit amut", quantity: 5, user: test).save failOnError: true
 
-        assert Expense.count() == 7
+        assert Expense.count() == 4
     }
 
     private production() {

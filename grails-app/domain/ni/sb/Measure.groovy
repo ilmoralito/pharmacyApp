@@ -1,6 +1,11 @@
 package ni.sb
 
+import org.grails.databinding.BindUsing
+
 class Measure {
+    @BindUsing({ obj, source ->
+        source["name"]?.capitalize()
+    })
     String name
 
     Date dateCreated
@@ -12,6 +17,7 @@ class Measure {
 
     static mapping = {
         version false
+        sort "name"
     }
 
     static belongsTo = Presentation

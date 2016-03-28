@@ -5,17 +5,29 @@
                 Distribuidores
             </g:link>
         </li>
-        <li class="${controllerName in ['provider', 'product', 'presentation', 'brand'] ? 'active' : ''}">
+        <li class="${controllerName in ['provider', 'product'] ? 'active' : ''}">
             <g:link controller="provider" params="[enabled: true]">
                 Laboratorios
+            </g:link>
+        </li>
+        <li class="${controllerName == 'presentation' ? 'active' : ''}">
+            <g:link controller="presentation">
+                Presentaciones
+            </g:link>
+        </li>
+        <li class="${controllerName == 'measure' ? 'active' : ''}">
+            <g:link controller="measure">
+                Medidas
             </g:link>
         </li>
         <li class="${controllerName == 'company' ? 'active' : ''}">
             <g:link controller="company">Empresas</g:link>
         </li>
+        <!--
         <li class="${controllerName == 'client' ? 'active' : ''}">
             <g:link controller="client">Clientes</g:link>
         </li>
+        -->
         <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
             <g:link controller="purchaseOrder">Pedidos</g:link>
         </li>

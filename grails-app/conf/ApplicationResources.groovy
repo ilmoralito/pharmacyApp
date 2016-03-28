@@ -1,6 +1,6 @@
 modules = {
     app {
-        resource url:"css/main.css"
+        resource url: "css/main.css"
     }
 
     // EMPLOYEE
@@ -9,80 +9,86 @@ modules = {
         resource url: "js/filter-table.js"
     }
 
+    // MEASURES
+    measures {
+        dependsOn "app"
+        resource url: "js/filter-measures.js"
+    }
+
     addTelefone {
         dependsOn "app"
-        resource url:"js/addTelefone.js"
+        resource url: "js/addTelefone.js"
     }
 
     createAndUpdatePurchaseOrder {
         dependsOn "app"
-        resource url:"js/createAndUpdatePurchaseOrder.js"
+        resource url: "js/createAndUpdatePurchaseOrder.js"
     }
 
     adminMedicine {
         dependsOn "app"
         dependsOn "calculateSellingPrice"
-        resource url:"js/application.js"
+        resource url: "js/application.js"
     }
 
     brandProduct {
         dependsOn "app"
         dependsOn "calculateSellingPrice"
-        resource url:"js/brandProduct.js"
+        resource url: "js/brandProduct.js"
     }
 
     calculateSellingPrice {
-        resource url:"js/calculateSellingPrice.js"
+        resource url: "js/calculateSellingPrice.js"
     }
 
     saleFilter {
         dependsOn "app"
-        resource url:"css/bootstrap-multiselect.css"
-        resource url:"js/bootstrap-multiselect.js"
-        resource url:"js/saleFilter.js"
+        resource url: "css/bootstrap-multiselect.css"
+        resource url: "js/bootstrap-multiselect.js"
+        resource url: "js/saleFilter.js"
     }
 
     chosenLib {
         dependsOn "app"
         dependsOn "chosen"
-        resource url:"js/chosenLib.js"
+        resource url: "js/chosenLib.js"
     }
 
     chosen { 
-        resource url:"js/chosen.js"
-        resource url:"css/chosen.css"
+        resource url: "js/chosen.js"
+        resource url: "css/chosen.css"
     }
 
     productMedicine {
         dependsOn "app"
-        resource url:"js/productMedicine.js"
+        resource url: "js/productMedicine.js"
     }
 
     modal {
-        resource url:"js/modal.js"
+        resource url: "js/modal.js"
     }
 
     saleMedicine {
-        resource url:"js/saleMedicine.js"
+        resource url: "js/saleMedicine.js"
     }
 
     adding {
-        resource url:"js/adding.js"
+        resource url: "js/adding.js"
     }
 
     pay {
-        resource url:"js/pay.js"
+        resource url: "js/pay.js"
     }
 
     filterStock {
-        resource url:"js/filterStock.js"
+        resource url: "js/filterStock.js"
     }
 
     reports {
-        resource url:"js/reports.js"
+        resource url: "js/reports.js"
     }
 
     addProduct {
-        resource url:"js/addProduct.js"
+        resource url: "js/addProduct.js"
     }
 }

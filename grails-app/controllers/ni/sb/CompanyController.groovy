@@ -91,7 +91,6 @@ class CompanyController {
     def addEmployee(Long id) {
         Company company = Company.get(id)
 
-            println company
         if (!company) {
             response.sendError 404
         }

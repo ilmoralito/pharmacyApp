@@ -7,12 +7,16 @@
         </g:link>
     </li>
     <li class="${actionName == 'medicineList' ? 'active' : ''}">
-        <g:link action="medicineList" params="[providerId: params?.providerId]">
+        <g:link
+            action="medicineList"
+            params="[providerId: params?.providerId, enabled: true]">
             Medicamentos
         </g:link>
     </li>
     <li class="${actionName == 'brandList' ? 'active' : ''}">
-        <g:link action="brandList" params="[providerId: params?.providerId]">
+        <g:link
+            action="brandList"
+            params="[providerId: params?.providerId, enabled: true]">
             Marcas
         </g:link>
     </li>

@@ -1,92 +1,93 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
-import grails.util.Holders
 
 @Secured(["ROLE_ADMIN"])
 class PresentationController {
-	def grailsApplication
+    static defaultAction = "list"
+    static allowedMethods = [
+        list: ["GET", "POST"],
+        show: "GET",
+        update: "POST",
+        addRemoveMeasure: "POST"
+    ]
 
-	static defaultAction = "list"
-	static allowedMethods = [
-		list:"GET",
-    addMeasures:"POST",
-    save:"POST",
-    delete:"GET"
-	]
+    def list() {
+        Closure presentations = {
+            List<Presentation> presentations = Presentation.list()
 
-  def list(Integer productId) {
-  	def medicine = Medicine.get productId
+            presentations
+        }
 
-  	if (!medicine) { response.sendError 404 }
+        if (request.post) {
+            Presentation presentation = new Presentation(params)
 
-  	def productPresentations = medicine.presentations.name
-    def presentationsKeys = grailsApplication.config.ni.sb.presentationsAndMeasures.keySet()
-    def presentationsList = presentationsKeys - productPresentations
+            if (!presentation.save()) {
+                presentation.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
 
- 	 	[presentations:Presentation.findAllByMedicine(medicine), medicine:medicine, presentationsList:presentationsList]
-  }
+                flash.message = "A ocurrido un error. Intentalo otravez"
 
-  def addMeasures(AddMeasuresCommand cmd, Integer id, Integer productId) {
-    if (cmd.hasErrors()) {
-      cmd.errors.allErrors.each { error ->
-        log.error "[$error.field: $error.defaultMessage]"
-      }
-    } else {
-      def presentation = Presentation.get id
+                return [presentations: presentations(), presentation: presentation]
+            }
+        }
 
-      if (!presentation) { response.sendError 404 }
-
-      def tmp = []
-      tmp.addAll presentation.measures
-
-      tmp.each { measure ->
-        presentation.removeFromMeasures measure
-      }
-
-      cmd.measures.each { measure ->
-        presentation.addToMeasures measure
-      }
-
-      presentation.save()
+        [presentations: presentations()]
     }
 
-    redirect action:"list", params:[productId:productId], fragment:cmd.presentation
-  }
+    def show(Long id) {
+        Presentation presentation = Presentation.get(id)
 
-  def save(Integer productId) {
-  	def product = Product.get productId
+        if (!presentation) {
+            response.sendError 404
+        }
 
-  	if (!product) { response.sendError 404 }
-
-  	def presentation = new Presentation(params)
-  	product.addToPresentations presentation
-
-  	product.save()
-
-  	redirect action:"list", params:[productId:productId]
-  }
-
-  def delete(Integer id) {
-  	def presentation = Presentation.get id
-
-  	if (!presentation) { response.sendError 404 }
-  	presentation.delete()
-
-  	redirect action:"list", params:[productId:presentation.medicine.id]
-  }
-}
-
-class AddMeasuresCommand {
-  String presentation
-  List<String> measures
-
-  static constraints = {
-    presentation inList:Holders.config.ni.sb.presentationsAndMeasures.keySet() as List
-    measures nullable:false, validator:{ measures, obj ->
-      if (!Holders.config.ni.sb.presentationsAndMeasures[obj.presentation].containsAll(measures)) {
-        "notMatch"
-      }
+        [presentation: presentation]
     }
-  }
+
+    def update(Long id) {
+        Presentation presentation = Presentation.get(id)
+
+        if (!presentation) {
+            response.sendError 404
+        }
+
+        presentation.properties = params
+
+        if (!presentation.save()) {
+            presentation.errors.allErrors.each { error ->
+                log.error "[$error.field: $error.defaultMessage]"
+            }
+
+            flash.message = "A ocurrido un error. Intentalo otravez"
+            chain action: "show", params: [id: id], model: [presentation: presentation]
+            return
+        }
+
+        redirect action: "show", id: id
+    }
+
+    def addRemoveMeasure(Long id) {
+        Presentation presentation = Presentation.get(id)
+
+        if (!presentation) {
+            response.sendError 404
+        }
+
+        List measures = params.list("measures")
+        List measuresTemporal = []
+
+        measuresTemporal.addAll(presentation.measures)
+
+        measuresTemporal.each { measure ->
+            presentation.removeFromMeasures(measure)
+        }
+
+        measures.each { measure ->
+            presentation.addToMeasures(Measure.get(measure))
+        }
+
+        redirect action: "show", id: id
+    }
 }

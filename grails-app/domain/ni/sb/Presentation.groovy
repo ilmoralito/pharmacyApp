@@ -1,10 +1,21 @@
 package ni.sb
 
+import org.grails.databinding.BindUsing
+
 class Presentation implements Serializable {
+    @BindUsing({ obj, source ->
+        source["name"]?.capitalize()
+    })
     String name
 
     static constraints = {
-        name blank: false, maxSize: 255
+        name blank: false, unique: true, maxSize: 255
+        measures nullable: false, minSize: 1
+    }
+
+    static mapping = {
+        measures cascade: "all-delete-orphan"
+        sort "name"
     }
 
     static belongsTo = Medicine

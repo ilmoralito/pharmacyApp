@@ -19,3 +19,6 @@ stacktrace.log
 /target-eclipse/
 todo
 .info
+devDb.h2.db
+devDb.lock.db
+devDb.trace.db

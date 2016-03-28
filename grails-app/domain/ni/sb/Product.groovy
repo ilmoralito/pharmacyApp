@@ -17,7 +17,7 @@ class Product implements Serializable {
     }
 
     static mapping = {
-        version false
+        tablePerHierarchy false
         sort dateCreated: "desc"
     }
 

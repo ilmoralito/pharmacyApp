@@ -1,6 +1,6 @@
 <g:applyLayout name="threeColumns">
     <head>
-        <title>Proveedores</title>
+        <title>Laboratorios</title>
         <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
     </head>
 
