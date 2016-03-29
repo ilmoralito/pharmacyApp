@@ -140,6 +140,41 @@ class BootStrap {
 
         assert Presentation.count() == 4
 
+        // DETAIL
+        List<Detail> details = []
+
+        details << builder.detail(name: "detail#1", id: "detail#1")
+        details << builder.detail(name: "detail#2", id: "detail#2")
+        details << builder.detail(name: "detail#3", id: "detail#3")
+        details << builder.detail(name: "detail#4", id: "detail#4")
+        details << builder.detail(name: "detail#5", id: "detail#5")
+
+        details.each { detail ->
+            detail.save failOnError: true
+        }
+
+        assert Detail.count() == 5
+
+        // BRAND
+        List<Brand> brands = []
+
+        brands << builder.brand(name: "brand#1", id: "brand#1") {
+            detail(refId: "detail#1")
+            detail(refId: "detail#2")
+            detail(refId: "detail#3")
+        }
+        brands << builder.brand(name: "brand#2", id: "brand#2") {
+            detail(refId: "detail#3")
+            detail(refId: "detail#4")
+            detail(refId: "detail#5")
+        }
+
+        brands.each { brand ->
+            brand.save failOnError: true
+        }
+
+        assert Brand.count() == 2
+
         // PROVIDER
         List<Provider> providers = []
 

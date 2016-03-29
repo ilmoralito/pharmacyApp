@@ -2,7 +2,7 @@ package ni.sb
 
 import org.grails.databinding.BindUsing
 
-class Brand implements Serializable {
+class Detail {
     @BindUsing({obj, source ->
         source["name"]?.capitalize()
     })
@@ -12,11 +12,11 @@ class Brand implements Serializable {
     Date lastUpdated
 
     static constraints = {
-        name blank: false, unique: true
+        name blank: false
     }
 
-    static belongsTo = BrandProduct
-    static hasMany = [brandProducts: BrandProduct, details: Detail]
+    static belongsTo = Brand
+    static hasMany = [brands: Brand]
 
     String toString() { name }
 }

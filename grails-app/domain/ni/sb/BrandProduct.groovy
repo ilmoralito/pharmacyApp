@@ -1,17 +1,12 @@
 package ni.sb
 
 class BrandProduct extends Product {
-  List brands
+    static constraints = {
+        brands nullable: false, minSize: 1
+    }
 
-  static constraints = {
-    brands nullable:false
-  }
+    List<Brand> brands
+    static hasMany = [brands: Brand]
 
-  static hasMany = [brands:Brand]
-
-  static mapping = {
-  	brands cascade: "all-delete-orphan"
-  }
-
-  String toString() { name }
+    String toString() { name }
 }
