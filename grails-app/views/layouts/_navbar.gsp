@@ -16,7 +16,7 @@
                         <g:if test="${(session.notif)}">
                             <span class="badge notifications"><span class="glyphicon glyphicon-bell"></span></span>
                         </g:if>
-                        Notificaciones <span class="caret"></span>
+                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>

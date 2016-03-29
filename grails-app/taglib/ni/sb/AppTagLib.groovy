@@ -11,7 +11,8 @@ class AppTagLib {
         presentations: "raw",
         productBackLick: "raw",
         measures: "raw",
-        users: "raw"
+        users: "raw",
+        details: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -136,6 +137,37 @@ class AppTagLib {
 
                     span {
                         mkp.yield user.fullName
+                    }
+                }
+            }
+        }
+    }
+
+    def details = { attrs ->
+        List<Detail> details = Detail.list()
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map<String, String> checkboxParams = [type: "checkbox", name: "details"]
+
+        builder.div {
+            p {
+                mkp.yield "Detalles"
+            }
+
+            div(class: "form-group") {
+                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+            }
+
+            details.each { detail ->
+                checkboxParams.value = detail.id
+
+                div(class: "checkbox") {
+                    label {
+                        input(checkboxParams)
+                    }
+
+                    // ID is set here for update detail scenario
+                    span(id: detail.id) {
+                        mkp.yield detail
                     }
                 }
             }

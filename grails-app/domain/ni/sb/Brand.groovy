@@ -13,7 +13,14 @@ class Brand implements Serializable {
 
     static constraints = {
         name blank: false, unique: true
+        details nullable: false, minSize: 1
     }
+
+    static mapping = {
+        sort "name"
+    }
+
+    List<Detail> details
 
     static belongsTo = BrandProduct
     static hasMany = [brandProducts: BrandProduct, details: Detail]

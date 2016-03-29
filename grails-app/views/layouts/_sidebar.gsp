@@ -20,6 +20,11 @@
                 Medidas
             </g:link>
         </li>
+        <li class="${controllerName == 'brand' ? 'active' : ''}">
+            <g:link controller="brand">
+                Marcas
+            </g:link>
+        </li>
         <li class="${controllerName == 'company' ? 'active' : ''}">
             <g:link controller="company" params="[enabled: true]">
                 Empresas

@@ -12,7 +12,11 @@ class Detail {
     Date lastUpdated
 
     static constraints = {
-        name blank: false
+        name blank: false, unique: true
+    }
+
+    static mapping = {
+        sort "name"
     }
 
     static belongsTo = Brand

@@ -9,10 +9,16 @@ modules = {
         resource url: "js/filter-table.js"
     }
 
-    // MEASURES
-    measures {
+    // PRESENTATION
+    // BRAND
+    filter {
         dependsOn "app"
-        resource url: "js/filter-measures.js"
+        resource url: "js/filter.js"
+    }
+
+    detail {
+        dependsOn "filter"
+        resource url: "js/updateDetail.js"
     }
 
     addTelefone {

@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Presentaciones</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, measures"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, filter"/>
     </head>
 
     <content tag="main">
