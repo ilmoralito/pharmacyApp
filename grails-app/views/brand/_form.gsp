@@ -7,4 +7,4 @@
         autofocus="true"/>
 </div>
 
-<pharmacyApp:details/>
+<pharmacyApp:details brand="${brand}"/>
