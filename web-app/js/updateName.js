@@ -8,10 +8,15 @@ $('.trigger').on("dblclick", function(event) {
         buttonConfirm = $('<button>', { class: 'btn btn-primary', id: 'confirmButton', text: 'Confirmar' }),
         buttonCancel = $('<button>', { class: 'btn btn-default pull-right', id: 'cancelButton', text: 'Cancelar' });
 
+
     div.append(input);
     _this.html(div);
     _this.append(buttonConfirm);
     _this.append(buttonCancel);
+
+    // setting-focus-on-dynamically-created-input-field
+    // http://stackoverflow.com/questions/21541826/setting-focus-on-dynamically-created-input-field-without-knowing-its-id
+    _this.find('input').focus().select();
 });
 
 $(document).on('click', '#cancelButton', function() {
@@ -42,9 +47,14 @@ $(document).on('click', '#confirmButton', function() {
                 }
 
                 if (data.name) {
+                    // Update data-name attribute in td
                     td.attr('data-name', data.name);
+                    td.data('name', data.name);
 
+                    // Update content of td
                     td.html(data.name);
+
+                    // Update checkbox > span content
                     $('span#' + id).html(data.name);
                 }
             },

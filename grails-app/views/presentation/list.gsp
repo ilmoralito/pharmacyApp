@@ -41,7 +41,7 @@
             </li>
             <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
                 <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">
-                    Medida
+                    <small>Medida</small>
                 </a>
             </li>
         </ul>
