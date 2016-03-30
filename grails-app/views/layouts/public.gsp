@@ -11,7 +11,8 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <h4>App name</h4>
+                <h4>${grailsApplication.config.ni.sb.companyName}</h4>
+
                 <g:layoutBody/>
 
                 <g:if test="${flash.message}">
