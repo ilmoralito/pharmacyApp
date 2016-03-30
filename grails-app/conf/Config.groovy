@@ -171,3 +171,13 @@ grails {
               "mail.smtp.socketFactory.fallback":"false"]
   }
 }
+
+ni {
+  sb {
+      companyName = "Company Name"
+      companyAddress = "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      companyTelephoneNumber = "###-####"
+      companyFaxNumber = "###-####"
+      companyLogo = "..."
+  }
+}
