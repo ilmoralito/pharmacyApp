@@ -4,7 +4,7 @@ import org.grails.databinding.BindUsing
 
 class Product implements Serializable {
     @BindUsing({ obj, source ->
-        source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
+        source["name"]?.capitalize()
     })
     String name
     Boolean enabled = true

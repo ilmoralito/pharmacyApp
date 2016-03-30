@@ -24,6 +24,14 @@ class AppTagLib {
         Map checkboxParams = [type: "checkbox", name: "presentations"]
 
         builder.div {
+            p {
+                mkp.yield "Presentaciones"
+            }
+
+            div(class: "form-group") {
+                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+            }
+
             presentations.each { presentation ->
                 div(class: "checkbox") {
                     checkboxParams.value = presentation.id
@@ -55,20 +63,21 @@ class AppTagLib {
     }
 
     def productBackLick = { attrs ->
-        String uri = ""
-
-        if (!(attrs.product instanceof Medicine || attrs.product instanceof BrandProduct)) {
-            uri = "productList"
-        } else if (attrs.product instanceof Medicine) {
-            uri = "medicineList"
-        } else {
-            uri = "brandList"
+        def product =  attrs.product
+        Closure uri = {
+            if (!(product instanceof Medicine || product instanceof BrandProduct)) {
+                "productList"
+            } else if (product instanceof Medicine) {
+                "medicineList"
+            } else {
+                "brandProductList"
+            }
         }
 
         out << g.link(
-            action: uri,
-            params: [providerId: attrs.product.provider.id],
-            fragment: attrs.product.id
+            action: uri(),
+            params: [providerId: product.provider.id],
+            fragment: product.id
         ) {
             "Regresar"
         }
@@ -176,7 +185,7 @@ class AppTagLib {
                     }
 
                     span(id: detail.id) {
-                        mkp.yield detail
+                        mkp.yield detail.name
                     }
                 }
             }
@@ -184,7 +193,42 @@ class AppTagLib {
     }
 
     def brands = { attrs ->
-        out << "TODO"
+        List<Brand> productBrands = attrs?.product?.brands
+        List<Brand> brands = Brand.list()
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map<String, String> checkboxParams = [type: "checkbox", name: "brands"]
+
+        builder.div {
+            p {
+                mkp.yield "Marcas"
+            }
+
+            div(class: "form-group") {
+                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+            }
+
+            brands.each { brand ->
+                checkboxParams.value = brand.id
+
+                if (productBrands) {
+                    if (productBrands.contains(brand)) {
+                        checkboxParams.checked = true
+                    } else {
+                        checkboxParams.remove("checked")
+                    }
+                }
+
+                div(class: "checkbox") {
+                    label {
+                        input(checkboxParams)
+                    }
+
+                    span(id: brand.id) {
+                        mkp.yield brand.name
+                    }
+                }
+            }
+        }
     }
 
     def purchaseOrderStatus = { attrs ->

@@ -34,17 +34,15 @@
         -->
     </div>
 
-    <p>Presentaciones</p>
     <pharmacyApp:presentations product="${product}"/>
 </g:if>
 
 <g:if test="${product instanceof ni.sb.BrandProduct || actionName == 'brandProductList'}">
-    <p>Marcas</p>
     <pharmacyApp:brands product="${product}"/>
 </g:if>
 
 <g:if test="${actionName == 'show'}">
-    <hr>
+    <p>Estado</p>
     <div class="checkbox">
         <label>
             <g:checkBox name="enabled" value="${product.enabled}"/>

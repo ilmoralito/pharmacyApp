@@ -6,7 +6,12 @@ class BrandProduct extends Product {
     }
 
     List<Brand> brands
+
     static hasMany = [brands: Brand]
+
+    static mapping = {
+        sort "name"
+    }
 
     String toString() { name }
 }

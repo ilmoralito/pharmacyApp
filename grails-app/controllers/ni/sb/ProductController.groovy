@@ -71,7 +71,7 @@ class ProductController {
             provider.addToProducts(medicine)
 
             if (!medicine.save()) {
-                provider.errors.allErrors.each { error ->
+                medicine.errors.allErrors.each { error ->
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
@@ -80,7 +80,7 @@ class ProductController {
                 return [
                     medicines: getMedicines(),
                     provider: provider,
-                    medicine: medicine
+                    product: medicine
                 ]
             }
         }
@@ -103,6 +103,26 @@ class ProductController {
             BrandProduct.findAllByProviderAndEnabled(provider, enabled)
         }
 
+        if (request.post) {
+            BrandProduct brandProduct = new BrandProduct(params)
+
+            provider.addToProducts(brandProduct)
+
+            if (!brandProduct.save()) {
+                brandProduct.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+
+                return [
+                    brandProducts: getBrandProducts(),
+                    provider: provider,
+                    product: brandProduct
+                ]
+            }
+        }
+
         [brandProducts: getBrandProducts(), provider: provider]
     }
 
@@ -123,23 +143,25 @@ class ProductController {
             response.sendError 404
         }
 
-        product.properties["name", "code", "genericName"] = params
+        product.properties = params
 
         if (product instanceof Medicine) {
-            /*
             product.presentations.clear()
 
-            */
-            List tempPresentations = []
-            tempPresentations.addAll(product.presentations)
-
-            tempPresentations.each { p ->
-                product.removeFromPresentations(p)
-            }
-
             List<Integer> presentations = params.list("presentations")
+
             presentations.each { presentation ->
                 product.addToPresentations(Presentation.get(presentation))
+            }
+        }
+
+        if (product instanceof BrandProduct) {
+            product.brands.clear()
+
+            List<Integer> brands = params.list("brands")
+
+            brands.each { brandId ->
+                product.addToBrands(Brand.get(brandId))
             }
         }
 
