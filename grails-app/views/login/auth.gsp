@@ -7,7 +7,7 @@
     <r:require modules="bootstrap-css, app"/>
 </head>
 <body>
-    <form action="${postUrl}" method="POST" autocomplete="off" role="form">
+    <form action="${postUrl}" method="POST" class="pagination-centered" autocomplete="off" role="form">
         <div class="form-group">
             <input
                 type="text"
