@@ -3,7 +3,7 @@
         name="name"
         value="${product?.name}"
         class="form-control"
-        placeholder="Nombre del producto"
+        placeholder="Nombre"
         autofocus="true"/>
 </div>
 
@@ -36,6 +36,11 @@
 
     <p>Presentaciones</p>
     <pharmacyApp:presentations product="${product}"/>
+</g:if>
+
+<g:if test="${product instanceof ni.sb.BrandProduct || actionName == 'brandProductList'}">
+    <p>Marcas</p>
+    <pharmacyApp:brands product="${product}"/>
 </g:if>
 
 <g:if test="${actionName == 'show'}">

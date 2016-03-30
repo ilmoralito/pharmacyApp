@@ -10,7 +10,7 @@ class ProductController {
     static allowedMethods = [
         productList: ["GET", "POST"],
         medicineList: ["GET", "POST"],
-        brandList: ["GET", "POST"],
+        brandProductList: ["GET", "POST"],
         show: "GET",
         update: "POST"
     ]
@@ -50,51 +50,61 @@ class ProductController {
         [products: getProducts(), provider: provider]
     }
 
-  def medicineList(Integer providerId, Boolean enabled, Boolean filtered) {
-    Provider provider = Provider.get(providerId)
+    def medicineList(Integer providerId, Boolean enabled, Boolean filtered) {
+        Provider provider = Provider.get(providerId)
 
-    if (!provider) {
-        response.sendError 404
-    }
-
-    Closure getMedicines = {
-        if (enabled == null) {
-            enabled = true
+        if (!provider) {
+            response.sendError 404
         }
 
-        Medicine.findAllByProviderAndEnabled(provider, enabled)
-    }
-
-    if (request.method == "POST") {
-        Medicine medicine = new Medicine(params)
-
-        provider.addToProducts(medicine)
-
-        if (!medicine.save()) {
-            provider.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+        Closure getMedicines = {
+            if (enabled == null) {
+                enabled = true
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
-
-            return [
-                medicines: getMedicines(),
-                provider: provider,
-                medicine: medicine
-            ]
+            Medicine.findAllByProviderAndEnabled(provider, enabled)
         }
+
+        if (request.method == "POST") {
+            Medicine medicine = new Medicine(params)
+
+            provider.addToProducts(medicine)
+
+            if (!medicine.save()) {
+                provider.errors.allErrors.each { error ->
+                    log.error "[$error.field: $error.defaultMessage]"
+                }
+
+                flash.message = "A ocurrido un error. Intentalo otravez"
+
+                return [
+                    medicines: getMedicines(),
+                    provider: provider,
+                    medicine: medicine
+                ]
+            }
+        }
+
+        [medicines: getMedicines(), provider: provider]
     }
 
-    [medicines: getMedicines(), provider:provider]
-  }
+    def brandProductList(Integer providerId, Boolean enabled, Boolean filtered) {
+        Provider provider = Provider.get(providerId)
 
-  def brandList(Integer providerId) {
-    def provider = Provider.get providerId
+        if (!provider) {
+            response.sendError 404
+        }
 
-    if (!provider) { response.sendError 404 }
+        Closure getBrandProducts = {
+            if (enabled == null) {
+                enabled = true
+            }
 
-    [brands:BrandProduct.findAllByProviderAndStatus(provider, params?.enabled ?: true), provider:provider]
-  }
+            BrandProduct.findAllByProviderAndEnabled(provider, enabled)
+        }
+
+        [brandProducts: getBrandProducts(), provider: provider]
+    }
 
     def show(Integer id) {
         def product = Product.get(id)

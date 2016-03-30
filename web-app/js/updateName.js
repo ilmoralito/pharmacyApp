@@ -1,8 +1,7 @@
 $('.trigger').on("dblclick", function(event) {
     var _this = $(this),
-        dataset = _this.data(),
-        id = dataset.id,
-        name = dataset.name;
+        id = _this.data('id'),
+        name = _this.data('name');
 
     var div = $('<div>', { class: 'form-group' }),
         input = $('<input>', { class: 'form-control', id: 'name', value: name, 'data-name': name, 'data-id': id }),
@@ -18,7 +17,7 @@ $('.trigger').on("dblclick", function(event) {
 $(document).on('click', '#cancelButton', function() {
     var _this = $(this),
         td = _this.parent(),
-        name = td.find('input').data().name;
+        name = td.find('input').data('name');
 
     td.html(name);
 });
@@ -27,9 +26,8 @@ $(document).on('click', '#confirmButton', function() {
     var _this = $(this),
         td = _this.parent(),
         input = td.find('input'),
-        dataset = input.data()
-        id = dataset.id,
-        currentName = dataset.name,
+        id = input.data('id'),
+        currentName = input.data('name'),
         name = input.val(),
         url = window.ajaxPATH;
 
@@ -44,8 +42,8 @@ $(document).on('click', '#confirmButton', function() {
                 }
 
                 if (data.name) {
-                    // TODO
-                    //td.data['name'] = name;
+                    td.attr('data-name', data.name);
+
                     td.html(data.name);
                     $('span#' + id).html(data.name);
                 }
@@ -58,4 +56,3 @@ $(document).on('click', '#confirmButton', function() {
         td.html(currentName);
     }
 })
-

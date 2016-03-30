@@ -12,7 +12,8 @@ class AppTagLib {
         productBackLick: "raw",
         measures: "raw",
         users: "raw",
-        details: "raw"
+        details: "raw",
+        brands: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -180,6 +181,10 @@ class AppTagLib {
                 }
             }
         }
+    }
+
+    def brands = { attrs ->
+        out << "TODO"
     }
 
     def purchaseOrderStatus = { attrs ->
