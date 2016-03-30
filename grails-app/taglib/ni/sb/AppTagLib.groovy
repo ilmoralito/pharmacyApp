@@ -104,7 +104,7 @@ class AppTagLib {
                         input(checkboxParams)
                     }
 
-                    span {
+                    span(id: measure.id) {
                         mkp.yield measure
                     }
                 }
@@ -144,6 +144,7 @@ class AppTagLib {
     }
 
     def details = { attrs ->
+        List<Detail> brandDetails = attrs?.brand?.details
         List<Detail> details = Detail.list()
         MarkupBuilder builder = new MarkupBuilder(out)
         Map<String, String> checkboxParams = [type: "checkbox", name: "details"]
@@ -160,12 +161,19 @@ class AppTagLib {
             details.each { detail ->
                 checkboxParams.value = detail.id
 
+                if (brandDetails) {
+                    if (brandDetails.contains(detail)) {
+                        checkboxParams.checked = true
+                    } else {
+                        checkboxParams.remove("checked")
+                    }
+                }
+
                 div(class: "checkbox") {
                     label {
                         input(checkboxParams)
                     }
 
-                    // ID is set here for update detail scenario
                     span(id: detail.id) {
                         mkp.yield detail
                     }

@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Presentaciones</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, filter"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, updateName"/>
     </head>
 
     <content tag="main">
@@ -31,13 +31,66 @@
     </content>
 
     <content tag="col1">
-        <g:form action="${actionName}" autocomplete="off">
-            <g:render template="form"/>
+        <g:set var="isFiltered" value="${params.boolean('filtered')}"/>
 
-            <p>Medidas</p>
-            <pharmacyApp:measures/>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="${!isFiltered ? 'active' : 'no-active'}">
+                <a href="#brand" aria-controls="brand" role="tab" data-toggle="tab">
+                    Presentacion
+                </a>
+            </li>
+            <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
+                <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">
+                    Medida
+                </a>
+            </li>
+        </ul>
+        <br>
 
-            <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-        </g:form>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="brand">
+                <g:form action="${actionName}" autocomplete="off">
+                    <g:render template="form"/>
+
+                    <p>Medidas</p>
+                    <pharmacyApp:measures/>
+
+                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+                </g:form>
+            </div>
+
+            <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="detail">
+                <g:form controller="measure" action="create" autocomplete="off">
+                    <div class="form-group">
+                        <g:textField name="name" class="form-control" placeholder="Nombre"/>
+                    </div>
+
+                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+                </g:form>
+
+                <table class="table table-hover table-striped">
+                    <thead>
+                       <th>Nombre</th>
+                    </thead>
+                    <tbody>
+                        <g:each in="${measures}" var="measure">
+                            <tr>
+                                <td
+                                    class="trigger"
+                                    data-id="${measure.id}"
+                                    data-name="${measure.name}">
+                                    ${measure.name}
+                                </td>
+                            </tr>
+                        </g:each>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--SAD solution T.T-->
+        <g:javascript>
+            window.ajaxPATH = "${createLink(controller: 'measure', action: 'update')}"
+        </g:javascript>
     </content>
 </g:applyLayout>

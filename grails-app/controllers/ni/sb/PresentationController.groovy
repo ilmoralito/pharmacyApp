@@ -14,9 +14,11 @@ class PresentationController {
 
     def list() {
         Closure presentations = {
-            List<Presentation> presentations = Presentation.list()
+            Presentation.list()
+        }
 
-            presentations
+        Closure measures = {
+            Measure.list()
         }
 
         if (request.post) {
@@ -29,11 +31,11 @@ class PresentationController {
 
                 flash.message = "A ocurrido un error. Intentalo otravez"
 
-                return [presentations: presentations(), presentation: presentation]
+                return [presentations: presentations(), presentation: presentation, measures: measures()]
             }
         }
 
-        [presentations: presentations()]
+        [presentations: presentations(), measures: measures()]
     }
 
     def show(Long id) {

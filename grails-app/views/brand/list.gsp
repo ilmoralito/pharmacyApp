@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Medidas</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, detail"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, updateName"/>
     </head>
 
     <content tag="main">
@@ -57,7 +57,7 @@
             </div>
 
             <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="detail">
-                <g:form controller="detail" action="create">
+                <g:form controller="detail" action="create" autocomplete="off">
                     <div class="form-group">
                         <g:textField name="name" class="form-control" placeholder="Nombre"/>
                     </div>
@@ -73,9 +73,9 @@
                         <g:each in="${details}" var="detail">
                             <tr>
                                 <td
-                                    class="details"
+                                    class="trigger"
                                     data-id="${detail.id}"
-                                    data-detail="${detail.name}">
+                                    data-name="${detail.name}">
                                     ${detail.name}
                                 </td>
                             </tr>

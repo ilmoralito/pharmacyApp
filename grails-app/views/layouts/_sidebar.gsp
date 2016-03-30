@@ -15,11 +15,6 @@
                 Presentaciones
             </g:link>
         </li>
-        <li class="${controllerName == 'measure' ? 'active' : ''}">
-            <g:link controller="measure">
-                Medidas
-            </g:link>
-        </li>
         <li class="${controllerName == 'brand' ? 'active' : ''}">
             <g:link controller="brand">
                 Marcas

@@ -16,9 +16,9 @@ modules = {
         resource url: "js/filter.js"
     }
 
-    detail {
+    updateName {
         dependsOn "filter"
-        resource url: "js/updateDetail.js"
+        resource url: "js/updateName.js"
     }
 
     addTelefone {
