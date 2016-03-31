@@ -76,7 +76,7 @@
                     </li>
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <li class="${controllerName == 'user' && actionName == 'list' ? 'active' : ''}">
-                            <g:link controller="user" action="list">
+                            <g:link controller="user" params="[enabled: true]">
                                 Administrar usuarios
                             </g:link>
                         </li>

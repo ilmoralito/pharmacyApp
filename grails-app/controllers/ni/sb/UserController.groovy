@@ -6,6 +6,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class UserController {
     def springSecurityService
 
+    static defaultAction = "list"
     static allowedMethods = [
         list: ["GET", "POST"],
         show: "GET",
@@ -14,7 +15,7 @@ class UserController {
         password: ["GET", "POST"]
     ]
 
-    def list(Boolean enabled) {
+    def list(Boolean enabled, Boolean filtered) {
         Closure users = {
             if (enabled == null) {
                 enabled = true
