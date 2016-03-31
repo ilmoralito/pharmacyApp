@@ -175,6 +175,7 @@ grails {
 ni {
   sb {
       companyName = "Company Name"
+      companyRUC = "####"
       companyAddress = "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
       companyTelephoneNumber = "###-####"
       companyFaxNumber = "###-####"
