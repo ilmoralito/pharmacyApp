@@ -24,7 +24,7 @@ class UserController {
             User.findAllByEnabled(enabled)
         }
 
-        if (request.method == "POST") {
+        if (request.post) {
             User user = new User(params)
 
             if (!user.save()) {
@@ -33,7 +33,12 @@ class UserController {
                 }
 
                 flash.message = "A ocurrido un error"
-                return [users: users(), user: user]
+
+                return [users: users()]
+
+                // TODO: FIX error 
+                // object references an unsaved transient instance - save the transient instance before flushing: ni.sb.User
+                //return [users: users(), user: user]
             } else {
                 Role role = Role.findByAuthority(params?.authority)
                 UserRole.create user, role, true
