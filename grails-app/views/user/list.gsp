@@ -5,18 +5,18 @@
     </head>
 
     <content tag="main">
-        <table class="table table-hover">
+        <table class="table table-hover table-striped">
             <colgroup>
                <col span="1" style="width: 45%;">
-               <col span="1" style="width: 35%;">
+               <col span="1" style="width: 45%;">
                <col span="1" style="width: 5%;">
-               <col span="1" style="width: 15%;">
+               <col span="1" style="width: 5%;">
             </colgroup>
             <thead>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Telefono</th>
                 <th>Rol</th>
-                <th>Estado</th>
             </thead>
             <tbody>
                 <g:each in="${users}" var="user">
@@ -27,17 +27,8 @@
                             </g:link>
                         </td>
                         <td>${user.email}</td>
+                        <td>${user.telephoneNumber}</td>
                         <td>${user.getAuthorities().authority.join(", ").tokenize("_")[1]}</td>
-                        <td>
-                            <g:link action="changeEnabledState" id="${user.id}">
-                                <g:if test="${user.enabled}">
-                                    Habilitado
-                                </g:if>
-                                <g:else>
-                                    No habilitado
-                                </g:else>
-                            </g:link>
-                        </td>
                     </tr>
                 </g:each>
             </tbody>

@@ -6,23 +6,25 @@ class User implements Serializable {
 
     transient springSecurityService
 
+    @BindUsing({ obj, source ->
+        source["fullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+    })
+    String fullName
+    String email
+    String telephoneNumber
     String password = "temporal"
     boolean enabled = true
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
-    String email
-    @BindUsing({ obj, source ->
-        source["fullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
-    })
-    String fullName
 
     static transients = ['springSecurityService']
 
     static constraints = {
-        password blank: false
+        fullName blank: false
         email email:true, blank:false, unique:true
-        fullName nullable:true
+        telephoneNumber blank: false, unique: true, minSize: 8, maxSize: 8
+        password blank: false
     }
 
     static mapping = {

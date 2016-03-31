@@ -23,21 +23,23 @@ class BootStrap {
 
         // USERS
         User admin = new User(
-            password: "password",
+            fullName: "admin user",
             email: "admin@domain.com",
-            fullName: "admin user"
+            telephoneNumber: "99887766",
+            password: "password",
         ).save failOnError: true
 
         User user = new User(
-            password: "password",
+            fullName: "user user",
             email: "user@domain.com",
-            fullName: "user user"
+            telephoneNumber: "88776655",
+            password: "password"
         ).save failOnError: true
 
         User test = new User(
-            password: "temporal",
+            fullName: "test user",
             email: "test@domain.com",
-            fullName: "test test"
+            telephoneNumber: "90897867"
         ).save failOnError: true
 
         Role adminRole = new Role(authority: "ROLE_ADMIN").save failOnError: true

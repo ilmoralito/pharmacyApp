@@ -1,20 +1,28 @@
 <div class="form-group">
+    <g:textField
+        name="fullName"
+        value="${user?.fullName}"
+        class="form-control"
+        placeholder="Nombre completo"
+        autofocus="true"/>
+</div>
+
+<div class="form-group">
     <input
         type="email"
         id="email"
         name="email"
         value="${user?.email}"
         class="form-control"
-        placeholder="Email"
-        autofocus="true">
+        placeholder="Email">
 </div>
 
 <div class="form-group">
     <g:textField
-        name="fullName"
+        name="telephoneNumber"
+        value="${user?.telephoneNumber}"
         class="form-control"
-        value="${user?.fullName}"
-        placeholder="Nombre completo"/>
+        placeholder="Telefono"/>
 </div>
 
 <div class="form-group">
@@ -25,3 +33,12 @@
         value="${user?.getAuthorities()?.getAt(0)?.authority}"
         class="form-control"/>
 </div>
+
+<g:if test="${actionName == 'show'}">
+    <div class="checkbox">
+        <label>
+            <g:checkBox name="enabled" value="${user?.enabled}"/>
+        </label>
+        Habilitado
+    </div>
+</g:if>
