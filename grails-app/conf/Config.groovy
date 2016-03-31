@@ -177,7 +177,7 @@ ni {
       companyName = "Company Name"
       companyRUC = "####"
       companyAddress = "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-      companyTelephoneNumber = "###-####"
+      companyTelephoneNumbers = [conventional: "23114455", claro: "88774455", movistar: "78986545"]
       companyFaxNumber = "###-####"
       companyLogo = "..."
   }
