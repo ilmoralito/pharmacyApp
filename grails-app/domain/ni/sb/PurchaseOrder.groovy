@@ -6,13 +6,25 @@ class PurchaseOrder implements Serializable {
     String invoiceNumber
     Date deadline
     BigDecimal balance
-    Boolean enabled
+    Boolean enabled = true
+    String paymentStatus
+    User user
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
+        distributor()
+        typeOfPurchase inListL: ["credit", "cash"], maxSize: "255"
+        invoiceNumber()
+        deadline validator: { deadline ->
+            Date today = new Date()
 
+            deadline >= today
+        }
+        balance(), minSize: 1.0
+        paymentStatus inList: ["pending", "paid"]
+        user()
     }
 
     static mapping = {
