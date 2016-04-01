@@ -1,6 +1,6 @@
 package ni.sb
 
-class Contact {
+class Contact implements Serializable {
     String fullName
     String email
     String telephoneNumber

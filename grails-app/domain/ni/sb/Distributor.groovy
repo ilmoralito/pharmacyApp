@@ -22,9 +22,11 @@ class Distributor implements Serializable {
         contact nullable: false
     }
 
+    List<Provider> providers
     static hasMany = [providers: Provider]
 
     static mapping = {
         employees cascade: "all-delete-orphan"
+        //providers sort: "name", order: "desc"
     }
 }

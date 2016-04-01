@@ -239,7 +239,8 @@ class BootStrap {
         List<Distributor> dealers = []
         dealers << builder.distributor(
             name: "Dealer1",
-            telephoneNumber: "23114455"
+            telephoneNumber: "23114455",
+            id: "dealer#1"
         ) {
             provider(refId: "LABORATORY1")
             provider(refId: "LABORATORY2")
@@ -249,7 +250,8 @@ class BootStrap {
 
         dealers << builder.distributor(
             name: "Dealer2",
-            telephoneNumber: "23111234"
+            telephoneNumber: "23111234",
+            id: "dealer#2"
         ) {
             provider(refId: "LABORATORY1")
             provider(refId: "LABORATORY4")
@@ -297,6 +299,22 @@ class BootStrap {
         new Expense(description: "Lorem ipsum dolor sit amut", quantity: 5, user: test).save failOnError: true
 
         assert Expense.count() == 4
+
+        // PURCHASEORDER
+        /*
+        List<PurchaseOrder> purchaseOrders = []
+        Date today = new Date()
+
+        purchaseOrders << builder.purchaseOrder(
+            distributor(refId: "dealer#1"),
+            user: admin,
+            typeOfPurchase: "credit",
+            invoiceNumber: "0001001",
+            deadline: today + 60,
+            balance: 5000, // TODO its needs to be calculated from total in items
+            paymentStatus: "pending"
+        )
+        */
     }
 
     private production() {
