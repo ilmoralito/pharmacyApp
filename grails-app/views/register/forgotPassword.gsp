@@ -32,14 +32,14 @@
             <div class="form-group">
                 <g:textField name="username"
                     size="35"
-                    class="form-control"
+                    class="form-control input-lg"
                     placeholder="Correo Electrónico"
                     autofocus="true"/>
             </div>
 
-            <input type="submit" id="submit" class="btn btn-primary" value="Restaurar Contraseña"/>
+            <input type="submit" id="submit" class="btn btn-primary btn-lg" value="Restaurar Contraseña"/>
             
-            <g:link controller="login" action="index" class="btn btn-default pull-right">
+            <g:link controller="login" action="index" class="btn btn-default btn-lg pull-right">
                 Regresar
             </g:link>
 

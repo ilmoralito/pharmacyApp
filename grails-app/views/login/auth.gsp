@@ -11,7 +11,7 @@
         <div class="form-group">
             <input
                 type="text"
-                class="form-control"
+                class="form-control input-lg"
                 name="j_username"
                 id="username"
                 placeholder="Correo electrónico"/>
@@ -20,14 +20,14 @@
         <div class="form-group">
             <input
                 type="password"
-                class="form-control"
+                class="form-control input-lg"
                 name="j_password"
                 id="password"
                 placeholder="Contraseña"/>
         </div>
 
-        <g:submitButton name="send" value="Iniciar sesion" class="btn btn-primary"/>
-        <g:link controller="register" action="forgotPassword" class="btn btn-default pull-right">
+        <g:submitButton name="send" value="Iniciar sesion" class="btn btn-primary btn-lg"/>
+        <g:link controller="register" action="forgotPassword" class="btn btn-default btn-lg pull-right">
             Olvido su contraseña
         </g:link>
     </form>
