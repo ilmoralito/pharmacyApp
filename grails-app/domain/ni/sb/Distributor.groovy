@@ -27,6 +27,5 @@ class Distributor implements Serializable {
 
     static mapping = {
         employees cascade: "all-delete-orphan"
-        //providers sort: "name", order: "desc"
     }
 }

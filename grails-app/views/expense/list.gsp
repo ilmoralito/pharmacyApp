@@ -110,7 +110,6 @@
                             placeholder="Hasta"/>
                     </div>
 
-                    <p>Usuarios</p>
                     <pharmacyApp:users userList="${params.list('users')}"/>
 
                     <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />

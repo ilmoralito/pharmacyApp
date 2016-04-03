@@ -14,14 +14,14 @@ class PurchaseOrder implements Serializable {
     Date lastUpdated
 
     static constraints = {
-        distributor()
-        user()
-        paymentType inListL: ["credit", "cash"], maxSize: 255
+        paymentType inList: ["credit", "cash"], maxSize: 255
         invoiceNumber blank: false, unique: true
-        deadline validator: { deadline ->
-            Date today = new Date()
+        deadline nullable: true, validator: { deadline, obj ->
+            if (obj.paymentType == "credit") {
+                Date today = new Date()
 
-            deadline >= today
+                deadline >= today
+            }
         }
         balance minSize: 1.0
         paymentStatus inList: ["pending", "paid"]
@@ -35,6 +35,10 @@ class PurchaseOrder implements Serializable {
 
     List<Item> items
     static hasMany = [items: Item]
+
+    def beforeValidate() {
+        paymentStatus = paymentType == "credit" ? "pending" : "paid"
+    }
 
     String toString() { invoiceNumber }
 }

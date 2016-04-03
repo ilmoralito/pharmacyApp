@@ -9,7 +9,8 @@ class PurchaseOrderController {
 
     static defaultAction = "list"
     static allowedMethods = [
-        list: ["GET", "POST"]
+        list: ["GET", "POST"],
+        create: "GET"
     ]
 
     def list(String paymentStatus) {
@@ -31,9 +32,10 @@ class PurchaseOrderController {
     def createPurchaseOrderFlow = {
         init {
             action {
+                def currentUser = springSecurityService.principal
                 List<Distributor> dealers = distributorService.getValidDistributors()
 
-                [dealers: dealers]
+                [dealers: dealers, currentUser: currentUser]
             }
 
             on("success").to "selectPurchaseOrderParameters"
@@ -50,18 +52,14 @@ class PurchaseOrderController {
                     return error()
                 }
 
-                println command.distributor
-                println command.distributor.class.name
+                Distributor distributor = Distributor.get(command.distributor)
 
-                User currentUser = springSecurityService.currentUser
-
-
-                /*
-                if (!distributor) {
-                    return error()
-                }
-                */
-
+                [
+                    invoiceNumber: command.invoiceNumber,
+                    paymentType: command.paymentType,
+                    deadline: command.deadline,
+                    distributor: distributor
+                ]
             }. to "items"
 
             on("cancel").to "done"
@@ -80,7 +78,7 @@ class PurchaseOrderController {
 class createPurchaseOrderCommand {
     String invoiceNumber
     Date deadline
-    Distributor distributor
+    Integer distributor
     String paymentType
 
     static constraints = {

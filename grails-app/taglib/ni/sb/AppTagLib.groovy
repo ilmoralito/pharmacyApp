@@ -15,7 +15,9 @@ class AppTagLib {
         users: "raw",
         details: "raw",
         brands: "raw",
-        dealers: "raw"
+        dealers: "raw",
+        paymentTypeBox: "raw",
+        fromTo: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -128,23 +130,25 @@ class AppTagLib {
         List<Long> userList = attrs.userList*.toLong()
         List<User> users = User.list()
         MarkupBuilder builder = new MarkupBuilder(out)
-        Map checkboxParams = [type: "checkbox", name: "users"]
+        Map params = [type: "checkbox", name: "users"]
 
         builder.div {
+            p "Usuarios"
+
             users.each { user ->
-                checkboxParams.value = user.id
+                params.value = user.id
 
                 if (userList) {
                     if (userList.contains(user.id)) {
-                        checkboxParams.checked = true
+                        params.checked = true
                     } else {
-                        checkboxParams.remove "checked"
+                        params.remove "checked"
                     }
                 }
 
                 div(class: "checkbox") {
                     label {
-                        input(checkboxParams)
+                        input(params)
                     }
 
                     span {
@@ -236,16 +240,17 @@ class AppTagLib {
     def dealers = { attrs ->
         List<Distributor> dealers = distributorService.getValidDistributors()
         MarkupBuilder builder = new MarkupBuilder(out)
-        Map<String, String> radioParams = [type: "radio", name: "distributor"]
+        Map<String, String> params = [type: attrs.type, name: "distributor"]
 
         builder.div {
+            p "Distribuidores"
+
             dealers.each { dealer ->
-                div(class: "radio") {
+                params.value = dealer.id
+
+                div(class: attrs.type) {
                     label {
-                        input(radioParams)
-                    }
-                    
-                    span {
+                        input(params)
                         mkp.yield dealer.name
                     }
                 }
@@ -258,6 +263,52 @@ class AppTagLib {
                     }
                 }
             }
+        }
+    }
+
+    def paymentTypeBox = { attrs ->
+        String type = attrs.type
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map<String, String> paymentTypes = [credit: "Credito", cash: "Contado"]
+        Map<String, String> params = [type: type, name: type == "radio" ? "paymentTypes" : "paymentType"]
+
+        builder.div {
+            p "Tipos de pago"
+
+            paymentTypes.each { paymentType ->
+                params.value = paymentType.key
+
+                div(class: type) {
+                    label {
+                        input(params)
+                        mkp.yield paymentType.value
+                    }
+                }
+            }
+        }
+    }
+
+    def fromTo = {
+        MarkupBuilder builder = new MarkupBuilder(out)
+
+        builder.div {
+            p "Fechas"
+
+            div(class: "form-group") {
+                input(name: "from", class: "form-control", placeholder: "Desde")
+            }
+
+            div(class: "form-group") {
+                input(name: "to", class: "form-control", placeholder: "Hasta")
+            }
+        }
+    }
+
+    def paymentType = { attrs ->
+        if (attrs.type == "cash") {
+            out << "Contado"
+        } else {
+            out << "Credito"
         }
     }
 

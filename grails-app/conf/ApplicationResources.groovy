@@ -3,6 +3,12 @@ modules = {
         resource url: "css/main.css"
     }
 
+    // PURCHASEORDER
+    purchaseOrder {
+        dependsOn "app"
+        resource url: "js/purchase-order.js"
+    }
+
     // EMPLOYEE
     employees {
         dependsOn "app"

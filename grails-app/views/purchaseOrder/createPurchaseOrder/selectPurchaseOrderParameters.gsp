@@ -1,12 +1,11 @@
 <g:applyLayout name="twoColumns">
     <head>
         <title>Orden de compra</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, purchaseOrder"/>
     </head>
 
     <content tag="main">
-        <div class="row">
-            <div class="col-md-5 col-md-offset-3">
+            <div class="col-md-5">
                 <p>Parametros de orden de compra</p>
                 <g:form autocomplete="off">
                     <g:render template="createPurchaseOrder/form"/>

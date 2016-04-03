@@ -29,12 +29,27 @@
             Crear pedido
         </g:link>
 
-        <p><br>Filtrar</p>
+        <br>
 
         <g:form action="list" autocomplete="off">
+            <p>Numero de factura</p>
             <div class="form-group">
-                ...
+                <g:textField
+                    name="invoiceNumber"
+                    value="${params?.invoiceNumber}"
+                    class="form-control"
+                    placeholder="####"/>
             </div>
+
+            <pharmacyApp:fromTo/>
+
+            <pharmacyApp:dealers type="checkbox"/>
+
+            <pharmacyApp:paymentTypeBox type="checkbox"/>
+
+            <pharmacyApp:users/>
+
+            <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>
     </content>
 </g:applyLayout>
