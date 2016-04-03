@@ -4,6 +4,7 @@ import groovy.xml.MarkupBuilder
 
 class AppTagLib {
     def saleService
+    def distributorService
 
     static defaultEncodeAs = "html"
     static encodeAsForTags = [
@@ -13,7 +14,8 @@ class AppTagLib {
         measures: "raw",
         users: "raw",
         details: "raw",
-        brands: "raw"
+        brands: "raw",
+        dealers: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -225,6 +227,34 @@ class AppTagLib {
 
                     span(id: brand.id) {
                         mkp.yield brand.name
+                    }
+                }
+            }
+        }
+    }
+
+    def dealers = { attrs ->
+        List<Distributor> dealers = distributorService.getValidDistributors()
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map<String, String> radioParams = [type: "radio", name: "distributor"]
+
+        builder.div {
+            dealers.each { dealer ->
+                div(class: "radio") {
+                    label {
+                        input(radioParams)
+                    }
+                    
+                    span {
+                        mkp.yield dealer.name
+                    }
+                }
+
+                ol(class: "hide") {
+                    dealer.providers.each { provider ->
+                        li {
+                            mkp.yield provider.name
+                        }
                     }
                 }
             }

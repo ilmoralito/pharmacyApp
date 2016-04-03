@@ -4,6 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class PurchaseOrderController {
+    def springSecurityService
+    def distributorService
 
     static defaultAction = "list"
     static allowedMethods = [
@@ -29,9 +31,7 @@ class PurchaseOrderController {
     def createPurchaseOrderFlow = {
         init {
             action {
-                List<Distributor> dealers = Distributor.where {
-                    providers.size() > 0 && enabled == true
-                }.list()
+                List<Distributor> dealers = distributorService.getValidDistributors()
 
                 [dealers: dealers]
             }
@@ -50,22 +50,25 @@ class PurchaseOrderController {
                     return error()
                 }
 
-                Distributor dealer = Distributor.get(command.distributor)
+                println command.distributor
+                println command.distributor.class.name
 
+                User currentUser = springSecurityService.currentUser
+
+
+                /*
                 if (!distributor) {
                     return error()
                 }
+                */
 
-                println distributor
-
-                return error()
             }. to "items"
 
             on("cancel").to "done"
         }
 
         items {
-
+            on("show").to "show"
         }
 
         done {
@@ -75,9 +78,10 @@ class PurchaseOrderController {
 }
 
 class createPurchaseOrderCommand {
+    String invoiceNumber
+    Date deadline
     Distributor distributor
     String paymentType
-    String invoiceNumber
 
     static constraints = {
         importFrom PurchaseOrder

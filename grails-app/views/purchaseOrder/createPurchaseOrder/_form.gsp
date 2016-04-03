@@ -1,5 +1,5 @@
-<label>Numero de factura</label>
 <div class="form-group">
+    <label>Numero de factura</label>
     <g:textField
         name="invoiceNumber"
         value="${purchaseOrder?.invoiceNumber}"
@@ -7,32 +7,30 @@
         placeholder="Numero de factura"/>
 </div>
 
+<!-- TODO: Add calendar here-->
+<div class="form-group">
+    <label>Fecha de pago</label>
+    <g:textField
+        name="deadline"
+        value="${purchaseOrder?.deadline}"
+        class="form-control"
+        placeholder="Fecha de pago"/>
+</div>
+
 <label>Distribuidor</label>
-<g:each in="${dealers}" var="distributor">
-    <div class="radio">
-        <label>
-            <g:radio name="distributor" value="${distributor.id}"/>
-            ${distributor.name}
-        </label>
-    </div>
-    <ol>
-        <g:each in="${distributor.providers}" var="provider">
-            <li>${provider.name}</li>
-        </g:each>
-    </ol>
-</g:each>
+<pharmacyApp:dealers/>
 
 <label>Tipo de pago</label>
 <div class="radio">
-    <label>
+    <label class="radio-inline">
         <g:radio name="paymentType" value="credit"/>
-        Credito
     </label>
+    <span>Credito</span>
 </div>
 
 <div class="radio">
-    <label>
+    <label class="radio-inline">
         <g:radio name="paymentType" value="cash"/>
-        Contado
     </label>
+    <span>Contado</span>
 </div>
