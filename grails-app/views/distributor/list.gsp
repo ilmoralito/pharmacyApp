@@ -8,7 +8,8 @@
         <g:if test="${dealers}">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 5%;">
                     <col span="1" style="width: 5%;">
                     <col span="1" style="width: 35%;">
                     <col span="1" style="width: 35%;">
@@ -17,6 +18,7 @@
                 <thead>
                     <th>Nombre</th>
                     <th>Telefono</th>
+                    <th>Limite</th>
                     <th>Contacto</th>
                     <th>Email</th>
                     <th>Telefono</th>
@@ -30,6 +32,7 @@
                                 </g:link>
                             </td>
                             <td>${dealer.telephoneNumber}</td>
+                            <td>${dealer.daysToPay}</td>
                             <td>${dealer.contact.fullName}</td>
                             <td>${dealer.contact.email}</td>
                             <td>${dealer.contact.telephoneNumber}</td>

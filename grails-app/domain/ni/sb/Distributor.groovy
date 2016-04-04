@@ -10,6 +10,7 @@ class Distributor implements Serializable {
     })
     String name
     String telephoneNumber
+    Integer daysToPay
     Boolean enabled = true
     Contact contact
 
@@ -19,6 +20,7 @@ class Distributor implements Serializable {
     static constraints = {
         name blank: false, unique: true
         telephoneNumber blank: false, unique: true
+        daysToPay min: 1
         contact nullable: false
     }
 

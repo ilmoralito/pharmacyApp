@@ -17,7 +17,8 @@ class AppTagLib {
         brands: "raw",
         dealers: "raw",
         paymentTypeBox: "raw",
-        fromTo: "raw"
+        fromTo: "raw",
+        paymentStatus: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -238,6 +239,8 @@ class AppTagLib {
     }
 
     def dealers = { attrs ->
+        String type = attrs.type
+        List<Integer> dealerList = attrs.list("dealerList")
         List<Distributor> dealers = distributorService.getValidDistributors()
         MarkupBuilder builder = new MarkupBuilder(out)
         Map<String, String> params = [type: attrs.type, name: "distributor"]
@@ -247,6 +250,12 @@ class AppTagLib {
 
             dealers.each { dealer ->
                 params.value = dealer.id
+
+                if (dealerList?.contains(dealer.id)) {
+                    params.checked = true
+                } else {
+                    params.remove("checked")
+                }
 
                 div(class: attrs.type) {
                     label {
@@ -270,7 +279,7 @@ class AppTagLib {
         String type = attrs.type
         MarkupBuilder builder = new MarkupBuilder(out)
         Map<String, String> paymentTypes = [credit: "Credito", cash: "Contado"]
-        Map<String, String> params = [type: type, name: type == "radio" ? "paymentTypes" : "paymentType"]
+        Map<String, String> params = [type: type, name: "paymentType"]
 
         builder.div {
             p "Tipos de pago"
@@ -300,6 +309,35 @@ class AppTagLib {
 
             div(class: "form-group") {
                 input(name: "to", class: "form-control", placeholder: "Hasta")
+            }
+        }
+    }
+
+    def paymentStatus = { attrs ->
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map<String, String> params = [type: "checkbox", name: "paymentStatus"]
+
+        builder {
+            p "Estado de pago"
+
+            div(class: "checkbox") {
+                params.value = "pending"
+
+                label {
+                    input(params)
+
+                    mkp.yield "Pendiente"
+                }
+            }
+
+            div(class: "checkbox") {
+                params.value = "paid"
+
+                label {
+                    input(params)
+
+                    mkp.yield "Cancelado"
+                }
             }
         }
     }

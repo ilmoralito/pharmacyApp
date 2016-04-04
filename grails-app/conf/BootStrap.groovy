@@ -240,6 +240,7 @@ class BootStrap {
         dealers << builder.distributor(
             name: "Dealer1",
             telephoneNumber: "23114455",
+            daysToPay: 30,
             id: "dealer#1"
         ) {
             provider(refId: "LABORATORY1")
@@ -251,6 +252,7 @@ class BootStrap {
         dealers << builder.distributor(
             name: "Dealer2",
             telephoneNumber: "23111234",
+            daysToPay: 20,
             id: "dealer#2"
         ) {
             provider(refId: "LABORATORY1")
@@ -260,7 +262,8 @@ class BootStrap {
 
         dealers << builder.distributor(
             name: "Dealer3",
-            telephoneNumber: "23117788"
+            telephoneNumber: "23117788",
+            daysToPay: 30
         ) {
             provider(refId: "LABORATORY3")
             provider(refId: "LABORATORY4")
@@ -269,7 +272,8 @@ class BootStrap {
 
         dealers << builder.distributor(
             name: "Dealer4",
-            telephoneNumber: "23118745"
+            telephoneNumber: "23118745",
+            daysToPay: 20
         ) {
             provider(refId: "LABORATORY1")
             provider(refId: "LABORATORY2")
@@ -281,6 +285,7 @@ class BootStrap {
         dealers << builder.distributor(
             name: "Dealer5",
             telephoneNumber: "23112258",
+            daysToPay: 60,
             enabled: false
         ) {
             contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")

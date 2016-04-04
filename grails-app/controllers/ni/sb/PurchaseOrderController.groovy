@@ -32,10 +32,9 @@ class PurchaseOrderController {
     def createPurchaseOrderFlow = {
         init {
             action {
-                def currentUser = springSecurityService.principal
                 List<Distributor> dealers = distributorService.getValidDistributors()
 
-                [dealers: dealers, currentUser: currentUser]
+                [dealers: dealers]
             }
 
             on("success").to "selectPurchaseOrderParameters"
@@ -43,22 +42,25 @@ class PurchaseOrderController {
 
 
         selectPurchaseOrderParameters {
-            on("confirm") { createPurchaseOrderCommand command ->
-                if (command.hasErrors()) {
-                    command.errors.allErrors.each { error ->
+            on("confirm") { PurchaseOrderCommand cmd ->
+                println cmd.distributor
+                println cmd.invoiceNumber
+                println cmd.paymentDate
+                println cmd.paymentType
+
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
                         log.error "[$error.field: $error.defaultMessage]"
                     }
 
                     return error()
                 }
 
-                Distributor distributor = Distributor.get(command.distributor)
-
                 [
-                    invoiceNumber: command.invoiceNumber,
-                    paymentType: command.paymentType,
-                    deadline: command.deadline,
-                    distributor: distributor
+                    distributor: cmd.distributor,
+                    invoiceNumber: cmd.invoiceNumber,
+                    paymentDate: cmd.paymentDate,
+                    paymentType: cmd.paymentType
                 ]
             }. to "items"
 
@@ -69,16 +71,24 @@ class PurchaseOrderController {
             on("show").to "show"
         }
 
+        show {
+            on("confirm") {
+
+            }.to "show"
+
+            on("goBack").to "items"
+        }
+
         done {
             redirect controller: "purchaseOrder", action: "list"
         }
     }
 }
 
-class createPurchaseOrderCommand {
-    String invoiceNumber
-    Date deadline
+class PurchaseOrderCommand implements Serializable {
     Integer distributor
+    String invoiceNumber
+    Date paymentDate
     String paymentType
 
     static constraints = {

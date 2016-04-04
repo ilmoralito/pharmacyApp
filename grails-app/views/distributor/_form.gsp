@@ -15,6 +15,17 @@
         placeholder="Numero telefonico"/>
 </div>
 
+<div class="form-group">
+    <input
+        type="number"
+        id="daysToPay"
+        name="daysToPay"
+        min="1",
+        value="${dealer?.daysToPay}"
+        class="form-control"
+        placeholder="Limite de pago">
+</div>
+
 <p>Contacto</p>
 <div class="form-group">
     <g:textField

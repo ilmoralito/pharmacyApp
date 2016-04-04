@@ -5,24 +5,27 @@
     </head>
 
     <content tag="main">
-            
+        
     </content>
     <content tag="col1">
-        <p>Datos de pedido</p>
-
         <label>Numero de factura</label>
         <p>${invoiceNumber}</p>
 
         <label>Realizado por</label>
-        <P>${currentUser.authorities}</P>
+        <P>${}</P>
 
         <label>Distribuidor</label>
-        <P>${distributor.name}</P>
+        <P>${distributor}</P>
 
         <label>Tipo de pago</label>
         <p><pharmacyApp:paymentType type="${paymentType}"/></p>
 
-        <g:link name="edit" class="btn btn-default btn-block">
+        <g:if test="${paymentType == 'credit'}">
+            <label>Fecha de pago</label>
+            <p>${paymentDate}</p>
+        </g:if>
+
+        <g:link event="show" class="btn btn-default btn-block">
             Editar
         </g:link>
     </content>

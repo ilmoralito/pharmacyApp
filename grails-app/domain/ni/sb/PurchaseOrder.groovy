@@ -3,27 +3,27 @@ package ni.sb
 class PurchaseOrder implements Serializable {
     Distributor distributor
     User user
-    String paymentType = "credit"
     String invoiceNumber
-    Date deadline
-    BigDecimal balance
-    Boolean enabled = true
+    String paymentType = "credit"
+    Date paymentDate
     String paymentStatus
+    Boolean enabled = true
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
-        paymentType inList: ["credit", "cash"], maxSize: 255
         invoiceNumber blank: false, unique: true
-        deadline nullable: true, validator: { deadline, obj ->
-            if (obj.paymentType == "credit") {
-                Date today = new Date()
+        paymentType inList: ["credit", "cash"], maxSize: 255
+        paymentDate nullable: true, validator: { paymentDate, obj ->
+            println paymentDate?.class?.name
 
-                deadline >= today
+            if (obj.paymentType == "credit") {
+                Date today = new Date().clearTime()
+
+                paymentDate >= today
             }
         }
-        balance minSize: 1.0
         paymentStatus inList: ["pending", "paid"]
         items nullable: false, minSize: 1
     }

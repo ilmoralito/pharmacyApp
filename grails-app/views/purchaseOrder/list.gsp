@@ -37,17 +37,18 @@
                 <g:textField
                     name="invoiceNumber"
                     value="${params?.invoiceNumber}"
-                    class="form-control"
-                    placeholder="####"/>
+                    class="form-control"/>
             </div>
 
             <pharmacyApp:fromTo/>
 
-            <pharmacyApp:dealers type="checkbox"/>
+            <pharmacyApp:dealers type="checkbox" dealerList="${params.list('distributor')}"/>
 
             <pharmacyApp:paymentTypeBox type="checkbox"/>
 
             <pharmacyApp:users/>
+
+            <pharmacyApp:paymentStatus/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>
