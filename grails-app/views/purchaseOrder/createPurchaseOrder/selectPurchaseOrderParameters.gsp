@@ -1,7 +1,7 @@
 <g:applyLayout name="twoColumns">
     <head>
         <title>Orden de compra</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, purchaseOrder"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
     <content tag="main">

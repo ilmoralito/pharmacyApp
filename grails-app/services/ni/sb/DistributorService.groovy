@@ -4,6 +4,9 @@ import grails.transaction.Transactional
 
 @Transactional
 class DistributorService {
+    Distributor getDistributor(Long id) {
+        Distributor.get(id)
+    }
 
     List<Distributor> getValidDistributors() {
         List<Distributor> dealers = Distributor.where {

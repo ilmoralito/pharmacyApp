@@ -7,14 +7,6 @@
         autofocus="true"/>
 </div>
 
-<pharmacyApp:paymentTypeBox type="radio"/>
-
-<div id="target" class="form-group hide">
-    <g:textField
-        name="paymentDate"
-        value="${paymentDate}"
-        class="form-control"
-        placeholder="Fecha de pago"/>
-</div>
+<pharmacyApp:paymentTypeBox type="radio" paymentType="${paymentType}"/>
 
 <pharmacyApp:dealers type="radio" dealerList="[distributor?.id]"/>

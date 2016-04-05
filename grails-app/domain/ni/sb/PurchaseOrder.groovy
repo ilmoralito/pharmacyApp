@@ -16,8 +16,6 @@ class PurchaseOrder implements Serializable {
         invoiceNumber blank: false, unique: true
         paymentType inList: ["credit", "cash"], maxSize: 255
         paymentDate nullable: true, validator: { paymentDate, obj ->
-            println paymentDate?.class?.name
-
             if (obj.paymentType == "credit") {
                 Date today = new Date().clearTime()
 

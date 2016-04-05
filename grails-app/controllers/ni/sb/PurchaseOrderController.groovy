@@ -43,11 +43,6 @@ class PurchaseOrderController {
 
         selectPurchaseOrderParameters {
             on("confirm") { PurchaseOrderCommand cmd ->
-                println cmd.distributor
-                println cmd.invoiceNumber
-                println cmd.paymentDate
-                println cmd.paymentType
-
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
                         log.error "[$error.field: $error.defaultMessage]"
@@ -56,10 +51,12 @@ class PurchaseOrderController {
                     return error()
                 }
 
+                Distributor distributor =distributorService.getDistributor(cmd.distributor)
+
                 [
-                    distributor: cmd.distributor,
+                    distributor: distributor,
                     invoiceNumber: cmd.invoiceNumber,
-                    paymentDate: cmd.paymentDate,
+                    paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
                     paymentType: cmd.paymentType
                 ]
             }. to "items"
@@ -72,8 +69,21 @@ class PurchaseOrderController {
         }
 
         show {
-            on("confirm") {
+            on("confirm") { PurchaseOrderCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[$error.field: $error.defaultMessage]"
+                    }
 
+                    return error()
+                }
+
+                Distributor distributor =distributorService.getDistributor(cmd.distributor)
+
+                flow.distributor = distributor
+                flow.invoiceNumber = cmd.invoiceNumber
+                flow.paymentDate = getPaymentDate(cmd.paymentType, distributor.daysToPay)
+                flow.paymentType = cmd.paymentType
             }.to "show"
 
             on("goBack").to "items"
@@ -83,12 +93,22 @@ class PurchaseOrderController {
             redirect controller: "purchaseOrder", action: "list"
         }
     }
+
+    private getPaymentDate(String paymentType, Integer daysToPay) {
+        Date today = new Date()
+        Date paymentDate = null
+
+        if (paymentType == "credit") {
+            paymentDate = today + daysToPay
+        }
+
+        paymentDate
+    }
 }
 
 class PurchaseOrderCommand implements Serializable {
     Integer distributor
     String invoiceNumber
-    Date paymentDate
     String paymentType
 
     static constraints = {

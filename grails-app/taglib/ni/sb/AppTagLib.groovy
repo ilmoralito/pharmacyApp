@@ -277,6 +277,7 @@ class AppTagLib {
 
     def paymentTypeBox = { attrs ->
         String type = attrs.type
+        String pt = attrs.paymentType
         MarkupBuilder builder = new MarkupBuilder(out)
         Map<String, String> paymentTypes = [credit: "Credito", cash: "Contado"]
         Map<String, String> params = [type: type, name: "paymentType"]
@@ -286,6 +287,12 @@ class AppTagLib {
 
             paymentTypes.each { paymentType ->
                 params.value = paymentType.key
+
+                if (paymentType.key == pt) {
+                    params.checked = true
+                } else {
+                    params.remove("checked")
+                }
 
                 div(class: type) {
                     label {
