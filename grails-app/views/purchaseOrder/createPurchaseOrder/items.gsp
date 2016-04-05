@@ -5,7 +5,22 @@
     </head>
 
     <content tag="main">
-        
+        <g:form autocomplete="off">
+            <div class="form-group">
+                <g:textField
+                    name="q"
+                    value="${params?.q}"
+                    class="form-control"
+                    autofocus="true"
+                    placeholder="Criterio de busqueda"/>
+            </div>
+
+            <g:submitButton name="sendQuery" value="Consultar" class="btn btn-primary"/>
+        </g:form>
+
+        <g:if test="${products}">
+            ${products}
+        </g:if>
     </content>
     <content tag="col1">
         <label>Numero de factura</label>
