@@ -18,7 +18,8 @@ class AppTagLib {
         dealers: "raw",
         paymentTypeBox: "raw",
         fromTo: "raw",
-        paymentStatus: "raw"
+        paymentStatus: "raw",
+        combo: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -344,6 +345,30 @@ class AppTagLib {
                     input(params)
 
                     mkp.yield "Cancelado"
+                }
+            }
+        }
+    }
+
+    def combo = { attrs ->
+        MarkupBuilder builder = new MarkupBuilder(out)
+        String name = attrs.name
+        String data = attrs.data
+        List<Product> from = attrs.from
+        Map<String, String> params = [:]
+
+        builder.div(class: "form-group") {
+            delegate.select(name: name, class: "form-control") {
+                from.each { o ->
+                    params.value = o.id
+
+                    if (data != null) {
+                        params["data-nami"] = o[data]*.name
+                    }
+
+                    option(params) {
+                        mkp.yield o.name
+                    }
                 }
             }
         }

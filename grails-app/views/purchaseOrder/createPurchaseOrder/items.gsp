@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Articulos</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, purchaseOrder"/>
     </head>
 
     <content tag="main">
@@ -10,7 +10,9 @@
                 <g:select
                     name="q"
                     from="${products}"
-                    value="${params?.q}"
+                    optionKey="name"
+                    optionValue="name"
+                    value="${q}"
                     class="form-control"/>
             </div>
 
@@ -24,34 +26,36 @@
                     <p>${r.provider}</p>
 
                     <g:if test="${r instanceof ni.sb.Medicine}">
-                        <div class="form-group">
-                            <g:select
-                                name="presentation"
-                                from="${r.presentations}"
-                                class="form-control"/>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <pharmacyApp:combo
+                                    name="presentation"
+                                    from="${r.presentations}"
+                                    data="measures"/>
+                            </div>
 
-                        <div class="form-group">
-                            <g:select
-                                name="measure"
-                                from="${r.presentations*.measures}"
-                                class="form-control"/>
+                            <div class="col-md-6">
+                                <pharmacyApp:combo
+                                    name="measure"
+                                    from="${r.presentations[0].measures}"/>
+                            </div>
                         </div>
                     </g:if>
 
                     <g:if test="${r instanceof ni.sb.BrandProduct}">
-                        <div class="form-group">
-                            <g:select
-                                name="brand"
-                                from="${r.brands}"
-                                class="form-control"/>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <pharmacyApp:combo
+                                    name="brand"
+                                    from="${r.brands}"
+                                    data="details"/>
+                            </div>
 
-                        <div class="form-group">
-                            <g:select
-                                name="detail"
-                                from="${r.brands*.details}"
-                                class="form-control"/>
+                            <div class="col-md-6">
+                                <pharmacyApp:combo
+                                    name="detail"
+                                    from="${r.brands[0].details}"/>
+                            </div>
                         </div>
                     </g:if>
 
@@ -65,24 +69,30 @@
                             placeholder="Cantidad">
                     </div>
 
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="purchasePrice"
-                            id="purchasePrice"
-                            min="1"
-                            class="form-control"
-                            placeholder="Precio de compra">
-                    </div>
-
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="sellingPrice"
-                            id="sellingPrice"
-                            min="1"
-                            class="form-control"
-                            placeholder="Precio de venta">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    name="purchasePrice"
+                                    id="purchasePrice"
+                                    min="1"
+                                    class="form-control"
+                                    placeholder="Precio de compra">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    name="sellingPrice"
+                                    id="sellingPrice"
+                                    min="1"
+                                    class="form-control"
+                                    placeholder="Precio de venta">
+                            </div>
+                        </div>
                     </div>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary"/>

@@ -81,7 +81,7 @@ class PurchaseOrderController {
 
                 List<Product> result = flow.productList.findAll { it.name == q }
 
-                [result: result]
+                [result: result, q: q]
             }.to "items"
         }
 

@@ -1,14 +1,9 @@
-$('input:radio[name=paymentType]').on('change', function() {
+$('form').find("select:first").on('change', function() {
     var $this = $(this);
-    var $target = $('#target');
+    var data = $this.find(':selected').data('nami');
+    var target = $this.parent().parent().next().find('select');
 
-    console.log($this.val())
-    if ($this.val() == 'credit') {
-        $target.removeClass('hide');
-        $target.addClass('show');
-        $('#deadline').focus();
-    } else {
-        $target.removeClass('show');
-        $target.addClass('hide');
-    }
-})
+    target.find('option').remove()
+
+    console.log(data);
+});
