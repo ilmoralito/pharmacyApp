@@ -2,7 +2,7 @@ package ni.sb
 
 import org.grails.databinding.BindUsing
 
-class Detail {
+class Detail implements Serializable {
     @BindUsing({obj, source ->
         source["name"]?.capitalize()
     })

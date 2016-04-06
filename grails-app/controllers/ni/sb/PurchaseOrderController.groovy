@@ -53,11 +53,20 @@ class PurchaseOrderController {
 
                 Distributor distributor =distributorService.getDistributor(cmd.distributor)
 
+                // distributor > providers > product
+                List<Product> products = []
+
+                distributor.providers.each { provider ->
+                    products << provider.products
+                }
+
                 [
                     distributor: distributor,
                     invoiceNumber: cmd.invoiceNumber,
                     paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
-                    paymentType: cmd.paymentType
+                    paymentType: cmd.paymentType,
+                    productList: products.flatten(),
+                    products: products.flatten().unique() { a, b -> a.name <=> b.name }
                 ]
             }. to "items"
 
@@ -66,6 +75,14 @@ class PurchaseOrderController {
 
         items {
             on("show").to "show"
+
+            on("query") {
+                String q = params?.q
+
+                List<Product> result = flow.productList.findAll { it.name == q }
+
+                [result: result]
+            }.to "items"
         }
 
         show {

@@ -24,7 +24,6 @@ class Item implements Serializable {
 
     def beforeUpdate() {
         total = purchasePrice * quantity
-        purchaseOrder.balance += total
     }
 
     static mapping = {

@@ -5,21 +5,90 @@
     </head>
 
     <content tag="main">
-        <g:form autocomplete="off">
+        <g:form autocomplete="off" class="form-inline">
             <div class="form-group">
-                <g:textField
+                <g:select
                     name="q"
+                    from="${products}"
                     value="${params?.q}"
-                    class="form-control"
-                    autofocus="true"
-                    placeholder="Criterio de busqueda"/>
+                    class="form-control"/>
             </div>
 
-            <g:submitButton name="sendQuery" value="Consultar" class="btn btn-primary"/>
+            <g:submitButton name="query" value="Consultar" class="btn btn-primary"/>
         </g:form>
+        <br>
 
-        <g:if test="${products}">
-            ${products}
+        <g:if test="${result}">
+            <g:each in="${result}" var="r">
+                <g:form autocomplete="off">
+                    <p>${r.provider}</p>
+
+                    <g:if test="${r instanceof ni.sb.Medicine}">
+                        <div class="form-group">
+                            <g:select
+                                name="presentation"
+                                from="${r.presentations}"
+                                class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <g:select
+                                name="measure"
+                                from="${r.presentations*.measures}"
+                                class="form-control"/>
+                        </div>
+                    </g:if>
+
+                    <g:if test="${r instanceof ni.sb.BrandProduct}">
+                        <div class="form-group">
+                            <g:select
+                                name="brand"
+                                from="${r.brands}"
+                                class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <g:select
+                                name="detail"
+                                from="${r.brands*.details}"
+                                class="form-control"/>
+                        </div>
+                    </g:if>
+
+                    <div class="form-group">
+                        <input
+                            type="number"
+                            name="quantity"
+                            id="quantity"
+                            min="1"
+                            class="form-control"
+                            placeholder="Cantidad">
+                    </div>
+
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            name="purchasePrice"
+                            id="purchasePrice"
+                            min="1"
+                            class="form-control"
+                            placeholder="Precio de compra">
+                    </div>
+
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            name="sellingPrice"
+                            id="sellingPrice"
+                            min="1"
+                            class="form-control"
+                            placeholder="Precio de venta">
+                    </div>
+
+                    <g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
+                </g:form>
+                <br>
+            </g:each>
         </g:if>
     </content>
     <content tag="col1">
