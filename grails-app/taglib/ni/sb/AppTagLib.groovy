@@ -363,7 +363,7 @@ class AppTagLib {
                     params.value = o.id
 
                     if (data != null) {
-                        params["data-nami"] = o[data]*.name
+                        params["data-info"] = o[data].collect { [id: it.id, name: it.name] }
                     }
 
                     option(params) {

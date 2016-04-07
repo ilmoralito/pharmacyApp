@@ -66,7 +66,8 @@ class PurchaseOrderController {
                     paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
                     paymentType: cmd.paymentType,
                     productList: products.flatten(),
-                    products: products.flatten().unique() { a, b -> a.name <=> b.name }
+                    products: products.flatten().unique() { a, b -> a.name <=> b.name },
+                    items: []
                 ]
             }. to "items"
 
@@ -82,6 +83,57 @@ class PurchaseOrderController {
                 List<Product> result = flow.productList.findAll { it.name == q }
 
                 [result: result, q: q]
+            }.to "items"
+
+            on("addItem") { ItemComamnd cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[$error.field: $error.defaultMessage]"
+                    }
+
+                    return error()
+                }
+
+                Product product = Product.get(cmd.product)
+
+                if (!(product instanceof Medicine) || !(product instanceof BrandProduct)) {
+                    Item item = new Item(
+                        product: product,
+                        quantity: cmd.quantity,
+                        purchasePrice: cmd.purchasePrice,
+                        sellingPrice: cmd.sellingPrice
+                    )
+
+                    flow.items << item
+                }
+
+                if (product instanceof Medicine) {
+                    MedicineOrder medicineOrder = new MedicineOrder(
+                        product: product,
+                        quantity: cmd.quantity,
+                        purchasePrice: cmd.purchasePrice,
+                        sellingPrice: cmd.sellingPrice,
+                        presentation: cmd.presentation,
+                        measure: cmd.measure,
+                        bash: cmd.bash
+                    )
+
+                    flow.items << medicineOrder
+                }
+
+                if (product instanceof BrandProduct) {
+                    BrandProductOrder brandProductOrder = new BrandProductOrder(
+                        product: product,
+                        quantity: cmd.quantity,
+                        purchasePrice: cmd.purchasePrice,
+                        sellingPrice: cmd.sellingPrice,
+                        brand: cmd.brand,
+                        detail: cmd.detail,
+                    )
+
+                    items << brandProductOrder
+                }
+                
             }.to "items"
         }
 
@@ -130,5 +182,16 @@ class PurchaseOrderCommand implements Serializable {
 
     static constraints = {
         importFrom PurchaseOrder
+    }
+}
+
+class ItemComamnd implements Serializable {
+    Integer product
+    Integer quantity
+    BigDecimal purchasePrice
+    BigDecimal sellingPrice
+
+    static constraints = {
+        importFrom Item
     }
 }

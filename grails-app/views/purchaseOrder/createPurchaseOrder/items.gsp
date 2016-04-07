@@ -25,6 +25,8 @@
                 <g:form autocomplete="off">
                     <p>${r.provider}</p>
 
+                    <g:hiddenField name="product" value="${r.id}"/>
+
                     <g:if test="${r instanceof ni.sb.Medicine}">
                         <div class="row">
                             <div class="col-md-6">
@@ -39,6 +41,13 @@
                                     name="measure"
                                     from="${r.presentations[0].measures}"/>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <g:textField
+                                name="bash"
+                                class="form-control"
+                                placeholder="Fecha de vencimiento"/>
                         </div>
                     </g:if>
 
@@ -95,10 +104,55 @@
                         </div>
                     </div>
 
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary"/>
+                    <g:submitButton name="addItem" value="Agregar" class="btn btn-primary"/>
                 </g:form>
                 <br>
             </g:each>
+        </g:if>
+
+        <!-- Items-->
+        <g:if test="${items}">
+            <table class="table table -hover table-striped">
+                <thead>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>P. Compra</th>
+                    <th>P. Venta</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>T. Compra</th>
+                    <th>T. Venta</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <g:each in="${flow.items}" var="item" status="index">
+                        <tr>
+                            <td>${item.product.name}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.purchasePrice}</td>
+                            <td>${item.sellingPrice}</td>
+                            <g:if test="${item instanceof ni.sb.Medicine}">
+                                <td>${item.presentation}</td>
+                                <td>${item.measure}</td>
+                                <td>${item.bash.format("yyyy-MM-dd")}</td>
+                            </g:if>
+                            <g:if test="condition">
+                                <td>${item.brand}</td>
+                                <td>${item.detail}</td>
+                                <td></td>
+                            </g:if>
+                            <td>${item.purchasePrice * item.quantity}</td>
+                            <td>${item.sellingPrice * item.quantity}</td>
+                            <td>
+                                <g:link event="deleteItem" params="[index: index]">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </g:link>
+                            </td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
         </g:if>
     </content>
     <content tag="col1">

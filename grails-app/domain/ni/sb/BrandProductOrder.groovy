@@ -1,18 +1,17 @@
 package ni.sb
 
 class BrandProductOrder extends Item {
-	Brand brand
-  String detail
+    Brand brand
+    String detail
 
-  static constraints = {
-    brand nullable:false
-    detail blank:false
-  }
+    static constraints = {
+        brand nullable: false
+        detail blank: false
+    }
 
-  static mapping = {
-  	version false
-    brand fetch: 'join'
-  }
+    static mapping = {
+        brand fetch: 'join'
+    }
 
-  String toString() { product }
+    String toString() { product.name }
 }
