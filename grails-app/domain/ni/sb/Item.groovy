@@ -13,7 +13,7 @@ class Item implements Serializable {
         quantity min: 1
         purchasePrice min: 0.1, scale: 2
         sellingPrice min: 0.1, scale: 2, validator: { sellingPrice, item ->
-            if (sellingPrice >= item.purchasePrice) {
+            if (sellingPrice < item.purchasePrice) {
                 "notValid"
             }
         }

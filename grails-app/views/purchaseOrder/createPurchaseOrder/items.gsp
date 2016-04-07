@@ -113,6 +113,18 @@
         <!-- Items-->
         <g:if test="${items}">
             <table class="table table -hover table-striped">
+                <colgroup>
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 9.9%;">
+                    <col span="1" style="width: 1%;">
+                </colgroup>
                 <thead>
                     <th>Producto</th>
                     <th>Cantidad</th>
@@ -126,18 +138,23 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    <g:each in="${flow.items}" var="item" status="index">
+                    <g:each in="${items.sort { it.product.name }}" var="item" status="index">
                         <tr>
                             <td>${item.product.name}</td>
                             <td>${item.quantity}</td>
                             <td>${item.purchasePrice}</td>
                             <td>${item.sellingPrice}</td>
+                            <g:if test="${!(item instanceof ni.sb.Medicine) || !(item instanceof ni.sb.BrandProduct)}">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </g:if>
                             <g:if test="${item instanceof ni.sb.Medicine}">
                                 <td>${item.presentation}</td>
                                 <td>${item.measure}</td>
                                 <td>${item.bash.format("yyyy-MM-dd")}</td>
                             </g:if>
-                            <g:if test="condition">
+                            <g:if test="${item instanceof ni.sb.Brand}">
                                 <td>${item.brand}</td>
                                 <td>${item.detail}</td>
                                 <td></td>
@@ -145,7 +162,7 @@
                             <td>${item.purchasePrice * item.quantity}</td>
                             <td>${item.sellingPrice * item.quantity}</td>
                             <td>
-                                <g:link event="deleteItem" params="[index: index]">
+                                <g:link event="deleteItem" params="[id: item.product.id]">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </g:link>
                             </td>
@@ -156,25 +173,34 @@
         </g:if>
     </content>
     <content tag="col1">
-        <label>Numero de factura</label>
-        <p>${invoiceNumber}</p>
+        <div id="meta">
+            <label>Numero de factura</label>
+            <p>${invoiceNumber}</p>
+            
+            <label>Realizado por</label>
+            <P>${applicationContext.springSecurityService.currentUser?.fullName}</P>
+            
+            <label>Distribuidor</label>
+            <P>${distributor.name}</P>
+            
+            <label>Tipo de pago</label>
+            <p><pharmacyApp:paymentType type="${paymentType}"/></p>
+            
+            <g:if test="${paymentDate}">
+                <label>Fecha de pago</label>
+                <p>${paymentDate?.format("yyyy-MM-dd")}</p>
+            </g:if>
+            
+            <g:link event="show" class="btn btn-default btn-block">
+                Editar
+            </g:link>
+        </div>
+        <br>
 
-        <label>Realizado por</label>
-        <P>${applicationContext.springSecurityService.currentUser?.fullName}</P>
-
-        <label>Distribuidor</label>
-        <P>${distributor.name}</P>
-
-        <label>Tipo de pago</label>
-        <p><pharmacyApp:paymentType type="${paymentType}"/></p>
-
-        <g:if test="${paymentDate}">
-            <label>Fecha de pago</label>
-            <p>${paymentDate?.format("yyyy-MM-dd")}</p>
+        <g:if test="${items}">
+            <g:link event="confirm" class="btn btn-primary btn-block btn-lg">
+                Confirmar compra
+            </g:link>
         </g:if>
-
-        <g:link event="show" class="btn btn-default btn-block">
-            Editar
-        </g:link>
     </content>
 </g:applyLayout>

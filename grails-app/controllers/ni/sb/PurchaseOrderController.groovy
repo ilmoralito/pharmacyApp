@@ -40,7 +40,6 @@ class PurchaseOrderController {
             on("success").to "selectPurchaseOrderParameters"
         }
 
-
         selectPurchaseOrderParameters {
             on("confirm") { PurchaseOrderCommand cmd ->
                 if (cmd.hasErrors()) {
@@ -104,6 +103,13 @@ class PurchaseOrderController {
                         sellingPrice: cmd.sellingPrice
                     )
 
+                    // Check if item is repited if it is the case remove it and add a new item to items
+                    Item prod = flow.items.find { item.product == it.product }
+                    
+                    if (prod) {
+                        flow.items.remove(prod)
+                    }
+
                     flow.items << item
                 }
 
@@ -133,8 +139,21 @@ class PurchaseOrderController {
 
                     items << brandProductOrder
                 }
-                
             }.to "items"
+
+            on("deleteItem") {
+                Integer id = params.int("id")
+
+                Item item = flow.items.find { id == it.product.id }
+                    
+                if (item) {
+                    flow.items.remove(item)
+                }
+            }.to "items"
+
+            on("confirm") {
+                // TODO
+            }.to "done"
         }
 
         show {
