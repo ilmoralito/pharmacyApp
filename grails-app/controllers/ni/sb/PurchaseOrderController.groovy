@@ -214,3 +214,30 @@ class ItemComamnd implements Serializable {
         importFrom Item
     }
 }
+
+class MedicineOrder {
+    Integer product
+    Integer quantity
+    BigDecimal purchasePrice
+    BigDecimal sellingPrice
+    Integer presentation
+    Integer measure
+    Date dueDate
+
+    static constraints = {
+        importFrom MedicineOrder
+    }
+}
+
+class BrandProductOrder {
+    Integer product
+    Integer quantity
+    BigDecimal purchasePrice
+    BigDecimal sellingPrice
+    Integer brand
+    Integer detail
+
+    static constraints = {
+        importFrom BrandProductOrder
+    }
+}
