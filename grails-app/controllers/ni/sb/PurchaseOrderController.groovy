@@ -215,7 +215,7 @@ class ItemComamnd implements Serializable {
     }
 }
 
-class MedicineOrder {
+class MedicineOrderCommand {
     Integer product
     Integer quantity
     BigDecimal purchasePrice
@@ -229,7 +229,7 @@ class MedicineOrder {
     }
 }
 
-class BrandProductOrder {
+class BrandProductOrderCommand {
     Integer product
     Integer quantity
     BigDecimal purchasePrice
