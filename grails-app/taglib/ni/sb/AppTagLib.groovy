@@ -1,6 +1,7 @@
 package ni.sb
 
 import groovy.xml.MarkupBuilder
+import groovy.json.JsonOutput
 
 class AppTagLib {
     def saleService
@@ -363,7 +364,7 @@ class AppTagLib {
                     params.value = o.id
 
                     if (data != null) {
-                        params["data-info"] = o[data].collect { [id: it.id, name: it.name] }
+                        params["data-info"] = JsonOutput.toJson(o[data].collect { [id: it.id, name: it.name] })
                     }
 
                     option(params) {
