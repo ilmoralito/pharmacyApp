@@ -152,7 +152,7 @@
                             <g:if test="${item instanceof ni.sb.Medicine}">
                                 <td>${item.presentation}</td>
                                 <td>${item.measure}</td>
-                                <td>${item.bash.format("yyyy-MM-dd")}</td>
+                                <td>${item.dueDate.format("yyyy-MM-dd")}</td>
                             </g:if>
                             <g:if test="${item instanceof ni.sb.Brand}">
                                 <td>${item.brand}</td>
