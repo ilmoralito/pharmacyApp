@@ -2,8 +2,8 @@ package ni.sb
 
 class MedicineOrder extends Item {
     Presentation presentation 
-    String measure
-    Date bash
+    Measure measure
+    Date dueDate
 
     static constraints = {
         presentation nullable: false, validator: { presentation, item ->
@@ -16,10 +16,10 @@ class MedicineOrder extends Item {
                 "notMeasureInSelectedPresentation"
             }
         }
-        bash nullable: false, validator: { bash ->
+        dueDate nullable: false, validator: { dueDate ->
             Date date = new Date() + 60
 
-            if (bash < date) {
+            if (dueDate < date) {
                 "notValid"
             }
         }
