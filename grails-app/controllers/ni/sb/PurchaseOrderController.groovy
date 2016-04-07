@@ -66,7 +66,7 @@ class PurchaseOrderController {
                     paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
                     paymentType: cmd.paymentType,
                     productList: products.flatten(),
-                    products: products.flatten().unique() { a, b -> a.name <=> b.name },
+                    products: products.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name },
                     items: []
                 ]
             }. to "items"
