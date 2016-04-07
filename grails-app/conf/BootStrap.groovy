@@ -208,7 +208,11 @@ class BootStrap {
             address: "Lorem ipsum dolor sit amelt",
             telephoneNumber: "23884455",
             id: "LABORATORY3"
-        )
+        ) {
+            product(name: "p1")
+            product(name: "p2")
+            product(name: "p3")
+        }
 
         providers << builder.provider(
             name: "Laboratory4",
