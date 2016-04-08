@@ -250,7 +250,7 @@ class PurchaseOrderCommand {
 }
 
 class ItemComamnd {
-    Integer product
+    Long product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
@@ -261,7 +261,7 @@ class ItemComamnd {
 }
 
 class MedicineOrderCommand {
-    Product product
+    Long product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
@@ -275,7 +275,7 @@ class MedicineOrderCommand {
 }
 
 class BrandProductOrderCommand {
-    Product product
+    Long product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice

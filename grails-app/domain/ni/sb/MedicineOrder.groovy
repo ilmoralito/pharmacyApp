@@ -1,6 +1,6 @@
 package ni.sb
 
-class MedicineOrder extends Item implements Serializable {
+class MedicineOrder extends Item {
     Presentation presentation 
     Measure measure
     Date dueDate
@@ -27,5 +27,5 @@ class MedicineOrder extends Item implements Serializable {
         }
     }
 
-    String toString() { product.name }
+    String toString() { product }
 }

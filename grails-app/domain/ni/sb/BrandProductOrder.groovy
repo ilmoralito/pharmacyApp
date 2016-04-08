@@ -1,17 +1,13 @@
 package ni.sb
 
-class BrandProductOrder extends Item implements Serializable {
+class BrandProductOrder extends Item {
     Brand brand
-    String detail
+    Detail detail
 
     static constraints = {
-        brand nullable: false
-        detail blank: false
+        brand()
+        detail()
     }
 
-    static mapping = {
-        brand fetch: 'join'
-    }
-
-    String toString() { product.name }
+    String toString() { product }
 }
