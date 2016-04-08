@@ -156,7 +156,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   "/register/register/**":          ["permitAll"]
 ]
 
-grails.databinding.dateFormats = ["yyyy-MM-dd", "dd-MM-yyyy"]
 ni.sb.minDateToSale = 60
 
 grails {

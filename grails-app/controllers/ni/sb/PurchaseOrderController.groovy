@@ -260,7 +260,7 @@ class ItemComamnd {
     }
 }
 
-class MedicineOrderCommand implements Serializable {
+class MedicineOrderCommand {
     Product product
     Integer quantity
     BigDecimal purchasePrice
