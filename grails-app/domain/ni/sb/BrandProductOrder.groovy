@@ -1,6 +1,6 @@
 package ni.sb
 
-class BrandProductOrder extends Item {
+class BrandProductOrder extends Item implements Serializable {
     Brand brand
     String detail
 

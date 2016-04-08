@@ -25,7 +25,7 @@
                 <g:form autocomplete="off">
                     <p>${r.provider}</p>
 
-                    <g:hiddenField name="product" value="${r.id}"/>
+                    <g:hiddenField name="productId" value="${r.id}"/>
 
                     <g:if test="${r instanceof ni.sb.Medicine}">
                         <div class="row">
@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <g:textField
-                                name="bash"
+                                name="dueDate"
                                 class="form-control"
                                 placeholder="Fecha de vencimiento"/>
                         </div>
@@ -104,72 +104,14 @@
                         </div>
                     </div>
 
-                    <g:submitButton name="addItem" value="Agregar" class="btn btn-primary"/>
+                    <g:submitButton name="${submitName}" value="Agregar" class="btn btn-primary"/>
                 </g:form>
                 <br>
             </g:each>
         </g:if>
 
-        <!-- Items-->
         <g:if test="${items}">
-            <table class="table table -hover table-striped">
-                <colgroup>
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 9.9%;">
-                    <col span="1" style="width: 1%;">
-                </colgroup>
-                <thead>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>P. Compra</th>
-                    <th>P. Venta</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>T. Compra</th>
-                    <th>T. Venta</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <g:each in="${items.sort { it.product.name }}" var="item" status="index">
-                        <tr>
-                            <td>${item.product.name}</td>
-                            <td>${item.quantity}</td>
-                            <td>${item.purchasePrice}</td>
-                            <td>${item.sellingPrice}</td>
-                            <g:if test="${!(item instanceof ni.sb.Medicine) || !(item instanceof ni.sb.BrandProduct)}">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </g:if>
-                            <g:if test="${item instanceof ni.sb.Medicine}">
-                                <td>${item.presentation}</td>
-                                <td>${item.measure}</td>
-                                <td>${item.dueDate.format("yyyy-MM-dd")}</td>
-                            </g:if>
-                            <g:if test="${item instanceof ni.sb.Brand}">
-                                <td>${item.brand}</td>
-                                <td>${item.detail}</td>
-                                <td></td>
-                            </g:if>
-                            <td>${item.purchasePrice * item.quantity}</td>
-                            <td>${item.sellingPrice * item.quantity}</td>
-                            <td>
-                                <g:link event="deleteItem" params="[id: item.product.id]">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </g:link>
-                            </td>
-                        </tr>
-                    </g:each>
-                </tbody>
-            </table>
+            ${items}
         </g:if>
     </content>
     <content tag="col1">

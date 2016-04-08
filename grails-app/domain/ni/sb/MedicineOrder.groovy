@@ -1,22 +1,24 @@
 package ni.sb
 
-class MedicineOrder extends Item {
+class MedicineOrder extends Item implements Serializable {
     Presentation presentation 
     Measure measure
     Date dueDate
 
     static constraints = {
-        presentation nullable: false, validator: { presentation, item ->
+        /*
+        presentation validator: { presentation, item ->
             if (!item.product.presentations.contains(presentation)) {
                 "notPresentationInSelectedProduct"
             }
         }
-        measure nullable: false, validator: { measure, item ->
+        measure validator: { measure, item ->
             if (!item.presentation.measures.contains(measure)) {
                 "notMeasureInSelectedPresentation"
             }
         }
-        dueDate nullable: false, validator: { dueDate ->
+        */
+        dueDate validator: { dueDate ->
             Date date = new Date() + 60
 
             if (dueDate < date) {

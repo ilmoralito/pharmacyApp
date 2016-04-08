@@ -81,7 +81,19 @@ class PurchaseOrderController {
 
                 List<Product> result = flow.productList.findAll { it.name == q }
 
-                [result: result, q: q]
+                Closure getSubmitName = {
+                    Product instance = result[0]
+
+                    if (instance instanceof Medicine) {
+                        "addMedicineOrder"
+                    } else if (instance instanceof BrandProduct) {
+                        "addBrandProductOrder"
+                    } else {
+                        "addItem"
+                    }
+                }
+
+                [result: result, q: q, submitName: getSubmitName()]
             }.to "items"
 
             on("addItem") { ItemComamnd cmd ->
@@ -95,50 +107,83 @@ class PurchaseOrderController {
 
                 Product product = Product.get(cmd.product)
 
-                if (!(product instanceof Medicine) || !(product instanceof BrandProduct)) {
-                    Item item = new Item(
-                        product: product,
-                        quantity: cmd.quantity,
-                        purchasePrice: cmd.purchasePrice,
-                        sellingPrice: cmd.sellingPrice
-                    )
+                Item item = new Item(
+                    product: product,
+                    quantity: cmd.quantity,
+                    purchasePrice: cmd.purchasePrice,
+                    sellingPrice: cmd.sellingPrice
+                )
 
-                    // Check if item is repited if it is the case remove it and add a new item to items
-                    Item prod = flow.items.find { item.product == it.product }
-                    
-                    if (prod) {
-                        flow.items.remove(prod)
+                Item prod = flow.items.find { item.product == it.product }
+                
+                if (prod) {
+                    flow.items.remove(prod)
+                }
+
+                flow.items << item
+            }.to "items"
+
+            on("addMedicineOrder") { MedicineOrderCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[$error.field: $error.defaultMessage]"
                     }
 
-                    flow.items << item
+                    return error()
                 }
 
-                if (product instanceof Medicine) {
-                    MedicineOrder medicineOrder = new MedicineOrder(
-                        product: product,
-                        quantity: cmd.quantity,
-                        purchasePrice: cmd.purchasePrice,
-                        sellingPrice: cmd.sellingPrice,
-                        presentation: cmd.presentation,
-                        measure: cmd.measure,
-                        bash: cmd.bash
-                    )
+                Product product = Product.get(cmd.product)
+                Presentation presentation = Presentation.get(cmd.presentation)
+                Measure measure = Measure.get(cmd.measure)
 
-                    flow.items << medicineOrder
+                MedicineOrder medicineOrder = new MedicineOrder(
+                    product: product,
+                    quantity: cmd.quantity,
+                    purchasePrice: cmd.purchasePrice,
+                    sellingPrice: cmd.sellingPrice,
+                    presentation: presentation,
+                    measure: measure,
+                    dueDate: cmd.dueDate
+                )
+
+                Item item = flow.items.find { medicineOrder.product == it.product }
+                    
+                if (item) {
+                    flow.items.remove(item)
                 }
 
-                if (product instanceof BrandProduct) {
-                    BrandProductOrder brandProductOrder = new BrandProductOrder(
-                        product: product,
-                        quantity: cmd.quantity,
-                        purchasePrice: cmd.purchasePrice,
-                        sellingPrice: cmd.sellingPrice,
-                        brand: cmd.brand,
-                        detail: cmd.detail,
-                    )
+                flow.items << medicineOrder
+            }.to "items"
 
-                    items << brandProductOrder
+            on("addBrandProductOrder") { BrandProductOrderCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[$error.field: $error.defaultMessage]"
+                    }
+
+                    return error()
                 }
+
+                //Product product = Product.get(cmd.product)
+                Brand brand = Brand.get(cmd.brand)
+                Detail detail = Detail.get(cmd.detail)
+
+                BrandProductOrder brandProductOrder = new BrandProductOrder(
+                    product: cmd.product,
+                    quantity: cmd.quantity,
+                    purchasePrice: cmd.purchasePrice,
+                    sellingPrice: cmd.sellingPrice,
+                    brand: brand,
+                    detail: detail
+                )
+
+                Item item = flow.items.find { it.product == brandProductOrder.product }
+                    
+                if (item) {
+                    flow.items.remove(item)
+                }
+
+                flow.items << brandProductOrder
             }.to "items"
 
             on("deleteItem") {
@@ -194,7 +239,7 @@ class PurchaseOrderController {
     }
 }
 
-class PurchaseOrderCommand implements Serializable {
+class PurchaseOrderCommand {
     Integer distributor
     String invoiceNumber
     String paymentType
@@ -204,7 +249,7 @@ class PurchaseOrderCommand implements Serializable {
     }
 }
 
-class ItemComamnd implements Serializable {
+class ItemComamnd {
     Integer product
     Integer quantity
     BigDecimal purchasePrice
@@ -215,8 +260,8 @@ class ItemComamnd implements Serializable {
     }
 }
 
-class MedicineOrderCommand {
-    Integer product
+class MedicineOrderCommand implements Serializable {
+    Product product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
@@ -230,12 +275,12 @@ class MedicineOrderCommand {
 }
 
 class BrandProductOrderCommand {
-    Integer product
+    Product product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
-    Integer brand
-    Integer detail
+    Long brand
+    Long detail
 
     static constraints = {
         importFrom BrandProductOrder
