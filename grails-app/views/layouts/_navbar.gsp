@@ -11,7 +11,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown ${(controllerName == 'notifications') ? 'active' : ''}">
+                <li class="dropdown ${controllerName == 'notifications' ? 'active' : ''}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <g:if test="${(session.notif)}">
                             <span class="badge notifications"><span class="glyphicon glyphicon-bell"></span></span>
@@ -61,7 +61,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown ${controllerName == 'user' ? 'active' : ''}">
                 <g:set var="fullName" value="${applicationContext.springSecurityService.currentUser?.fullName}"/>
 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
