@@ -60,8 +60,8 @@ class PurchaseOrderController {
                 [
                     distributor: distributor,
                     invoiceNumber: cmd.invoiceNumber,
-                    paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
                     paymentType: cmd.paymentType,
+                    paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
                     productList: products.flatten(),
                     products: products.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name },
                     items: [],
@@ -191,7 +191,6 @@ class PurchaseOrderController {
                 } else {
                     flow.brandProductOrders << brandProductOrder
                 }
-
             }.to "items"
 
             on("deleteItem") {
@@ -225,7 +224,29 @@ class PurchaseOrderController {
             }.to "items"
 
             on("confirm") {
-                // TODO
+                PurchaseOrder purchaseOrder = new PurchaseOrder(
+                    distributor: flow.distributor,
+                    user: springSecurityService.currentUser,
+                    invoiceNumber: flow.invoiceNumber,
+                    paymentType: flow.paymentType,
+                    paymentDate: flow.paymentDate
+                )
+
+                flow.items.each { item ->
+                    purchaseOrder.addToItems(item)
+                }
+
+                flow.medicineOrders.each { medicineOrder ->
+                    purchaseOrder.addToItems(medicineOrder)
+                }
+
+                flow.brandProductOrders.each { brandProductOrder ->
+                    purchaseOrder.addToItems(brandProductOrder)
+                }
+
+                flash.message = "Proceso concluido correctamente"
+
+                purchaseOrder.save()
             }.to "done"
         }
 
