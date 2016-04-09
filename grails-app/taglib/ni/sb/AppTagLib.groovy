@@ -152,9 +152,6 @@ class AppTagLib {
                 div(class: "checkbox") {
                     label {
                         input(params)
-                    }
-
-                    span {
                         mkp.yield user.fullName
                     }
                 }
@@ -316,8 +313,6 @@ class AppTagLib {
         MarkupBuilder builder = new MarkupBuilder(out)
 
         builder.div {
-            p "Fechas"
-
             div(class: "form-group") {
                 input(name: "from", class: "form-control", placeholder: "Desde")
             }

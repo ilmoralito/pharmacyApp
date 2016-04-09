@@ -7,13 +7,23 @@
     <content tag="main">
         <g:if test="${purchaseOrders}">
             <table class="table table-hover table-striped">
+                <colgroup>
+                    <col span="1" style="width: 1%;">
+                    <col span="1" style="width: 99%;">
+                </colgroup>
                 <thead>
-                    <th># Factura</th>
+                    <th>#</th>
+                    <th>Factura</th>
                 </thead>
                 <tbody>
-                    <g:each in="${purchaseOrders}" var="purchaseOrder">
+                    <g:each in="${purchaseOrders}" var="purchaseOrder" status="idx">
                         <tr>
-                            <td>${purchaseOrder.invoiceNumber}</td>
+                            <td>${idx + 1}</td>
+                            <td>
+                                <g:link action="show" params="[id: purchaseOrder.id]">
+                                    ${purchaseOrder.invoiceNumber}
+                                </g:link>
+                            </td>
                         </tr>
                     </g:each>
                 </tbody>
@@ -32,12 +42,12 @@
         <br>
 
         <g:form action="list" autocomplete="off">
-            <p>Numero de factura</p>
             <div class="form-group">
                 <g:textField
                     name="invoiceNumber"
                     value="${params?.invoiceNumber}"
-                    class="form-control"/>
+                    class="form-control"
+                    placeholder="Numero de factura"/>
             </div>
 
             <pharmacyApp:fromTo/>
