@@ -51,8 +51,6 @@ class PurchaseOrderController {
                 }
 
                 Distributor distributor =distributorService.getDistributor(cmd.distributor)
-
-                // distributor > providers > product
                 List<Product> products = []
 
                 distributor.providers.each { provider ->
@@ -66,7 +64,9 @@ class PurchaseOrderController {
                     paymentType: cmd.paymentType,
                     productList: products.flatten(),
                     products: products.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name },
-                    items: []
+                    items: [],
+                    medicineOrders: [],
+                    brandProductOrders: []
                 ]
             }. to "items"
 
@@ -117,10 +117,12 @@ class PurchaseOrderController {
                 Item prod = flow.items.find { item.product == it.product }
                 
                 if (prod) {
-                    flow.items.remove(prod)
+                    item.quantity = cmd.quantity
+                    item.purchasePrice = cmd.purchasePrice
+                    item.sellingPrice = cmd.sellingPrice
+                } else {
+                    flow.items << item
                 }
-
-                flow.items << item
             }.to "items"
 
             on("addMedicineOrder") { MedicineOrderCommand cmd ->
@@ -132,27 +134,30 @@ class PurchaseOrderController {
                     return error()
                 }
 
-                Product product = Product.get(cmd.product)
-                Presentation presentation = Presentation.get(cmd.presentation)
-                Measure measure = Measure.get(cmd.measure)
-
                 MedicineOrder medicineOrder = new MedicineOrder(
-                    product: product,
+                    product: cmd.product,
                     quantity: cmd.quantity,
                     purchasePrice: cmd.purchasePrice,
                     sellingPrice: cmd.sellingPrice,
-                    presentation: presentation,
-                    measure: measure,
+                    presentation: cmd.presentation,
+                    measure: cmd.measure,
                     dueDate: cmd.dueDate
                 )
 
-                Item item = flow.items.find { medicineOrder.product == it.product }
-                    
-                if (item) {
-                    flow.items.remove(item)
+                MedicineOrder item = flow.medicineOrders.find {
+                    medicineOrder.product == it.product &&
+                    medicineOrder.presentation == it.presentation &&
+                    medicineOrder.measure == it.measure
                 }
 
-                flow.items << medicineOrder
+                if (item) {
+                    item.dueDate = cmd.dueDate
+                    item.quantity = cmd.quantity
+                    item.purchasePrice = cmd.purchasePrice
+                    item.sellingPrice = cmd.sellingPrice
+                } else {
+                    flow.medicineOrders << medicineOrder
+                }
             }.to "items"
 
             on("addBrandProductOrder") { BrandProductOrderCommand cmd ->
@@ -164,26 +169,29 @@ class PurchaseOrderController {
                     return error()
                 }
 
-                //Product product = Product.get(cmd.product)
-                Brand brand = Brand.get(cmd.brand)
-                Detail detail = Detail.get(cmd.detail)
-
                 BrandProductOrder brandProductOrder = new BrandProductOrder(
                     product: cmd.product,
                     quantity: cmd.quantity,
                     purchasePrice: cmd.purchasePrice,
                     sellingPrice: cmd.sellingPrice,
-                    brand: brand,
-                    detail: detail
+                    brand: cmd.brand,
+                    detail: cmd.detail
                 )
 
-                Item item = flow.items.find { it.product == brandProductOrder.product }
-                    
-                if (item) {
-                    flow.items.remove(item)
+                BrandProductOrder item = flow.brandProductOrders.find {
+                    brandProductOrder.product== it.product &&
+                    brandProductOrder.brand == it.brand &&
+                    brandProductOrder.detail == it.detail
                 }
 
-                flow.items << brandProductOrder
+                if (item) {
+                    item.quantity = cmd.quantity
+                    item.purchasePrice = cmd.purchasePrice
+                    item.sellingPrice = cmd.sellingPrice
+                } else {
+                    flow.brandProductOrders << brandProductOrder
+                }
+
             }.to "items"
 
             on("deleteItem") {
@@ -193,6 +201,26 @@ class PurchaseOrderController {
                     
                 if (item) {
                     flow.items.remove(item)
+                }
+            }.to "items"
+
+            on("deleteMedicineOrder") {
+                Integer id = params.int("id")
+
+                MedicineOrder medicineOrder = flow.medicineOrders.find { id == it.product.id }
+                    
+                if (medicineOrder) {
+                    flow.medicineOrders.remove(medicineOrder)
+                }
+            }.to "items"
+
+            on("deleteBrandProductOrder") {
+                Integer id = params.int("id")
+
+                BrandProductOrder brandProductOrder = flow.brandProductOrders.find { id == it.product.id }
+                    
+                if (brandProductOrder) {
+                    flow.brandProductOrders.remove(brandProductOrder)
                 }
             }.to "items"
 
@@ -213,10 +241,17 @@ class PurchaseOrderController {
 
                 Distributor distributor =distributorService.getDistributor(cmd.distributor)
 
+                if (distributor != flow.distributor) {
+                    flow.items = []
+                    flow.medicineOrders = []
+                    flow.brandProductOrders = []
+                }
+
                 flow.distributor = distributor
                 flow.invoiceNumber = cmd.invoiceNumber
                 flow.paymentDate = getPaymentDate(cmd.paymentType, distributor.daysToPay)
                 flow.paymentType = cmd.paymentType
+
             }.to "show"
 
             on("goBack").to "items"

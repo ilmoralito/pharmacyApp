@@ -1,8 +1,7 @@
 $('form').find("select:first").on('change', function() {
-    var $this = $(this);
     var optionSelected = $("option:selected", this);
-    var info = optionSelected.data("info")
-    var target = $this.parent().parent().next().find('select');
+    var info = optionSelected.data("info");
+    var target = $(this).parent().next().find('select');
 
     target.find('option').remove()
 
@@ -11,4 +10,12 @@ $('form').find("select:first").on('change', function() {
 
         target.append(option);
     }
+});
+
+$('.trigger').on('click', function() {
+    $(this).next().toggle();
+});
+
+$('#toggleMeta').on('click', function() {
+    $('#meta').toggleClass('show');
 });

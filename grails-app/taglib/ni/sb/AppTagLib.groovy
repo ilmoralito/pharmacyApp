@@ -243,12 +243,18 @@ class AppTagLib {
     def dealers = { attrs ->
         String type = attrs.type
         List<Integer> dealerList = attrs.list("dealerList")
+        Boolean showMessage = attrs.boolean("showMessage")
         List<Distributor> dealers = distributorService.getValidDistributors()
         MarkupBuilder builder = new MarkupBuilder(out)
         Map<String, String> params = [type: attrs.type, name: "distributor"]
 
         builder.div {
-            p "Distribuidores"
+            p {
+                div "Distribuidores"
+                if (showMessage) {
+                    small "Si cambia de distribuidor se eliminaran los articulos agregados"
+                }
+            }
 
             dealers.each { dealer ->
                 params.value = dealer.id
@@ -373,6 +379,21 @@ class AppTagLib {
                 }
             }
         }
+    }
+
+    // TODO: Implement a groovier solution
+    def calcTotal = { attrs ->
+        List items =attrs.items
+        String property = attrs.property
+        BigDecimal total = 0.0
+
+        items.each { item ->
+            BigDecimal result = item[property] * item.quantity
+
+            total += result
+        }
+
+        out << total
     }
 
     def paymentType = { attrs ->
