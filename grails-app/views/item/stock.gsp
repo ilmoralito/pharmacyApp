@@ -6,35 +6,108 @@
 
     <content tag="main">
         <g:if test="${items}">
-
             <table class="table table-hover">
+                <caption>Productos</caption>
                 <colgroup>
-                    <col span="1" style="width: 30%;">
-                    <col span="1" style="width: 11%;">
-                    <col span="1" style="width: 59%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
                 </colgroup>
                 <thead>
-                    <th>NOMBRE DEL PRODUCTO</th>
-                    <th>N PEDIDOS</th>
+                    <th>NOMBRE</th>
+                    <th colspan="2"></th>
                     <th>CANTIDAD</th>
                 </thead>
                 <tbody>
-                    <g:each in="${items}" var="item">
+                    <g:each in="${items}" var="${item}">
                         <tr>
-                            <td>${item.product}</td>
-                            <td>${item.count}</td>
-                            <td>${item.quantity}</td>
+                            <td colspan="4"><strong>${item.labName}</strong></td>
                         </tr>
+                        <g:each in="${item.labProducts}" var="product">
+                            <tr>
+                                <td>${product.name}</td>
+                                <td colspan="2"></td>
+                                <td>${product.quantity}</td>
+                            </tr>
+                        </g:each>
                     </g:each>
-                    <tr>
-                        <td colspan="2"><b>TOTAL</b></td>
-                        <td>${items.quantity.sum()}</td>
-                    </tr>
                 </tbody>
             </table>
         </g:if>
         <g:else>
-            <p>Nada que mostrar</p>
+            <p>Sin artuclos que mostrar</p>
+        </g:else>
+
+        <g:if test="${medicines}">
+            <table class="table table-hover">
+                <caption>Medicinas</caption>
+                <colgroup>
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                </colgroup>
+                <thead>
+                    <th>NOMBRE</th>
+                    <th>PRESENTACION</th>
+                    <th>MEDIDA</th>
+                    <th>CANTIDAD</th>
+                </thead>
+                <tbody>
+                    <g:each in="${medicines}" var="${medicine}">
+                        <tr>
+                            <td colspan="4">${medicine.labName}</td>
+                        </tr>
+                        <g:each in="${medicine.labProducts}" var="product">
+                            <tr>
+                                <td>${product.name}</td>
+                                <td>${product.presentation}</td>
+                                <td>${product.measure}</td>
+                                <td>${product.quantity}</td>
+                            </tr>
+                        </g:each>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
+        <g:else>
+            <p>Sin medicinas que mostrar</p>
+        </g:else>
+
+        <g:if test="${brandProducts}">
+            <table class="table table-hover">
+                <caption>Productos</caption>
+                <colgroup>
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 25%;">
+                </colgroup>
+                <thead>
+                    <th>NOMBRE</th>
+                    <th>MARCA</th>
+                    <th>DETALLE</th>
+                    <th>CANTIDAD</th>
+                </thead>
+                <tbody>
+                    <g:each in="${brandProducts}" var="${brandProduct}">
+                        <tr>
+                            <td colspan="4">${brandProduct.labName}</td>
+                        </tr>
+                        <g:each in="${brandProduct.labProducts}" var="product">
+                            <tr>
+                                <td>${product.name}</td>
+                                <td>${product.brand}</td>
+                                <td>${product.detail}</td>
+                                <td>${product.quantity}</td>
+                            </tr>
+                        </g:each>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
+        <g:else>
+            <p>Sin productos de marca que mostrar</p>
         </g:else>
     </content>
 

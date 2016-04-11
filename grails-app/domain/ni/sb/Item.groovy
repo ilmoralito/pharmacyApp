@@ -1,7 +1,5 @@
 package ni.sb
 
-import org.hibernate.transform.AliasToEntityMapResultTransformer
-
 class Item implements Serializable {
     Product product
     Integer quantity
@@ -18,19 +16,6 @@ class Item implements Serializable {
             if (sellingPrice < item.purchasePrice) {
                 "notValid"
             }
-        }
-    }
-
-    static namedQueries = {
-        stock {
-            projections {
-                groupProperty "product", "product"
-                count "product", "count"
-                sum "quantity", "quantity"
-            }
-
-            order("count", "desc")
-            resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
         }
     }
 
