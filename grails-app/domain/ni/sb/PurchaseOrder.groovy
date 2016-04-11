@@ -26,6 +26,39 @@ class PurchaseOrder implements Serializable {
         items nullable: false, minSize: 1
     }
 
+    static namedQueries = {
+        filter { distributors, from, to, users, invoiceNumber, paymentType, paymentStatus ->
+            if (distributors) {
+                distributor {
+                    "in" "id", distributors
+                }
+            }
+
+            if (from && to) {
+                ge "dateCreated", from.clearTime()
+                le "dateCreated", to.clearTime()
+            }
+
+            if (users) {
+                user {
+                    "in" "id", users
+                }
+            }
+
+            if (invoiceNumber) {
+                eq "invoiceNumber", invoiceNumber
+            }
+
+            if (paymentType) {
+                "in" "paymentType", paymentType
+            }
+
+            if (paymentStatus) {
+                "in" "paymentStatus", paymentStatus
+            }
+        }
+    }
+
     static mapping = {
         sort dateCreated: "desc"
         items cascade: "all-delete-orphan"
