@@ -13,13 +13,21 @@ class PurchaseOrderController {
         create: "GET"
     ]
 
-    def list(String paymentStatus) {
+    def list() {
         Closure purchaseOrders = {
-            if (paymentStatus == null) {
-                paymentStatus = "pending"
-            }
+            if (request.post) {
+                String invoiceNumber = params?.invoiceNumber
+                Date from = params.date("from", "yyyy-MM-dd")
+                Date to = params.date("to", "yyyy-MM-dd")
+                List<Integer> distributors = params.list("distributor")*.toLong()
+                List<Integer> users = params.list("users")*.toLong()
+                List<String> paymentType = params.list("paymentType").toList()
+                List<String> paymentStatus = params.list("paymentStatus").toList()
 
-            PurchaseOrder.findAllByPaymentStatus(paymentStatus)
+                PurchaseOrder.filter(distributors, from, to, users, invoiceNumber, paymentType, paymentStatus).list()
+            } else {
+                PurchaseOrder.findAllByPaymentStatus("pending")
+            }
         }
 
         [purchaseOrders: purchaseOrders()]
@@ -246,7 +254,13 @@ class PurchaseOrderController {
 
                 flash.message = "Proceso concluido correctamente"
 
-                purchaseOrder.save()
+                if (!purchaseOrder.save()) {
+                    purchaseOrder.errors.allErrors.each { error ->
+                        log.error "[$error.field: $error.defaultMessage]"
+                    }
+
+                    return error()
+                }
             }.to "done"
         }
 

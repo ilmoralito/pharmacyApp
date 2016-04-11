@@ -53,6 +53,7 @@ grails.project.dependency.resolution = {
     // runtime 'mysql:mysql-connector-java:5.1.27'
     // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
     compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile "com.craigburke.document:pdf:0.4.15"
   }
 
   plugins {

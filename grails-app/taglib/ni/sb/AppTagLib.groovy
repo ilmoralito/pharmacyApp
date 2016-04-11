@@ -130,9 +130,9 @@ class AppTagLib {
     }
 
     def users = { attrs ->
+        MarkupBuilder builder = new MarkupBuilder(out)
         List<Long> userList = attrs.userList*.toLong()
         List<User> users = User.list()
-        MarkupBuilder builder = new MarkupBuilder(out)
         Map params = [type: "checkbox", name: "users"]
 
         builder.div {
@@ -238,16 +238,16 @@ class AppTagLib {
     }
 
     def dealers = { attrs ->
+        MarkupBuilder builder = new MarkupBuilder(out)
         String type = attrs.type
-        List<Integer> dealerList = attrs.list("dealerList")
+        List<Integer> dealerList = attrs.list("dealerList")*.toLong()
         Boolean showMessage = attrs.boolean("showMessage")
         List<Distributor> dealers = distributorService.getValidDistributors()
-        MarkupBuilder builder = new MarkupBuilder(out)
-        Map<String, String> params = [type: attrs.type, name: "distributor"]
+        Map<String, String> params = [type: type, name: "distributor"]
 
         builder.div {
             p {
-                div "Distribuidores"
+                mkp.yield "Distribuidores"
                 if (showMessage) {
                     small "Si cambia de distribuidor se eliminaran los articulos agregados"
                 }
@@ -262,7 +262,7 @@ class AppTagLib {
                     params.remove("checked")
                 }
 
-                div(class: attrs.type) {
+                div(class: type) {
                     label {
                         input(params)
                         mkp.yield dealer.name
@@ -281,9 +281,9 @@ class AppTagLib {
     }
 
     def paymentTypeBox = { attrs ->
-        String type = attrs.type
-        String pt = attrs.paymentType
         MarkupBuilder builder = new MarkupBuilder(out)
+        String type = attrs.type
+        def pt = attrs.paymentType
         Map<String, String> paymentTypes = [credit: "Credito", cash: "Contado"]
         Map<String, String> params = [type: type, name: "paymentType"]
 
@@ -293,7 +293,7 @@ class AppTagLib {
             paymentTypes.each { paymentType ->
                 params.value = paymentType.key
 
-                if (paymentType.key == pt) {
+                if (pt instanceof String ? paymentType.key == pt : paymentType.key in pt) {
                     params.checked = true
                 } else {
                     params.remove("checked")
@@ -309,33 +309,52 @@ class AppTagLib {
         }
     }
 
-    def fromTo = {
+    def fromTo = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
+        List<Map> params = [
+            [
+                name: "from",
+                value: attrs?.from,
+                class: "form-control",
+                placeholder: "Desde"
+            ],[
+                name: "to",
+                value: attrs?.to,
+                class: "form-control",
+                placeholder: "Hasta"
+            ]
+        ]
 
         builder.div {
-            div(class: "form-group") {
-                input(name: "from", class: "form-control", placeholder: "Desde")
-            }
+            p "Fechas"
 
-            div(class: "form-group") {
-                input(name: "to", class: "form-control", placeholder: "Hasta")
+            params.each { m ->
+                div(class: "form-group") {
+                    input(m)
+                }
             }
         }
     }
 
     def paymentStatus = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
+        List<String> paymentStatusList = attrs.paymentStatusList
         Map<String, String> params = [type: "checkbox", name: "paymentStatus"]
 
-        builder {
+        builder.div {
             p "Estado de pago"
 
             div(class: "checkbox") {
                 params.value = "pending"
 
+                if ("pending" in paymentStatusList) {
+                    params.checked = true
+                } else {
+                    params.remove("checked")
+                }
+
                 label {
                     input(params)
-
                     mkp.yield "Pendiente"
                 }
             }
@@ -343,9 +362,14 @@ class AppTagLib {
             div(class: "checkbox") {
                 params.value = "paid"
 
+                if ("paid" in paymentStatusList) {
+                    params.checked = true
+                } else {
+                    params.remove("checked")
+                }
+
                 label {
                     input(params)
-
                     mkp.yield "Cancelado"
                 }
             }

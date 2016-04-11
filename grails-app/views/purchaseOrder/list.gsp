@@ -50,15 +50,15 @@
                     placeholder="Numero de factura"/>
             </div>
 
-            <pharmacyApp:fromTo/>
+            <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
 
             <pharmacyApp:dealers type="checkbox" dealerList="${params.list('distributor')}"/>
 
-            <pharmacyApp:paymentTypeBox type="checkbox"/>
+            <pharmacyApp:paymentTypeBox type="checkbox" paymentType="${params.list('paymentType')}"/>
 
-            <pharmacyApp:users/>
+            <pharmacyApp:users userList="${params.list('users')}"/>
 
-            <pharmacyApp:paymentStatus/>
+            <pharmacyApp:paymentStatus paymentStatusList="${params.list('paymentStatus')}"/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>
