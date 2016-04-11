@@ -33,8 +33,8 @@
         <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>
-        <li class="${controllerName == 'purchaseOrder' && actionName == 'stock' ? 'active' : ''}">
-            <g:link controller="purchaseOrder" action="stock">Inventario</g:link>
+        <li class="${controllerName == 'item' ? 'active' : ''}">
+            <g:link controller="item">Inventario</g:link>
         </li>
         <!--
         <li class="${controllerName == 'reports' ? 'active' : ''}">
