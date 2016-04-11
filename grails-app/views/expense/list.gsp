@@ -94,22 +94,7 @@
 
             <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
                 <g:form action="list" autocomplete="off">
-                    <p>Fechas</p>
-                    <div class="form-group">
-                        <g:textField
-                            name="from"
-                            value="${params?.from}"
-                            class="form-control"
-                            placeholder="Desde"/>
-                    </div>
-
-                    <div class="form-group">
-                        <g:textField name="to"
-                            value="${params?.to}"
-                            class="form-control"
-                            placeholder="Hasta"/>
-                    </div>
-
+                    <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
                     <pharmacyApp:users userList="${params.list('users')}"/>
 
                     <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />
