@@ -8,7 +8,7 @@
 </head>
 <body>
 	<g:render template="notifications"/>
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<g:if test="${infoInstance}">
 			<br>
 			<div class="col-md-9">
