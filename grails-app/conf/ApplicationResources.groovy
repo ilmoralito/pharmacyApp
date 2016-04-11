@@ -3,20 +3,16 @@ modules = {
         resource url: "css/main.css"
     }
 
-    // PURCHASEORDER
     purchaseOrder {
         dependsOn "app"
         resource url: "js/purchase-order.js"
     }
 
-    // EMPLOYEE
     employees {
         dependsOn "app"
         resource url: "js/filter-table.js"
     }
 
-    // PRESENTATION
-    // BRAND
     filter {
         dependsOn "app"
         resource url: "js/filter.js"
@@ -30,11 +26,6 @@ modules = {
     addTelefone {
         dependsOn "app"
         resource url: "js/addTelefone.js"
-    }
-
-    createAndUpdatePurchaseOrder {
-        dependsOn "app"
-        resource url: "js/createAndUpdatePurchaseOrder.js"
     }
 
     adminMedicine {
@@ -60,22 +51,6 @@ modules = {
         resource url: "js/saleFilter.js"
     }
 
-    chosenLib {
-        dependsOn "app"
-        dependsOn "chosen"
-        resource url: "js/chosenLib.js"
-    }
-
-    chosen { 
-        resource url: "js/chosen.js"
-        resource url: "css/chosen.css"
-    }
-
-    productMedicine {
-        dependsOn "app"
-        resource url: "js/productMedicine.js"
-    }
-
     modal {
         resource url: "js/modal.js"
     }
@@ -90,10 +65,6 @@ modules = {
 
     pay {
         resource url: "js/pay.js"
-    }
-
-    filterStock {
-        resource url: "js/filterStock.js"
     }
 
     reports {
