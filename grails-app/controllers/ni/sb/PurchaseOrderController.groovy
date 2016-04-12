@@ -10,7 +10,8 @@ class PurchaseOrderController {
     static defaultAction = "list"
     static allowedMethods = [
         list: ["GET", "POST"],
-        create: "GET"
+        create: "GET",
+        show: "GET"
     ]
 
     def list() {
@@ -35,6 +36,16 @@ class PurchaseOrderController {
 
     def create() {
         redirect action: "createPurchaseOrder"
+    }
+
+    def show(Long id) {
+        PurchaseOrder purchaseOrder = PurchaseOrder.get(id)
+
+        if (!purchaseOrder) {
+            response.sendError 404
+        }
+
+        [purchaseOrder: purchaseOrder]
     }
 
     def createPurchaseOrderFlow = {
