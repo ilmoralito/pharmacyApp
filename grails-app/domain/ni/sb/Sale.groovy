@@ -1,31 +1,26 @@
 package ni.sb
 
-class Sale implements Serializable {
-  User user
-  BigDecimal balance = 0
-  Boolean canceled = false
+class Sale {
+    User user
+    BigDecimal balance = 0.0
+    Boolean canceled = false
 
-	Date dateCreated
-	Date lastUpdated
+    Date dateCreated
+    Date lastUpdated
 
-  static constraints = {
-    user nullable:false
-    balance scale:2
-  }
-
-  static mapping = {
-  	version false
-    sort dateCreated: "desc"
-  }
-
-  static namedQueries = {
-    fromTo { from, to ->
-      ge "dateCreated", from.clearTime()
-      le "dateCreated", to.clearTime()
+    static constraints = {
+        user nullable: false
+        balance scale: 2
     }
-  }
 
-  static hasMany = [saleDetails:SaleDetail]
+    static namedQueries = {
+        fromTo { from, to ->
+            ge "dateCreated", from.clearTime()
+            le "dateCreated", to.clearTime()
+        }
+    }
 
-  String toString() { dateCreated }
+    static hasMany = [saleDetails: SaleDetail]
+
+    String toString() { dateCreated }
 }
