@@ -18,6 +18,10 @@ class Sale {
             ge "dateCreated", from.clearTime()
             le "dateCreated", to.clearTime()
         }
+
+        byCurrentUser {
+            eq "user", domainClass.application.mainContext.springSecurityService.currentUser
+        }
     }
 
     static hasMany = [saleDetails: SaleDetail]
