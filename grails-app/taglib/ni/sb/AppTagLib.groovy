@@ -247,7 +247,9 @@ class AppTagLib {
             p {
                 mkp.yield "Distribuidores"
                 if (showMessage) {
-                    small "Si cambia de distribuidor se eliminaran los articulos agregados"
+                    div {
+                        small "Si cambia de distribuidor se eliminaran los articulos agregados"
+                    }
                 }
             }
 
