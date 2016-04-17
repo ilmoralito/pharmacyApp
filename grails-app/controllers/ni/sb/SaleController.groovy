@@ -122,7 +122,7 @@ class SaleController {
         User currentUser = springSecurityService.currentUser
         List<Sale> sales = Sale.fromTo(today, today + 1).findAllByUser(currentUser)
 
-        [sales: sales]
+        [sales: sales.sort { a, b -> b.dateCreated <=> a.dateCreated }]
     }
 
     def detail(Long id) {
