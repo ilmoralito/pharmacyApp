@@ -1,8 +1,13 @@
 package ni.sb
 
+import org.grails.databinding.BindUsing
+
 class Sale implements Serializable {
     User user
     BigDecimal balance
+    @BindUsing({ obj, source ->
+        source["toName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+    })
     String toName
     BigDecimal moneyReceived
     String annotation
