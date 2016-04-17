@@ -8,48 +8,143 @@ class SaleController {
 
     static defaultAction = "create"
     static allowedMethods = [
-        create: ["GET", "POST"],
-        search: "POST",
-        list: ["GET", "POST"]
+        create: ["GET"],
+        list: ["GET", "POST"],
+        summary: "GET"
     ]
 
-    def create() { }
+    def create() {
+        redirect action: "createSale"
+    }
 
-    def search() {
-        String query = params?.query
-        def criteria = Item.createCriteria()
-        def result = criteria {
-            product {
-                like "name", "%1%"
+    def createSaleFlow = {
+        init {
+            action {
+                List<Item> items = Item.list()
+                List<SaleDetail> saleDetails = []
+
+                [items: items, saleDetails: saleDetails]
             }
+
+            on("success").to "sale"
         }
 
-        List items = result.collect { item ->
-            [
-                id: item.id,
-                name: item.product.name,
-                quantity: item.quantity,
-                purchasePrice: item.purchasePrice,
-                sellingPrice: item.sellingPrice,
-                provider: item.product.provider.name,
-                presentation: item instanceof MedicineOrder ? item.presentation.name : null,
-                measure: item instanceof MedicineOrder ? item.measure.name : null,
-                brand: item instanceof BrandProductOrder ? item.brand.name : null,
-                detail: item instanceof BrandProductOrder ? item.detail.name : null
-            ]
+        sale {
+            on("chooseItems") {
+                Item item = Item.get(params.int("id"))
+                def query = Item.where {
+                    product.name == item.product.name
+                }
+                List<Item> data = query.list()
+
+                [data: data, item: item]
+            }.to "sale"
+
+            on("addItem") { SaleDetailCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "Datos incorrectos"
+                    return error()
+                }
+
+                // Check if current items exists in saleDetails
+                SaleDetail a = flow.saleDetails.find { saleDetail ->
+                    saleDetail.item == cmd.item
+                }
+
+                if (a) {
+                    a.quantity = cmd.quantity
+                    a.total = cmd.item.sellingPrice * cmd.quantity
+                } else {
+                    SaleDetail saleDetail = new SaleDetail(
+                        item: cmd.item,
+                        quantity: cmd.quantity,
+                        total: cmd.item.sellingPrice * cmd.quantity
+                    )
+
+                    flow.saleDetails << saleDetail
+                }
+            }.to "sale"
+
+            on("removeItem") {
+                Integer index = params.int("id")
+
+                flow.saleDetails.remove(index)
+            }.to "sale"
+
+            on("confirm") { SaleCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "Datos incorrectos"
+                    return error()
+                }
+
+                Sale sale = new Sale(
+                    user: springSecurityService.currentUser,
+                    balance: cmd.balance,
+                    toName: cmd.toName,
+                    moneyReceived: cmd.moneyReceived,
+                    annotation: cmd.annotation,
+                    employee: cmd.employee
+                )
+
+                flow.saleDetails.each { saleDetail ->
+                    sale.addToSaleDetails(saleDetail)
+                }
+
+                if (!sale.save()) {
+                    sale.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "Datos incorrectos"
+                    return error()
+                }
+
+                flash.message = "Venta realizada correctamente"
+            }.to "done"
         }
 
-        render(contentType: "application/json") {
-            items
+        done {
+            redirect action: "create"
         }
     }
 
     def list() {
-        Date today = new Date()
-
-        List<Sale> sales = Sale.fromTo(today, today).byCurrentUser().list()
+        List<Sale> sales = Sale.list()
 
         [sales: sales]
     }
 
+    def summary() {
+
+    }
+}
+
+class SaleDetailCommand {
+    Item item
+    Integer quantity
+
+    static constraints = {
+        importFrom SaleDetail
+    }
+}
+
+class SaleCommand {
+    BigDecimal balance
+    String toName
+    BigDecimal moneyReceived
+    String annotation
+    Employee employee
+    Boolean canceled = false
+
+    static constraints = {
+        importFrom Sale, exclude: ["user"]
+    }
 }

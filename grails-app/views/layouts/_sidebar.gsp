@@ -33,7 +33,7 @@
         </li>
     </sec:ifAllGranted>
     <li class="${controllerName == 'sale' ? 'active' : ''}">
-        <g:link controller="sale">Ventas</g:link>
+        <g:link controller="sale" action="create">Ventas</g:link>
     </li>
     <li class="${controllerName == 'expense' ? 'active' : ''}">
         <g:link controller="expense">

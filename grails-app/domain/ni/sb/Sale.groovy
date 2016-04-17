@@ -1,16 +1,25 @@
 package ni.sb
 
-class Sale {
+class Sale implements Serializable {
     User user
-    BigDecimal balance = 0.0
+    BigDecimal balance
+    String toName
+    BigDecimal moneyReceived
+    String annotation
+    Employee employee
     Boolean canceled = false
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
-        user nullable: false
-        balance scale: 2
+        balance min: 1.0, scale: 2
+        toName blank: false
+        moneyReceived min: 1.0, scale: 2, validator: { moneyReceived, sale ->
+            moneyReceived >= sale.balance
+        }
+        annotation nullable: true, maxSize: 255
+        employee nullable: true
     }
 
     static namedQueries = {
@@ -24,7 +33,14 @@ class Sale {
         }
     }
 
+    List<SaleDetail> saleDetails
     static hasMany = [saleDetails: SaleDetail]
 
-    String toString() { dateCreated }
+    def beforeInsert() {
+        if (employee) {
+            toName = employee.fullName
+        }
+    }
+
+    String toString() { "by $toName for $user.fullName" }
 }

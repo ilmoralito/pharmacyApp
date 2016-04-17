@@ -1,6 +1,6 @@
 package ni.sb
 
-class SaleDetail {
+class SaleDetail implements Serializable {
     Item item
     Integer quantity
     BigDecimal total
@@ -9,12 +9,15 @@ class SaleDetail {
     Date lastUpdated
 
     static constraints = {
-        item nullable: false
-        quantity min: 1, nullable: false
-        total scale: 2, min: 0.1
+        quantity min: 1
+        total min: 0.1, scale: 2
     }
 
     static belongsTo = [sale: Sale]
+
+    def beforeValidate() {
+        total = item.sellingPrice * quantity
+    }
 
     String toString() { item }
 }
