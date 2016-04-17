@@ -29,7 +29,7 @@
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>
         <li class="${controllerName == 'item' ? 'active' : ''}">
-            <g:link controller="item">Inventario</g:link>
+            <g:link controller="item" action="itemStock">Inventario</g:link>
         </li>
     </sec:ifAllGranted>
     <li class="${controllerName == 'sale' ? 'active' : ''}">

@@ -4,12 +4,34 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class ItemController {
-    static defaultAction = "stock"
+    static defaultAction = "itemStock"
     static allowedMethods = [
-        stock: ["GET", "POST"]
+        itemStock: "GET",
+        medicineStock: "GET",
+        brandProductStock: "GET"
     ]
 
-    def stock() {
+    def itemStock() {
+        List<Item> items = Item.list().findAll { item ->
+            !(item instanceof MedicineOrder) && !(item instanceof BrandProductOrder)
+        }
+        
+        List data = items.groupBy { it.product.provider }.collect { a ->
+            [
+                labName: a.key,
+                labProducts: a.value.collect { b ->
+                    [
+                        name: b,
+                        quantity: b.quantity
+                    ]
+                }
+            ]
+        }
+
+        [items: data]
+    }
+
+    def medicineStock() {
         List medicines = MedicineOrder.list().groupBy { it.product.provider }.collect { a ->
             [
                 labName: a.key,
@@ -24,6 +46,10 @@ class ItemController {
             ]
         }
 
+        [medicines: medicines]
+    }
+
+    def brandProductStock() {
         List brandProducts = BrandProductOrder.list().groupBy { it.product.provider }.collect { a ->
             [
                 labName: a.key,
@@ -38,20 +64,6 @@ class ItemController {
             ]
         }
 
-        List items = Item.list().findAll { item ->
-            !(item instanceof MedicineOrder) && !(item instanceof BrandProductOrder)
-        }.groupBy { it.product.provider }.collect { a ->
-            [
-                labName: a.key,
-                labProducts: a.value.collect { b ->
-                    [
-                        name: b,
-                        quantity: b.quantity
-                    ]
-                }
-            ]
-        }
-
-        [items: items, medicines: medicines, brandProducts: brandProducts]
+        [brandProducts: brandProducts]
     }
 }
