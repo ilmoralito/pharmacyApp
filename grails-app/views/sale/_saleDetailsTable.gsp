@@ -49,15 +49,17 @@
                 <td>${saleDetail.quantity}</td>
                 <td>${saleDetail.total}</td>
                 <td>
-                    <g:link event="removeItem" params="[id: idx]" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </g:link>
+                    <g:if test="${actionName != 'detail'}">
+                        <g:link event="removeItem" params="[id: idx]" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </g:link>
+                    </g:if>
                 </td>
             </tr>
         </g:each>
         <tr>
             <td colspan="7"></td>
-            <td colspan="2"><strong>${sale.saleDetails.total.sum()}</strong></td>
+            <td colspan="2"><strong>${saleDetails.total.sum()}</strong></td>
         </tr>
     </tbody>
 </table>
