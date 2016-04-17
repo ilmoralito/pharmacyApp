@@ -10,6 +10,7 @@ class SaleController {
     static allowedMethods = [
         create: ["GET"],
         list: ["GET", "POST"],
+        detail: "GET",
         summary: "GET"
     ]
 
@@ -117,9 +118,21 @@ class SaleController {
     }
 
     def list() {
-        List<Sale> sales = Sale.list()
+        Date today = new Date()
+        User currentUser = springSecurityService.currentUser
+        List<Sale> sales = Sale.fromTo(today, today + 1).findAllByUser(currentUser)
 
         [sales: sales]
+    }
+
+    def detail(Long id) {
+        Sale sale = Sale.get(id)
+
+        if (!sale) {
+            response.sendError 404
+        }
+
+        [sale: sale]
     }
 
     def summary() {
