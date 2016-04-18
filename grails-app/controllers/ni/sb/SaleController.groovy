@@ -21,7 +21,7 @@ class SaleController {
     def createSaleFlow = {
         init {
             action {
-                List<Item> items = Item.list()
+                List<Item> items = Item.list().unique() { a, b -> a.product.name <=> b.product.name }.sort { it.product.name }
                 List<SaleDetail> saleDetails = []
 
                 [items: items, saleDetails: saleDetails]
