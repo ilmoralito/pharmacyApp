@@ -19,6 +19,7 @@
                         <input
                             id="filter"
                             class="form-control input-sm"
+                            style="font-weight: normal;"
                             placeholder="Filtrar"
                             autofocus="true">
                     </th>
