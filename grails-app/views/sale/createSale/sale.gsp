@@ -221,8 +221,9 @@
             </div>
 
             <div class="form-group">
-                <label for="toName">A nombre de</label>
-                <g:textField name="toName" class="form-control"/>
+                <label for="toName">Cliente</label>
+                <g:textField name="client.id" list="clients" class="form-control"/>
+                <pharmacyApp:clientsDataList/>
             </div>
 
             <div class="form-group">

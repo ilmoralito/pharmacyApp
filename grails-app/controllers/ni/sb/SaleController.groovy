@@ -181,7 +181,7 @@ class SaleDetailCommand {
 
 class SaleCommand {
     BigDecimal balance
-    String toName
+    Client client
     BigDecimal moneyReceived
     String annotation
     Employee employee

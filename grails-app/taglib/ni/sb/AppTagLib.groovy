@@ -18,7 +18,8 @@ class AppTagLib {
         paymentTypeBox: "raw",
         fromTo: "raw",
         paymentStatus: "raw",
-        combo: "raw"
+        combo: "raw",
+        clientsDataList: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -396,6 +397,17 @@ class AppTagLib {
                         mkp.yield o.name
                     }
                 }
+            }
+        }
+    }
+
+    def clientsDataList = {
+        MarkupBuilder builder = new MarkupBuilder(out)
+        List<Client> clients = Client.findAllByEnabled(true)
+
+        builder.datalist(id: "clients") {
+            clients.each { client ->
+                option(value: client.id) { mkp.yield client.fullName }
             }
         }
     }

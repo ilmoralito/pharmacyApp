@@ -8,7 +8,7 @@ class Sale implements Serializable {
     @BindUsing({ obj, source ->
         source["toName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
     })
-    String toName
+    Client client
     BigDecimal moneyReceived
     String annotation
     Employee employee
@@ -19,7 +19,6 @@ class Sale implements Serializable {
 
     static constraints = {
         balance min: 1.0, scale: 2
-        toName blank: false
         moneyReceived min: 1.0, scale: 2, validator: { moneyReceived, sale ->
             moneyReceived >= sale.balance
         }
