@@ -7,7 +7,7 @@
     <content tag="main">
         <g:render template="nav"/>
 
-        <g:if test="${}">
+        <g:if test="${saleDetails}">
             <table class="table table-hover">
                  <colgroup>
                     <col span="1" style="width: 50%;">
