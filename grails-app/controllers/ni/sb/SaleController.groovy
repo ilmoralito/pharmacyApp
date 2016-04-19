@@ -136,7 +136,37 @@ class SaleController {
     }
 
     def summary() {
+        Date today = new Date()
+        User currentUser = springSecurityService.currentUser
+        def c = SaleDetail.createCriteria()
+        List<SaleDetail> data = c {
+            ge "dateCreated", today.clearTime()
+            le "dateCreated", today.clearTime() + 1
+            sale {
+                eq "user", currentUser
+            }
+        }
 
+        BigDecimal balance = Sale.fromTo(today, today + 1).findAllByUser(currentUser).balance.sum()
+
+        BigDecimal expenseBalance = Expense.createCriteria().list {
+            ge "dateCreated", today.clearTime()
+            le "dateCreated", today.clearTime() + 1
+            eq "user", currentUser
+        }.quantity.sum()
+
+        List saleDetails = data.groupBy { it.item }.collect { a ->
+            [
+                item: a.key,
+                quantity: a.value.size()
+            ]
+        }.sort { -it.quantity }
+
+        [
+            saleDetails: saleDetails,
+            balance: balance ?: 0,
+            expenseBalance: expenseBalance ?: 0
+        ]
     }
 }
 
