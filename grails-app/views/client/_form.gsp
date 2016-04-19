@@ -8,6 +8,14 @@
 
 <div class="form-group">
     <g:textField
+        name="email"
+        value="${client?.email}"
+        class="form-control"
+        placeholder="Correo electronico"/>
+</div>
+
+<div class="form-group">
+    <g:textField
         name="address"
         value="${client?.address}"
         class="form-control"
@@ -16,35 +24,8 @@
 
 <div class="form-group">
     <g:textField
-        name="identificationCard"
-        value="${client?.identificationCard}"
+        name="telephoneNumber"
+        value="${client?.telephoneNumber}"
         class="form-control"
-        placeholder="Cedula"/>
+        placeholder="Numero de telefono"/>
 </div>
-
-<g:if test="${actionName == 'show'}">
-    <div class="form-group">
-        <g:select
-            name="status"
-            from="['Activo', 'Inactivo']"
-            keys="[true, false]"
-            value="${client?.status}"
-            class="form-control"/>
-    </div>
-</g:if>
-
-<g:if test="${!client?.telephones}">
-    <a href="#" id="triggerAddTelephone" class="btn btn-link btn-xs">
-        Agregar telefono
-    </a>
-
-    <div class="form-group">
-        <input
-            type="telephone"
-            id="telephones"
-            name="telephones"
-            class="form-control telephones"
-            maxlength="8"
-            placeholder="Telefono">
-    </div>
-</g:if>

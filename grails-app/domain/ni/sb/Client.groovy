@@ -1,37 +1,26 @@
 package ni.sb
 
 import org.grails.databinding.BindUsing
+import groovy.transform.ToString
 
+@ToString
 class Client implements Serializable {
     @BindUsing({ obj, source ->
         source["fullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
     })
     String fullName
+    String email
     String address
-    @BindUsing({ obj, source ->
-        source["identificationCard"]?.toUpperCase()
-    })
-    String identificationCard
-    Boolean status = true
+    String telephoneNumber
+    Boolean enabled = true
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
         fullName blank: false
-        address blank: false
-        identificationCard blank: false, unique: true, maxSize: 14, minSize: 14
-        telephones nullable: true
+        email nullable: true, email: true, unique: true
+        address nullable: true, maxSize: 1000
+        telephoneNumber nullable: true
     }
-
-    static mapping = {
-        version false
-        sort dateCreated: "desc"
-        telephones cascade: "all-delete-orphan"
-    }
-
-    List<Telephone> telephones
-    static hasMany = [telephones: Telephone]
-
-    String toString() { fullName }
 }

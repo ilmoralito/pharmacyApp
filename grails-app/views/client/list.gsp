@@ -15,9 +15,9 @@
                 </colgroup>
                 <thead>
                     <th>Nombre</th>
-                    <th>Cedula</th>
+                    <th>Email</th>
                     <th>Direccion</th>
-                    <th>Telefonos</th>
+                    <th>Telefono</th>
                 </thead>
                 <tbody>
                     <g:each in="${clients}" var="client">
@@ -27,9 +27,9 @@
                                     ${client.fullName}
                                 </g:link>
                             </td>
-                            <td>${client.identificationCard}</td>
+                            <td>${client.email}</td>
                             <td>${client.address}</td>
-                            <td>${client?.telephones?.join(", ")}</td>
+                            <td>${client.telephoneNumber}</td>
                         </tr>
                     </g:each>
                 </tbody>

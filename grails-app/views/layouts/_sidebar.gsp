@@ -25,6 +25,11 @@
                 Empresas
             </g:link>
         </li>
+        <li class="${controllerName == 'client' ? 'active' : ''}">
+            <g:link controller="client">
+                Clientes
+            </g:link>
+        </li>
         <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>

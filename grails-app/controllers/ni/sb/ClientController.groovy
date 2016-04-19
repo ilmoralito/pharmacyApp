@@ -8,24 +8,22 @@ class ClientController {
     static allowedMethods = [
         list: ["GET", "POST"],
         show: "GET",
-        update: "POST",
-        removeTelephone: "GET"
+        update: "POST"
     ]
 
     def list() {
-        Boolean status = params?.status ?: true
+        Boolean enabled = params?.enabled ?: true
+
+        Closure clients = {
+            if (enabled == null) {
+                enabled = true
+            }
+
+            Client.findAllByEnabled(enabled)
+        }
 
         if (request.method == "POST") {
-            List telephones = params.list("telephones")?.findAll { it != "" }
-            Client client = new Client(
-                fullName: params.fullName,
-                address: params.address,
-                identificationCard: params.identificationCard
-            )
-
-            telephones.each { telephone ->
-                client.addToTelephones(new Telephone(telephoneNumber: telephone))
-            }
+            Client client = new Client(params)
 
             if (!client.save()) {
                 client.errors.allErrors.each { error ->
@@ -33,10 +31,12 @@ class ClientController {
                 }
 
                 flash.message = "A ocurrido un error. Intentalo otravez"
+
+                return [clients: clients(), client: client]
             }
         }
 
-        [clients: Client.findAllByStatus(status)]
+        [clients: clients()]
     }
 
 
@@ -57,12 +57,10 @@ class ClientController {
             response.sendError 404
         }
 
-        List<String> telephones = params.list("telephones")?.findAll { it != "" }
-
-        client.fullName = params.fullName
-        client.address = params.address
-        client.identificationCard = params.identificationCard
-        client.status = params.boolean("status")
+        client.fullName = params?.fullName
+        client.email = params?.email
+        client.address = params?.address
+        client.telephoneNumber = params?.telephoneNumber
 
         if (!client.save()) {
             client.errors.allErrors.each { error ->
@@ -73,19 +71,5 @@ class ClientController {
         }
 
         redirect action: "show", id: id
-    }
-
-    def removeTelephone(Long clientId, Long id) {
-        Client client = Client.get clientId
-        Telephone telephone = Telephone.get id
-
-        if (!client || !telephone) {
-            response.sendError 404
-        }
-
-        client.removeFromTelephones telephone
-        client.save()
-
-        redirect action: "show", id: clientId
     }
 }

@@ -21,6 +21,24 @@ class BootStrap {
         DomainBuilder builder = new DomainBuilder()
         builder.classNameResolver = "ni.sb"
 
+        // CLIENT
+        List<Client> clients = []
+
+        clients << builder.client(
+            fullName: "client one name",
+            email: "client.one.name@domain.com",
+            address: "client one name address",
+            telephoneNumber: "23114455"
+        )
+
+        clients << builder.client(
+            fullName: "client two name"
+        )
+
+        clients.each { client ->
+            client.save failOnError: true
+        }
+
         // USERS
         User admin = new User(
             fullName: "admin user",
