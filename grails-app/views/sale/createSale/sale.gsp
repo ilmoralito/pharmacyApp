@@ -222,8 +222,21 @@
 
             <div class="form-group">
                 <label for="toName">Cliente</label>
-                <g:textField name="client.id" list="clients" class="form-control"/>
                 <pharmacyApp:clientsDataList/>
+                <a href="#" id="addClient">
+                    <small>Agregar cliente</small>
+                </a>
+                <div class="panel panel-default ${clientFormState}">
+                    <div class="panel-body">
+                        <g:form>
+                            <g:render template="/client/form" model="[inputSize: 'input-sm']"/>
+                            <g:submitButton
+                                name="addClient"
+                                value="Confirmar"
+                                class="btn btn-primary btn-block btn-sm"/>
+                        </g:form>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">

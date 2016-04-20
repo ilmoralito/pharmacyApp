@@ -19,4 +19,9 @@ $(function() {
 
         $('#change').html(change);
     });
+
+    $('#addClient').on('click', function(e) {
+        e.preventDefault()
+        $(this).next().toggleClass('show hide');
+    })
 });

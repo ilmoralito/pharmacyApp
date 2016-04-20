@@ -30,7 +30,7 @@
                             <td>${idx + 1}</td>
                             <td>
                                 <g:link action="detail" id="${sale.id}">
-                                    ${sale.toName}
+                                    ${sale.client.fullName}
                                 </g:link>
                             </td>
                         </tr>

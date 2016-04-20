@@ -76,6 +76,28 @@ class SaleController {
                 flow.saleDetails.remove(index)
             }.to "sale"
 
+            on("addClient") { Client cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "A ocurrido un error"
+                    flow.clientFormState = "show"
+                    return error()
+                }
+
+                Client client = new Client(
+                    fullName: cmd.fullName,
+                    email: cmd.email,
+                    address: cmd.address,
+                    telephoneNumber: cmd.telephoneNumber
+                )
+
+                flow.clientFormState = "hide"
+                client.save()
+            }.to "sale"
+
             on("confirm") { SaleCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
@@ -89,7 +111,7 @@ class SaleController {
                 Sale sale = new Sale(
                     user: springSecurityService.currentUser,
                     balance: cmd.balance,
-                    toName: cmd.toName,
+                    client: cmd.client,
                     moneyReceived: cmd.moneyReceived,
                     annotation: cmd.annotation,
                     employee: cmd.employee
@@ -189,5 +211,16 @@ class SaleCommand {
 
     static constraints = {
         importFrom Sale, exclude: ["user"]
+    }
+}
+
+class ClientCommand {
+    String fullName
+    String email
+    String address
+    String telephoneNumber
+
+    static constraints = {
+        importFrom Client
     }
 }

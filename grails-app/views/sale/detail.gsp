@@ -40,7 +40,7 @@
                         <td colspan="2"><strong>A nombre de</strong></td>
                     </tr>
                     <tr>
-                        <td colspan="2">${sale.toName}</td>
+                        <td colspan="2">${sale.client.fullName}</td>
                     </tr>
                     <tr>
                         <td colspan="2"><strong>Observacion</strong></td>

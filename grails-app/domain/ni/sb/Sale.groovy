@@ -1,13 +1,8 @@
 package ni.sb
 
-import org.grails.databinding.BindUsing
-
 class Sale implements Serializable {
     User user
     BigDecimal balance
-    @BindUsing({ obj, source ->
-        source["toName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
-    })
     Client client
     BigDecimal moneyReceived
     String annotation
@@ -39,12 +34,6 @@ class Sale implements Serializable {
 
     List<SaleDetail> saleDetails
     static hasMany = [saleDetails: SaleDetail]
-
-    def beforeInsert() {
-        if (employee) {
-            toName = employee.fullName
-        }
-    }
 
     String toString() { "by $toName for $user.fullName" }
 }

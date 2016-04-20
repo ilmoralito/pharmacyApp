@@ -25,7 +25,7 @@ class AppTagLib {
     static namespace = "pharmacyApp"
 
     def presentations = { attrs ->
-        MarkupBuilder builder = new MarkupBuilder(out)
+        MarkupBuilderfullNameu
         List<Presentation> presentations = Presentation.list()
         Map checkboxParams = [type: "checkbox", name: "presentations"]
 
@@ -405,7 +405,7 @@ class AppTagLib {
         MarkupBuilder builder = new MarkupBuilder(out)
         List<Client> clients = Client.findAllByEnabled(true)
 
-        builder.datalist(id: "clients") {
+        builder.select(name: "client.id", class: "form-control") {
             clients.each { client ->
                 option(value: client.id) { mkp.yield client.fullName }
             }
