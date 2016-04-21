@@ -23,4 +23,8 @@ class Client implements Serializable {
         address nullable: true, maxSize: 1000
         telephoneNumber nullable: true
     }
+
+    static mapping = {
+        sort dateCreated: "desc"
+    }
 }
