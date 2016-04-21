@@ -24,7 +24,7 @@ class SaleController {
                 List<Item> items = Item.list().unique() { a, b -> a.product.name <=> b.product.name }.sort { it.product.name }
                 List<SaleDetail> saleDetails = []
 
-                [items: items, saleDetails: saleDetails]
+                [items: items, saleDetails: saleDetails, clientFormState: "hide"]
             }
 
             on("success").to "sale"
@@ -76,7 +76,7 @@ class SaleController {
                 flow.saleDetails.remove(index)
             }.to "sale"
 
-            on("addClient") { Client cmd ->
+            on("addClient") { ClientCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
                         log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
@@ -95,7 +95,8 @@ class SaleController {
                 )
 
                 flow.clientFormState = "hide"
-                client.save()
+                client.save(flush: true)
+                flow.clientInstance = client
             }.to "sale"
 
             on("confirm") { SaleCommand cmd ->

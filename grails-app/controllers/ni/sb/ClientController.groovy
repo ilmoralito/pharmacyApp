@@ -51,20 +51,17 @@ class ClientController {
     }
 
     def update(Integer id) {
-        Client client = Client.get id
+        Client client = Client.get(id)
 
         if (!client) {
             response.sendError 404
         }
 
-        client.fullName = params?.fullName
-        client.email = params?.email
-        client.address = params?.address
-        client.telephoneNumber = params?.telephoneNumber
+        client.properties = params
 
         if (!client.save()) {
             client.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
             flash.message = "A ocurrido un error. Intentalo otravez"

@@ -401,13 +401,22 @@ class AppTagLib {
         }
     }
 
-    def clientsDataList = {
+    def clientsDataList = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
+        Client clientInstance = attrs?.client
         List<Client> clients = Client.findAllByEnabled(true)
+        Map<String, String> params = [:]
 
         builder.select(name: "client.id", class: "form-control") {
             clients.each { client ->
-                option(value: client.id) { mkp.yield client.fullName }
+                if (clientInstance) {
+                    if (client.id == clientInstance?.id) {
+                        params.selected = true
+                    }
+                }
+
+                params.value = client.id
+                option(params) { mkp.yield client.fullName }
             }
         }
     }

@@ -204,14 +204,14 @@
             <g:hiddenField name="balance" value="${saleDetails.total.sum()}"/>
 
             <div class="form-group">
-                <label>Saldo</label>
+                <label>Total a pagar</label>
                 <div class="form-control">
                     ${saleDetails.total.sum()}
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="moneyReceived">Dinero recivido</label>
+                <label for="moneyReceived">Recibido</label>
                 <g:textField name="moneyReceived" class="form-control"/>
             </div>
 
@@ -222,7 +222,7 @@
 
             <div class="form-group">
                 <label for="toName">Cliente</label>
-                <pharmacyApp:clientsDataList/>
+                <pharmacyApp:clientsDataList client="${clientInstance}"/>
                 <a href="#" id="addClient">
                     <small>Agregar cliente</small>
                 </a>
