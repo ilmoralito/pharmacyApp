@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Empleados</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, employees"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, filterTable"/>
     </head>
 
     <content tag="main">

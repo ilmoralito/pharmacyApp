@@ -1,7 +1,7 @@
 <g:applyLayout name="twoColumns">
     <head>
         <title>Ventas</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, filterTable"/>
     </head>
 
     <content tag="main">
@@ -14,10 +14,10 @@
                     <col span="1" style="width: 99%;">
                 </colgroup>
                 <thead>
-                    <th class="text-center">#</th>
+                    <th class="text-center">ID</th>
                     <th>
                         <input
-                            id="filter"
+                            id="search"
                             class="form-control input-sm"
                             style="font-weight: normal;"
                             placeholder="Filtrar"
@@ -25,10 +25,10 @@
                     </th>
                 </thead>
                 <tbody>
-                    <g:each in="${sales}" var="sale" status="idx">
+                    <g:each in="${sales}" var="sale">
                         <tr>
-                            <td>${idx + 1}</td>
-                            <td>
+                            <td>${sale.id}</td>
+                            <td class="data">
                                 <g:link action="detail" id="${sale.id}">
                                     ${sale.client.fullName}
                                 </g:link>

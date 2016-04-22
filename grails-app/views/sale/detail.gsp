@@ -15,6 +15,10 @@
                 <div class="panel-heading">Datos de venta</div>
                 <tbody>
                     <tr>
+                        <td><strong>ID</strong></td>
+                        <td>${sale.id}</td>
+                    </tr>
+                    <tr>
                         <td><strong>Hora</strong></td>
                         <td>${sale.dateCreated.format('HH:mm')}</td>
                     </tr>

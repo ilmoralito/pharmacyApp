@@ -13,7 +13,7 @@ modules = {
         resource url: "js/purchase-order.js"
     }
 
-    employees {
+    filterTable {
         dependsOn "app"
         resource url: "js/filter-table.js"
     }
