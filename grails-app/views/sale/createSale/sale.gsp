@@ -71,9 +71,9 @@
                                             name="quantity"
                                             id="quantity"
                                             min="1"
-                                            max="${item.quantity}"
+                                            max="${d.quantity}"
                                             class="form-control input-sm"
-                                            placeholder="${item.quantity}">
+                                            placeholder="${d.quantity}">
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
@@ -128,9 +128,9 @@
                                             name="quantity"
                                             id="quantity"
                                             min="1"
-                                            max="${item.quantity}"
+                                            max="${d.quantity}"
                                             class="form-control input-sm"
-                                            placeholder="${item.quantity}">
+                                            placeholder="${d.quantity}">
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
@@ -175,9 +175,9 @@
                                             name="quantity"
                                             id="quantity"
                                             min="1"
-                                            max="${item.quantity}"
+                                            max="${d.quantity}"
                                             class="form-control input-sm"
-                                            placeholder="${item.quantity}">
+                                            placeholder="${d.quantity}">
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
