@@ -25,7 +25,7 @@ class AppTagLib {
     static namespace = "pharmacyApp"
 
     def presentations = { attrs ->
-        MarkupBuilderfullNameu
+        MarkupBuilder builder = new MarkupBuilder(out)
         List<Presentation> presentations = Presentation.list()
         Map checkboxParams = [type: "checkbox", name: "presentations"]
 

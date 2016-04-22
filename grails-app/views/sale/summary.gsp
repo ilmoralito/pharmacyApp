@@ -22,14 +22,14 @@
                         <g:set var="data" value="${saleDetail}"/>
                         <tr>
                             <td>
-                                <g:if test="${item instanceof ni.sb.MedicineOrder}">
-                                    ${item} ${item.presentation} ${item.measure}
+                                <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder}">
+                                    ${saleDetail.item} ${saleDetail.item.presentation} ${saleDetail.item.measure}
                                 </g:if>
-                                <g:elseif test="${item instanceof ni.sb.BrandProductOrder}">
-                                    ${item} ${saleDetail.brand} ${detail}
+                                <g:elseif test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
+                                    ${saleDetail.item} ${saleDetail.item.brand} ${saleDetail.item.detail}
                                 </g:elseif>
                                 <g:else>
-                                    ${saleDetail}
+                                    ${saleDetail.item}
                                 </g:else>
                             </td>
                             <td>${saleDetail.quantity}</td>
@@ -45,7 +45,7 @@
     <content tag="col1">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Datos
+                Resumen
             </div>
             <table class="table table-hover">
                 <tbody>
