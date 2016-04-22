@@ -118,6 +118,8 @@ class SaleController {
                 )
 
                 flow.saleDetails.each { saleDetail ->
+                    saleDetail.item.quantity -= saleDetail.quantity
+
                     sale.addToSaleDetails(saleDetail)
                 }
 
