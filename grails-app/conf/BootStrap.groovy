@@ -3,8 +3,6 @@ import grails.util.Environment
 import grails.util.DomainBuilder
 
 class BootStrap {
-    def itemService
-
     def init = { servletContext ->
         if (Environment.current == Environment.DEVELOPMENT) {
             development()

@@ -4,8 +4,6 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class NotificationsController {
-    def generalService
-    def exportService
     def grailsApplication
 
     static defaultAction = "quantity"
