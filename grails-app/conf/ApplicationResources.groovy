@@ -27,8 +27,4 @@ modules = {
         dependsOn "filter"
         resource url: "js/updateName.js"
     }
-
-    pay {
-        resource url: "js/pay.js"
-    }
 }
