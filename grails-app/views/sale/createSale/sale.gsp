@@ -200,8 +200,26 @@
         </g:if>
     </content>
     <content tag="col1">
-        <g:form autocomplete="off">
+        <a href="#" id="addClient"><small>Agregar cliente</small></a>
+        <div class="panel panel-default ${clientFormState}">
+            <div class="panel-body">
+                <g:form autocomplete="off">
+                    <g:render template="/client/form" model="[inputSize: 'input-sm']"/>
+                    <g:submitButton
+                        name="addClient"
+                        value="Confirmar"
+                        class="btn btn-primary btn-block btn-sm"/>
+                </g:form>
+            </div>
+        </div>
+
+        <g:form autocomplete="off" id="saleForm">
             <g:hiddenField name="balance" value="${saleDetails.total.sum()}"/>
+
+            <div class="form-group">
+                <label for="client">Cliente</label>
+                <pharmacyApp:clientsDataList/>
+            </div>
 
             <div class="form-group">
                 <label>Total a pagar</label>
@@ -218,25 +236,6 @@
             <div class="form-group">
                 <label for="change">Cambio</label>
                 <div class="form-control" id="change"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="toName">Cliente</label>
-                <pharmacyApp:clientsDataList client="${clientInstance}"/>
-                <a href="#" id="addClient">
-                    <small>Agregar cliente</small>
-                </a>
-                <div class="panel panel-default ${clientFormState}">
-                    <div class="panel-body">
-                        <g:form>
-                            <g:render template="/client/form" model="[inputSize: 'input-sm']"/>
-                            <g:submitButton
-                                name="addClient"
-                                value="Confirmar"
-                                class="btn btn-primary btn-block btn-sm"/>
-                        </g:form>
-                    </div>
-                </div>
             </div>
 
             <div class="form-group">

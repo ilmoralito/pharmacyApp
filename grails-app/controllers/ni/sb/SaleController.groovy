@@ -96,7 +96,6 @@ class SaleController {
 
                 flow.clientFormState = "hide"
                 client.save(flush: true)
-                flow.clientInstance = client
             }.to "sale"
 
             on("confirm") { SaleCommand cmd ->
@@ -193,15 +192,6 @@ class SaleController {
     }
 }
 
-class SaleDetailCommand {
-    Item item
-    Integer quantity
-
-    static constraints = {
-        importFrom SaleDetail
-    }
-}
-
 class SaleCommand {
     BigDecimal balance
     Client client
@@ -212,6 +202,15 @@ class SaleCommand {
 
     static constraints = {
         importFrom Sale, exclude: ["user"]
+    }
+}
+
+class SaleDetailCommand {
+    Item item
+    Integer quantity
+
+    static constraints = {
+        importFrom SaleDetail
     }
 }
 

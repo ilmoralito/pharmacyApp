@@ -20,8 +20,7 @@ $(function() {
         $('#change').html(change);
     });
 
-    $('#addClient').on('click', function(e) {
-        e.preventDefault()
+    $('#addClient').on('click', function() {
         $(this).next().toggleClass('show hide');
     })
 });

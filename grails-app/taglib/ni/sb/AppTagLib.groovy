@@ -401,24 +401,19 @@ class AppTagLib {
         }
     }
 
-    def clientsDataList = { attrs ->
+    def clientsDataList = {
         MarkupBuilder builder = new MarkupBuilder(out)
-        Client clientInstance = attrs?.client
         List<Client> clients = Client.findAllByEnabled(true)
         Map<String, String> params = [:]
 
-        builder.select(name: "client.id", class: "form-control") {
-            clients.each { client ->
-                if (clientInstance) {
-                    if (client.id == clientInstance?.id) {
-                        params.selected = true
-                    }
-                }
-
-                params.value = client.id
-                option(params) { mkp.yield client.fullName }
-            }
-        }
+        out << g.select(
+            name:"client.id",
+            noSelection: ['': '-Selecciona cliente-'],
+            from: clients,
+            optionKey: "id",
+            optionValue: "fullName",
+            class: "form-control"
+        )
     }
 
     // TODO: Implement a groovier solution
