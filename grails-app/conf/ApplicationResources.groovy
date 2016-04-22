@@ -28,11 +28,6 @@ modules = {
         resource url: "js/updateName.js"
     }
 
-    addTelefone {
-        dependsOn "app"
-        resource url: "js/addTelefone.js"
-    }
-
     pay {
         resource url: "js/pay.js"
     }
