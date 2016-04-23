@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${items}">
-            <a href="#" class="trigger">Productos</a>
+            <p href="#" class="trigger">Productos</p>
 
             <table class="table table-hover">
                 <colgroup>
@@ -61,7 +61,7 @@
         </g:if>
 
         <g:if test="${medicineOrders}">
-            <a href="#" class="trigger">Medicinas</a>
+            <p href="#" class="trigger">Medicinas</p>
 
             <table class="table table-hover">
                 <colgroup>
@@ -123,7 +123,7 @@
         </g:if>
 
         <g:if test="${brandProductOrders}">
-            <a href="#" class="trigger">Marcas</a>
+            <p href="#" class="trigger">Marcas</p>
 
             <table class="table table-hover" style="margin-top: 10px;">
                 <colgroup>
@@ -252,16 +252,16 @@
                                 ${r.provider}
                             </p>
 
-                            <g:hiddenField name="product" value="${r.id}"/>
+                            <g:hiddenField name="product.id" value="${r.id}"/>
 
                             <g:if test="${r instanceof ni.sb.Medicine}">
                                 <pharmacyApp:combo
-                                    name="presentation"
+                                    name="presentation.id"
                                     from="${r.presentations}"
                                     data="measures"/>
 
                                 <pharmacyApp:combo
-                                    name="measure"
+                                    name="measure.id"
                                     from="${r.presentations[0].measures}"/>
 
                                 <div class="form-group">
@@ -274,12 +274,12 @@
 
                             <g:if test="${r instanceof ni.sb.BrandProduct}">
                                 <pharmacyApp:combo
-                                    name="brand"
+                                    name="brand.id"
                                     from="${r.brands}"
                                     data="details"/>
 
                                 <pharmacyApp:combo
-                                    name="detail"
+                                    name="detail.id"
                                     from="${r.brands[0].details}"/>
                             </g:if>
 

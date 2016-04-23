@@ -118,17 +118,16 @@ class PurchaseOrderController {
             on("addItem") { ItemComamnd cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
-                        log.error "[$error.field: $error.defaultMessage]"
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
                     return error()
                 }
 
-                Product product = Product.get(cmd.product)
-
                 Item item = new Item(
-                    product: product,
+                    product: cmd.product,
                     quantity: cmd.quantity,
+                    fixedQuantity: cmd.quantity,
                     purchasePrice: cmd.purchasePrice,
                     sellingPrice: cmd.sellingPrice
                 )
@@ -147,7 +146,7 @@ class PurchaseOrderController {
             on("addMedicineOrder") { MedicineOrderCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
-                        log.error "[$error.field: $error.defaultMessage]"
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
                     return error()
@@ -156,6 +155,7 @@ class PurchaseOrderController {
                 MedicineOrder medicineOrder = new MedicineOrder(
                     product: cmd.product,
                     quantity: cmd.quantity,
+                    fixedQuantity: cmd.quantity,
                     purchasePrice: cmd.purchasePrice,
                     sellingPrice: cmd.sellingPrice,
                     presentation: cmd.presentation,
@@ -182,7 +182,7 @@ class PurchaseOrderController {
             on("addBrandProductOrder") { BrandProductOrderCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
-                        log.error "[$error.field: $error.defaultMessage]"
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
                     return error()
@@ -191,6 +191,7 @@ class PurchaseOrderController {
                 BrandProductOrder brandProductOrder = new BrandProductOrder(
                     product: cmd.product,
                     quantity: cmd.quantity,
+                    fixedQuantity: cmd.quantity,
                     purchasePrice: cmd.purchasePrice,
                     sellingPrice: cmd.sellingPrice,
                     brand: cmd.brand,
@@ -256,14 +257,14 @@ class PurchaseOrderController {
                 }
 
                 flow.medicineOrders.each { medicineOrder ->
+                    // Update item selling price
+
                     purchaseOrder.addToItems(medicineOrder)
                 }
 
                 flow.brandProductOrders.each { brandProductOrder ->
                     purchaseOrder.addToItems(brandProductOrder)
                 }
-
-                flash.message = "Proceso concluido correctamente"
 
                 if (!purchaseOrder.save()) {
                     purchaseOrder.errors.allErrors.each { error ->
@@ -272,6 +273,8 @@ class PurchaseOrderController {
 
                     return error()
                 }
+
+                flash.message = "Proceso concluido correctamente"
             }.to "done"
         }
 
@@ -331,7 +334,7 @@ class PurchaseOrderCommand {
 }
 
 class ItemComamnd {
-    Long product
+    Product product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
@@ -342,12 +345,12 @@ class ItemComamnd {
 }
 
 class MedicineOrderCommand {
-    Long product
+    Product product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
-    Integer presentation
-    Integer measure
+    Presentation presentation
+    Measure measure
     Date dueDate
 
     static constraints = {
@@ -356,12 +359,12 @@ class MedicineOrderCommand {
 }
 
 class BrandProductOrderCommand {
-    Long product
+    Product product
     Integer quantity
     BigDecimal purchasePrice
     BigDecimal sellingPrice
-    Long brand
-    Long detail
+    Brand brand
+    Detail detail
 
     static constraints = {
         importFrom BrandProductOrder
