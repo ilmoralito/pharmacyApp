@@ -254,23 +254,44 @@ class PurchaseOrderController {
 
                 flow.items.each { item ->
                     purchaseOrder.addToItems(item)
+
+                    def query = Item.where {
+                        product == item.product
+                    }
+
+                    Integer total = query.updateAll(sellingPrice: item.sellingPrice)
                 }
 
                 flow.medicineOrders.each { medicineOrder ->
-                    // Update item selling price
-
                     purchaseOrder.addToItems(medicineOrder)
+
+                    def query = MedicineOrder.where {
+                        product == medicineOrder.product &&
+                        presentation == medicineOrder.presentation &&
+                        measure == medicineOrder.measure
+                    }
+
+                    Integer total = query.updateAll(sellingPrice: medicineOrder.sellingPrice)
                 }
 
                 flow.brandProductOrders.each { brandProductOrder ->
                     purchaseOrder.addToItems(brandProductOrder)
+
+                    def query = BrandProductOrder.where {
+                        product == brandProductOrder.product &&
+                        brand == brandProductOrder.brand &&
+                        detail == brandProductOrder.detail
+                    }
+
+                    Integer total = query.updateAll(sellingPrice: brandProductOrder.sellingPrice)
                 }
 
                 if (!purchaseOrder.save()) {
                     purchaseOrder.errors.allErrors.each { error ->
-                        log.error "[$error.field: $error.defaultMessage]"
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
+                    flash.message = "A ocurrido un error. Log notificado"
                     return error()
                 }
 
