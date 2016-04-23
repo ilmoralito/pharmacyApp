@@ -16,7 +16,7 @@ class SaleDetail implements Serializable {
     static belongsTo = [sale: Sale]
 
     static namedQueries = {
-        fromTo { Date from, Date to ->
+        fromTo { from, to ->
             ge "dateCreated", from.clearTime()
             le "dateCreated", to.clearTime() + 1
         }

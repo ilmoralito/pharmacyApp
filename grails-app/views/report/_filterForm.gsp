@@ -1,1 +1,1 @@
-<pharmacyApp:fromTo/>
+<pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>

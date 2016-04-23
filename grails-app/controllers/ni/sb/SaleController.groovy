@@ -163,9 +163,9 @@ class SaleController {
         Date today = new Date()
         User user = springSecurityService.currentUser
         List<SaleDetail> data = SaleDetail.fromTo(today, today).bySaleUser(user).list()
-        BigDecimal balance = Sale.fromTo(today, today).findAllByUser(user).balance.sum()
-        BigDecimal expenseBalance = Expense.fromTo(today, today).findAllByUser(user).quantity.sum()
-        List saleDetails = data.groupBy { it.item }.collect { a ->
+        BigDecimal balance = Sale.fromTo(today, today).findAllByUser(user).balance.sum() ?: 0.0
+        BigDecimal expenseBalance = Expense.fromTo(today, today).findAllByUser(user).quantity.sum() ?: 0.0
+        List<Map> saleDetails = data.groupBy { it.item }.collect { a ->
             [
                 item: a.key,
                 quantity: a.value.quantity.sum()
@@ -174,8 +174,8 @@ class SaleController {
 
         [
             saleDetails: saleDetails,
-            balance: balance ?: 0,
-            expenseBalance: expenseBalance ?: 0
+            balance: balance,
+            expenseBalance: expenseBalance
         ]
     }
 }
