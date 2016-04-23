@@ -10,8 +10,8 @@
                 <colgroup>
                     <col span="1" style="width: 25%;">
                     <col span="1" style="width: 55%;">
-                    <col span="1" style="width: 5%;">
                     <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
                     <th>Nombre</th>
