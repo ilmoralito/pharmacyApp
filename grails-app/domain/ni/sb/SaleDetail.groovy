@@ -15,6 +15,19 @@ class SaleDetail implements Serializable {
 
     static belongsTo = [sale: Sale]
 
+    static namedQueries = {
+        fromTo { Date from, Date to ->
+            ge "dateCreated", from.clearTime()
+            le "dateCreated", to.clearTime() + 1
+        }
+
+        bySaleUser { user ->
+            sale {
+                eq "user", user
+            }
+        }
+    }
+
     def beforeValidate() {
         total = item.sellingPrice * quantity
     }

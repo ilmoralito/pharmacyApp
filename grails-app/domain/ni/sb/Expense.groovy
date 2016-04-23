@@ -15,7 +15,7 @@ class Expense {
 
     static constraints = {
         description blank: false
-        quantity nullable: false, min: 0.1
+        quantity min: 0.1
     }
 
     static namedQueries = {
@@ -32,11 +32,6 @@ class Expense {
     }
 
     static mapping = {
-        version false
         sort dateCreated: "asc"
-    }
-
-    def beforeInsert() {
-        //user = delegate.springSecurityService.currentUser
     }
 }

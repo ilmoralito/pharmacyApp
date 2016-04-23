@@ -144,7 +144,7 @@ class SaleController {
     def list() {
         Date today = new Date()
         User currentUser = springSecurityService.currentUser
-        List<Sale> sales = Sale.fromTo(today, today + 1).findAllByUser(currentUser)
+        List<Sale> sales = Sale.fromTo(today, today).findAllByUser(currentUser)
 
         [sales: sales.sort { a, b -> b.dateCreated <=> a.dateCreated }]
     }
@@ -161,28 +161,14 @@ class SaleController {
 
     def summary() {
         Date today = new Date()
-        User currentUser = springSecurityService.currentUser
-        def c = SaleDetail.createCriteria()
-        List<SaleDetail> data = c {
-            ge "dateCreated", today.clearTime()
-            le "dateCreated", today.clearTime() + 1
-            sale {
-                eq "user", currentUser
-            }
-        }
-
-        BigDecimal balance = Sale.fromTo(today, today + 1).findAllByUser(currentUser).balance.sum()
-
-        BigDecimal expenseBalance = Expense.createCriteria().list {
-            ge "dateCreated", today.clearTime()
-            le "dateCreated", today.clearTime() + 1
-            eq "user", currentUser
-        }.quantity.sum()
-
+        User user = springSecurityService.currentUser
+        List<SaleDetail> data = SaleDetail.fromTo(today, today).bySaleUser(user).list()
+        BigDecimal balance = Sale.fromTo(today, today).findAllByUser(user).balance.sum()
+        BigDecimal expenseBalance = Expense.fromTo(today, today).findAllByUser(user).quantity.sum()
         List saleDetails = data.groupBy { it.item }.collect { a ->
             [
                 item: a.key,
-                quantity: a.value.size()
+                quantity: a.value.quantity.sum()
             ]
         }.sort { -it.quantity }
 

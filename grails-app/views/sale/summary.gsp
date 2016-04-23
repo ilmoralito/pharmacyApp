@@ -10,12 +10,12 @@
         <g:if test="${saleDetails}">
             <table class="table table-hover">
                  <colgroup>
-                    <col span="1" style="width: 50%;">
-                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 70%;">
                 </colgroup>
                 <thead>
                     <th>Articulo</th>
-                    <th>Cantidad</th>
+                    <th>Unidades vendidas</th>
                 </thead>
                 <tbody>
                     <g:each in="${saleDetails}" var="saleDetail">

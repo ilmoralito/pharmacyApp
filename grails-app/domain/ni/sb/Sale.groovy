@@ -24,11 +24,7 @@ class Sale implements Serializable {
     static namedQueries = {
         fromTo { from, to ->
             ge "dateCreated", from.clearTime()
-            le "dateCreated", to.clearTime()
-        }
-
-        byCurrentUser {
-            eq "user", domainClass.application.mainContext.springSecurityService.currentUser
+            le "dateCreated", to.clearTime() + 1
         }
     }
 
