@@ -9,85 +9,96 @@
             </button>
             <g:link class="navbar-brand" controller="${controllerName}">App name</g:link>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown ${controllerName == 'notifications' ? 'active' : ''}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <g:if test="${(session.notif)}">
-                            <span class="badge notifications"><span class="glyphicon glyphicon-bell"></span></span>
-                        </g:if>
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> <span class="caret"></span>
+                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <g:link controller="notifications" action="quantity">
-                                <g:if test="${session.q > 0}">
-                                    <span class="badge notifications">${session.q}</span>
-                                </g:if>
                                 Existencias bajas
                             </g:link>
                         </li>
-                    <li>
-                        <g:link controller="notifications" action="expire">
-                            <g:if test="${session.ex > 0}">
-                                <span class="badge notifications">${session.ex}</span>
-                            </g:if>
-                            Por vencerse
-                        </g:link>
-                    </li>
-                    <li>
-                        <g:link controller="notifications" action="expired">
-                            <g:if test="${session.exd > 0}">
-                                <span class="badge notifications">${session.exd}</span>
-                            </g:if>
-                            Vencidos
-                        </g:link>
-                    </li>
-                    <li>
-                        <g:link controller="notifications" action="pendingOrders">
-                            <g:if test="${session.po > 0}">
-                                <span class="badge notifications">${session.po}</span>
-                            </g:if>
-                            Pedidos Pendientes
-                        </g:link>
-                    </li>
-                    <li>
-                        <g:link controller="notifications" action="clientPayments">
-                            <g:if test="${session.cp > 0}">
-                                <span class="badge notifications">${session.cp}</span>
-                            </g:if>
-                            Pago de clientes
-                        </g:link>
-                    </li>
-                </ul>
-            </li>
-            <li class="dropdown ${controllerName == 'user' ? 'active' : ''}">
-                <g:set var="fullName" value="${applicationContext.springSecurityService.currentUser?.fullName}"/>
-
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                ${fullName}
-                <span class="caret"></span></a>
-
-                <ul class="dropdown-menu" role="menu">
-                    <li class="${actionName == 'profile' || actionName == 'password' ? 'active' : ''}">
-                        <g:link controller="user" action="profile">
-                            Perfil
-                        </g:link>
-                    </li>
-                    <sec:ifAllGranted roles="ROLE_ADMIN">
-                        <li class="${controllerName == 'user' && actionName == 'list' ? 'active' : ''}">
-                            <g:link controller="user" params="[enabled: true]">
-                                Administrar usuarios
+                        <li>
+                            <g:link controller="notifications" action="expire">
+                                Por vencerse
                             </g:link>
                         </li>
-                    </sec:ifAllGranted>
+                        <li>
+                            <g:link controller="notifications" action="expired">
+                                Vencidos
+                            </g:link>
+                        </li>
+                        <li>
+                            <g:link controller="notifications" action="pendingOrders">
+                                Pedidos Pendientes
+                            </g:link>
+                        </li>
+                        <li>
+                            <g:link controller="notifications" action="clientPayments">
+                                Pago de clientes
+                            </g:link>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown ${controllerName == 'report' ? 'active' : ''}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Reportes
+                        <span class="caret"></span>
+                    </a>
 
-                    <li class="divider"></li>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="${actionName == 'sales' ? 'active' : ''}">
+                            <g:link controller="report" action="sales">
+                                Ventas
+                            </g:link>
+                        </li>
+                        <li class="${actionName == 'stock' ? 'active' : ''}">
+                            <g:link controller="report" action="stock">
+                                Inventario
+                            </g:link>
+                        </li>
+                        <li class="${actionName == 'clients' ? 'active' : ''}">
+                            <g:link controller="report" action="clients">
+                                Clientes
+                            </g:link>
+                        </li>
+                        <li class="${actionName == 'employees' ? 'active' : ''}">
+                            <g:link controller="report" action="employees">
+                                A empresas
+                            </g:link>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown ${controllerName == 'user' ? 'active' : ''}">
+                    <g:set var="fullName" value="${applicationContext.springSecurityService.currentUser?.fullName}"/>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        ${fullName}
+                        <span class="caret"></span>
+                    </a>
 
-                    <li><g:link controller="logout" action="index">Salir</g:link></li>
-                  </ul>
-            </li>
-          </ul>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="${actionName == 'profile' || actionName == 'password' ? 'active' : ''}">
+                            <g:link controller="user" action="profile">
+                                Perfil
+                            </g:link>
+                        </li>
+                        <sec:ifAllGranted roles="ROLE_ADMIN">
+                            <li class="${controllerName == 'user' && actionName == 'list' ? 'active' : ''}">
+                                <g:link controller="user" params="[enabled: true]">
+                                    Administrar usuarios
+                                </g:link>
+                            </li>
+                        </sec:ifAllGranted>
+
+                        <li class="divider"></li>
+                        <li><g:link controller="logout" action="index">Salir</g:link></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

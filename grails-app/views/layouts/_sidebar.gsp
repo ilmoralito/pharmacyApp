@@ -33,9 +33,6 @@
         <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>
-        <li class="${controllerName == 'item' ? 'active' : ''}">
-            <g:link controller="item" action="itemStock">Inventario</g:link>
-        </li>
     </sec:ifAllGranted>
     <li class="${controllerName == 'sale' ? 'active' : ''}">
         <g:link controller="sale" action="create">Ventas</g:link>
