@@ -6,7 +6,7 @@ import groovy.transform.ToString
 @ToString
 class Distributor implements Serializable {
     @BindUsing({
-        obj, source -> source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize()?.join(" ")
+        obj, source -> source["name"]?.capitalize()
     })
     String name
     String telephoneNumber
@@ -22,6 +22,7 @@ class Distributor implements Serializable {
         telephoneNumber blank: false, unique: true
         daysToPay min: 1
         contact nullable: false
+        providers nullable: false, minSize: 1
     }
 
     List<Provider> providers

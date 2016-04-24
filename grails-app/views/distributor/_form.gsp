@@ -26,6 +26,15 @@
         placeholder="Limite de pago">
 </div>
 
+<g:if test="${actionName == 'show'}">
+    <div class="checkbox">
+        <label>
+            <g:checkBox name="enabled" value="${dealer?.enabled}"/>
+            Habilitado
+        </label>
+    </div>
+</g:if>
+
 <p>Contacto</p>
 <div class="form-group">
     <g:textField
@@ -51,11 +60,5 @@
         placeholder="Numero telefonico"/>
 </div>
 
-<g:if test="${actionName == 'show'}">
-    <p>Habilitado</p>
-    <div class="checkbox">
-        <label>
-            <g:checkBox name="enabled" value="${dealer?.enabled}"/>
-        </label>
-    </div>
-</g:if>
+<p>Laboratorios</p>
+<pharmacyApp:providers providerList="${dealer?.providers ?: params.list('providers')}"/>

@@ -19,7 +19,8 @@ class AppTagLib {
         fromTo: "raw",
         paymentStatus: "raw",
         combo: "raw",
-        clientsDataList: "raw"
+        clientsDataList: "raw",
+        providers: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -414,6 +415,33 @@ class AppTagLib {
             optionValue: "fullName",
             class: "form-control"
         )
+    }
+
+    def providers = { attrs ->
+        MarkupBuilder builder = new MarkupBuilder(out)
+        List<Provider> providerList = attrs.providerList
+        List<Provider> providers = Provider.where {
+            enabled == true && products.size() > 0
+        }.list()
+        Map<String, String> params = [type: "checkbox", name: "providers"]
+
+        builder.div {
+            providers.each { provider ->
+                params.value = provider.id
+
+                if (provider in providerList) {
+                    params.checked = true
+                } else {
+                    params.remove("checked")
+                }
+
+                div(class: "checkbox") {
+                    label {
+                        input(params) { mkp.yield provider.name }
+                    }
+                }
+            }
+        }
     }
 
     // TODO: Implement a groovier solution

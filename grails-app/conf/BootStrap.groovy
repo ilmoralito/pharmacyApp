@@ -308,6 +308,7 @@ class BootStrap {
             daysToPay: 60,
             enabled: false
         ) {
+            provider(refId: "LABORATORY3")
             contact(fullName: "contact5", email: "contact5@domain.com", telephoneNumber: "76565434")
         }
 
