@@ -139,7 +139,7 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = "ni.sb.User"
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = "ni.sb.UserRole"
 grails.plugin.springsecurity.authority.className = "ni.sb.Role"
 grails.plugin.springsecurity.logout.postOnly = false
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/notifications/quantity"
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/sale/createSale"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	"/":                              ["permitAll"],
 	"/index":                         ["permitAll"],
