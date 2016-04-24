@@ -2,37 +2,24 @@ package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_ADMIN", "ROLE_USER"])
 class NotificationsController {
-    def grailsApplication
-
     static defaultAction = "quantity"
     static allowedMethods = [
         quantity: "GET",
         expire: "GET",
-        expired: "GET",
-        pendingOrders: "GET",
-        clientPayments: "GET"
+        expire: "GET",
     ]
 
-    @Secured(['ROLE_ADMIN','ROLE_USER'])
-    def quantity() {
+    def lowExistences() {
 
     }
 
-    def expire() {
+    def aboutToDueDate() {
 
     }
 
-    def expired() {
-
-    }
-
-    def pendingOrders() {
-        
-    }
-
-    def clientPayments() {
+    def dueDate() {
 
     }
 }

@@ -17,62 +17,59 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li role="presentation" class="dropdown-header">Articulos</li>
                         <li>
                             <g:link controller="notifications" action="quantity">
                                 Existencias bajas
+                                <span class="badge"></span>
                             </g:link>
                         </li>
                         <li>
                             <g:link controller="notifications" action="expire">
                                 Por vencerse
+                                <span class="badge"></span>
                             </g:link>
                         </li>
+                        <li role="presentation" class="dropdown-header">Pedidos</li>
                         <li>
-                            <g:link controller="notifications" action="expired">
-                                Vencidos
-                            </g:link>
-                        </li>
-                        <li>
-                            <g:link controller="notifications" action="pendingOrders">
-                                Pedidos Pendientes
-                            </g:link>
-                        </li>
-                        <li>
-                            <g:link controller="notifications" action="clientPayments">
-                                Pago de clientes
+                            <g:link controller="notifications" action="expire">
+                                Fecha de pago proxima
+                                <span class="badge"></span>
                             </g:link>
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown ${controllerName == 'report' ? 'active' : ''}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Reportes
-                        <span class="caret"></span>
-                    </a>
+                <sec:ifAllGranted roles="ROLE_ADMIN">
+                    <li class="dropdown ${controllerName == 'report' ? 'active' : ''}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reportes
+                            <span class="caret"></span>
+                        </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="${actionName == 'sales' ? 'active' : ''}">
-                            <g:link controller="report" action="sales">
-                                Ventas
-                            </g:link>
-                        </li>
-                        <li class="${actionName == 'stock' ? 'active' : ''}">
-                            <g:link controller="report" action="stock">
-                                Inventario
-                            </g:link>
-                        </li>
-                        <li class="${actionName == 'clients' ? 'active' : ''}">
-                            <g:link controller="report" action="clients">
-                                Clientes
-                            </g:link>
-                        </li>
-                        <li class="${actionName == 'employees' ? 'active' : ''}">
-                            <g:link controller="report" action="employees">
-                                A empresas
-                            </g:link>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="${actionName == 'sales' ? 'active' : ''}">
+                                <g:link controller="report" action="sales">
+                                    Ventas
+                                </g:link>
+                            </li>
+                            <li class="${actionName == 'stock' ? 'active' : ''}">
+                                <g:link controller="report" action="stock">
+                                    Inventario
+                                </g:link>
+                            </li>
+                            <li class="${actionName == 'clients' ? 'active' : ''}">
+                                <g:link controller="report" action="clients">
+                                    Clientes
+                                </g:link>
+                            </li>
+                            <li class="${actionName == 'employees' ? 'active' : ''}">
+                                <g:link controller="report" action="employees">
+                                    A empresas
+                                </g:link>
+                            </li>
+                        </ul>
+                    </li>
+                </sec:ifAllGranted>
                 <li class="dropdown ${controllerName == 'user' ? 'active' : ''}">
                     <g:set var="fullName" value="${applicationContext.springSecurityService.currentUser?.fullName}"/>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
