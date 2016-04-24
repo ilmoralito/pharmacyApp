@@ -19,20 +19,20 @@
                     <ul class="dropdown-menu">
                         <li role="presentation" class="dropdown-header">Articulos</li>
                         <li>
-                            <g:link controller="notifications" action="quantity">
+                            <g:link controller="notifications" action="lowStocks">
                                 Existencias bajas
                                 <span class="badge"></span>
                             </g:link>
                         </li>
                         <li>
-                            <g:link controller="notifications" action="expire">
+                            <g:link controller="notifications" action="aboutToExpire">
                                 Por vencerse
                                 <span class="badge"></span>
                             </g:link>
                         </li>
                         <li role="presentation" class="dropdown-header">Pedidos</li>
                         <li>
-                            <g:link controller="notifications" action="expire">
+                            <g:link controller="notifications" action="paymentDateClose">
                                 Fecha de pago proxima
                                 <span class="badge"></span>
                             </g:link>

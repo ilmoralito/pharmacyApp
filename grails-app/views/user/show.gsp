@@ -11,7 +11,7 @@
                 <br>
                 <br>
 
-                <g:form action="update">
+                <g:form action="update" autocomplete="off">
                     <g:hiddenField name="id" value="${params?.id}"/>
 
                     <g:render template="form"/>

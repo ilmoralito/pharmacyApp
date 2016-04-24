@@ -80,7 +80,7 @@ class UserController {
         User user = springSecurityService.currentUser
 
         if (request.method == "POST") {
-            user.properties["username", "email", "fullName"] = params
+            user.properties["fullName", "email", "telephoneNumber"] = params
 
             if (!user.save()) {
                 user.errors.allErrors.each { error ->

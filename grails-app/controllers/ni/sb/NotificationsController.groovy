@@ -6,20 +6,20 @@ import grails.plugin.springsecurity.annotation.Secured
 class NotificationsController {
     static defaultAction = "quantity"
     static allowedMethods = [
-        quantity: "GET",
-        expire: "GET",
-        expire: "GET",
+        lowStocks: "GET",
+        aboutToExpire: "GET",
+        paymentDateClose: "GET",
     ]
 
-    def lowExistences() {
+    def lowStocks() {
 
     }
 
-    def aboutToDueDate() {
+    def aboutToExpire() {
 
     }
 
-    def dueDate() {
+    def paymentDateClose() {
 
     }
 }

@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <g:form action="profile">
+                <g:form action="profile" autocomplete="off">
                     <g:render template="form"/>
 
                     <input type="submit" class="btn btn-primary" value="Confirmar"/>
