@@ -11,16 +11,16 @@
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 18%;">
-                    <col span="1" style="width: 65%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 63%;">
                     <col span="1" style="width: 5%;">
                     <col span="1" style="width: 1%;">
                 </colgroup>
                 <thead>
                     <th>#</th>
                     <th>Hora</th>
-                    <th>Creado por</th>
-                    <th>Descripcion</th>
+                    <th>Realizado por</th>
+                    <th>Razon del gasto</th>
                     <th>Monto</th>
                     <th></th>
                 </thead>

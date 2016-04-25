@@ -12,16 +12,22 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown ${controllerName == 'notifications' ? 'active' : ''}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                    <a
+                        href="#"
+                        class="dropdown-toggle"
+                        data-toggle="dropdown">
+                        <span
+                            class="glyphicon glyphicon-bell ${session.lowStocks ? 'notify' : ''}"
+                            aria-hidden="true">
+                        </span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation" class="dropdown-header">Articulos</li>
-                        <li>
+                        <li class="${actionName == 'lowStocks' ? 'active' : ''}">
                             <g:link controller="notifications" action="lowStocks">
                                 Existencias bajas
-                                <span class="badge"></span>
+                                <span class="badge">${session?.lowStocks}</span>
                             </g:link>
                         </li>
                         <li>

@@ -1,6 +1,7 @@
 package ni.sb
 
 class AppFilters {
+    def itemService
     def springSecurityService
     def passwordEncoder
 
@@ -19,6 +20,14 @@ class AppFilters {
                         return false
                     }
                 }
+            }
+        }
+
+        checkForLowStocks(controller: "*", action: "*") {
+            before = {
+                Item[] itemsWithLowStocks = itemService.getItemsWithlowStocks()
+
+                session?.lowStocks = itemsWithLowStocks.size()
             }
         }
     }

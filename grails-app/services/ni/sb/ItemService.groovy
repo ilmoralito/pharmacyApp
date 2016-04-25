@@ -4,8 +4,13 @@ import grails.transaction.Transactional
 
 @Transactional
 class ItemService {
+    static transactional = false
 
-    def serviceMethod() {
+    Item[] getItemsWithlowStocks() {
+        def items = Item.where {
+            quantity <= 10
+        }.list()
 
+        items
     }
 }

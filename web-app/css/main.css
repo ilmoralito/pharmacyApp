@@ -1,8 +1,10 @@
 body { padding-top: 70px; }
 
-.trigger { cursor: pointer; }
-
 textarea {
     resize: vertical;
     max-height: 200px;
 }
+
+.notify { color: green; }
+
+.trigger { cursor: pointer; }
