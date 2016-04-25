@@ -23,11 +23,13 @@ class AppFilters {
             }
         }
 
-        checkForLowStocks(controller: "*", action: "*") {
+        notifications(controller: "*", action: "*") {
             before = {
                 Item[] itemsWithLowStocks = itemService.getItemsWithlowStocks()
+                MedicineOrder[] medicineOrdersAboutToExpire = itemService.getMedicineOrdersAboutToExpire()
 
                 session?.lowStocks = itemsWithLowStocks.size()
+                session?.aboutToExpire = medicineOrdersAboutToExpire.size()
             }
         }
     }

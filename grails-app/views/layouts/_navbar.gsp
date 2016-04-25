@@ -17,7 +17,7 @@
                         class="dropdown-toggle"
                         data-toggle="dropdown">
                         <span
-                            class="glyphicon glyphicon-bell ${session.lowStocks ? 'notify' : ''}"
+                            class="glyphicon glyphicon-bell ${session?.lowStocks || session?.aboutToExpire ? 'notify' : ''}"
                             aria-hidden="true">
                         </span>
                         <span class="caret"></span>
@@ -27,20 +27,26 @@
                         <li class="${actionName == 'lowStocks' ? 'active' : ''}">
                             <g:link controller="notifications" action="lowStocks">
                                 Existencias bajas
-                                <span class="badge">${session?.lowStocks}</span>
+                                <g:if test="${session?.lowStocks}">
+                                    <span class="badge">${session?.lowStocks}</span>
+                                </g:if>
                             </g:link>
                         </li>
-                        <li>
+                        <li class="${actionName == 'aboutToExpire' ? 'active' : ''}">
                             <g:link controller="notifications" action="aboutToExpire">
                                 Por vencerse
-                                <span class="badge"></span>
+                                <g:if test="${session?.aboutToExpire}">
+                                    <span class="badge">${session?.aboutToExpire}</span>
+                                </g:if>
                             </g:link>
                         </li>
                         <li role="presentation" class="dropdown-header">Pedidos</li>
-                        <li>
+                        <li class="${actionName == 'paymentDateClose' ? 'active' : ''}">
                             <g:link controller="notifications" action="paymentDateClose">
                                 Fecha de pago proxima
-                                <span class="badge"></span>
+                                <g:if test="${session?.paymentDateClose}">
+                                    <span class="badge">${session?.paymentDateClose}</span>
+                                </g:if>
                             </g:link>
                         </li>
                     </ul>

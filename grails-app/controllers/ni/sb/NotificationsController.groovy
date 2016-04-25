@@ -14,13 +14,15 @@ class NotificationsController {
     ]
 
     def lowStocks() {
-        List<Item> items = itemService.getItemsWithlowStocks()
+        Item[] items = itemService.getItemsWithlowStocks()
 
         [items: items]
     }
 
     def aboutToExpire() {
+        MedicineOrder[] medicineOrders = itemService.getMedicineOrdersAboutToExpire()
 
+        [medicineOrders: medicineOrders]
     }
 
     def paymentDateClose() {

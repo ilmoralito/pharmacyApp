@@ -1,5 +1,8 @@
 package ni.sb
 
+import groovy.transform.ToString
+
+@ToString
 class MedicineOrder extends Item {
     Presentation presentation 
     Measure measure
@@ -26,6 +29,4 @@ class MedicineOrder extends Item {
             }
         }
     }
-
-    String toString() { product }
 }
