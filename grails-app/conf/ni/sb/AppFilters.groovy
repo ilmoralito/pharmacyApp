@@ -1,8 +1,6 @@
 package ni.sb
 
 class AppFilters {
-    def itemService
-    def purchaseOrderService
     def springSecurityService
     def passwordEncoder
 
@@ -21,18 +19,6 @@ class AppFilters {
                         return false
                     }
                 }
-            }
-        }
-
-        notifications(controller: "*", action: "*") {
-            before = {
-                Item[] itemsWithLowStocks = itemService.getItemsWithlowStocks()
-                MedicineOrder[] medicineOrdersAboutToExpire = itemService.getMedicineOrdersAboutToExpire()
-                PurchaseOrder[] purchaseOrdersPaymentDateClose = purchaseOrderService.getPurchaseOrdersPaymentDateClose()
-
-                session?.lowStocks = itemsWithLowStocks.size()
-                session?.aboutToExpire = medicineOrdersAboutToExpire.size()
-                session?.paymentDateClose = purchaseOrdersPaymentDateClose.size()
             }
         }
     }
