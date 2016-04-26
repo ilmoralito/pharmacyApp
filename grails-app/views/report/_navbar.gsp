@@ -35,7 +35,7 @@
             </ul>
     </li>
 
-    <li class="${actionName == 'clients' ? 'active' : ''}">
+    <li class="${actionName == 'clients' || actionName == 'detail' ? 'active' : ''}">
         <g:link action="clients">Clientes</g:link>
     </li>
 

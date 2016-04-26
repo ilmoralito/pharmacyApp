@@ -42,7 +42,7 @@
         </g:else>
     </content>
     <content tag="col1">
-        <g:form>
+        <g:form action="sales" autocomplete="off">
             <g:render template="filterForm"/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>

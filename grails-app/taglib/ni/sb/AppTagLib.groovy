@@ -328,7 +328,7 @@ class AppTagLib {
         ]
 
         builder.div {
-            p "Fechas"
+            p attrs?.label ?: "Fechas"
 
             params.each { m ->
                 div(class: "form-group") {
@@ -442,6 +442,28 @@ class AppTagLib {
                 }
             }
         }
+    }
+
+    def field = { attrs ->
+        String field = attrs.field
+        String result = ""
+
+        switch(field) {
+            case "month":
+                result = "Mes"
+            break
+            case "week":
+                result = "Semana"
+            break
+            case "year":
+                result = "Ano"
+            break
+            case "custom":
+                result = "Custom"
+            break
+        }
+
+        out << result
     }
 
     // TODO: Implement a groovier solution

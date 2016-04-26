@@ -1,1 +1,4 @@
-<pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
+<pharmacyApp:fromTo
+    from="${params?.from}"
+    to="${params?.to}"
+    label="${actionName == 'clients' ? "Libre" : '' }"/>

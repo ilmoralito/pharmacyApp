@@ -1,6 +1,7 @@
 package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Secured(["ROLE_ADMIN"])
 class ReportController {
@@ -11,6 +12,7 @@ class ReportController {
         sales: ["GET", "POST"],
         stock: ["GET", "POST"],
         clients: ["GET", "POST"],
+        detail: "GET",
         employees: ["GET", "POST"]
     ]
 
@@ -92,7 +94,53 @@ class ReportController {
     }
 
     def clients() {
+        Closure clients = {
+            List<Sale> data = []
 
+            if (request.post) {
+                // query by week
+
+                // query by month
+
+                // query by year
+
+                // custom query
+            } else {
+                data = Sale.list()
+            }
+
+            List summary = data.groupBy { it.client }.collect { a ->
+                [
+                    id: a.key.id,
+                    client: a.key.fullName,
+                    quantity: a.value.size()
+                ]
+            }
+
+            summary.sort { -it.quantity }
+        }
+
+        [clients: clients()]
+    }
+
+    def detail(Long id) {
+        List<SaleDetail> saleDetails = SaleDetail.createCriteria().list {
+            sale {
+                client {
+                    eq "id", id
+                }
+            }
+
+            projections {
+                groupProperty "item", "item"
+                count "item", "quantity"
+            }
+
+            order("quantity", "desc")
+            resultTransformer(AliasToEntityMapResultTransformer.INSTANCE)
+        }
+
+        [result: saleDetails]
     }
 
     def employees() {
