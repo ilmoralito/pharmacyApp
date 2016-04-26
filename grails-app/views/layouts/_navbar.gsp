@@ -17,7 +17,7 @@
                         class="dropdown-toggle"
                         data-toggle="dropdown">
                         <span
-                            class="glyphicon glyphicon-bell ${session?.lowStocks || session?.aboutToExpire ? 'notify' : ''}"
+                            class="glyphicon glyphicon-bell ${session?.lowStocks || session?.aboutToExpire || session?.paymentDateClose ? 'notify' : ''}"
                             aria-hidden="true">
                         </span>
                         <span class="caret"></span>

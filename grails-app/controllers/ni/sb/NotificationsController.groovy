@@ -5,6 +5,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class NotificationsController {
     def itemService
+    def purchaseOrderService
 
     static defaultAction = "quantity"
     static allowedMethods = [
@@ -26,6 +27,8 @@ class NotificationsController {
     }
 
     def paymentDateClose() {
+        PurchaseOrder[] purchaseOrders = purchaseOrderService.getPurchaseOrdersPaymentDateClose()
 
+        [purchaseOrders: purchaseOrders]
     }
 }
