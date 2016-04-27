@@ -94,5 +94,6 @@ grails.project.dependency.resolution = {
     compile ":webflow:2.0.8.1"
     compile ":export:1.6"
     compile ":quartz:1.0.1"
+    compile "org.grails.plugins:quartz-monitor:1.0"
   }
 }
