@@ -39,21 +39,28 @@
     </content>
     <content tag="col1">
         <p>Intervalos</p>
-        <g:form name="byMonth" action="clients" class="intervals">
-            <g:hiddenField name="field" value="month"/>
-            <g:submitButton name="send" value="Por mes" class="btn btn-default btn-block"/>
-        </g:form>
+        <g:link
+            action="clients"
+            params="[field: 'month']"
+            class="btn btn-default btn-block ${params?.field == 'month' ? 'active' : ''}">
+            Por mes
+        </g:link>
 
-        <g:form name="byWeek" action="clients" class="intervals">
-            <g:hiddenField name="field" value="week"/>
-            <g:submitButton name="send" value="Por semana" class="btn btn-default btn-block"/>
-        </g:form>
+        <g:link
+            action="clients"
+            params="[field: 'week']"
+            class="btn btn-default btn-block ${params?.field == 'week' || !params.field ? 'active' : ''}">
+            Por semana
+        </g:link>
 
-        <g:form name="byYear" action="clients" class="intervals">
-            <g:hiddenField name="field" value="year"/>
-            <g:submitButton name="send" value="Por ano" class="btn btn-default btn-block"/>
-        </g:form>
+        <g:link
+            action="clients"
+            params="[field: 'year']"
+            class="btn btn-default btn-block ${params?.field == 'year' ? 'active' : ''}">
+            Por año
+        </g:link>
 
+        <p style="margin-top: 10px;">Personalizado</p>
         <g:form action="clients" autocomplete="off">
             <g:hiddenField name="field" value="custom"/>
             <g:render template="filterForm"/>

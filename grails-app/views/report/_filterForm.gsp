@@ -1,4 +1,4 @@
 <pharmacyApp:fromTo
     from="${params?.from}"
     to="${params?.to}"
-    label="${actionName == 'clients' ? "Libre" : '' }"/>
+    label="${actionName == 'clients' ? "Personalizado" : '' }"/>

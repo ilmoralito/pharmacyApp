@@ -6,6 +6,7 @@ import org.hibernate.transform.AliasToEntityMapResultTransformer
 @Secured(["ROLE_ADMIN"])
 class ReportController {
     def springSecurityService
+    def saleService
 
     static defaultAction = "sales"
     static allowedMethods = [
@@ -94,33 +95,22 @@ class ReportController {
     }
 
     def clients() {
-        Closure clients = {
-            List<Sale> data = []
-
+        Closure getSales = {
             if (request.post) {
-                // query by week
+                Date from = params.date("from", "yyyy-MM-dd") ?: new Date()
+                Date to = params.date("to", "yyyy-MM-dd") ?: new Date()
 
-                // query by month
-
-                // query by year
-
-                // custom query
+                log.info "Custom query"
+                log.info "Quering from ${from.format('yyyy-MM-dd')} to ${to.format('yyyy-MM-dd')}"
+                Sale.fromTo(from, to).list()
             } else {
-                data = Sale.list()
+                saleService.getSalesFromField(params?.field)
             }
-
-            List summary = data.groupBy { it.client }.collect { a ->
-                [
-                    id: a.key.id,
-                    client: a.key.fullName,
-                    quantity: a.value.size()
-                ]
-            }
-
-            summary.sort { -it.quantity }
         }
 
-        [clients: clients()]
+        List<Map<String, String>> clients = saleService.getSummary(getSales())
+
+        [clients: clients]
     }
 
     def detail(Long id) {

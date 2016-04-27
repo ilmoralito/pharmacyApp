@@ -118,6 +118,11 @@ log4j = {
          "org.springframework",
          "org.hibernate",
          "net.sf.ehcache.hibernate"
+
+  debug 'ni.sb',
+        'grails.app.services.ni.sb',
+        'grails.app.controllers.ni.sb',
+        'grails.app.jobs.ni.sb'
 }
 
 // App configuration

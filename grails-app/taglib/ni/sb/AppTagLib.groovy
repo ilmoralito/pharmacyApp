@@ -328,8 +328,6 @@ class AppTagLib {
         ]
 
         builder.div {
-            p attrs?.label ?: "Fechas"
-
             params.each { m ->
                 div(class: "form-group") {
                     input(m)
