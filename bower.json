@@ -1,0 +1,17 @@
+{
+  "name": "pharmacyApp",
+  "homepage": "https://github.com/ilmoralito/pharmacyApp",
+  "authors": [
+    "Mario Martinez <amakenadog@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
