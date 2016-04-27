@@ -52,8 +52,9 @@ grails.project.dependency.resolution = {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
     // runtime 'mysql:mysql-connector-java:5.1.27'
     // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
-    compile 'commons-beanutils:commons-beanutils:1.8.3'
-    compile "com.craigburke.document:pdf:0.4.15"
+    compile "commons-beanutils:commons-beanutils:1.8.3"
+    //compile "com.craigburke.document:pdf:0.4.15"
+    //compile "org.grails.plugins:quartz:1.0.2"
   }
 
   plugins {
@@ -92,5 +93,6 @@ grails.project.dependency.resolution = {
     runtime ":twitter-bootstrap:3.3.0"
     compile ":webflow:2.0.8.1"
     compile ":export:1.6"
+    compile ":quartz:1.0.1"
   }
 }
