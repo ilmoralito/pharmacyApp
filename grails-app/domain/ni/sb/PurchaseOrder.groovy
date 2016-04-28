@@ -13,6 +13,7 @@ class PurchaseOrder implements Serializable {
     Date lastUpdated
 
     static constraints = {
+        distributor()
         invoiceNumber blank: false, unique: true
         paymentType inList: ["credit", "cash"], maxSize: 255
         paymentDate nullable: true, validator: { paymentDate, obj ->

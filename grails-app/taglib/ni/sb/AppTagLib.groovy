@@ -243,7 +243,7 @@ class AppTagLib {
         List<Integer> dealerList = attrs.list("dealerList")*.toLong()
         Boolean showMessage = attrs.boolean("showMessage")
         List<Distributor> dealers = distributorService.getValidDistributors()
-        Map<String, String> params = [type: type, name: "distributor"]
+        Map<String, String> params = [type: type, name: attrs?.name ?: "distributor"]
 
         builder.div {
             p {

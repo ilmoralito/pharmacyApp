@@ -69,18 +69,17 @@ class PurchaseOrderController {
                     return error()
                 }
 
-                Distributor distributor =distributorService.getDistributor(cmd.distributor)
                 List<Product> products = []
 
-                distributor.providers.each { provider ->
+                cmd.distributor.providers.each { provider ->
                     products << provider.products
                 }
 
                 [
-                    distributor: distributor,
+                    distributor: cmd.distributor,
                     invoiceNumber: cmd.invoiceNumber,
                     paymentType: cmd.paymentType,
-                    paymentDate: getPaymentDate(cmd.paymentType, distributor.daysToPay),
+                    paymentDate: getPaymentDate(cmd.paymentType, cmd.distributor.daysToPay),
                     productList: products.flatten(),
                     products: products.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name },
                     items: [],
@@ -303,23 +302,21 @@ class PurchaseOrderController {
             on("confirm") { PurchaseOrderCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
-                        log.error "[$error.field: $error.defaultMessage]"
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
                     return error()
                 }
 
-                Distributor distributor =distributorService.getDistributor(cmd.distributor)
-
-                if (distributor != flow.distributor) {
+                if (cmd.distributor != flow.distributor) {
                     flow.items = []
                     flow.medicineOrders = []
                     flow.brandProductOrders = []
                 }
 
-                flow.distributor = distributor
+                flow.distributor = cmd.distributor
                 flow.invoiceNumber = cmd.invoiceNumber
-                flow.paymentDate = getPaymentDate(cmd.paymentType, distributor.daysToPay)
+                flow.paymentDate = getPaymentDate(cmd.paymentType, cmd.distributor.daysToPay)
                 flow.paymentType = cmd.paymentType
 
             }.to "show"
@@ -345,7 +342,7 @@ class PurchaseOrderController {
 }
 
 class PurchaseOrderCommand {
-    Integer distributor
+    Distributor distributor
     String invoiceNumber
     String paymentType
 

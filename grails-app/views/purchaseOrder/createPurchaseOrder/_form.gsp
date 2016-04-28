@@ -9,4 +9,8 @@
 
 <pharmacyApp:paymentTypeBox type="radio" paymentType="${paymentType}"/>
 
-<pharmacyApp:dealers type="radio" dealerList="[distributor?.id]" showMessage="true"/>
+<pharmacyApp:dealers
+    name="distributor.id"
+    type="radio"
+    dealerList="[distributor?.id]"
+    showMessage="true"/>
