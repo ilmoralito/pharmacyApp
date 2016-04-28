@@ -5,6 +5,15 @@ textarea {
     max-height: 200px;
 }
 
+label {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.checkbox label {
+    font-size: 1em;
+}
+
 .notify { color: green; }
 
 .trigger { cursor: pointer; }
