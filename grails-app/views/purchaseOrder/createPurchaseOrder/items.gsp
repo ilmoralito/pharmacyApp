@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Articulos</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, purchaseOrder"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, bootstrap3datepicker, purchaseOrder"/>
     </head>
 
     <content tag="main">

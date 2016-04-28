@@ -315,11 +315,13 @@ class AppTagLib {
         MarkupBuilder builder = new MarkupBuilder(out)
         List<Map> params = [
             [
+                id: "from",
                 name: "from",
                 value: attrs?.from,
                 class: "form-control",
                 placeholder: "Desde"
             ],[
+                id: "to",
                 name: "to",
                 value: attrs?.to,
                 class: "form-control",

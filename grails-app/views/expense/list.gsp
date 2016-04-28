@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Gasto diario</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app, bootstrap3datepicker, fromToDatepicker"/>
     </head>
 
     <content tag="main">
