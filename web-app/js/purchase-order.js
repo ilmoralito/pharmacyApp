@@ -1,4 +1,8 @@
 $(function() {
+    $('#q').select2({
+        closeOnSelect: false
+    });
+
     $('form').find("select:first").on('change', function() {
         var optionSelected = $("option:selected", this);
         var info = optionSelected.data("info");

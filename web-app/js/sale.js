@@ -1,4 +1,8 @@
 $(function() {
+    $('#id').select2();
+
+    $('#client\\.id').select2();
+
     $('#moneyReceived').on('blur', function() {
         var $this = $(this);
         var moneyReceived = $this.val();

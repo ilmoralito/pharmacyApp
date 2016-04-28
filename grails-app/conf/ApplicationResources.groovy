@@ -5,11 +5,13 @@ modules = {
 
     sale {
         dependsOn "app"
+        dependsOn "select2"
         resource url: "js/sale.js"
     }
 
     purchaseOrder {
         dependsOn "app"
+        dependsOn "select2"
         resource url: "js/purchase-order.js"
     }
 
@@ -32,6 +34,11 @@ modules = {
         resource url: "/components/moment/min/moment.min.js"
         resource url: "/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
         resource url: "/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+    }
+
+    select2 {
+        resource url: "/components/select2/dist/js/select2.min.js"
+        resource url: "/components/select2/dist/css/select2.min.css"
     }
 
     fromToDatepicker {

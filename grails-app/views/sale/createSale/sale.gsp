@@ -14,6 +14,7 @@
                         name="id"
                         from="${items}"
                         optionKey="id"
+                        optionValue="product"
                         value="${item?.id}"
                         class="form-control"/>
                 </div>
