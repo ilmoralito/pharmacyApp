@@ -134,9 +134,9 @@ class PurchaseOrderController {
                 Item prod = flow.items.find { item.product == it.product }
                 
                 if (prod) {
-                    item.quantity = cmd.quantity
-                    item.purchasePrice = cmd.purchasePrice
-                    item.sellingPrice = cmd.sellingPrice
+                    prod.quantity = cmd.quantity
+                    prod.purchasePrice = cmd.purchasePrice
+                    prod.sellingPrice = cmd.sellingPrice
                 } else {
                     flow.items << item
                 }
