@@ -27,7 +27,7 @@ class NotificationsController {
     }
 
     def paymentDateClose() {
-        PurchaseOrder[] purchaseOrders = purchaseOrderService.getPurchaseOrdersPaymentDateClose()
+        List purchaseOrders = purchaseOrderService.getPurchaseOrdersPaymentDateClose()
 
         [purchaseOrders: purchaseOrders]
     }
