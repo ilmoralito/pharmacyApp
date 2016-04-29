@@ -17,7 +17,7 @@
                         class="dropdown-toggle"
                         data-toggle="dropdown">
                         <span
-                            class="glyphicon glyphicon-bell ${session?.lowStocks || session?.aboutToExpire || session?.paymentDateClose ? 'notify' : ''}"
+                            class="glyphicon glyphicon-bell ${grailsApplication.config.ni.sb.lowStocks || grailsApplication.config.ni.sb.aboutToExpire || grailsApplication.config.ni.sb.paymentDateClose ? 'notify' : ''}"
                             aria-hidden="true">
                         </span>
                         <span class="caret"></span>
@@ -27,16 +27,16 @@
                         <li class="${actionName == 'lowStocks' ? 'active' : ''}">
                             <g:link controller="notifications" action="lowStocks">
                                 Existencias bajas
-                                <g:if test="${session?.lowStocks}">
-                                    <span class="badge">${session?.lowStocks}</span>
+                                <g:if test="${grailsApplication.config.ni.sb.lowStocks}">
+                                    <span class="badge">${grailsApplication.config.ni.sb.lowStocks}</span>
                                 </g:if>
                             </g:link>
                         </li>
                         <li class="${actionName == 'aboutToExpire' ? 'active' : ''}">
                             <g:link controller="notifications" action="aboutToExpire">
                                 Por vencerse
-                                <g:if test="${session?.aboutToExpire}">
-                                    <span class="badge">${session?.aboutToExpire}</span>
+                                <g:if test="${grailsApplication.config.ni.sb.aboutToExpire}">
+                                    <span class="badge">${grailsApplication.config.ni.sb.aboutToExpire}</span>
                                 </g:if>
                             </g:link>
                         </li>
@@ -44,8 +44,8 @@
                         <li class="${actionName == 'paymentDateClose' ? 'active' : ''}">
                             <g:link controller="notifications" action="paymentDateClose">
                                 Fecha de pago proxima
-                                <g:if test="${session?.paymentDateClose}">
-                                    <span class="badge">${session?.paymentDateClose}</span>
+                                <g:if test="${grailsApplication.config.ni.sb.paymentDateClose}">
+                                    <span class="badge">${grailsApplication.config.ni.sb.paymentDateClose}</span>
                                 </g:if>
                             </g:link>
                         </li>

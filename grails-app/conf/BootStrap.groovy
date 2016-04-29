@@ -3,7 +3,13 @@ import grails.util.Environment
 import grails.util.DomainBuilder
 
 class BootStrap {
+    def grailsApplication
+
     def init = { servletContext ->
+        grailsApplication.config.ni.sb.lowStocks = 0
+        grailsApplication.config.ni.sb.aboutToExpire = 0
+        grailsApplication.config.ni.sb.paymentDateClose = 0
+
         if (Environment.current == Environment.DEVELOPMENT) {
             development()
         }

@@ -178,11 +178,11 @@ grails {
 
 ni {
   sb {
-      companyName = "Company Name"
-      companyRUC = "####"
-      companyAddress = "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-      companyTelephoneNumbers = [conventional: "23114455", claro: "88774455", movistar: "78986545"]
-      companyFaxNumber = "###-####"
-      companyLogo = "..."
+    companyName = "Company Name"
+    companyRUC = "####"
+    companyAddress = "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    companyTelephoneNumbers = [conventional: "23114455", claro: "88774455", movistar: "78986545"]
+    companyFaxNumber = "###-####"
+    companyLogo = "..."
   }
 }

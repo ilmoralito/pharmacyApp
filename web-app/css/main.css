@@ -10,11 +10,11 @@ label {
     font-weight: normal;
 }
 
-.checkbox label {
+.checkbox label, .radio label {
     font-size: 1em;
 }
 
-.notify { color: green; }
+.notify { color: gold; }
 
 .trigger { cursor: pointer; }
 
