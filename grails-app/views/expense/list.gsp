@@ -7,7 +7,7 @@
     <content tag="main">
         <g:if test="${expenses}">
             <p>Gasto diario</p>
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 5%;">

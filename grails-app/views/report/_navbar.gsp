@@ -39,6 +39,10 @@
         <g:link action="clients">Clientes</g:link>
     </li>
 
+    <li class="${actionName == 'expenses' || actionName == 'expensesDetail' ? 'active' : ''}">
+        <g:link action="expenses">Gastos diarios</g:link>
+    </li>
+
     <li class="${actionName == 'employees' ? 'active' : ''}">
         <g:link action="employees">A empresas</g:link>
     </li>

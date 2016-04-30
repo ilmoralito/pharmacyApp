@@ -74,6 +74,11 @@
                                     Clientes
                                 </g:link>
                             </li>
+                            <li class="${actionName == 'expenses' ? 'active' : ''}">
+                                <g:link controller="report" action="expenses">
+                                    Gastos diarios
+                                </g:link>
+                            </li>
                             <li class="${actionName == 'employees' ? 'active' : ''}">
                                 <g:link controller="report" action="employees">
                                     A empresas

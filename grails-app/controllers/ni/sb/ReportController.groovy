@@ -2,6 +2,7 @@ package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
 import org.hibernate.transform.AliasToEntityMapResultTransformer
+import static java.util.Calendar.*
 
 @Secured(["ROLE_ADMIN"])
 class ReportController {
@@ -14,7 +15,24 @@ class ReportController {
         stock: ["GET", "POST"],
         clients: ["GET", "POST"],
         detail: "GET",
+        expenses: "GET",
+        expensesDetail: ["GET","POST"],
         employees: ["GET", "POST"]
+    ]
+
+    private static final MONTHS = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
     ]
 
     def sales() {
@@ -131,6 +149,39 @@ class ReportController {
         }
 
         [result: saleDetails]
+    }
+
+    def expenses() {
+        List data = Expense.list().groupBy { it.dateCreated[YEAR] } { it.dateCreated[MONTH] }.collect { a ->
+            [
+                year: a.key,
+                months: (0..11).collect { m ->
+                    [
+                        name: MONTHS[m],
+                        total: a.value[m]?.quantity?.sum() ?: 0,
+                        quantity: a.value[m]?.size() ?: 0
+                    ]
+                }
+            ]
+        }.sort { it.year }
+
+        [data: data]
+    }
+
+    def expensesDetail(Integer y, Integer m) {
+        def data = Expense.where {
+            year(dateCreated) == y &&
+            month(dateCreated) == m + 1
+        }.list().groupBy { it.dateCreated[DATE] }
+
+        def expenses = (1..30).collect { d ->
+            [
+                day: d,
+                expenses: data[d] ?: []
+            ]
+        }
+
+        [expenses: expenses, month: MONTHS[m], year: y]
     }
 
     def employees() {
