@@ -45,7 +45,16 @@ class PurchaseOrderController {
             response.sendError 404
         }
 
-        [purchaseOrder: purchaseOrder]
+        List items = purchaseOrder.items.findAll { !(it instanceof MedicineOrder) || !(it instanceof BrandProductOrder) }
+        List medicineOrders = purchaseOrder.items.findAll { it instanceof MedicineOrder }
+        List brandProductOrders = purchaseOrder.items.findAll { it instanceof BrandProductOrder }
+
+        [
+            items: items,
+            medicineOrders: medicineOrders,
+            brandProductOrders: brandProductOrders,
+            purchaseOrder: purchaseOrder
+        ]
     }
 
     def createPurchaseOrderFlow = {

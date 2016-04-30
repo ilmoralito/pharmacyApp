@@ -490,10 +490,29 @@ class AppTagLib {
     }
 
     def purchaseOrderStatus = { attrs ->
-        if (attrs.status) {
+        if (attrs.status == "paid") {
             out << "Pagado"
         } else {
             out << "Pendiente"
+        }
+    }
+
+    def paymentDate = { attrs ->
+        MarkupBuilder mb = new MarkupBuilder(out)
+        Date today = new Date()
+        Date paymentDate = attrs.paymentDate
+        Integer difference = paymentDate - today
+
+        mb.div {
+            if (difference <= 15) {
+                span(class: "label label-info") {
+                    mkp.yield "A $difference dias"
+                }
+            } else if (difference <= 10) {
+                span(class: "label label-danger") {
+                    mkp.yield "A $difference dias"
+                }
+            }
         }
     }
 }
