@@ -183,144 +183,121 @@
     </content>
     <content tag="col1">
         <p>
-            <a href="#" id="toggleMeta">
-                Metadata
-            </a>
+            <a href="#" id="toggleMeta">Detalle de pedido</a>
         </p>
-        <div id="meta" class="panel panel-info hide">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td><small>Factura</small></td>
-                        <td><small>${invoiceNumber}</small></td>
-                    </tr>
-                    <tr>
-                        <td><small>Por</small></td>
-                        <td><small>${applicationContext.springSecurityService.currentUser?.fullName}</small></td>
-                    </tr>
-                    <tr>
-                        <td><small>Distribuidor</small></td>
-                        <td><small>${distributor.name}</small></td>
-                    </tr>
-                    <tr>
-                        <td><small>Tipo de pago</small></td>
-                        <td><small><pharmacyApp:paymentType type="${paymentType}"/></small></td>
-                    </tr>
-                    <g:if test="${paymentDate}">
-                        <tr>
-                            <td><small>Fecha de pago</small></td>
-                            <td><small>${paymentDate?.format("yyyy-MM-dd")}</small></td>
-                        </tr>
-                    </g:if>
-                </tbody>
-            </table>
+        <div id="meta" class="hide">
+            <label>Factura</label>
+            <p>${invoiceNumber}</p>
 
-            <div class="panel-body">
-                <g:link event="show" class="btn btn-info btn-block">
-                    Editar
-                </g:link>
-            </div>
+            <label>Creado por</label>
+            <p>${applicationContext.springSecurityService.currentUser?.fullName}</p>
+
+            <label>Distribuidor</label>
+            <p>${distributor.name}</p>
+
+            <label>Tipo de pago</label>
+            <p><pharmacyApp:paymentType type="${paymentType}"/></small></p>
+
+            <g:if test="${paymentDate}">
+                <label>Fecha de pago</label>
+                <p>${paymentDate?.format("yyyy-MM-dd")}</p>
+            </g:if>
+
+            <p>
+                <g:link event="show">Editar</g:link>
+            </p>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <g:form autocomplete="off">
+        <g:form autocomplete="off">
+            <div class="form-group">
+                <g:select
+                    name="q"
+                    from="${products}"
+                    optionKey="name"
+                    optionValue="name"
+                    value="${q}"
+                    class="form-control"/>
+            </div>
+
+            <g:submitButton
+                name="query"
+                value="Consultar"
+                class="btn btn-primary btn-block"/>
+        </g:form>
+
+        <g:if test="${result}">
+            <g:each in="${result}" var="r">
+                <g:form autocomplete="off" id="item">
+                    <g:hiddenField name="product.id" value="${r.id}"/>
+
+                    <p><br>${r.provider}</p>
+
                     <div class="form-group">
-                        <g:select
-                            name="q"
-                            from="${products}"
-                            optionKey="name"
-                            optionValue="name"
-                            value="${q}"
-                            class="form-control"/>
+                        <input
+                            type="number"
+                            name="quantity"
+                            id="quantity"
+                            min="1"
+                            class="form-control"
+                            autofocus="true"
+                            placeholder="Cantidad">
+                    </div>
+
+                    <g:if test="${r instanceof ni.sb.Medicine}">
+                        <div class="form-group">
+                            <g:textField
+                                name="dueDate"
+                                class="form-control"
+                                placeholder="Fecha de vencimiento"/>
+                        </div>
+
+                        <pharmacyApp:combo
+                            name="presentation.id"
+                            from="${r.presentations}"
+                            data="measures"/>
+
+                        <pharmacyApp:combo
+                            name="measure.id"
+                            from="${r.presentations[0].measures}"/>
+                    </g:if>
+
+                    <g:if test="${r instanceof ni.sb.BrandProduct}">
+                        <pharmacyApp:combo
+                            name="brand.id"
+                            from="${r.brands}"
+                            data="details"/>
+
+                        <pharmacyApp:combo
+                            name="detail.id"
+                            from="${r.brands[0].details}"/>
+                    </g:if>
+
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            name="purchasePrice"
+                            id="purchasePrice"
+                            min="1"
+                            class="form-control"
+                            placeholder="Precio de compra">
+                    </div>
+
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            name="sellingPrice"
+                            id="sellingPrice"
+                            min="1"
+                            class="form-control"
+                            placeholder="Precio de venta">
                     </div>
 
                     <g:submitButton
-                        name="query"
-                        value="Consultar"
+                        name="${submitName}"
+                        value="Agregar"
                         class="btn btn-primary btn-block"/>
                 </g:form>
-            </div>
-        </div>
-
-        <g:if test="${result}">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <g:each in="${result}" var="r" status="index">
-                        <g:form autocomplete="off" style="${index > 0 ? 'margin-top: 10px;' : ''}">
-                            <p>
-                                ${r.provider}
-                            </p>
-
-                            <g:hiddenField name="product.id" value="${r.id}"/>
-
-                            <g:if test="${r instanceof ni.sb.Medicine}">
-                                <pharmacyApp:combo
-                                    name="presentation.id"
-                                    from="${r.presentations}"
-                                    data="measures"/>
-
-                                <pharmacyApp:combo
-                                    name="measure.id"
-                                    from="${r.presentations[0].measures}"/>
-
-                                <div class="form-group">
-                                    <g:textField
-                                        name="dueDate"
-                                        class="form-control"
-                                        placeholder="Fecha de vencimiento"/>
-                                </div>
-                            </g:if>
-
-                            <g:if test="${r instanceof ni.sb.BrandProduct}">
-                                <pharmacyApp:combo
-                                    name="brand.id"
-                                    from="${r.brands}"
-                                    data="details"/>
-
-                                <pharmacyApp:combo
-                                    name="detail.id"
-                                    from="${r.brands[0].details}"/>
-                            </g:if>
-
-                            <div class="form-group">
-                                <input
-                                    type="number"
-                                    name="quantity"
-                                    id="quantity"
-                                    min="1"
-                                    class="form-control"
-                                    placeholder="Cantidad">
-                            </div>
-
-                            <div class="form-group">
-                                <input
-                                    type="text"
-                                    name="purchasePrice"
-                                    id="purchasePrice"
-                                    min="1"
-                                    class="form-control"
-                                    placeholder="Precio de compra">
-                            </div>
-
-                            <div class="form-group">
-                                <input
-                                    type="text"
-                                    name="sellingPrice"
-                                    id="sellingPrice"
-                                    min="1"
-                                    class="form-control"
-                                    placeholder="Precio de venta">
-                            </div>
-
-                            <g:submitButton
-                                name="${submitName}"
-                                value="Agregar"
-                                class="btn btn-primary btn-block"/>
-                        </g:form>
-                    </g:each>
-                </div>
-            </div>
+            </g:each>
         </g:if>
 
         <g:if test="${items || medicineOrders || brandProductOrders}">

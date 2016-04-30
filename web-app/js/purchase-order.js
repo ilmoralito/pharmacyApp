@@ -1,9 +1,7 @@
 $(function() {
-    $('#q').select2({
-        closeOnSelect: false
-    });
+    $('#q').select2();
 
-    $('form').find("select:first").on('change', function() {
+    $('form#item').find("select:first").on('change', function() {
         var optionSelected = $("option:selected", this);
         var info = optionSelected.data("info");
         var target = $(this).parent().next().find('select');
