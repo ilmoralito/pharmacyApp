@@ -11,7 +11,8 @@ class PurchaseOrderController {
     static allowedMethods = [
         list: ["GET", "POST"],
         create: "GET",
-        show: "GET"
+        show: "GET",
+        update: "POST"
     ]
 
     def list() {
@@ -55,6 +56,32 @@ class PurchaseOrderController {
             brandProductOrders: brandProductOrders,
             purchaseOrder: purchaseOrder
         ]
+    }
+
+    def update(Long id) {
+        PurchaseOrder purchaseOrder = PurchaseOrder.get(id)
+
+        if (!purchaseOrder) {
+            response.sendError 404
+        }
+
+        if (params?.paymentType == "cash" && params?.paymentStatus == "pending") {
+            flash.message = "Operacion no permitida. Pedido de contado no puede estar pendiente"
+            redirect action: "show", id: id
+            return
+        }
+
+        purchaseOrder.properties["invoiceNumber", "paymentType", "paymentStatus"] = params
+
+        if (!purchaseOrder.save()) {
+            purchaseOrder.errors.allErrors.each { error ->
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+            }
+        }
+
+        flash.message = "Actualizado"
+
+        redirect action: "show", id: id
     }
 
     def createPurchaseOrderFlow = {
@@ -257,6 +284,7 @@ class PurchaseOrderController {
                     user: springSecurityService.currentUser,
                     invoiceNumber: flow.invoiceNumber,
                     paymentType: flow.paymentType,
+                    paymentStatus: flow.paymentType == "credit" ? "pending" : "paid",
                     paymentDate: flow.paymentDate
                 )
 

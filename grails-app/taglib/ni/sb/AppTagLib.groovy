@@ -17,7 +17,7 @@ class AppTagLib {
         dealers: "raw",
         paymentTypeBox: "raw",
         fromTo: "raw",
-        paymentStatus: "raw",
+        paymentStatusBox: "raw",
         combo: "raw",
         clientsDataList: "raw",
         providers: "raw"
@@ -290,9 +290,9 @@ class AppTagLib {
         Map<String, String> params = [type: type, name: "paymentType"]
 
         builder.div {
-            p "Tipos de pago"
+            label "Tipos de pago"
 
-            paymentTypes.each { paymentType ->
+            paymentTypes.eachWithIndex { paymentType, idx ->
                 params.value = paymentType.key
 
                 if (pt instanceof String ? paymentType.key == pt : paymentType.key in pt) {
@@ -338,18 +338,19 @@ class AppTagLib {
         }
     }
 
-    def paymentStatus = { attrs ->
+    def paymentStatusBox = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
-        List<String> paymentStatusList = attrs.paymentStatusList
-        Map<String, String> params = [type: "checkbox", name: "paymentStatus"]
+        def status = attrs.paymentStatusList
+        String type = attrs.type
+        Map<String, String> params = [type: type, name: "paymentStatus"]
 
-        builder.div {
-            p "Estado de pago"
+        builder {
+            label "Estado de pago"
 
-            div(class: "checkbox") {
+            div(class: type, style: "margin-top: 5px;") {
                 params.value = "pending"
 
-                if ("pending" in paymentStatusList) {
+                if (status instanceof List ? "pending" in status : status == "pending") {
                     params.checked = true
                 } else {
                     params.remove("checked")
@@ -361,10 +362,10 @@ class AppTagLib {
                 }
             }
 
-            div(class: "checkbox") {
+            div(class: type) {
                 params.value = "paid"
 
-                if ("paid" in paymentStatusList) {
+                if (status instanceof List ? "paid" in status : status == "paid") {
                     params.checked = true
                 } else {
                     params.remove("checked")

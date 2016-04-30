@@ -97,6 +97,8 @@
     </content>
 
     <content tag="col1">
+        <p>Informacion de pedido</p>
+
         <label>Distribuidor</label>
         <p><g:fieldValue bean="${purchaseOrder}" field="distributor.name"/></p>
 
@@ -119,5 +121,26 @@
             <label>Estado de pago</label>
             <p><pharmacyApp:purchaseOrderStatus status="${purchaseOrder.paymentStatus}"/></p>
         </g:if>
+
+        <p>Tareas</p>
+
+        <g:form name="task" action="update">
+            <g:hiddenField name="id" value="${purchaseOrder.id}"/>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="invoiceNumber">Numero de factura</label>
+                <g:textField
+                    name="invoiceNumber"
+                    value="${purchaseOrder.invoiceNumber}"
+                    class="form-control"
+                    placeholder="Numero de factura"/>
+            </div>
+
+            <pharmacyApp:paymentTypeBox type="radio" paymentType="${purchaseOrder.paymentType}"/>
+
+            <pharmacyApp:paymentStatusBox type="radio" paymentStatusList="${purchaseOrder.paymentStatus}"/>
+
+            <g:submitButton name="send" value="Confirmar" class="btn btn-primary btn-block"/>
+        </g:form>
     </content>
 </g:applyLayout>

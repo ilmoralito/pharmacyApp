@@ -58,7 +58,7 @@
 
             <pharmacyApp:users userList="${params.list('users')}"/>
 
-            <pharmacyApp:paymentStatus paymentStatusList="${params.list('paymentStatus')}"/>
+            <pharmacyApp:paymentStatusBox type="checkbox" paymentStatusList="${params.list('paymentStatus')}"/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>

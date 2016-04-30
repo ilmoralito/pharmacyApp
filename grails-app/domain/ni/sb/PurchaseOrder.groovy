@@ -68,9 +68,5 @@ class PurchaseOrder implements Serializable {
     List<Item> items
     static hasMany = [items: Item]
 
-    def beforeValidate() {
-        paymentStatus = paymentType == "credit" ? "pending" : "paid"
-    }
-
     String toString() { invoiceNumber }
 }
