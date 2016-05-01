@@ -8,6 +8,8 @@ class Sale implements Serializable {
     String annotation
     Employee employee
     Boolean canceled = false
+    String reazonOfCanelation
+    Date dateOfCancelation
 
     Date dateCreated
     Date lastUpdated
@@ -19,6 +21,12 @@ class Sale implements Serializable {
         }
         annotation nullable: true, maxSize: 255
         employee nullable: true
+        reazonOfCanelation nullable: true, maxSize: 255, validator: { reazonOfCanelation, obj ->
+            if (obj.canceled) {
+                return reazonOfCanelation != ""
+            }
+        }
+        dateOfCancelation nullable: true
     }
 
     static namedQueries = {
@@ -30,6 +38,12 @@ class Sale implements Serializable {
 
     List<SaleDetail> saleDetails
     static hasMany = [saleDetails: SaleDetail]
+
+    def beforeUpdate() {
+        if (isDirty("canceled")) {
+            dateOfCancelation = new Date()
+        }
+    }
 
     String toString() { "by $toName for $user.fullName" }
 }

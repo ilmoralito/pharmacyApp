@@ -11,6 +11,7 @@ class SaleController {
         create: ["GET"],
         list: ["GET", "POST"],
         detail: "GET",
+        cancelSale: "POST",
         summary: "GET"
     ]
 
@@ -157,6 +158,32 @@ class SaleController {
         }
 
         [sale: sale]
+    }
+
+    def cancelSale(Long id) {
+        Sale sale = Sale.get(id)
+
+        if (!sale) {
+            response.sendError 404
+        }
+
+        sale.canceled = true
+        sale.reazonOfCanelation = params?.reazonOfCanelation
+
+        if (!sale.save()) {
+            sale.errors.allErrors.each { error ->
+                log.error "[field: $error, defaultMessage: $error.defaultMessage]"
+            }
+
+            flash.message = "A ocurrido un error. Motivo de la anulacion es un dato obligatorio"
+
+            redirect action: "detail", id: id
+            return
+        }
+
+        flash.message = "Venta anulada"
+
+        redirect action: "detail", id: id
     }
 
     def summary() {

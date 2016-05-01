@@ -31,6 +31,10 @@
                             <td class="data">
                                 <g:link action="detail" id="${sale.id}">
                                     ${sale.client.fullName}
+
+                                    <g:if test="${sale.canceled}">
+                                        <span class="label label-info">Anulada</span>
+                                    </g:if>
                                 </g:link>
                             </td>
                         </tr>

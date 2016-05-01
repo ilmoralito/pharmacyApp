@@ -227,7 +227,7 @@
 
         <g:if test="${result}">
             <g:each in="${result}" var="r">
-                <g:form autocomplete="off" id="item">
+                <g:form autocomplete="off" id="item" style="margin-bottom: 10px;">
                     <g:hiddenField name="product.id" value="${r.id}"/>
 
                     <p><br>${r.provider}</p>
