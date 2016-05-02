@@ -43,30 +43,24 @@
         </g:else>
     </content>
     <content tag="col1">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Resumen
-            </div>
-            <table class="table table-hover">
-                <tbody>
-                    <tr>
-                        <td>Saldo</td>
-                        <td>${balance}</td>
-                    </tr>
-                    <tr>
-                        <td>Gasto</td>
-                        <td>
-                            <g:link controller="expense">
-                                ${expenseBalance ?: 0}
-                            </g:link>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Total caja</td>
-                        <td>${balance - expenseBalance}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <p>Resumen</p>
+
+        <label>Monto</label>
+        <p>${balance}</p>
+
+        <label>Gasto del dia</label>
+        <p>
+            <g:link controller="expense">
+                ${expenseBalance ?: 0}
+            </g:link>
+        </p>
+
+        <label>Total en caja</label>
+        <p>${balance - expenseBalance}</p>
+
+        <g:if test="${balanceSalesCandeled}">
+            <label>Saldo de ventas canceladas</label>
+            <p>${balanceSalesCandeled}</p>
+        </g:if>
     </content>
 </g:applyLayout>

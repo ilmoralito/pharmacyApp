@@ -189,8 +189,16 @@ class SaleController {
     def summary() {
         Date today = new Date()
         User user = springSecurityService.currentUser
-        List<SaleDetail> data = SaleDetail.fromTo(today, today).bySaleUser(user).list()
-        BigDecimal balance = Sale.fromTo(today, today).findAllByUser(user).balance.sum() ?: 0.0
+        List <SaleDetail> data = SaleDetail.createCriteria().list {
+            ge "dateCreated", today.clearTime()
+            le "dateCreated", today.clearTime() + 1
+            sale {
+                eq "canceled", false
+                eq "user", user
+            }
+        }
+        BigDecimal balance = Sale.fromTo(today, today).findAllByUserAndCanceled(user, false).balance.sum() ?: 0.0
+        BigDecimal balanceSalesCandeled = Sale.fromTo(today, today).findAllByUserAndCanceled(user, true).balance.sum() ?: 0.0
         BigDecimal expenseBalance = Expense.fromTo(today, today).findAllByUser(user).quantity.sum() ?: 0.0
         List<Map> saleDetails = data.groupBy { it.item }.collect { a ->
             [
@@ -202,6 +210,7 @@ class SaleController {
         [
             saleDetails: saleDetails,
             balance: balance,
+            balanceSalesCandeled: balanceSalesCandeled,
             expenseBalance: expenseBalance
         ]
     }
