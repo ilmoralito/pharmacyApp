@@ -457,10 +457,10 @@ class AppTagLib {
                 result = "Semana"
             break
             case "year":
-                result = "Ano"
+                result = "Año"
             break
             case "custom":
-                result = "Custom"
+                result = "Personalizado"
             break
         }
 

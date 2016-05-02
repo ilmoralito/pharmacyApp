@@ -52,11 +52,12 @@ class ReportController {
 
         def(Date from, Date to) = getFromAndToDates()
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(from, to)
+        List<Sale> sales = saleService.getSales(from,to)
 
         [
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
-            balance: saleService.getBalanceSummary(from, to, false),
-            balanceCanceledSales: saleService.getBalanceSummary(from, to, true),
+            balance: saleService.getBalanceSummary(sales),
+            balanceCanceledSales: saleService.getBalanceSummary(sales),
             expenseBalance: expenseService.getExpensesBalanceSummary(from, to)
         ]
     }
@@ -115,21 +116,22 @@ class ReportController {
         }
     }
 
-    def clients() {
-        Closure getSales = {
+    def clients(String field) {
+        Closure getFromAndToDates = {
             if (request.post) {
-                Date from = params.date("from", "yyyy-MM-dd") ?: new Date()
-                Date to = params.date("to", "yyyy-MM-dd") ?: new Date()
-
-                log.info "Custom query"
-                log.info "Quering from ${from.format('yyyy-MM-dd')} to ${to.format('yyyy-MM-dd')}"
-                Sale.fromTo(from, to).list()
+                [
+                    params.date("from", "yyyy-MM-dd") ?: new Date(),
+                    params.date("to", "yyyy-MM-dd") ?: new Date()
+                ]
             } else {
-                saleService.getSalesFromField(params?.field)
+                helperService.getDates(field)
             }
         }
 
-        List<Map<String, String>> clients = saleService.getSummary(getSales())
+        def(Date from, Date to) = getFromAndToDates()
+
+        List<Sale> sales = saleService.getSales(from,to)
+        List<Map<String, String>> clients = saleService.getSummary(sales)
 
         [clients: clients]
     }

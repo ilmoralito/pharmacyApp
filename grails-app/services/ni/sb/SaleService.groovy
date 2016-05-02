@@ -15,24 +15,24 @@ class SaleService {
     }
 
     def getSummary(List<Sale> data) {
-        List<Map<String, String>> summary = data.groupBy { it.client }.collect { a ->
+        data.groupBy { it.client }.collect { a ->
             [
                 id: a.key.id,
                 client: a.key.fullName,
                 quantity: a.value.size()
             ]
         }.sort { -it.quantity }
-
-        summary
     }
 
-    def getBalanceSummary(Date from, Date to, Boolean canceled = false) {
-        List<Sale> sales = Sale.createCriteria().list {
-            eq "canceled", canceled
+    def getBalanceSummary(List<Sale> sales) {
+        sales?.balance?.sum() ?: 0.0
+    }
+
+    def getSales(Date from, Date to, Boolean canceled = false) {
+        Sale.createCriteria().list {
             ge "dateCreated", from.clearTime()
             le "dateCreated", to.clearTime() + 1
+            eq "canceled", canceled
         }
-
-        sales?.balance?.sum() ?: 0.0
     }
 }

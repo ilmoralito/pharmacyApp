@@ -194,11 +194,12 @@ class SaleController {
         User user = springSecurityService.currentUser
 
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(today, today)
+        List<Sale> sales = saleService.getSales(today, today)
 
         [
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
-            balance: saleService.getBalanceSummary(today, today, false),
-            balanceCanceledSales: saleService.getBalanceSummary(today, today, true),
+            balance: saleService.getBalanceSummary(sales),
+            balanceCanceledSales: saleService.getBalanceSummary(sales),
             expenseBalance: expenseService.getExpensesBalanceSummary(today, today)
         ]
     }

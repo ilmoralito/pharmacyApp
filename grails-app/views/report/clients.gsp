@@ -23,7 +23,7 @@
                             <td>
                                 <g:link
                                     action="detail"
-                                    params="[id:c.id, client: c.client, field: params?.field ?: 'month']">
+                                    params="[id:c.id, client: c.client, field: params?.field ?: 'week']">
                                     ${c.client}
                                 </g:link>
                             </td>
