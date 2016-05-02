@@ -28,7 +28,7 @@ class PurchaseOrderController {
 
                 PurchaseOrder.filter(distributors, from, to, users, invoiceNumber, paymentType, paymentStatus).list()
             } else {
-                PurchaseOrder.findAllByPaymentStatus("pending")
+                PurchaseOrder.list()
             }
         }
 
