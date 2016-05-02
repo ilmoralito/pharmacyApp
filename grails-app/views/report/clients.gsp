@@ -39,31 +39,12 @@
     </content>
     <content tag="col1">
         <p>Intervalos</p>
-        <g:link
-            action="clients"
-            params="[field: 'month']"
-            class="btn btn-default btn-block ${params?.field == 'month' ? 'active' : ''}">
-            Por mes
-        </g:link>
-
-        <g:link
-            action="clients"
-            params="[field: 'week']"
-            class="btn btn-default btn-block ${params?.field == 'week' || !params.field ? 'active' : ''}">
-            Por semana
-        </g:link>
-
-        <g:link
-            action="clients"
-            params="[field: 'year']"
-            class="btn btn-default btn-block ${params?.field == 'year' ? 'active' : ''}">
-            Por año
-        </g:link>
-
+        <g:render template="intervals" model="[target: 'clients']"/>
+        
         <p style="margin-top: 10px;">Personalizado</p>
         <g:form action="clients" autocomplete="off">
             <g:hiddenField name="field" value="custom"/>
-            <g:render template="filterForm"/>
+            <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>

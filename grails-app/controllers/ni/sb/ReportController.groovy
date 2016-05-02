@@ -8,6 +8,9 @@ import static java.util.Calendar.*
 class ReportController {
     def springSecurityService
     def saleService
+    def helperService
+    def saleDetailService
+    def expenseService
 
     static defaultAction = "sales"
     static allowedMethods = [
@@ -35,27 +38,27 @@ class ReportController {
         "Diciembre"
     ]
 
-    def sales() {
-        if (request.post) {
-            Date from = params.date("from", "yyyy-MM-dd") ?: new Date()
-            Date to = params.date("to", "yyyy-MM-dd") ?: new Date()
-
-            List data = SaleDetail.fromTo(from, to).list()
-            BigDecimal balance = Sale.fromTo(from, to).list().balance.sum()
-            BigDecimal expenseBalance = Expense.fromTo(from, to).list().quantity.sum()
-            List saleDetails = data.groupBy { it.item }.collect { a ->
+    def sales(String field) {
+        Closure getFromAndToDates = {
+            if (request.post) {
                 [
-                    item: a.key,
-                    quantity: a.value.quantity.sum()
+                    params.date("from", "yyyy-MM-dd") ?: new Date(),
+                    params.date("to", "yyyy-MM-dd") ?: new Date()
                 ]
-            }.sort { -it.quantity }
-
-            return [
-                saleDetails: saleDetails,
-                balance: balance ?: 0.0,
-                expenseBalance: expenseBalance ?: 0.0
-            ]
+            } else {
+                helperService.getDates(field)
+            }
         }
+
+        def(Date from, Date to) = getFromAndToDates()
+        List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(from, to)
+
+        [
+            saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
+            balance: saleService.getBalanceSummary(from, to, false),
+            balanceCanceledSales: saleService.getBalanceSummary(from, to, true),
+            expenseBalance: expenseService.getExpensesBalanceSummary(from, to)
+        ]
     }
 
     def stock(String flag) {

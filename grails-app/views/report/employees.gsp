@@ -15,8 +15,10 @@
         </g:else>
     </content>
     <content tag="col1">
+        <p style="margin-top: 10px;">Personalizado</p>
         <g:form>
-            <g:render template="filterForm"/>
+            <g:hiddenField name="field" value="custom"/>
+            <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
 
             <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
         </g:form>
