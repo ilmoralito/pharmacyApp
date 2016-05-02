@@ -5,6 +5,9 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class SaleController {
     def springSecurityService
+    def saleDetailService
+    def saleService
+    def expenseService
 
     static defaultAction = "create"
     static allowedMethods = [
@@ -189,29 +192,14 @@ class SaleController {
     def summary() {
         Date today = new Date()
         User user = springSecurityService.currentUser
-        List <SaleDetail> data = SaleDetail.createCriteria().list {
-            ge "dateCreated", today.clearTime()
-            le "dateCreated", today.clearTime() + 1
-            sale {
-                eq "canceled", false
-                eq "user", user
-            }
-        }
-        BigDecimal balance = Sale.fromTo(today, today).findAllByUserAndCanceled(user, false).balance.sum() ?: 0.0
-        BigDecimal balanceSalesCandeled = Sale.fromTo(today, today).findAllByUserAndCanceled(user, true).balance.sum() ?: 0.0
-        BigDecimal expenseBalance = Expense.fromTo(today, today).findAllByUser(user).quantity.sum() ?: 0.0
-        List<Map> saleDetails = data.groupBy { it.item }.collect { a ->
-            [
-                item: a.key,
-                quantity: a.value.quantity.sum()
-            ]
-        }.sort { -it.quantity }
+
+        List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(today, today)
 
         [
-            saleDetails: saleDetails,
-            balance: balance,
-            balanceSalesCandeled: balanceSalesCandeled,
-            expenseBalance: expenseBalance
+            saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
+            balance: saleService.getBalanceSummary(today, today, false),
+            balanceCanceledSales: saleService.getBalanceSummary(today, today, true),
+            expenseBalance: expenseService.getExpensesBalanceSummary(today, today)
         ]
     }
 }

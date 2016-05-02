@@ -43,24 +43,12 @@
         </g:else>
     </content>
     <content tag="col1">
-        <p>Resumen</p>
-
-        <label>Monto</label>
-        <p>${balance}</p>
-
-        <label>Gasto del dia</label>
-        <p>
-            <g:link controller="expense">
-                ${expenseBalance ?: 0}
-            </g:link>
-        </p>
-
-        <label>Total en caja</label>
-        <p>${balance - expenseBalance}</p>
-
-        <g:if test="${balanceSalesCandeled}">
-            <label>Saldo de ventas canceladas</label>
-            <p>${balanceSalesCandeled}</p>
-        </g:if>
+        <g:render
+            template="/shared/resumen"
+            model="[
+                balance: balance,
+                expenseBalance: expenseBalance,
+                balanceCanceledSales: balanceCanceledSales
+            ]"/>
     </content>
 </g:applyLayout>
