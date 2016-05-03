@@ -14,8 +14,8 @@ class MeasureController {
         Measure measure = new Measure(params)
 
         if (!measure.save()) {
-            measure.error.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+            measure.errors.allErrors.each { error ->
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
             flash.message = "A ocurrido un error"
@@ -35,7 +35,7 @@ class MeasureController {
 
         if (!measure.save()) {
             measure.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
             render(contentType: "application/json") {

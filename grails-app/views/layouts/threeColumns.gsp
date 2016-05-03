@@ -12,14 +12,14 @@
         </div>
         <div class="col-md-8">
             <g:pageProperty name="page.main"/>
-
-            <g:set var="message" value="${message ?: flash.message}"/>
-            <g:if test="${message}">
-                <div class="message">${message}</div>
-            </g:if>
         </div>
         <div class="col-md-2">
             <g:pageProperty name="page.col1"/>
+
+            <g:set var="message" value="${message ?: flash.message}"/>
+            <g:if test="${message}">
+                <p><br>${message}</p>
+            </g:if>
         </div>
     </body>
 </html>

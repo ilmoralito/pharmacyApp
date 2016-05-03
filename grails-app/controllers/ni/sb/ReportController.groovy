@@ -179,14 +179,22 @@ class ReportController {
             month(dateCreated) == m + 1
         }.list().groupBy { it.dateCreated[DATE] }
 
-        def expenses = (1..30).collect { d ->
+        def(Date from, Date to) = helperService.getDates("month")
+
+        List result = (from..to).collect { d ->
             [
-                day: d,
-                expenses: data[d] ?: []
+                day: d[DATE],
+                expenses: data[d[DATE]].collect { e->
+                    [
+                        fullName: e?.user?.fullName,
+                        description: e?.description,
+                        quantity: e?.quantity
+                    ]
+                }
             ]
         }
 
-        [expenses: expenses, month: MONTHS[m], year: y]
+        [result: result, month: MONTHS[m], year: y]
     }
 
     def employees() {
