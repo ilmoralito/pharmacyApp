@@ -10,7 +10,11 @@ class DistributorService {
 
     List<Distributor> getValidDistributors() {
         List<Distributor> dealers = Distributor.where {
-            providers.size() > 0 && enabled == true
+            enabled == true
         }.list()
+    }
+
+    Integer getMaximumDistributorDaysToPay(List<Distributor> distributors) {
+        distributors.daysToPay.max()
     }
 }

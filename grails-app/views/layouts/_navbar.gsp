@@ -49,6 +49,10 @@
                                 </g:if>
                             </g:link>
                         </li>
+                        <li class="divider"></li>
+                        <li>
+                            <g:link controller="configuration">Configurar</g:link>
+                        </li>
                     </ul>
                 </li>
                 <sec:ifAllGranted roles="ROLE_ADMIN">

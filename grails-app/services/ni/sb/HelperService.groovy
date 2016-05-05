@@ -5,8 +5,6 @@ import static java.util.Calendar.*
 
 @Transactional
 class HelperService {
-
-
     def getDates(String field) {
         Calendar calendar = Calendar.instance
         Calendar from = calendar.clone()

@@ -7,10 +7,13 @@
     <content tag="main">
         <g:render template="navbar"/>
 
-        <g:if test="${expenses}">
+        <g:if test="${result}">
             <p>Gastos diario de ${month} ${year}</p>
 
+            ${result}
+
             <table class="table table-hover table-bordered">
+                <caption>${result.expenses}</caption>
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 20%;">
@@ -21,35 +24,26 @@
                     <th>Dia</th>
                     <th>Usuario</th>
                     <th>Descripcion</th>
-                    <th>Monto</th>
+                    <th>${r.expenses.size()}</th>
                 </thead>
                 <tbody>
-                    <g:each in="${expenses}" var="e">
+                    <g:each in="${result}" var="r">
                         <tr>
-                            <td rowspan="${e.expenses?.size() ?: 0}">
-                                ${e.day}
-                            </td>
-                            <g:if test="${e.expenses}">
-                                <g:each in="${e.expenses}" var="expense">
-                                    <tr>
-                                        <td><g:fieldValue bean="${expense}" field="user.fullName"/></td>
-                                        <td><g:fieldValue bean="${expense}" field="description"/></td>
-                                        <td><g:fieldValue bean="${expense}" field="quantity"/></td>
-                                    </tr>
-                                </g:each>
-                            </g:if>
-                            <g:else>
-                                <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                            </g:else>
+                            <td rowspan="${r.expenses?.size() + 1 ?: 1}">${r.day}</td>
                         </tr>
+                        <g:each in="${r.expenses}" var="e">
+                            <tr>
+                                <td>${e.fullName}</td>
+                                <td>${e.description} ${e}</td>
+                                <td>${e.quantity}</td>
+                            </tr>
+                                
+                        </g:each>
+                        
                     </g:each>
                     <tr>
-                        <td colspan="2"></td>
-                        <td><%--${expenses.quantity.sum()}--%></td>
+                        <td colspan="3">Total</td>
+                        <td>10000</td>
                     </tr>
                 </tbody>
             </table>

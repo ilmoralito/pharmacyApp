@@ -184,5 +184,9 @@ ni {
     companyTelephoneNumbers = [conventional: "23114455", claro: "88774455", movistar: "78986545"]
     companyFaxNumber = "###-####"
     companyLogo = "..."
+
+    minLowStocks = 10
+    minMedicineOrdersAboutToExpire = 60
+    minPurchaseOrdersPaymentDateClose = 30
   }
 }

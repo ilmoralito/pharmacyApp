@@ -5,11 +5,13 @@ import org.hibernate.transform.AliasToEntityMapResultTransformer
 
 @Transactional
 class PurchaseOrderService {
+    def configurationService
+
     static transactional = false
 
     List getPurchaseOrdersPaymentDateClose() {
         List purchaseOrders = PurchaseOrder.createCriteria().list {
-            le "paymentDate", new Date() + 10
+            le "paymentDate", new Date() + configurationService,loadConfiguration().minPurchaseOrdersPaymentDateClose
             eq "paymentType", "credit"
             eq "paymentStatus", "pending"
 

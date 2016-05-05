@@ -6,9 +6,22 @@ class BootStrap {
     def grailsApplication
 
     def init = { servletContext ->
-        grailsApplication.config.ni.sb.lowStocks = 0
-        grailsApplication.config.ni.sb.aboutToExpire = 0
-        grailsApplication.config.ni.sb.paymentDateClose = 0
+        ConfigObject config = grailsApplication.config.ni.sb
+
+        config.lowStocks = 0
+        config.aboutToExpire = 0
+        config.paymentDateClose = 0
+
+        // Set default values for configuration for all environments
+        if (!Configuration.count()) {
+            Configuration configuration = new Configuration(
+                minLowStocks: config.minLowStocks,
+                minMedicineOrdersAboutToExpire: config.minMedicineOrdersAboutToExpire,
+                minPurchaseOrdersPaymentDateClose: config.minPurchaseOrdersPaymentDateClose
+            )
+
+            configuration.save failOnError: true
+        }
 
         if (Environment.current == Environment.DEVELOPMENT) {
             development()
