@@ -8,8 +8,7 @@ class AppJob {
     def description = "Notifications Job"
 
     static triggers = {
-        //simple repeatInterval: 300000 // execute job once in 5 minutes
-        simple repeatInterval: 5000l
+        simple repeatInterval: 300000
     }
 
     def execute() {
