@@ -403,10 +403,10 @@ class AppTagLib {
         }
     }
 
-    def clientsDataList = {
+    def clientsDataList = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
         List<Client> clients = Client.findAllByEnabled(true)
-        Map<String, String> params = [:]
+        Integer clientID = attrs?.clientID
 
         out << g.select(
             name:"client.id",
@@ -414,6 +414,7 @@ class AppTagLib {
             from: clients,
             optionKey: "id",
             optionValue: "fullName",
+            value: clientID,
             class: "form-control"
         )
     }

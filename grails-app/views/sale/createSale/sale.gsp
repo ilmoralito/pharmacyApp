@@ -202,41 +202,45 @@
     </content>
     <content tag="col1">
         <a href="#" id="addClient"><small>Agregar cliente</small></a>
-        <div class="panel panel-default ${clientFormState}">
-            <div class="panel-body">
-                <g:form autocomplete="off">
-                    <g:render template="/client/form" model="[inputSize: 'input-sm']"/>
-                    <g:submitButton
-                        name="addClient"
-                        value="Confirmar"
-                        class="btn btn-primary btn-block btn-sm"/>
-                </g:form>
-            </div>
+        <div class="${clientFormState}">
+            <g:form autocomplete="off">
+                <g:render template="/client/form"/>
+                <g:submitButton
+                    name="addClient"
+                    value="Agregar cliente"
+                    class="btn btn-primary btn-block btn-sm"/>
+            </g:form>
+            <br>
         </div>
 
         <g:form autocomplete="off" id="saleForm">
             <g:hiddenField name="balance" value="${saleDetails.total.sum()}"/>
 
-            <div class="form-group">
-                <label for="client">Cliente</label>
-                <pharmacyApp:clientsDataList/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Total a pagar</label>
+                        <div class="form-control">
+                            ${saleDetails.total.sum()}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="change">Cambio</label>
+                        <div class="form-control" id="change"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Total a pagar</label>
-                <div class="form-control">
-                    ${saleDetails.total.sum()}
-                </div>
+                <label for="client">Cliente</label>
+                <pharmacyApp:clientsDataList clientID="${clientID}"/>
             </div>
 
             <div class="form-group">
                 <label for="moneyReceived">Recibido</label>
                 <g:textField name="moneyReceived" class="form-control"/>
-            </div>
-
-            <div class="form-group">
-                <label for="change">Cambio</label>
-                <div class="form-control" id="change"></div>
             </div>
 
             <div class="form-group">

@@ -100,6 +100,7 @@ class SaleController {
 
                 flow.clientFormState = "hide"
                 client.save(flush: true)
+                flow.clientID = client.id
             }.to "sale"
 
             on("confirm") { SaleCommand cmd ->
