@@ -13,15 +13,13 @@ class BootStrap {
         config.paymentDateClose = 0
 
         // Set default values for configuration for all environments
-        if (!Configuration.count()) {
-            Configuration configuration = new Configuration(
-                minLowStocks: config.minLowStocks,
-                minMedicineOrdersAboutToExpire: config.minMedicineOrdersAboutToExpire,
-                minPurchaseOrdersPaymentDateClose: config.minPurchaseOrdersPaymentDateClose
-            )
+        Configuration configuration = Configuration.get(1) ?: new Configuration(
+            minLowStocks: config.minLowStocks,
+            minMedicineOrdersAboutToExpire: config.minMedicineOrdersAboutToExpire,
+            minPurchaseOrdersPaymentDateClose: config.minPurchaseOrdersPaymentDateClose
+        )
 
-            configuration.save failOnError: true
-        }
+        configuration.save(flush: true)
 
         if (Environment.current == Environment.DEVELOPMENT) {
             development()

@@ -8,17 +8,17 @@ class ItemService {
 
     static transactional = false
 
-    Item[] getItemsWithlowStocks() {
-        Item[] items = Item.where {
-            quantity <= configuration.loadConfiguration().minLowStocks
+    List<Item> getItemsWithlowStocks() {
+        List<Item> items = Item.where {
+            quantity <= configurationService.loadConfiguration().minLowStocks
         }.list()
 
         items
     }
 
-    MedicineOrder[] getMedicineOrdersAboutToExpire() {
+    List<MedicineOrder> getMedicineOrdersAboutToExpire() {
         Date today = new Date()
-        MedicineOrder[] medicineOrders = MedicineOrder.where {
+        List<MedicineOrder> medicineOrders = MedicineOrder.where {
             dueDate <= today + configurationService.loadConfiguration().minMedicineOrdersAboutToExpire
         }.list()
 

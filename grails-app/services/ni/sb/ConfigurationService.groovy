@@ -7,6 +7,8 @@ class ConfigurationService {
     static transactional = false
 
     def loadConfiguration() {
-        Configuration.get(1)
+        Configuration configuration = Configuration.get(1)
+
+        configuration
     }
 }

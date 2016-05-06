@@ -11,7 +11,7 @@ class PurchaseOrderService {
 
     List getPurchaseOrdersPaymentDateClose() {
         List purchaseOrders = PurchaseOrder.createCriteria().list {
-            le "paymentDate", new Date() + configurationService,loadConfiguration().minPurchaseOrdersPaymentDateClose
+            le "paymentDate", new Date() + configurationService.loadConfiguration().minPurchaseOrdersPaymentDateClose
             eq "paymentType", "credit"
             eq "paymentStatus", "pending"
 

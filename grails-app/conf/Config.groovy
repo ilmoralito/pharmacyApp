@@ -187,6 +187,6 @@ ni {
 
     minLowStocks = 10
     minMedicineOrdersAboutToExpire = 60
-    minPurchaseOrdersPaymentDateClose = 30
+    minPurchaseOrdersPaymentDateClose = 10
   }
 }
