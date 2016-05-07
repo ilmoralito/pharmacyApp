@@ -100,8 +100,7 @@ class AppTagLib {
                 input(
                     type: "search",
                     id: "search",
-                    class: "form-control",
-                    placeholder: "Filtrar"
+                    class: "form-control"
                 )
             }
 

@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${presentations}">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
                 <thead>
                     <th width="1" class="text-center">#</th>
                     <th>Nombre de presentacion</th>
@@ -52,8 +52,10 @@
                 <g:form action="${actionName}" autocomplete="off">
                     <g:render template="form"/>
 
-                    <p>Medidas</p>
-                    <pharmacyApp:measures/>
+                    <g:if test="${measures}">
+                        <label>Filtrar medidas</label>
+                        <pharmacyApp:measures/>
+                    </g:if>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
                 </g:form>
@@ -62,29 +64,32 @@
             <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="detail">
                 <g:form controller="measure" action="create" autocomplete="off">
                     <div class="form-group">
-                        <g:textField name="name" class="form-control" placeholder="Nombre"/>
+                        <label for="name">Medida</label>
+                        <g:textField name="name" class="form-control"/>
                     </div>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
                 </g:form>
 
-                <table class="table table-hover table-striped">
-                    <thead>
-                       <th>Nombre</th>
-                    </thead>
-                    <tbody>
-                        <g:each in="${measures}" var="measure">
-                            <tr>
-                                <td
-                                    class="trigger"
-                                    data-id="${measure.id}"
-                                    data-name="${measure.name}">
-                                    ${measure.name}
-                                </td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
+                <g:if test="${measures}">
+                    <table class="table table-hover">
+                        <thead>
+                           <th>Medidas</th>
+                        </thead>
+                        <tbody>
+                            <g:each in="${measures}" var="measure">
+                                <tr>
+                                    <td
+                                        class="trigger"
+                                        data-id="${measure.id}"
+                                        data-name="${measure.name}">
+                                        ${measure.name}
+                                    </td>
+                                </tr>
+                            </g:each>
+                        </tbody>
+                    </table>
+                </g:if>
             </div>
         </div>
 
