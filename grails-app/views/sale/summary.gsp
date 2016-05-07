@@ -23,13 +23,13 @@
                         <tr>
                             <td>
                                 <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder}">
-                                    ${saleDetail.item} ${saleDetail.item.presentation} ${saleDetail.item.measure}
+                                    ${saleDetail.item.product.name} ${saleDetail.item.presentation} ${saleDetail.item.measure}
                                 </g:if>
                                 <g:elseif test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
-                                    ${saleDetail.item} ${saleDetail.item.brand} ${saleDetail.item.detail}
+                                    ${saleDetail.item.product.name} ${saleDetail.item.brand} ${saleDetail.item.detail}
                                 </g:elseif>
                                 <g:else>
-                                    ${saleDetail.item}
+                                    ${saleDetail.item.product.name}
                                 </g:else>
                             </td>
                             <td>${saleDetail.quantity}</td>
