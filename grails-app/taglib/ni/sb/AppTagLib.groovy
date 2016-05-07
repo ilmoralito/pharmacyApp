@@ -427,22 +427,28 @@ class AppTagLib {
         }.list()
         Map<String, String> params = [type: "checkbox", name: "providers"]
 
-        builder.div {
-            providers.each { provider ->
-                params.value = provider.id
+        if (providers) {
+            builder.div {
+                providers.each { provider ->
+                    params.value = provider.id
 
-                if (provider in providerList) {
-                    params.checked = true
-                } else {
-                    params.remove("checked")
-                }
+                    if (provider in providerList) {
+                        params.checked = true
+                    } else {
+                        params.remove("checked")
+                    }
 
-                div(class: "checkbox") {
-                    label {
-                        input(params) { mkp.yield provider.name }
+                    div(class: "checkbox") {
+                        label {
+                            input(params) { mkp.yield provider.name }
+                        }
                     }
                 }
             }
+        } else {
+            out << "<p>"
+            out << g.link(controller: "provider", action: "list") { "Agregar laboratorios" }
+            out << "</p>"
         }
     }
 

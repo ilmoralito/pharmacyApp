@@ -60,5 +60,5 @@
         class="form-control"/>
 </div>
 
-<p>Laboratorios</p>
+<label for="providers">Laboratorios</label>
 <pharmacyApp:providers providerList="${dealer?.providers ?: params.list('providers')}"/>
