@@ -1,16 +1,16 @@
 <div class="form-group">
+    <label for="fullName">Nombre completo</label>
     <g:textField
         name="fullName"
         value="${employee?.fullName}"
         class="form-control"
-        placeholder="Nombre del empleado"
         autofocus="true"/>
 </div>
 
 <div class="form-group">
+    <label for="inss">Numero de INSS</label>
     <g:textField
         name="inss"
         value="${employee?.inss}"
-        class="form-control"
-        placeholder="Numero de INSS"/>
+        class="form-control"/>
 </div>

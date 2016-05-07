@@ -11,7 +11,7 @@
         <g:if test="${employees}">
             <p><br>Empleados de ${company}</p>
 
-            <table id="employees" class="table table-hover table-striped">
+            <table id="employees" class="table table-hover">
                 <colgroup>
                     <col span="1" style="width: 30%;">
                     <col span="1" style="width: 65%;">
@@ -82,10 +82,10 @@
 
             <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
                 <div class="form-group">
+                    <label>Por Nombre o INSS</label>
                     <g:textField
                         name="search"
-                        class="form-control"
-                        placeholder="Por nombre o INSS"/>
+                        class="form-control"/>
                 </div>
             </div>
         </div>
