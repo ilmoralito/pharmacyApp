@@ -31,12 +31,12 @@ class AppTagLib {
         Map checkboxParams = [type: "checkbox", name: "presentations"]
 
         builder.div {
-            p {
-                mkp.yield "Presentaciones"
+            label {
+                mkp.yield "Filtrar presentaciones"
             }
 
             div(class: "form-group") {
-                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+                input(type: "search", id: "search", class: "form-control")
             }
 
             presentations.each { presentation ->
@@ -200,12 +200,12 @@ class AppTagLib {
         Map<String, String> checkboxParams = [type: "checkbox", name: "brands"]
 
         builder.div {
-            p {
-                mkp.yield "Marcas"
+            label {
+                mkp.yield "Filtrar marcas"
             }
 
             div(class: "form-group") {
-                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+                input(type: "search", id: "search", class: "form-control")
             }
 
             brands.each { brand ->
