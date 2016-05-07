@@ -5,95 +5,94 @@
     </head>
 
     <content tag="main">
-            <g:if test="${medicineOrders}">
-                <p>Medicinas</p>
-                <table class="table table-hover table-condensed">
-                    <colgroup>
-                        <col span="1" style="width: 40%;">
-                        <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 45%;">
-                        <col span="1" style="width: 5%;">
-                    </colgroup>
-                    <thead>
-                        <th>Medicina</th>
-                        <th>Cantidad</th>
-                        <th>Compra</th>
-                        <th>Venta</th>
-                        <th>Vencimiento</th>
-                    </thead>
-                    <tbody>
-                        <g:each in="${medicineOrders}" var="m">
-                            <tr>
-                                <td>
-                                    <g:fieldValue bean="${m}" field="product.name"/>
-                                    <g:fieldValue bean="${m}" field="presentation"/>
-                                    <g:fieldValue bean="${m}" field="measure"/>
-                                </td>
-                                <td><g:fieldValue bean="${m}" field="quantity"/></td>
-                                <td><g:fieldValue bean="${m}" field="purchasePrice"/></td>
-                                <td><g:fieldValue bean="${m}" field="sellingPrice"/></td>
-                                <td><g:formatDate format="yyyy-MM-dd" date="dueDate"/></td>
-                                <td></td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
-            </g:if>
+        <g:if test="${medicineOrders}">
+            <p>Medicinas</p>
+            <table class="table table-hover table-condensed">
+                <colgroup>
+                    <col span="1" style="width: 40%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 45%;">
+                    <col span="1" style="width: 5%;">
+                </colgroup>
+                <thead>
+                    <th>Medicina</th>
+                    <th>Cantidad</th>
+                    <th>Compra</th>
+                    <th>Venta</th>
+                    <th>Vencimiento</th>
+                </thead>
+                <tbody>
+                    <g:each in="${medicineOrders}" var="m">
+                        <tr>
+                            <td>
+                                <g:fieldValue bean="${m}" field="product.name"/>
+                                <g:fieldValue bean="${m}" field="presentation"/>
+                                <g:fieldValue bean="${m}" field="measure"/>
+                            </td>
+                            <td><g:fieldValue bean="${m}" field="quantity"/></td>
+                            <td><g:fieldValue bean="${m}" field="purchasePrice"/></td>
+                            <td><g:fieldValue bean="${m}" field="sellingPrice"/></td>
+                            <td><g:formatDate format="yyyy-MM-dd" date="${m.dueDate}"/></td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
 
-            <g:elseif test="${brandProductOrders}">
-                <p>Productos de marca</p>
-                <table class="table table-hover table-condensed">
-                    <colgroup>
-                        <col span="1" style="width: 40%;">
-                        <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 50%;">
-                    </colgroup>
-                    <thead>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio de compra</th>
-                        <th>Precio de venta</th>
-                    </thead>
-                    <tbody>
-                        <g:each in="${brandProductOrders}" var="bp">
-                            <tr>
-                                <td>
-                                    <g:fieldValue bean="${bp}" field="product.name"/>
-                                    <g:fieldValue bean="${bp}" field="brand"/>
-                                    <g:fieldValue bean="${bp}" field="detail"/>
-                                </td>
-                                <td><g:fieldValue bean="${bp}" field="quantity"/></td>
-                                <td><g:fieldValue bean="${bp}" field="purchasePrice"/></td>
-                                <td><g:fieldValue bean="${bp}" field="sellingPrice"/></td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
-            </g:elseif>
+        <g:if test="${brandProductOrders}">
+            <p>Productos de marca</p>
+            <table class="table table-hover table-condensed">
+                <colgroup>
+                    <col span="1" style="width: 40%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 50%;">
+                </colgroup>
+                <thead>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Compra</th>
+                    <th>Venta</th>
+                </thead>
+                <tbody>
+                    <g:each in="${brandProductOrders}" var="bp">
+                        <tr>
+                            <td>
+                                <g:fieldValue bean="${bp}" field="product.name"/>
+                                <g:fieldValue bean="${bp}" field="brand"/>
+                                <g:fieldValue bean="${bp}" field="detail"/>
+                            </td>
+                            <td><g:fieldValue bean="${bp}" field="quantity"/></td>
+                            <td><g:fieldValue bean="${bp}" field="purchasePrice"/></td>
+                            <td><g:fieldValue bean="${bp}" field="sellingPrice"/></td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
 
-            <g:else>
-                <p>Productos</p>
-                <table class="table table-hover table-condensed">
-                    <thead>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio de compra</th>
-                        <th>Precio de venta</th>
-                    </thead>
-                    <tbody>
-                        <g:each in="${items}" var="item">
-                            <tr>
-                                <td><g:fieldValue bean="${item}" field="product.name"/></td>
-                                <td><g:fieldValue bean="${item}" field="quantity"/></td>
-                                <td><g:fieldValue bean="${item}" field="purchasePrice"/></td>
-                                <td><g:fieldValue bean="${item}" field="sellingPrice"/></td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
-            </g:else>
+        <g:if test="${items}">
+            <p>Productos</p>
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Compra</th>
+                    <th>Venta</th>
+                </thead>
+                <tbody>
+                    <g:each in="${items}" var="item">
+                        <tr>
+                            <td><g:fieldValue bean="${item}" field="product.name"/></td>
+                            <td><g:fieldValue bean="${item}" field="quantity"/></td>
+                            <td><g:fieldValue bean="${item}" field="purchasePrice"/></td>
+                            <td><g:fieldValue bean="${item}" field="sellingPrice"/></td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
     </content>
 
     <content tag="col1">
