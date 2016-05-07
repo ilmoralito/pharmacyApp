@@ -75,16 +75,14 @@
             <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
                 <g:form action="create" autocomplete="off">
                     <div class="form-group">
-                        <label for="description" class="sr-only">Descripcion</label>
+                        <label for="description">Motivo del gasto</label>
                         <g:textArea
                             name="description"
-                            placeholder="Razon del gasto"
-                            class="form-control"
-                            style="resize: vertical; max-height: 200px; min-height: 100px;"/>
+                            class="form-control"/>
                     </div>
                 
                     <div class="form-group">
-                        <label for="quantity" class="sr-only">Cantidad</label>
+                        <label for="quantity">Monto</label>
                         <g:textField name="quantity" placeholder="Monto" class="form-control"/>
                     </div>
                 

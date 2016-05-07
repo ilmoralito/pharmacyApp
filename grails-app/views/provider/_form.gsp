@@ -1,25 +1,25 @@
 <div class="form-group">
+    <label for="name">Nombre</label>
     <g:textField
         name="name"
         value="${provider?.name}"
-        class="form-control"
-        placeholder="Nombre"/>
+        class="form-control"/>
 </div>
 
 <div class="form-group">
+    <label for="address">Direccion</label>
     <g:textField
         name="address"
         value="${provider?.address}"
-        class="form-control"
-        placeholder="Direccion"/>
+        class="form-control"/>
 </div>
 
 <div class="form-group">
+    <label for="telephoneNumber">Numero telefonico</label>
     <g:textField
         name="telephoneNumber"
         value="${provider?.telephoneNumber}"
         class="form-control"
-        placeholder="Numero telefonico"
         maxLength="8"/>
 </div>
 

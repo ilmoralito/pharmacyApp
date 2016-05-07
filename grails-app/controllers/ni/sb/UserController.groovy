@@ -33,7 +33,6 @@ class UserController {
                 }
 
                 flash.message = "A ocurrido un error"
-
                 return [users: users()]
 
                 // TODO: FIX error 
@@ -87,7 +86,7 @@ class UserController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
+                flash.message = "A ocurrido un error."
             }
         }
 
@@ -104,7 +103,7 @@ class UserController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
+                flash.message = "A ocurrido un error."
                 return
             }
 

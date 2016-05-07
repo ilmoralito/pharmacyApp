@@ -1,14 +1,15 @@
 <p>Empresa</p>
 <div class="form-group">
+    <label for="name">Nombre</label>
     <g:textField
         name="name"
         value="${company?.name}"
-        class="form-control"
-        placeholder="Nombre"/>
+        class="form-control"/>
 </div>
 
 <!--TODO: Get cities list from constraints in company domain class-->
 <div class="form-group">
+    <label for="city">Ciudad</label>
     <g:select
         name="city"
         from="['Leon', 'Chinandega']"
@@ -17,44 +18,44 @@
 </div>
 
 <div class="form-group">
+    <label for="address">Direccion</label>
     <g:textField
         name="address"
         value="${company?.address}"
-        class="form-control"
-        placeholder="Direcccion"/>
+        class="form-control"/>
 </div>
 
 <div class="form-group">
+    <label for="telephoneNumber">Numero telefonico</label>
     <g:textField
         name="telephoneNumber"
         value="${company?.telephoneNumber}"
-        class="form-control"
-        placeholder="Telefono"/>
+        class="form-control"/>
 </div>
 
 <p>Contacto</p>
 <div class="form-group">
+    <label for="contactFullName">Nombre de contacto</label>
     <g:textField
         name="contactFullName"
         value="${company?.contactFullName}"
-        class="form-control"
-        placeholder="Nombre de contacto"/>
+        class="form-control"/>
 </div>
 
 <div class="form-group">
+    <label for="contactTelephoneNumber">Telefono de contacto</label>
     <g:textField
         name="contactTelephoneNumber"
         value="${company?.contactTelephoneNumber}"
-        class="form-control"
-        placeholder="Telefono de contacto"/>
+        class="form-control"/>
 </div>
 
 <div class="form-group">
+    <label for="contactEmail">Emial de contacto</label>
     <g:textField
         name="contactEmail"
         value="${company?.contactEmail}"
-        class="form-control"
-        placeholder="Email de contacto"/>
+        class="form-control"/>
 </div>
 
 <g:if test="${actionName == 'show'}">

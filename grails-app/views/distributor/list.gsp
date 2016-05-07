@@ -45,7 +45,6 @@
             <p>Nada que mostrar</p>
         </g:else>
     </content>
-
     <content tag="col1">
         <g:set var="filtered" value="${params.boolean('filtered')}"/>
         <g:set var="isEnabled" value="${params.boolean('enabled')}"/>

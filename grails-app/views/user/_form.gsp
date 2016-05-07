@@ -1,32 +1,33 @@
 <div class="form-group">
+    <label for="fullName">Nombre completo</label>
     <g:textField
         name="fullName"
         value="${user?.fullName}"
         class="form-control"
-        placeholder="Nombre completo"
         autofocus="true"/>
 </div>
 
 <div class="form-group">
+    <label for="email">Email</label>
     <input
         type="email"
         id="email"
         name="email"
         value="${user?.email}"
-        class="form-control"
-        placeholder="Email">
+        class="form-control">
 </div>
 
 <div class="form-group">
+    <label for="telephoneNumber">Numero de telefono</label>
     <g:textField
         name="telephoneNumber"
         value="${user?.telephoneNumber}"
-        class="form-control"
-        placeholder="Telefono"/>
+        class="form-control"/>
 </div>
 
 <g:if test="${actionName == 'show' || actionName == 'list'}">
     <div class="form-group">
+        <label for="authority">Autoridad</label>
         <g:select
             name="authority"
             from="['USER', 'ADMIN']"

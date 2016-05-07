@@ -29,8 +29,7 @@ class PresentationController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [presentations: presentations(), presentation: presentation, measures: measures()]
             }
         }
@@ -62,7 +61,7 @@ class PresentationController {
                 log.error "[$error.field: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
+            flash.message = "A ocurrido un error."
             chain action: "show", params: [id: id], model: [presentation: presentation]
             return
         }

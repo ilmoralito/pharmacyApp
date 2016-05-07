@@ -30,8 +30,7 @@ class ClientController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [clients: clients(), client: client]
             }
         }
@@ -64,7 +63,7 @@ class ClientController {
                 log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
+            flash.message = "A ocurrido un error."
         }
 
         redirect action: "show", id: id

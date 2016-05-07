@@ -1,9 +1,9 @@
 <div class="form-group">
+    <label for="invoiceNumber">Numero de factura</label>
     <g:textField
         name="invoiceNumber"
         value="${invoiceNumber}"
         class="form-control"
-        placeholder="Numero de factura"
         autofocus="true"/>
 </div>
 

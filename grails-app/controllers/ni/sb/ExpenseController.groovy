@@ -47,7 +47,7 @@ class ExpenseController {
                 log.error "[field: $error.field, message: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
+            flash.message = "A ocurrido un error."
         }
 
         redirect action: "list"

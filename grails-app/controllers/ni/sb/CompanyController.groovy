@@ -33,8 +33,7 @@ class CompanyController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [companies: getCompanies(), company: company]
             }
         }
@@ -66,7 +65,7 @@ class CompanyController {
                 log.error "[$error.field: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
+            flash.message = "A ocurrido un error."
         }
 
         redirect action: "show", id: id
@@ -106,8 +105,7 @@ class CompanyController {
                 log.error "[$error.field: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
-
+            flash.message = "A ocurrido un error."
             chain action: "showEmployee", params: [id: id], model: [employee: employee]
             return
         }
@@ -131,8 +129,7 @@ class CompanyController {
                 log.error "[$error.field: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Intentalo otravez"
-
+            flash.message = "A ocurrido un error."
             chain action: "employees", model: [employee: employee], params: [id: id]
             return
         }

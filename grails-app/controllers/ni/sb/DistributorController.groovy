@@ -24,8 +24,7 @@ class DistributorController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [dealers: query.list(), dealer: dealer]
             }
         }

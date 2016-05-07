@@ -1,37 +1,28 @@
 <div class="form-group">
+    <label for="name">Nombre</label>
     <g:textField
         name="name"
         value="${product?.name}"
         class="form-control"
-        placeholder="Nombre"
         autofocus="true"/>
 </div>
 
 <g:if test="${product instanceof ni.sb.Medicine || actionName == 'medicineList'}">
     <div class="form-group">
+        <label for="code">Codigo</label>
         <g:textField
             name="code"
             value="${product?.code}"
-            class="form-control"
-            placeholder="Codigo"/>
+            class="form-control"/>
     </div>
 
     <div class="form-group">
+        <label for="genericName">Nombre Generico</label>
         <g:textField
             name="genericName"
             value="${product?.genericName}"
             class="form-control"
-            placeholder="Nombre Generico"
             list="genericNames"/>
-
-        <!--
-        TODO
-        <datalist id="genericNames">
-            <g:each in="${1..10}" var="n">
-                <option value="peluso"/>
-            </g:each>
-        </datalist>
-        -->
     </div>
 
     <pharmacyApp:presentations product="${product}"/>

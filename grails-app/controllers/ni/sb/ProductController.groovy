@@ -41,8 +41,7 @@ class ProductController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [products: getProducts(), provider: provider, product: product]
             }
         }
@@ -75,8 +74,7 @@ class ProductController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [
                     medicines: getMedicines(),
                     provider: provider,
@@ -113,8 +111,7 @@ class ProductController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [
                     brandProducts: getBrandProducts(),
                     provider: provider,

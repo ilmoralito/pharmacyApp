@@ -21,8 +21,7 @@ class ProviderController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error. Intentalo otravez"
-
+                flash.message = "A ocurrido un error."
                 return [providers: Provider.findAllByEnabled(enabled), provider: provider]
             }
         }
