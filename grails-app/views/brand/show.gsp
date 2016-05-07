@@ -6,11 +6,15 @@
 
     <content tag="main">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <g:form action="update" autocomplete="off">
                     <p>Marca</p>
+
                     <g:hiddenField name="id" value="${brand.id}"/>
                     <g:render template="form"/>
+
+                    <label>Filtrar detalles</label>
+                    <pharmacyApp:details brand="${brand}"/>
 
                     <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
                 </g:form>

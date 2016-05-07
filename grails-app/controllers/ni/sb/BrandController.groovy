@@ -56,6 +56,14 @@ class BrandController {
 
         brand.properties["name"] = params
 
+        List details = params.list("details")
+
+        brand.details.clear()
+
+        details.each { detail ->
+            brand.addToDetails(Detail.get(detail))
+        }
+
         if (!brand.save()) {
             brand.errors.allErrors.each { error ->
                 log.error "[$error.field: $error.defaultMessage]"
@@ -65,16 +73,6 @@ class BrandController {
 
             chain action: "show", params: [id: id], model: [brand: brand]
             return
-        }
-
-        // Update details
-        List details = params.list("details")
-
-        brand.details.clear()
-
-        details.each { detail ->
-            brand.addToDetails(Detail.get(detail))
-            brand.save(flush: true)
         }
 
         redirect action: "show", id: id

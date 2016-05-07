@@ -5,25 +5,20 @@
     </head>
 
     <content tag="main">
-        <div class="row">
-            <div class="col-md-6">
-                <g:form action="update" autocomplete="off">
-                    <p>Presentacion</p>
+        <g:form action="update" autocomplete="off">
+            <p>Presentacion</p>
+
+            <div class="row">
+                <div class="col-md-5">
                     <g:hiddenField name="id" value="${params?.id}"/>
                     <g:render template="form"/>
 
-                    <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
-                </g:form>
-            </div>
-            <div class="col-md-6">
-                <g:form action="addRemoveMeasure" autocomplete="off">
-                    <p>Medidas</p>
-                    <g:hiddenField name="id" value="${presentation.id}"/>
+                    <label>Filtrar medidas</label>
                     <pharmacyApp:measures presentation="${presentation}"/>
 
                     <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
-                </g:form>
+                </div>
             </div>
-        </div>
+        </g:form>
     </content>
 </g:applyLayout>

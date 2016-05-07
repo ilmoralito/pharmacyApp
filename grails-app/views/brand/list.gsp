@@ -54,7 +54,7 @@
 
                     <g:if test="${details}">
                         <label>Filtrar detalles</label>
-                        <pharmacyApp:details brand="${brand}"/>
+                        <pharmacyApp:details/>
                     </g:if>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>

@@ -8,8 +8,7 @@ class PresentationController {
     static allowedMethods = [
         list: ["GET", "POST"],
         show: "GET",
-        update: "POST",
-        addRemoveMeasure: "POST"
+        update: "POST"
     ]
 
     def list() {
@@ -54,7 +53,15 @@ class PresentationController {
             response.sendError 404
         }
 
-        presentation.properties = params
+        presentation.name = params?.name
+
+        List measures = params.list("measures")
+
+        presentation.measures.clear()
+
+        measures.each { measure ->
+            presentation.addToMeasures(Measure.get(measure))
+        }
 
         if (!presentation.save()) {
             presentation.errors.allErrors.each { error ->
@@ -64,25 +71,6 @@ class PresentationController {
             flash.message = "A ocurrido un error."
             chain action: "show", params: [id: id], model: [presentation: presentation]
             return
-        }
-
-        redirect action: "show", id: id
-    }
-
-    def addRemoveMeasure(Long id) {
-        Presentation presentation = Presentation.get(id)
-
-        if (!presentation) {
-            response.sendError 404
-        }
-
-        List measures = params.list("measures")
-
-        presentation.measures.clear()
-
-        measures.each { measure ->
-            presentation.addToMeasures(Measure.get(measure))
-            presentation.save()
         }
 
         redirect action: "show", id: id
