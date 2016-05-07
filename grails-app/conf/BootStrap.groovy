@@ -59,7 +59,7 @@ class BootStrap {
             fullName: "admin user",
             email: "admin@domain.com",
             telephoneNumber: "99887766",
-            password: "password",
+            password: "password"
         ).save failOnError: true
 
         User user = new User(
@@ -342,25 +342,47 @@ class BootStrap {
         new Expense(description: "Lorem ipsum dolor sit amut", quantity: 5, user: test).save failOnError: true
 
         assert Expense.count() == 4
-
-        // PURCHASEORDER
-        /*
-        List<PurchaseOrder> purchaseOrders = []
-        Date today = new Date()
-
-        purchaseOrders << builder.purchaseOrder(
-            distributor(refId: "dealer#1"),
-            user: admin,
-            typeOfPurchase: "credit",
-            invoiceNumber: "0001001",
-            deadline: today + 60,
-            balance: 5000, // TODO its needs to be calculated from total in items
-            paymentStatus: "pending"
-        )
-        */
     }
 
     private production() {
-        // TODO
+        Role adminRole = Role.findByAuthority("ROLE_ADMIN") ?: new Role(
+            authority: "ROLE_ADMIN"
+        ).save(flush: true)
+
+        Role userRole = Role.findByAuthority("ROLE_USER") ?: new Role(
+            authority: "ROLE_USER"
+        ).save(flush: true)
+
+        User admin = User.findByEmail("admin.user@domain.com") ?: new User(
+            fullName: "first run user",
+            email: "admin.user@domain.com",
+            telephoneNumber: "89898989",
+            password: "adminpassword"
+        ).save(flush: true)
+
+        User user = User.findByEmail("user.user@domain.com") ?: new User(
+            fullName: "second run user",
+            email: "user.user@domain.com",
+            telephoneNumber: "89898977",
+            password: "userpassword"
+        ).save(flush: true)
+
+        User test = User.findByEmail("test.user@domain.com") ?: new User(
+            fullName: "another run user",
+            email: "test.user@domain.com",
+            telephoneNumber: "77898977"
+        ).save(flush: true)
+
+        if (!UserRole.exists(admin.id, adminRole.id)) {
+            UserRole.create admin, adminRole, true
+        }
+
+        if (!UserRole.exists(user.id, userRole.id)) {
+            UserRole.create user, userRole, true
+        }
+        
+        if (!UserRole.exists(test.id, userRole.id)) {
+            UserRole.create test, userRole, true
+        }
     }
 }
