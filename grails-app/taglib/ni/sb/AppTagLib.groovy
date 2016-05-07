@@ -165,12 +165,8 @@ class AppTagLib {
         Map<String, String> checkboxParams = [type: "checkbox", name: "details"]
 
         builder.div {
-            p {
-                mkp.yield "Detalles"
-            }
-
             div(class: "form-group") {
-                input(type: "search", id: "search", class: "form-control", placeholder: "Filtrar")
+                input(type: "search", id: "search", class: "form-control")
             }
 
             details.each { detail ->

@@ -6,7 +6,7 @@
 
     <content tag="main">
         <g:if test="${brands}">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
                 <thead>
                     <th width="1" class="text-center">#</th>
                     <th>Marcas</th>
@@ -52,6 +52,11 @@
                 <g:form action="${actionName}" autocomplete="off">
                     <g:render template="form"/>
 
+                    <g:if test="${details}">
+                        <label>Filtrar detalles</label>
+                        <pharmacyApp:details brand="${brand}"/>
+                    </g:if>
+
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
                 </g:form>
             </div>
@@ -65,23 +70,25 @@
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
                 </g:form>
 
-                <table class="table table-hover table-striped">
-                    <thead>
-                       <th>Nombre</th>
-                    </thead>
-                    <tbody>
-                        <g:each in="${details}" var="detail">
-                            <tr>
-                                <td
-                                    class="trigger"
-                                    data-id="${detail.id}"
-                                    data-name="${detail.name}">
-                                    ${detail.name}
-                                </td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
+                <g:if test="${details}">
+                    <table class="table table-hover">
+                        <thead>
+                           <th>Nombre</th>
+                        </thead>
+                        <tbody>
+                            <g:each in="${details}" var="detail">
+                                <tr>
+                                    <td
+                                        class="trigger"
+                                        data-id="${detail.id}"
+                                        data-name="${detail.name}">
+                                        ${detail.name}
+                                    </td>
+                                </tr>
+                            </g:each>
+                        </tbody>
+                    </table>
+                </g:if>
             </div>
         </div>
 

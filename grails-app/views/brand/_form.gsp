@@ -6,5 +6,3 @@
         class="form-control"
         autofocus="true"/>
 </div>
-
-<pharmacyApp:details brand="${brand}"/>
