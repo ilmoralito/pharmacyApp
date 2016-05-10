@@ -48,7 +48,6 @@
             model="[
                 balance: balance,
                 expenseBalance: expenseBalance,
-                balanceCanceledSales: balanceCanceledSales
-            ]"/>
+                balanceCanceledSales: balanceCanceledSales]"/>
     </content>
 </g:applyLayout>

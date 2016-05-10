@@ -196,11 +196,12 @@ class SaleController {
 
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(today, today)
         List<Sale> sales = saleService.getSales(today, today)
+        List<Sale> canceledSales = saleService.getSales(today, today, true)
 
         [
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
             balance: saleService.getBalanceSummary(sales),
-            balanceCanceledSales: saleService.getBalanceSummary(sales),
+            balanceCanceledSales: saleService.getBalanceSummary(canceledSales),
             expenseBalance: expenseService.getExpensesBalanceSummary(today, today)
         ]
     }

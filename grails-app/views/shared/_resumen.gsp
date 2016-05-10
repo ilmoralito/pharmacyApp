@@ -10,6 +10,6 @@
 <p>${balance - expenseBalance}</p>
 
 <g:if test="${balanceCanceledSales}">
-    <label>Monto en ventas canceladas</label>
+    <label>Monto de ventas canceladas</label>
     <p>${balanceCanceledSales}</p>
 </g:if>

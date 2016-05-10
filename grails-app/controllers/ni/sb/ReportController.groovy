@@ -53,11 +53,12 @@ class ReportController {
         def(Date from, Date to) = getFromAndToDates()
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(from, to)
         List<Sale> sales = saleService.getSales(from,to)
+        List<Sale> canceledSales = saleService.getSales(from, to, true)
 
         [
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
             balance: saleService.getBalanceSummary(sales),
-            balanceCanceledSales: saleService.getBalanceSummary(sales),
+            balanceCanceledSales: saleService.getBalanceSummary(canceledSales),
             expenseBalance: expenseService.getExpensesBalanceSummary(from, to)
         ]
     }

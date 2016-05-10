@@ -33,8 +33,10 @@
         <label>A nombre de</label>
         <p><g:fieldValue bean="${sale}" field="client.fullName"/></p>
 
-        <label>Observacion</label>
-        <p><g:fieldValue bean="${sale}" field="annotation"/></p>
+        <g:if test="${sale.annotation}">
+            <label>Observacion</label>
+            <p><g:fieldValue bean="${sale}" field="annotation"/></p>
+        </g:if>
 
         <g:if test="${sale.canceled}">
             <label>Estado</label>
