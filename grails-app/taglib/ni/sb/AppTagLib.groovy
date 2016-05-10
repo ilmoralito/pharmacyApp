@@ -135,7 +135,7 @@ class AppTagLib {
         Map params = [type: "checkbox", name: "users"]
 
         builder.div {
-            p "Usuarios"
+            label "Usuarios"
 
             users.each { user ->
                 params.value = user.id
@@ -241,7 +241,7 @@ class AppTagLib {
         Map<String, String> params = [type: type, name: attrs?.name ?: "distributor"]
 
         builder.div {
-            p {
+            label {
                 mkp.yield "Distribuidores"
                 if (showMessage) {
                     div {
