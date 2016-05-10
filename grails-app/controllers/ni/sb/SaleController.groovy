@@ -185,8 +185,12 @@ class SaleController {
             return
         }
 
-        flash.message = "Venta anulada"
+        // Return sale items quantity to inventary
+        sale.saleDetails.each { saleDetail ->
+            saleDetail.item.quantity += saleDetail.quantity
+        }
 
+        flash.message = "Venta anulada exitosamente y productos retornados a inventario"
         redirect action: "detail", id: id
     }
 
