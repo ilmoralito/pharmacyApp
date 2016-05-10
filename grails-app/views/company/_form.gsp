@@ -7,7 +7,6 @@
         class="form-control"/>
 </div>
 
-<!--TODO: Get cities list from constraints in company domain class-->
 <div class="form-group">
     <label for="city">Ciudad</label>
     <g:select
@@ -30,6 +29,14 @@
     <g:textField
         name="telephoneNumber"
         value="${company?.telephoneNumber}"
+        class="form-control"/>
+</div>
+
+<div class="form-group">
+    <label for="creditLimit">Limite de credito</label>
+    <g:textField
+        name="creditLimit"
+        value="${company?.creditLimit}"
         class="form-control"/>
 </div>
 

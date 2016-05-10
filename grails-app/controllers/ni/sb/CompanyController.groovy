@@ -78,7 +78,7 @@ class CompanyController {
             response.sendError 404
         }
 
-        [employees: company.employees, company: company]
+        [employees: company.employees, companyId: company.id, companyName: company.name]
     }
 
     def showEmployee(Long id) {

@@ -8,6 +8,14 @@
 </div>
 
 <div class="form-group">
+    <label for="telephoneNumber">Numero telefonico</label>
+    <g:textField
+        name="telephoneNumber"
+        value="${employee?.telephoneNumber}"
+        class="form-control"/>
+</div>
+
+<div class="form-group">
     <label for="inss">Numero de INSS</label>
     <g:textField
         name="inss"

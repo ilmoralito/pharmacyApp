@@ -34,10 +34,16 @@ class BootStrap {
 
     private development() {
         DomainBuilder builder = new DomainBuilder()
-        builder.classNameResolver = "ni.sb"
-
-        // CLIENT
         List<Client> clients = []
+        List<Company> companies = []
+        List<Measure> measures = []
+        List<Presentation> presentations = []
+        List<Detail> details = []
+        List<Brand> brands = []
+        List<Provider> providers = []
+        List<Distributor> dealers = []
+
+        builder.classNameResolver = "ni.sb"
 
         clients << builder.client(
             fullName: "client one name",
@@ -86,14 +92,12 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 3
 
-        // COMPANY
-        List<Company> companies = []
-
         companies << builder.company(
             name: "company1",
             city: "Leon",
             address: "Lorem ipsum dolor sit amet",
             telephoneNumber: "23114455",
+            creditLimit: 1500.00,
             contactFullName: "contact1 name",
             contactTelephoneNumber: "88776678",
             contactEmail: "contact1.name@company1.com.ni",
@@ -102,6 +106,7 @@ class BootStrap {
             10.times {
                 employee(
                     fullName: "employee#$it",
+                    telephoneNumber: "87898978",
                     inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
                 )
             }
@@ -112,6 +117,7 @@ class BootStrap {
             city: "Chinandega",
             address: "Lorem ipsum dolor sit amot",
             telephoneNumber: "23124455",
+            creditLimit: 3000.00,
             contactFullName: "contact2 name",
             contactTelephoneNumber: "76776678",
             contactEmail: "contact2.name@company1.com.ni",
@@ -120,6 +126,7 @@ class BootStrap {
             20.times {
                 employee(
                     fullName: "employee#$it",
+                    telephoneNumber: "89090909",
                     inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
                 )
             }
@@ -130,9 +137,6 @@ class BootStrap {
         }
 
         assert Company.count() == 2
-
-        // MEASURE
-        List<Measure> measures = []
 
         measures << builder.measure(name: "measure#1", id: "MEASURE#1")
         measures << builder.measure(name: "measure#2", id: "MEASURE#2")
@@ -146,9 +150,6 @@ class BootStrap {
         }
 
         assert Measure.count() == 6
-
-        // PRESENTATION
-        List<Presentation> presentations = []
 
         presentations << builder.presentation(name: "presentation#1", id: "PRESENTATION#1") {
             measure(refId: "MEASURE#1")
@@ -175,9 +176,6 @@ class BootStrap {
 
         assert Presentation.count() == 4
 
-        // DETAIL
-        List<Detail> details = []
-
         details << builder.detail(name: "detail#1", id: "detail#1")
         details << builder.detail(name: "detail#2", id: "detail#2")
         details << builder.detail(name: "detail#3", id: "detail#3")
@@ -189,9 +187,6 @@ class BootStrap {
         }
 
         assert Detail.count() == 5
-
-        // BRAND
-        List<Brand> brands = []
 
         brands << builder.brand(name: "brand#1", id: "brand#1") {
             detail(refId: "detail#1")
@@ -209,9 +204,6 @@ class BootStrap {
         }
 
         assert Brand.count() == 2
-
-        // PROVIDER
-        List<Provider> providers = []
 
         providers << builder.provider(
             name: "Laboratory1",
@@ -272,8 +264,6 @@ class BootStrap {
 
         assert Provider.count() == 5
 
-        // DEALER
-        List<Distributor> dealers = []
         dealers << builder.distributor(
             name: "Dealer1",
             telephoneNumber: "23114455",

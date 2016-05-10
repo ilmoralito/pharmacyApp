@@ -9,17 +9,19 @@
         <br>
 
         <g:if test="${employees}">
-            <p><br>Empleados de ${company}</p>
+            <p>Empleados de ${companyName}</p>
 
             <table id="employees" class="table table-hover">
                 <colgroup>
-                    <col span="1" style="width: 30%;">
-                    <col span="1" style="width: 65%;">
+                    <col span="1" style="width: 5%%;">
+                    <col span="1" style="width: 5%%;">
+                    <col span="1" style="width: 90%;">
                     <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
-                    <th>Nombre de empleado</th>
                     <th>INSS</th>
+                    <th>Telefono</th>
+                    <th>Nombre y apellido</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -29,19 +31,16 @@
                                 ${employee.fullName} ${employee.inss}
                             </td>
                             <td>
-                                <g:link
-                                    action="showEmployee"
-                                    id="${employee.id}">
-                                    ${employee.fullName}
+                                <g:link action="showEmployee" id="${employee.id}">
+                                    <g:fieldValue bean="${employee}" field="inss"/>
                                 </g:link>
                             </td>
-                            <td>
-                                ${employee.inss}
-                            </td>
+                            <td><g:fieldValue bean="${employee}" field="telephoneNumber"/></td>
+                            <td><g:fieldValue bean="${employee}" field="fullName"/></td>
                             <td class="text-center">
                                 <g:link
                                     action="removeEmployee"
-                                    params="[id: company.id, employeeId: employee.id]">
+                                    params="[id: companyId, employeeId: employee.id]">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </g:link>
                             </td>
@@ -73,7 +72,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
                 <g:form action="addEmployee" autocomplete="off">
-                    <g:hiddenField name="id" value="${company.id}"/>
+                    <g:hiddenField name="id" value="${companyId}"/>
                     <g:render template="formEmployee"/>
 
                     <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>

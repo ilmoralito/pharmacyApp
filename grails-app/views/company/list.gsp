@@ -8,13 +8,11 @@
         <g:if test="${companies}">
             <table class="table table-hover">
                 <colgroup>
-                    <col span="1" style="width: 90%;">
-                    <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 75%;">
                 </colgroup>
                 <thead>
                     <th>Nombre</th>
-                    <th>Telefono</th>
                     <th>Empleados</th>
                 </thead>
                 <tbody>
@@ -25,7 +23,6 @@
                                     ${company.name}
                                 </g:link>
                             </td>
-                            <td>${company.telephoneNumber}</td>
                             <td>
                                 <g:link action="employees" id="${company.id}">
                                     Empleados
