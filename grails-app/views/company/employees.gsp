@@ -67,7 +67,6 @@
                 </a>
             </li>
         </ul>
-        <br>
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">

@@ -8,7 +8,7 @@
         <g:render template="navbar"/>
 
         <g:if test="${products}">
-            <p><br>${provider.name}</p>
+            <p>${provider.name}</p>
 
             <table class="table table-hover table-striped">
                 <thead>
@@ -56,7 +56,6 @@
                 </a>
             </li>
         </ul>
-        <br>
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="create">

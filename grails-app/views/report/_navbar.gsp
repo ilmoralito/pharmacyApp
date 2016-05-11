@@ -47,4 +47,3 @@
         <g:link action="employees">A empresas</g:link>
     </li>
 </ul>
-<br>
