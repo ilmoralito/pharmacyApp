@@ -1,22 +1,14 @@
 <table class="table table-hover">
     <colgroup>
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 14.83%;">
-        <col span="1" style="width: 5%;">
-        <col span="1" style="width: 5%;">
-        <col span="1" style="width: 1%;">
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 60%;">
+        <col span="1" style="width: 9%;">
+        <col span="1" style="width: 9%;">
+        <col span="1" style="width: 2%;">
     </colgroup>
     <thead>
-        <th>Nombre</th>
         <th>Laboratorio</th>
-        <th>Presentacion</th>
-        <th>Medida</th>
-        <th>Marca</th>
-        <th>Detalle</th>
+        <th>Articulo</th>
         <th>Cantidad</th>
         <th>Total</th>
         <th></th>
@@ -24,27 +16,17 @@
     <tbody>
         <g:each in="${saleDetails}" var="saleDetail" status="idx">
             <tr>
-                <td>${saleDetail.item.product}</td>
                 <td>${saleDetail.item.product.provider}</td>
                 <td>
                     <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder}">
-                        ${saleDetail.item.presentation}
+                        ${saleDetail.item.product.name} ${saleDetail.item.presentation} ${saleDetail.item.measure}
                     </g:if>
-                </td>
-                <td>
-                    <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder}">
-                        ${saleDetail.item.measure}
-                    </g:if>
-                </td>
-                <td>
-                    <g:if test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
-                        ${saleDetail.item.brand}
-                    </g:if>
-                </td>
-                <td>
-                    <g:if test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
-                        ${saleDetail.item.detail}
-                    </g:if>
+                    <g:elseif test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
+                        ${saleDetail.item.product.name} ${saleDetail.item.brand} ${saleDetail.item.detail}
+                    </g:elseif>
+                    <g:else>
+                        ${saleDetail.item.product.name}
+                    </g:else>
                 </td>
                 <td>${saleDetail.quantity}</td>
                 <td>${saleDetail.total}</td>
@@ -58,7 +40,7 @@
             </tr>
         </g:each>
         <tr>
-            <td colspan="7"></td>
+            <td colspan="3"></td>
             <td colspan="2"><strong>${saleDetails.total.sum()}</strong></td>
         </tr>
     </tbody>

@@ -1,32 +1,28 @@
 package ni.sb
 
+import groovy.transform.ToString
+
+@ToString
 class Sale implements Serializable {
     User user
     BigDecimal balance
-    Client client
-    BigDecimal moneyReceived
-    String annotation
-    Employee employee
     Boolean canceled = false
     String reazonOfCanelation
     Date dateOfCancelation
+    String annotation
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
         balance min: 1.0, scale: 2
-        moneyReceived min: 1.0, scale: 2, validator: { moneyReceived, sale ->
-            moneyReceived >= sale.balance
-        }
-        annotation nullable: true, maxSize: 255
-        employee nullable: true
         reazonOfCanelation nullable: true, maxSize: 255, validator: { reazonOfCanelation, obj ->
             if (obj.canceled) {
                 return reazonOfCanelation != ""
             }
         }
         dateOfCancelation nullable: true
+        annotation nullable: true, maxSize: 255
     }
 
     static namedQueries = {
@@ -44,6 +40,4 @@ class Sale implements Serializable {
             dateOfCancelation = new Date()
         }
     }
-
-    String toString() { "by $toName for $user.fullName" }
 }

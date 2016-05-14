@@ -28,7 +28,7 @@ class SaleController {
                 List<Item> items = Item.list().unique() { a, b -> a.product.name <=> b.product.name }.sort { it.product.name }
                 List<SaleDetail> saleDetails = []
 
-                [items: items, saleDetails: saleDetails, clientFormState: "hide"]
+                [items: items, saleDetails: saleDetails, clientFormState: "hide", saleType: "cash"]
             }
 
             on("success").to "sale"
@@ -103,7 +103,7 @@ class SaleController {
                 flow.clientID = client.id
             }.to "sale"
 
-            on("confirm") { SaleCommand cmd ->
+            on("confirmCashSale") { CashSaleCommand cmd ->
                 if (cmd.hasErrors()) {
                     cmd.errors.allErrors.each { error ->
                         log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
@@ -113,23 +113,22 @@ class SaleController {
                     return error()
                 }
 
-                Sale sale = new Sale(
+                CashSale cashSale = new CashSale(
                     user: springSecurityService.currentUser,
-                    balance: cmd.balance,
                     client: cmd.client,
+                    balance: cmd.balance,
                     moneyReceived: cmd.moneyReceived,
-                    annotation: cmd.annotation,
-                    employee: cmd.employee
+                    annotation: cmd.annotation
                 )
 
                 flow.saleDetails.each { saleDetail ->
                     saleDetail.item.quantity -= saleDetail.quantity
 
-                    sale.addToSaleDetails(saleDetail)
+                    cashSale.addToSaleDetails(saleDetail)
                 }
 
-                if (!sale.save()) {
-                    sale.errors.allErrors.each { error ->
+                if (!cashSale.save()) {
+                    cashSale.errors.allErrors.each { error ->
                         log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                     }
 
@@ -139,6 +138,46 @@ class SaleController {
 
                 flash.message = "Venta realizada correctamente"
             }.to "done"
+
+            on("confirmCreditSale") { CreditSaleCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "Datos incorrectos"
+                    return error()
+                }
+
+                CreditSale creditSale = new CreditSale(
+                    user: springSecurityService.currentUser,
+                    invoiceNumber: cmd.invoiceNumber,
+                    employee: cmd.employee,
+                    balance: cmd.balance,
+                    annotation: cmd.annotation
+                )
+
+                flow.saleDetails.each { saleDetail ->
+                    saleDetail.item.quantity -= saleDetail.quantity
+
+                    creditSale.addToSaleDetails(saleDetail)
+                }
+
+                if (!creditSale.save()) {
+                    creditSale.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    flash.message = "Datos incorrectos"
+                    return error()
+                }
+
+                flash.message = "Venta realizada correctamente"
+            }.to "done"
+
+            on("changeSaleType") {
+                flow.saleType = params?.saleType ?: "cash"
+            }.to "sale"
         }
 
         done {
@@ -196,31 +235,51 @@ class SaleController {
 
     def summary() {
         Date today = new Date()
-        User user = springSecurityService.currentUser
 
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(today, today)
-        List<Sale> sales = saleService.getSales(today, today)
-        List<Sale> canceledSales = saleService.getSales(today, today, true)
+        List<CashSale> cashSales = saleService.getCashSales(today, today)
+        List<CreditSale> creditSales = saleService.getCreditSales(today, today)
+        List<CashSale> canceledCashSales = saleService.getCashSales(today, today, true)
 
         [
+            balanceCashSales: saleService.getBalanceSummary(cashSales),
+            quantityCashSales: cashSales.size(),
+            quantityCreditSales: creditSales.size(),
+            quantityCanceledSales: canceledCashSales.size(),
+            balanceCreditSales: saleService.getBalanceSummary(creditSales),
+            balanceCanceledSales: saleService.getBalanceSummary(canceledCashSales),
+            expenseBalance: expenseService.getExpensesBalanceSummary(today, today),
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
-            balance: saleService.getBalanceSummary(sales),
-            balanceCanceledSales: saleService.getBalanceSummary(canceledSales),
-            expenseBalance: expenseService.getExpensesBalanceSummary(today, today)
+            companies: creditSales.groupBy { it.employee.company.name }.collect { a ->
+                [
+                    name: a.key,
+                    balance: a.value.balance.sum(),
+                    size: a.value.size()
+                ]
+            }
         ]
     }
 }
 
-class SaleCommand {
-    BigDecimal balance
+class CashSaleCommand {
     Client client
+    BigDecimal balance
     BigDecimal moneyReceived
     String annotation
-    Employee employee
-    Boolean canceled = false
 
     static constraints = {
-        importFrom Sale, exclude: ["user"]
+        importFrom CashSale
+    }
+}
+
+class CreditSaleCommand {
+    String invoiceNumber
+    Employee employee
+    BigDecimal balance
+    String annotation
+
+    static constraints = {
+        importFrom CreditSale
     }
 }
 

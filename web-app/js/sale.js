@@ -1,6 +1,6 @@
 $(function() {
     $('#id').select2();
-
+    
     $('#client\\.id').select2();
 
     $('#moneyReceived').on('blur', function() {
@@ -27,4 +27,55 @@ $(function() {
     $('#addClient').on('click', function() {
         $(this).next().toggleClass('show hide');
     })
+
+    // Employee
+    $('#company').on('change', function() {
+        var employee = $('#employee');
+        var optionSelected = $('option:selected', this);
+        var employees = optionSelected.data('employees');
+
+        employee.find('option').remove();
+        
+        for (var i = employees.length - 1; i >= 0; i--) {
+            var opt = $('<option>', {
+                value: employees[i].id,
+                text: employees[i].fullName,
+                'data-identificationCard': employees[i].identificationCard,
+                'data-inss': employees[i].inss,
+                'data-companyCreditLimit': employees[i].companyCreditLimit
+            });
+
+            employee.append(opt);
+        }
+    });
+
+    var defaultEmployees = $('#company').find('option:first-child').data('employees');
+    var employee = $('#employee');
+    
+    for (var i = defaultEmployees.length - 1; i >= 0; i--) {
+        var opt = $('<option>', {
+            value: defaultEmployees[i].id,
+            text: defaultEmployees[i].fullName,
+            'data-identificationCard': defaultEmployees[i].identificationCard,
+            'data-inss': defaultEmployees[i].inss,
+            'data-companyCreditLimit': defaultEmployees[i].companyCreditLimit
+        });
+
+        employee.append(opt);
+    }
+
+    $('#employee').on('change', function() {
+        var optionSelected = $('option:selected', this);
+            data = optionSelected.data();
+            template = $('#template').html();
+            rendered = Mustache.render(template, data);
+
+        Mustache.parse(template);
+
+        $('#employeeInformation').html(rendered);
+    });
+
+    $('#company').select2();
+
+    $('#employee').select2();
 });

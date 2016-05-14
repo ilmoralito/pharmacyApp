@@ -13,15 +13,17 @@
 
             <table id="employees" class="table table-hover">
                 <colgroup>
+                    <col span="1" style="width: 80%;">
                     <col span="1" style="width: 5%%;">
                     <col span="1" style="width: 5%%;">
-                    <col span="1" style="width: 90%;">
+                    <col span="1" style="width: 5%%;">
                     <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
-                    <th>INSS</th>
-                    <th>Telefono</th>
                     <th>Nombre y apellido</th>
+                    <th>INSS</th>
+                    <th>Cedula</th>
+                    <th>Telefono</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -32,11 +34,12 @@
                             </td>
                             <td>
                                 <g:link action="showEmployee" id="${employee.id}">
-                                    <g:fieldValue bean="${employee}" field="inss"/>
+                                    <g:fieldValue bean="${employee}" field="fullName"/>
                                 </g:link>
                             </td>
+                            <td><g:fieldValue bean="${employee}" field="inss"/></td>
+                            <td><g:fieldValue bean="${employee}" field="identificationCard"/></td>
                             <td><g:fieldValue bean="${employee}" field="telephoneNumber"/></td>
-                            <td><g:fieldValue bean="${employee}" field="fullName"/></td>
                             <td class="text-center">
                                 <g:link
                                     action="removeEmployee"

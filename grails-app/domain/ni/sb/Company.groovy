@@ -4,7 +4,7 @@ import org.grails.databinding.BindUsing
 import groovy.transform.ToString
 
 @ToString
-class Company {
+class Company implements Serializable {
     @BindUsing({ obj, source ->
         source["name"]?.capitalize()
     })

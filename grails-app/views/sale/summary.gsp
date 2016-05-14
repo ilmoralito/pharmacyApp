@@ -9,6 +9,7 @@
 
         <g:if test="${saleDetails}">
             <table class="table table-hover">
+                <caption>Resumen por numero de articulos vendidos</caption>
                  <colgroup>
                     <col span="1" style="width: 30%;">
                     <col span="1" style="width: 70%;">
@@ -37,6 +38,35 @@
                     </g:each>
                 </tbody>
             </table>
+
+            <g:if test="${companies}">
+                <table class="table table-hover">
+                    <caption>Resumen de ventas al credito</caption>
+                     <colgroup>
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 50%;">
+                        <col span="1" style="width: 20%;">
+                    </colgroup>
+                    <thead>
+                        <th>Empresa</th>
+                        <th>Monto</th>
+                        <th>Numero de ventas</th>
+                    </thead>
+                    <tbody>
+                        <g:each in="${companies}" var="company">
+                            <tr>
+                                <td>${company.name}</td>
+                                <td>${company.balance}</td>
+                                <td>${company.size}</td>
+                            </tr>
+                        </g:each>
+                        <tr>
+                            <td></td>
+                            <td colspan="2">${companies.balance.sum()}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </g:if>
         </g:if>
         <g:else>
             <p>Nada que mostrar</p>

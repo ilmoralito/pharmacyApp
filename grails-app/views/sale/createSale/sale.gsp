@@ -201,54 +201,114 @@
         </g:if>
     </content>
     <content tag="col1">
-        <a href="#" id="addClient"><small>Agregar cliente</small></a>
-        <div class="${clientFormState}">
-            <g:form autocomplete="off">
-                <g:render template="/client/form"/>
-                <g:submitButton
-                    name="addClient"
-                    value="Agregar cliente"
-                    class="btn btn-primary btn-block btn-sm"/>
-            </g:form>
-            <br>
-        </div>
+        <ul class="nav nav-tabs">
+            <li class="${saleType == 'cash' ? 'active' : ''}">
+                <g:link event="changeSaleType" params="[saleType: 'cash']">Contado</g:link>
+            </li>
+            <li class="${saleType == 'credit' ? 'active' : ''}">
+                <g:link event="changeSaleType" params="[saleType: 'credit']">Credito</g:link>
+            </li>
+        </ul>
+
+        <g:if test="${saleType == 'cash'}">
+            <a href="#" id="addClient"><small>Agregar cliente</small></a>
+            <div class="${clientFormState}">
+                <g:form autocomplete="off">
+                    <g:render template="/client/form"/>
+                    <g:submitButton
+                        name="addClient"
+                        value="Agregar cliente"
+                        class="btn btn-primary btn-block btn-sm"/>
+                </g:form>
+                <br>
+            </div>
+        </g:if>
 
         <g:form autocomplete="off" id="saleForm">
             <g:hiddenField name="balance" value="${saleDetails.total.sum()}"/>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Total a pagar</label>
-                        <div class="form-control">
-                            ${saleDetails.total.sum()}
+            <g:if test="${saleType == 'cash'}">
+                <div class="form-group">
+                    <label for="client">Cliente</label>
+                    <pharmacyApp:clientsDataList clientID="${clientID}"/>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <div class="form-control">
+                                ${saleDetails.total.sum()}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="change">Cambio</label>
+                            <div class="form-control" id="change"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="change">Cambio</label>
-                        <div class="form-control" id="change"></div>
+
+                <div class="form-group">
+                    <label for="moneyReceived">Recibido</label>
+                    <g:textField name="moneyReceived" class="form-control"/>
+                </div>
+            </g:if>
+
+            <g:if test="${saleType == 'credit'}">
+                <div class="form-group">
+                    <label for="invoiceNumber">Numero de factura</label>
+                    <g:textField name="invoiceNumber" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa</label>
+                    <pharmacyApp:companies/>
+                </div>
+
+                <div class="form-group">
+                    <label for="employee">Empleado</label>
+                    <select name="employee.id" id="employee" class="form-control"></select>
+                </div>
+
+                <div id="employeeInformation"></div>
+
+                <div class="form-group">
+                    <label>Monto</label>
+                    <div class="form-control">
+                        ${saleDetails.total.sum()}
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="client">Cliente</label>
-                <pharmacyApp:clientsDataList clientID="${clientID}"/>
-            </div>
-
-            <div class="form-group">
-                <label for="moneyReceived">Recibido</label>
-                <g:textField name="moneyReceived" class="form-control"/>
-            </div>
+            </g:if>
 
             <div class="form-group">
                 <label for="annotation">Observacion</label>
                 <g:textArea name="annotation" class="form-control"/>
             </div>
 
-            <g:submitButton name="confirm" value="Confirmar" class="btn btn-primary btn-block"/>
+            <g:submitButton
+                name="${saleType == 'cash' ? 'confirmCashSale' : 'confirmCreditSale'}"
+                value="Confirmar"
+                class="btn btn-primary btn-block"/>
         </g:form>
+
+        <script id="template" type="x-tmpl-mustache">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <label>Cedula</label>
+                    <p>{{ identificationcard }}</p>
+                    
+                    <label>INSS</label>
+                    <p>{{ inss }}</p>
+                    
+                    <label>Saldo de deuda pendiente</label>
+                    <p></p>
+                    
+                    <label>Limite permitido</label>
+                    <p>{{ companycreditlimit }}</p>
+                </div>
+            </div>
+        </script>
     </content>
 </g:applyLayout>

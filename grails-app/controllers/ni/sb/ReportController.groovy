@@ -52,13 +52,13 @@ class ReportController {
 
         def(Date from, Date to) = getFromAndToDates()
         List<SaleDetail> saleDetails = saleDetailService.getSaleDetails(from, to)
-        List<Sale> sales = saleService.getSales(from,to)
-        List<Sale> canceledSales = saleService.getSales(from, to, true)
+        List<CashSale> cashSales = saleService.getCashSales(from,to)
+        List<CashSale> canceledCashSales = saleService.getCashSales(from, to, true)
 
         [
             saleDetails: saleDetailService.getSaleDetailSummary(saleDetails),
-            balance: saleService.getBalanceSummary(sales),
-            balanceCanceledSales: saleService.getBalanceSummary(canceledSales),
+            balance: saleService.getBalanceSummary(cashSales),
+            balanceCanceledSales: saleService.getBalanceSummary(canceledCashSales),
             expenseBalance: expenseService.getExpensesBalanceSummary(from, to)
         ]
     }
@@ -131,7 +131,7 @@ class ReportController {
 
         def(Date from, Date to) = getFromAndToDates()
 
-        List<Sale> sales = saleService.getSales(from,to)
+        List<Sale> sales = saleService.getCashSales(from,to)
         List<Map<String, String>> clients = saleService.getSummary(sales)
 
         [clients: clients]

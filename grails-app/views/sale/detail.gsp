@@ -15,23 +15,38 @@
         <label>ID</label>
         <p><g:fieldValue bean="${sale}" field="id"/></p>
 
-        <label>Hora</label>
+        <label>Hora de venta</label>
         <p><g:formatDate format="HH:mm" date="${sale.dateCreated}"/></p>
 
-        <label>Monto</label>
+        <label>Monto de compra</label>
         <p><g:fieldValue bean="${sale}" field="balance"/></p>
 
-        <label>Cantidad recivida</label>
-        <p><g:fieldValue bean="${sale}" field="moneyReceived"/></p>
+        <g:if test="${sale instanceof ni.sb.CashSale}">
+            <label>Cantidad recivida</label>
+            <p><g:fieldValue bean="${sale}" field="moneyReceived"/></p>
 
-        <label>Cambio</label>
-        <p>${sale.moneyReceived - sale.balance}</p>
+            <label>Cambio</label>
+            <p>${sale.moneyReceived - sale.balance}</p>
+        </g:if>
 
         <label>Atendido por</label>
         <p><g:fieldValue bean="${sale}" field="user.fullName"/></p>
 
-        <label>A nombre de</label>
-        <p><g:fieldValue bean="${sale}" field="client.fullName"/></p>
+        <g:if test="${sale instanceof ni.sb.CashSale}">
+            <label>A nombre de</label>
+            <p><g:fieldValue bean="${sale}" field="client.fullName"/></p>
+        </g:if>
+
+        <g:if test="${sale instanceof ni.sb.CreditSale}">
+            <label>Numero de factura</label>
+            <p><g:fieldValue bean="${sale}" field="invoiceNumber"/></p>
+
+            <label>A nombre de</label>
+            <p><g:fieldValue bean="${sale}" field="employee.fullName"/></p>
+
+            <label>Empresa</label>
+            <p><g:fieldValue bean="${sale}" field="employee.company.name"/></p>
+        </g:if>
 
         <g:if test="${sale.annotation}">
             <label>Observacion</label>

@@ -20,7 +20,8 @@ class AppTagLib {
         paymentStatusBox: "raw",
         combo: "raw",
         clientsDataList: "raw",
-        providers: "raw"
+        providers: "raw",
+        companies: "raw"
     ]
 
     static namespace = "pharmacyApp"
@@ -514,6 +515,34 @@ class AppTagLib {
             } else if (difference <= 10) {
                 span(class: "label label-danger") {
                     mkp.yield "A $difference dias"
+                }
+            }
+        }
+    }
+
+    def companies = { attrs ->
+        MarkupBuilder mb = new MarkupBuilder(out)
+        List<Company> companies = Company.where {
+            enabled == true &&
+            employees.size() >= 1
+        }.list()
+
+        mb.div(class: "form-group") {
+            delegate.select(name: "company", id: "company", class: "form-control") {
+                companies.each { company ->
+                    List employees = company.employees.collect { employee ->
+                        [
+                            id: employee.id,
+                            fullName: employee.fullName,
+                            identificationCard: employee.identificationCard,
+                            inss: employee.inss,
+                            companyCreditLimit: company.creditLimit
+                        ]
+                    }
+
+                    option(value: company.name, "data-employees": JsonOutput.toJson(employees)) {
+                        mkp.yield company.name
+                    }
                 }
             }
         }

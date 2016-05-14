@@ -24,15 +24,23 @@ class SaleService {
         }.sort { -it.quantity }
     }
 
-    def getBalanceSummary(List<Sale> sales) {
-        sales?.balance?.sum() ?: 0.0
-    }
-
-    def getSales(Date from, Date to, Boolean canceled = false) {
-        Sale.createCriteria().list {
+    List<CashSale> getCashSales(Date from, Date to, Boolean canceled = false) {
+        CashSale.createCriteria().list {
             ge "dateCreated", from.clearTime()
             le "dateCreated", to.clearTime() + 1
             eq "canceled", canceled
         }
+    }
+
+    List<CreditSale> getCreditSales(Date from, Date to, Boolean canceled = false) {
+        CreditSale.createCriteria().list {
+            ge "dateCreated", from.clearTime()
+            le "dateCreated", to.clearTime() + 1
+            eq "canceled", canceled
+        }
+    }
+
+    BigDecimal getBalanceSummary(List<Sale> sales) {
+        sales?.balance?.sum() ?: 0.0
     }
 }

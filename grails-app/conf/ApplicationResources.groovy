@@ -5,6 +5,7 @@ modules = {
 
     sale {
         dependsOn "app"
+        dependsOn "mustache"
         dependsOn "select2"
         resource url: "js/sale.js"
     }
@@ -39,6 +40,10 @@ modules = {
     select2 {
         resource url: "/components/select2/dist/js/select2.min.js"
         resource url: "/components/select2/dist/css/select2.min.css"
+    }
+
+    mustache {
+        resource url: "/components/mustache.js/mustache.min.js"
     }
 
     fromToDatepicker {
