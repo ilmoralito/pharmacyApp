@@ -34,6 +34,9 @@
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>
     </sec:ifAllGranted>
+    <li class="${controllerName == 'payment' ? 'active' : ''}">
+        <g:link controller="payment" action="index">Abonos</g:link>
+    </li>
     <li class="${controllerName == 'sale' ? 'active' : ''}">
         <g:link controller="sale" action="create">Ventas</g:link>
     </li>
