@@ -313,22 +313,28 @@ class AppTagLib {
             [
                 id: "from",
                 name: "from",
-                value: attrs?.from,
-                class: "form-control",
-                placeholder: "Desde"
+                value: attrs.from,
+                class: "form-control form-control-date",
+                label: "Desde"
             ],[
                 id: "to",
                 name: "to",
-                value: attrs?.to,
-                class: "form-control",
-                placeholder: "Hasta"
+                value: attrs.to,
+                class: "form-control form-control-date",
+                label: "Hasta"
             ]
         ]
 
-        builder.div {
+        builder.div(class: 'row') {
             params.each { m ->
-                div(class: "form-group") {
-                    input(m)
+                div(class: 'col-md-6') {
+                    div(class: "form-group") {
+                        label(for: m.name) {
+                            mkp.yield m.label
+                        }
+
+                        input(m)
+                    }
                 }
             }
         }

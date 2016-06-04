@@ -35,32 +35,43 @@
     </content>
 
     <content tag="col1">
-        <g:link action="create" class="btn btn-primary btn-block">
-            Crear pedido
-        </g:link>
+        <ul class="nav nav-tabs">
+            <li class="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:link action="list" >Crear</g:link>
+            </li>
+            <li class="${params.tab == 'filter' ? 'active' : ''}">
+                <g:link action="list" params="[tab: 'filter']">Filtrar</g:link>
+            </li>
+        </ul>
 
-        <br>
+        <g:if test="${!params.tab || params.tab != 'filter'}">
+            <g:link action="create" class="btn btn-primary btn-block">
+                Crear pedido
+            </g:link>
+        </g:if>
 
-        <g:form action="list" autocomplete="off">
-            <div class="form-group">
-                <g:textField
-                    name="invoiceNumber"
-                    value="${params?.invoiceNumber}"
-                    class="form-control"
-                    placeholder="Numero de factura"/>
-            </div>
+        <g:if test="${params.tab == 'filter'}">
+            <g:form name="filterForm" action="list" params="[tab: 'filter']" autocomplete="off">
+                <div class="form-group">
+                    <label for="invoiceNumber">Numero de factura</label>
+                    <g:textField
+                        name="invoiceNumber"
+                        value="${params?.invoiceNumber}"
+                        class="form-control"/>
+                </div>
 
-            <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
+                <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
 
-            <pharmacyApp:dealers type="checkbox" dealerList="${params.list('distributor')}"/>
+                <pharmacyApp:dealers type="checkbox" dealerList="${params.list('distributor')}"/>
 
-            <pharmacyApp:paymentTypeBox type="checkbox" paymentType="${params.list('paymentType')}"/>
+                <pharmacyApp:paymentTypeBox type="checkbox" paymentType="${params.list('paymentType')}"/>
 
-            <pharmacyApp:users userList="${params.list('users')}"/>
+                <pharmacyApp:users userList="${params.list('users')}"/>
 
-            <pharmacyApp:paymentStatusBox type="checkbox" paymentStatusList="${params.list('paymentStatus')}"/>
+                <pharmacyApp:paymentStatusBox type="checkbox" paymentStatusList="${params.list('paymentStatus')}"/>
 
-            <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
-        </g:form>
+                <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
+            </g:form>
+        </g:if>
     </content>
 </g:applyLayout>
