@@ -81,7 +81,7 @@ class PurchaseOrderController {
 
         flash.message = "Actualizado"
 
-        redirect action: "show", id: id
+        redirect action: "show", params: [id: id, tab: params.tab]
     }
 
     def createPurchaseOrderFlow = {
