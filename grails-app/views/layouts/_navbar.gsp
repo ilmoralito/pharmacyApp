@@ -26,7 +26,7 @@
                         <li role="presentation" class="dropdown-header">Articulos</li>
                         <li class="${actionName == 'lowStocks' ? 'active' : ''}">
                             <g:link controller="notifications" action="lowStocks">
-                                Existencias bajas
+                                Productos con bajas existencias
                                 <g:if test="${grailsApplication.config.ni.sb.lowStocks}">
                                     <span class="badge">${grailsApplication.config.ni.sb.lowStocks}</span>
                                 </g:if>
@@ -34,7 +34,7 @@
                         </li>
                         <li class="${actionName == 'aboutToExpire' ? 'active' : ''}">
                             <g:link controller="notifications" action="aboutToExpire">
-                                Por vencerse
+                                Medicinas proximas a vencerse
                                 <g:if test="${grailsApplication.config.ni.sb.aboutToExpire}">
                                     <span class="badge">${grailsApplication.config.ni.sb.aboutToExpire}</span>
                                 </g:if>
@@ -43,7 +43,7 @@
                         <li role="presentation" class="dropdown-header">Pedidos</li>
                         <li class="${actionName == 'paymentDateClose' ? 'active' : ''}">
                             <g:link controller="notifications" action="paymentDateClose">
-                                Fecha de pago proxima
+                                Pedidos con fecha de pago proximo
                                 <g:if test="${grailsApplication.config.ni.sb.paymentDateClose}">
                                     <span class="badge">${grailsApplication.config.ni.sb.paymentDateClose}</span>
                                 </g:if>

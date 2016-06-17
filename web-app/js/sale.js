@@ -1,7 +1,21 @@
 $(function() {
-    $('#id').select2();
-    
-    $('#client\\.id').select2();
+    $('#client\\.id').select2({
+        theme: "bootstrap"
+    });
+
+    $('#id').select2({
+        theme: "bootstrap"
+    });
+
+    $('#company').select2({
+        theme: "bootstrap"
+    });
+
+    $('#employee').select2({
+        theme: "bootstrap"
+    });
+
+    autosize($('#annotation'));
 
     $('#moneyReceived').on('blur', function() {
         var $this = $(this);
@@ -35,7 +49,7 @@ $(function() {
         var employees = optionSelected.data('employees');
 
         employee.find('option').remove();
-        
+
         for (var i = employees.length - 1; i >= 0; i--) {
             var opt = $('<option>', {
                 value: employees[i].id,
@@ -51,7 +65,7 @@ $(function() {
 
     var defaultEmployees = $('#company').find('option:first-child').data('employees');
     var employee = $('#employee');
-    
+
     for (var i = defaultEmployees.length - 1; i >= 0; i--) {
         var opt = $('<option>', {
             value: defaultEmployees[i].id,
@@ -74,8 +88,4 @@ $(function() {
 
         $('#employeeInformation').html(rendered);
     });
-
-    $('#company').select2();
-
-    $('#employee').select2();
 });

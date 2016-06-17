@@ -6,23 +6,41 @@
 
     <content tag="main">
         <g:if test="${purchaseOrders}">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
+                <caption>${purchaseOrders.size()} resultados</caption>
                 <colgroup>
-                    <col span="1" style="width: 1%;">
-                    <col span="1" style="width: 99%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 17%;">
+                    <col span="1" style="width: 55%;">
                 </colgroup>
                 <thead>
-                    <th>#</th>
                     <th>Factura</th>
+                    <th>Distribuidor</th>
+                    <th>Tipo de pago</th>
+                    <th>Estado del credito</th>
+                    <th>Dias para pagar</th>
                 </thead>
                 <tbody>
-                    <g:each in="${purchaseOrders}" var="purchaseOrder" status="idx">
+                    <g:each in="${purchaseOrders}" var="po">
                         <tr>
-                            <td>${idx + 1}</td>
                             <td>
-                                <g:link action="show" params="[id: purchaseOrder.id]">
-                                    ${purchaseOrder.invoiceNumber}
+                                <g:link action="show" params="[id: po.id]">
+                                    <g:fieldValue bean="${po}" field="invoiceNumber"/>
                                 </g:link>
+                            </td>
+                            <td><g:fieldValue bean="${po}" field="distributor.name"/></td>
+                            <td><pharmacyApp:paymentType type="${po.paymentType}"/></td>
+                            <td>
+                                <g:if test="${po.paymentType == 'credit'}">
+                                    <pharmacyApp:purchaseOrderStatus status="${po.paymentStatus}"/>
+                                </g:if>
+                            </td>
+                            <td>
+                                <g:if test="${po.paymentType == 'credit'}">
+                                    ${po.paymentDate - new Date()}
+                                </g:if>
                             </td>
                         </tr>
                     </g:each>
@@ -66,9 +84,9 @@
 
                 <pharmacyApp:paymentTypeBox type="checkbox" paymentType="${params.list('paymentType')}"/>
 
-                <pharmacyApp:users userList="${params.list('users')}"/>
-
                 <pharmacyApp:paymentStatusBox type="checkbox" paymentStatusList="${params.list('paymentStatus')}"/>
+
+                <pharmacyApp:users userList="${params.list('users')}"/>
 
                 <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block"/>
             </g:form>

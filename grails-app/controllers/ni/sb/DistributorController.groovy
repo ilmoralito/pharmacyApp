@@ -6,30 +6,37 @@ import grails.plugin.springsecurity.annotation.Secured
 class DistributorController {
     static defaultAction = "list"
     static allowedMethods = [
-        list:["GET", "POST"],
+        list:"GET",
+        create: ["GET", "POST"],
         show:"GET",
         update:"POST"
     ]
 
-    def list(Boolean enabled, Boolean filtered) {
-        def query = Distributor.where {
+    def list() {
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        List<Distributor> dealers = Distributor.where {
             enabled == enabled
-        }
+        }.list()
+
+        [dealers: dealers]
+    }
+
+    def create() {
+        Distributor distribuidor = new Distributor(params)
 
         if (request.method == "POST") {
-            Distributor dealer = new Distributor(params)
-
-            if (!dealer.save()) {
-                dealer.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+            if (!distribuidor.save()) {
+                distribuidor.errors.allErrors.each { error ->
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [dealers: query.list(), dealer: dealer]
+                flash.bag = distribuidor
             }
+
+            flash.message = distribuidor.hasErrors() ? "A ocurrido un error" : "Accion concluida correctamente"
         }
 
-        [dealers: query.list()]
+        [distribuidor: distribuidor]
     }
 
     def show(Long id) {

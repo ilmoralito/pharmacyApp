@@ -9,21 +9,21 @@
 <body>
     <form action="${postUrl}" method="POST" class="pagination-centered" autocomplete="off" role="form">
         <div class="form-group">
+            <label for="username">Email</label>
             <input
                 type="text"
                 class="form-control input-lg"
                 name="j_username"
-                id="username"
-                placeholder="Correo electrónico"/>
+                id="username"/>
         </div>
 
         <div class="form-group">
+            <label for="password">Contraseña</label>
             <input
                 type="password"
                 class="form-control input-lg"
                 name="j_password"
-                id="password"
-                placeholder="Contraseña"/>
+                id="password"/>
         </div>
 
         <g:submitButton name="send" value="Iniciar sesion" class="btn btn-primary btn-lg"/>

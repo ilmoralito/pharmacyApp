@@ -2,7 +2,7 @@ package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_ADMIN", "ROLE_USER"])
 class PresentationController {
     static defaultAction = "list"
     static allowedMethods = [
@@ -12,28 +12,21 @@ class PresentationController {
     ]
 
     def list() {
-        Closure presentations = {
-            Presentation.list()
-        }
-
-        Closure measures = {
-            Measure.list()
-        }
-
         if (request.post) {
             Presentation presentation = new Presentation(params)
 
             if (!presentation.save()) {
                 presentation.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [presentations: presentations(), presentation: presentation, measures: measures()]
+                flash.bag = presentation
             }
+
+            flash.message = presentation.hasErrors() ? "A ocurrido un error" : "Tarea concluida"
         }
 
-        [presentations: presentations(), measures: measures()]
+        [presentations: Presentation.list(), measures: Measure.list()]
     }
 
     def show(Long id) {
@@ -48,15 +41,13 @@ class PresentationController {
 
     def update(Long id) {
         Presentation presentation = Presentation.get(id)
+        List measures = params.list("measures")
 
         if (!presentation) {
             response.sendError 404
         }
 
         presentation.name = params?.name
-
-        List measures = params.list("measures")
-
         presentation.measures.clear()
 
         measures.each { measure ->
@@ -65,14 +56,11 @@ class PresentationController {
 
         if (!presentation.save()) {
             presentation.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
-
-            flash.message = "A ocurrido un error."
-            chain action: "show", params: [id: id], model: [presentation: presentation]
-            return
         }
 
+        flash.message = presentation.hasErrors() ? "A ocurrido un error" : "Tarea concluida"
         redirect action: "show", id: id
     }
 }

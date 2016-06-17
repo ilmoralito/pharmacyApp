@@ -1,15 +1,14 @@
 <g:applyLayout name="twoColumns">
     <head>
-        <title>Empresa</title>
+        <title>Distribuidor</title>
         <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
     <content tag="main">
-        <g:form action="update" autocomplete="off">
-            <g:hiddenField name="id" value="${params?.id}"/>
+        <g:form name="createDistributorForm" action="create" autocomplete="off">
             <g:render template="form"/>
 
-            <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
+            <g:submitButton name="sendDistributorForm" value="Confirmar" class="btn btn-primary"/>
         </g:form>
     </content>
 </g:applyLayout>

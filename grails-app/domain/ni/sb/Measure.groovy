@@ -1,7 +1,9 @@
 package ni.sb
 
 import org.grails.databinding.BindUsing
+import groovy.transform.ToString
 
+@ToString
 class Measure implements Serializable {
     @BindUsing({ obj, source ->
         source["name"]?.capitalize()
@@ -16,11 +18,9 @@ class Measure implements Serializable {
     }
 
     static mapping = {
-        sort "name"
+        sort name: "asc"
     }
 
     static belongsTo = Presentation
     static hasMany = [presentations: Presentation]
-
-    String toString() { name }
 }

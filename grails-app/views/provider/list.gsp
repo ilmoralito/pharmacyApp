@@ -6,37 +6,37 @@
 
     <content tag="main">
         <g:if test="${providers}">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
                 <colgroup>
-                    <col span="1" style="width: 25%;">
-                    <col span="1" style="width: 55%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 89%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 1%;">
                 </colgroup>
                 <thead>
-                    <th>Nombre</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
+                    <th>Laboratorios</th>
                     <th>Productos</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     <g:each in="${providers}" var="provider">
                         <tr>
                             <td>
                                 <g:link action="show" params="[id: provider.id]">
-                                    ${provider}
+                                    <g:fieldValue bean="${provider}" field="name"/>
                                 </g:link>
                             </td>
-                            <td>${provider.address}</td>
-                            <td>${provider.telephoneNumber}</td>
                             <td>
                                 <g:link
                                     controller="product"
                                     action="productList"
-                                    params="[providerId: provider.id, enabled: true]">
+                                    params="[providerId: provider.id]">
                                     Productos
                                 </g:link>
-                                <g:if test="${!provider.products}">*</g:if>
+                            </td>
+                            <td>
+                                <g:if test="${!provider.products}">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                </g:if>
                             </td>
                         </tr>
                     </g:each>
@@ -50,46 +50,41 @@
     </content>
 
     <content tag="col1">
-        <g:set var="isFiltered" value="${params.boolean('filtered') ?: false}"/>
-        <g:set var="isEnabled" value="${params.boolean('enabled')}"/>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!isFiltered ? 'active' : 'no-active'}">
-                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
-                    Crear
-                </a>
+            <li role="presentation" class="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:link action="list">Crear</g:link>
             </li>
-            <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
-                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
+            <li role="presentation" class="${params.tab == 'filter' ? 'active' : ''}">
+                <g:link action="list" params="[tab: 'filter']">
                     Filtrar
-                </a>
+                </g:link>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="create">
-                <g:form action="list" autocomplete="off" params="[enabled: params.boolean('enabled')]">
+            <g:if test="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:form name="createProviderForm" action="list" autocomplete="off">
                     <g:render template="form"/>
 
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+                    <g:submitButton name="sendProviderForm" value="Confirmar" class="btn btn-primary btn-block"/>
                 </g:form>
-            </div>
-
-            <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="filter">
+            </g:if>
+            <g:else>
                 <g:link
                     action="list"
-                    params="[enabled: true, filtered: true]"
-                    class="btn btn-block btn-${isEnabled ? 'primary' : 'default'}">
+                    params="[enabled: true, tab: 'filter']"
+                    class="btn btn-block btn-${params.boolean('enabled') || params.enabled == null ? 'primary' : 'default'}">
                     Activos
                 </g:link>
 
                 <g:link
                     action="list"
-                    params="[enabled: false, filtered: true]"
-                    class="btn btn-block btn-${!isEnabled ? 'primary' : 'default'}">
+                    params="[enabled: false, tab: 'filter']"
+                    class="btn btn-block btn-${params.boolean('enabled') == false ? 'primary' : 'default'}">
                     No activos
                 </g:link>
-            </div>
+            </g:else>
         </div>
     </content>
 </g:applyLayout>

@@ -2,7 +2,7 @@ package ni.sb
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_ADMIN", "ROLE_USER"])
 class MeasureController {
     static defaultAction = "create"
     static allowedMethods = [
@@ -17,11 +17,10 @@ class MeasureController {
             measure.errors.allErrors.each { error ->
                 log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
-
-            flash.message = "A ocurrido un error"
         }
 
-        redirect controller: "presentation", params: [filtered: true]
+        flash.message = measure.hasErrors() ? "A ocurrido un error" : "Tarea concluida"
+        redirect controller: "presentation", params: params
     }
 
     def update(Long id) {
@@ -31,20 +30,20 @@ class MeasureController {
             response.sendError 404
         }
 
-        measure.properties = params
+        measure.name = params.name
 
         if (!measure.save()) {
             measure.errors.allErrors.each { error ->
                 log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
-
-            render(contentType: "application/json") {
-                error = true
-            }
         }
 
         render(contentType: "application/json") {
-            name = measure.name
+            if (measure.hasErrors()) {
+                error = true
+            } else {
+                name = measure.name
+            }
         }
     }
 }

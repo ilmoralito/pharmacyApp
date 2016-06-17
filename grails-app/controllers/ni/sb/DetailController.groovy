@@ -15,13 +15,13 @@ class DetailController {
 
         if (!detail.save()) {
             detail.error.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error"
+            flash.message = detail.hasErrors() ? "A ocurrido un error" : "Accion concluida correctamente"
         }
 
-        redirect controller: "brand", params: [filtered: true]
+        redirect controller: "brand", params: [tab: "filter"]
     }
 
     def update(Long id) {
@@ -31,20 +31,20 @@ class DetailController {
             response.sendError 404
         }
 
-        detail.properties["name"] = params?.name
+        detail.name = params.name
 
         if (!detail.save()) {
             detail.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
-            }
-
-            render(contentType: "application/json") {
-                error = true
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
         }
 
         render(contentType: "application/json") {
-            name = detail.name
+            if (detail.hasErrors()) {
+                error = true
+            } else {
+                name = detail.name
+            }
         }
     }
 }

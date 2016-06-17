@@ -1,7 +1,9 @@
 package ni.sb
 
 import org.grails.databinding.BindUsing
+import groovy.transform.ToString
 
+@ToString
 class Presentation implements Serializable {
     @BindUsing({ obj, source ->
         source["name"]?.capitalize()
@@ -21,6 +23,4 @@ class Presentation implements Serializable {
 
     List<Measure> measures
     static hasMany = [medicines: Medicine, measures: Measure]
-
-    String toString() { name }
 }

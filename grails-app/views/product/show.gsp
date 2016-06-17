@@ -5,9 +5,7 @@
     </head>
 
     <content tag="main">
-        <p>
-            <pharmacyApp:productBackLick product="${product}"/>
-        </p>
+        <p><pharmacyApp:productBackLick product="${product}"/></p>
 
         <div class="row">
             <div class="col-md-6">

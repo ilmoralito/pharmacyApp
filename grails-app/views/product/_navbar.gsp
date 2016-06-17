@@ -1,4 +1,4 @@
-<g:set var="parameters" value="[providerId: provider.id, enabled: true]"/>
+<g:set var="parameters" value="[providerId: provider.id]"/>
 
 <ul class="nav nav-tabs">
     <li class="${actionName in ['productList', 'show'] ? 'active' : ''}">

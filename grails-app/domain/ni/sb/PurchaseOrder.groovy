@@ -15,7 +15,11 @@ class PurchaseOrder implements Serializable {
     static constraints = {
         distributor()
         invoiceNumber blank: false, unique: true
-        paymentType inList: ["credit", "cash"], maxSize: 100
+        paymentType inList: ["credit", "cash"], maxSize: 100, validator: { paymentType, obj ->
+            if (paymentType == "cash" && obj.paymentStatus == "pending") {
+                return "not.valid.paymentType"
+            }
+        }
         paymentDate nullable: true, validator: { paymentDate, obj ->
             if (obj.paymentType == "credit") {
                 Date today = new Date().clearTime()

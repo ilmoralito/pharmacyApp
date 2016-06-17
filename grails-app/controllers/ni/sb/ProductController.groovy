@@ -15,53 +15,50 @@ class ProductController {
         update: "POST"
     ]
 
-    def productList(Long providerId, Boolean enabled, Boolean filtered) {
+    def productList(Long providerId) {
         Provider provider = Provider.get(providerId)
 
         if (!provider) {
             response.sendError 404
         }
 
-        Closure getProducts = {
-            if (enabled == null) {
-                enabled = true
-            }
-
-            Product.findAllByProviderAndEnabled(provider, enabled)
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        def products = Product.where {
+            provider == provider && enabled == enabled
         }
 
         if (request.method == "POST") {
-            params.enabled = true
             Product product = new Product(params)
 
             provider.addToProducts(product)
 
             if (!product.save()) {
                 product.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [products: getProducts(), provider: provider, product: product]
+                flash.bag = product
             }
+
+            flash.message = product.hasErrors() ? "A ocurrido un error" : "Accion concluida"
         }
 
-        [products: getProducts(), provider: provider]
+        [
+            products: products.list().findAll {!(it instanceof Medicine) && !(it instanceof BrandProduct)},
+            provider: provider
+        ]
     }
 
-    def medicineList(Integer providerId, Boolean enabled, Boolean filtered) {
+    def medicineList(Long providerId) {
         Provider provider = Provider.get(providerId)
 
         if (!provider) {
             response.sendError 404
         }
 
-        Closure getMedicines = {
-            if (enabled == null) {
-                enabled = true
-            }
-
-            Medicine.findAllByProviderAndEnabled(provider, enabled)
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        def medicines = Medicine.where {
+            provider == provider && enabled == enabled
         }
 
         if (request.method == "POST") {
@@ -71,34 +68,28 @@ class ProductController {
 
             if (!medicine.save()) {
                 medicine.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [
-                    medicines: getMedicines(),
-                    provider: provider,
-                    product: medicine
-                ]
+                flash.bag = medicine
             }
+
+            flash.message = medicine.hasErrors() ? "A ocurrido un error" : "Accion concluida"
         }
 
-        [medicines: getMedicines(), provider: provider]
+        [medicines: medicines.list(), provider: provider]
     }
 
-    def brandProductList(Integer providerId, Boolean enabled, Boolean filtered) {
+    def brandProductList(Long providerId) {
         Provider provider = Provider.get(providerId)
 
         if (!provider) {
             response.sendError 404
         }
 
-        Closure getBrandProducts = {
-            if (enabled == null) {
-                enabled = true
-            }
-
-            BrandProduct.findAllByProviderAndEnabled(provider, enabled)
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        def brandProducts = BrandProduct.where {
+            provider == provider && enabled == enabled
         }
 
         if (request.post) {
@@ -111,19 +102,16 @@ class ProductController {
                     log.error "[$error.field: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [
-                    brandProducts: getBrandProducts(),
-                    provider: provider,
-                    product: brandProduct
-                ]
+                flash.bag = brandProduct
             }
+
+            flash.message = brandProduct.hasErrors() ? "A ocurrido un error" : "Accion concluida"
         }
 
-        [brandProducts: getBrandProducts(), provider: provider]
+        [brandProducts: brandProducts.list(), provider: provider]
     }
 
-    def show(Integer id) {
+    def show(Long id) {
         def product = Product.get(id)
 
         if (!product) {
@@ -133,7 +121,7 @@ class ProductController {
         [product: product, providerId: product.provider.id]
     }
 
-    def update(Integer id) {
+    def update(Long id) {
         def product = Product.get(id)
 
         if (!product) {
@@ -163,9 +151,14 @@ class ProductController {
         }
 
         if (!product.save()) {
-            chain action: "show", params: [id: id], model: [product: product]
-        } else {
-            redirect action: "show", params: [id: id]
+            product.errors.allErrors.each { error ->
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+            }
+
+            flash.bag = product
         }
+
+        flash.message = product.hasErrors() ? "A ocurrido un error" : "Accion concluida"
+        redirect action: "show", id: id
     }
 }

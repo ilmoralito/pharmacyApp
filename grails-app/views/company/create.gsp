@@ -5,8 +5,7 @@
     </head>
 
     <content tag="main">
-        <g:form action="update" autocomplete="off">
-            <g:hiddenField name="id" value="${params?.id}"/>
+        <g:form action="create" autocomplete="off">
             <g:render template="form"/>
 
             <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>

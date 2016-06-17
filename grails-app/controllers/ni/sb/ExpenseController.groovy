@@ -20,16 +20,16 @@ class ExpenseController {
             Date today = new Date()
 
             if (request.get) {
-                Expense.fromTo(today, today).list()
+                Expense.fromTo(today, today).list(params)
             } else {
                 Date fromDate = params.date("from", "yyyy-MM-dd") ?: today
                 Date toDate = params.date("to", "yyyy-MM-dd") ?: today
                 List users = params.list("users")*.toLong()
 
                 if (users) {
-                    Expense.fromTo(fromDate, toDate).byUser(users).list()
+                    Expense.fromTo(fromDate, toDate).byUser(users).list(params)
                 } else {
-                    Expense.fromTo(fromDate, toDate).list()
+                    Expense.fromTo(fromDate, toDate).list(params)
                 }
             }
         }
@@ -46,10 +46,9 @@ class ExpenseController {
             expense.errors.allErrors.each { error ->
                 log.error "[field: $error.field, message: $error.defaultMessage]"
             }
-
-            flash.message = "A ocurrido un error."
         }
 
+        flash.message = expense.hasErrors() ? "A ocurrido un error" : "Acction conluida"
         redirect action: "list"
     }
 

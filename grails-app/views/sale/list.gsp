@@ -11,7 +11,8 @@
             <table class="table table-hover">
                 <colgroup>
                     <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 90%;">
+                    <col span="1" style="width: 85%;">
+                    <col span="1" style="width: 5%;">
                     <col span="1" style="width: 5%;">
                 </colgroup>
                 <thead>
@@ -24,6 +25,7 @@
                             placeholder="Filtrar"
                             autofocus="true">
                     </th>
+                    <th></th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -39,11 +41,12 @@
                                     <g:if test="${sale instanceof ni.sb.CreditSale}">
                                         ${sale.employee.fullName}
                                     </g:if>
-
-                                    <g:if test="${sale.canceled}">
-                                        <span class="label label-info">Anulada</span>
-                                    </g:if>
                                 </g:link>
+                            </td>
+                            <td>
+                                <g:if test="${sale.canceled}">
+                                    <span class="label label-info">Anulada</span>
+                                </g:if>
                             </td>
                             <td>
                                 <g:if test="${sale instanceof ni.sb.CreditSale}">

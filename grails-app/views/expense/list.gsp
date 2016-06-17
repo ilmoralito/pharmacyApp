@@ -6,8 +6,8 @@
 
     <content tag="main">
         <g:if test="${expenses}">
-            <p>Gasto diario</p>
             <table class="table table-hover">
+                <caption>Gasto diario</caption> 
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 5%;">
@@ -31,9 +31,9 @@
                             <td>
                                 <g:formatDate date="${expense.dateCreated}" formatName="hour.date.format"/>
                             </td>
-                            <td>${expense.user}</td>
-                            <td>${expense.description}</td>
-                            <td>${expense.quantity}</td>
+                            <td><g:fieldValue bean="${expense}" field="user.fullName"/></td>
+                            <td><g:fieldValue bean="${expense}" field="description" /></td>
+                            <td><g:fieldValue bean="${expense}" field="quantity"/></td>
                             <td>
                                 <sec:ifAllGranted roles="ROLE_ADMIN">
                                     <g:link action="delete" id="${expense.id}">
@@ -58,45 +58,38 @@
 
     <content tag="col1">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!filtered ? 'active' : ''}">
-                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
-                    Crear
-                </a>
+            <li role="presentation" class="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:link action="list">Crear</g:link>
             </li>
-            <li role="presentation" class="${filtered ? 'active' : ''}">
-                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
-                    Filtrar
-                </a>
+            <li role="presentation" class="${params.tab == 'filter' ? 'active' : '' }">
+                <g:link action="list" params="[tab: 'filter']">Filtrar</g:link>
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
-                <g:form action="create" autocomplete="off">
-                    <div class="form-group">
-                        <label for="description">Motivo del gasto</label>
-                        <g:textArea
-                            name="description"
-                            class="form-control"/>
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="quantity">Monto</label>
-                        <g:textField name="quantity" placeholder="Monto" class="form-control"/>
-                    </div>
-                
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-                </g:form>
-            </div>
+        <g:if test="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+            <g:form action="create" autocomplete="off">
+                <div class="form-group">
+                    <label for="description">Motivo del gasto</label>
+                    <g:textArea
+                        name="description"
+                        class="form-control"/>
+                </div>
+            
+                <div class="form-group">
+                    <label for="quantity">Monto</label>
+                    <g:textField name="quantity" class="form-control"/>
+                </div>
+            
+                <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+            </g:form>
+        </g:if>
+        <g:else>
+            <g:form action="list" autocomplete="off" params="[tab: 'filter']">
+                <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
+                <pharmacyApp:users userList="${params.list('users')}"/>
 
-            <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
-                <g:form action="list" autocomplete="off">
-                    <pharmacyApp:fromTo from="${params?.from}" to="${params?.to}"/>
-                    <pharmacyApp:users userList="${params.list('users')}"/>
-
-                    <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />
-                </g:form>
-            </div>
-        </div>
+                <g:submitButton name="send" value="Filtrar" class="btn btn-primary btn-block" />
+            </g:form>
+        </g:else>
     </content>
 </g:applyLayout>

@@ -12,7 +12,9 @@ class ProviderController {
         update: "POST"
     ]
 
-    def list(Boolean enabled, Boolean filtered) {
+    def list() {
+        Boolean enabled = params.boolean('enabled') == null ? true : params.boolean('enabled')
+
         if (request.method == "POST") {
             Provider provider = new Provider(params)
 

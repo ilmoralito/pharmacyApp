@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Empleados</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, filterTable"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, filterTable, alertBox"/>
     </head>
 
     <content tag="main">
@@ -9,21 +9,14 @@
         <br>
 
         <g:if test="${employees}">
-            <p>Empleados de ${companyName}</p>
-
             <table id="employees" class="table table-hover">
+                <caption>${company.name}</caption>
                 <colgroup>
-                    <col span="1" style="width: 80%;">
-                    <col span="1" style="width: 5%%;">
-                    <col span="1" style="width: 5%%;">
-                    <col span="1" style="width: 5%%;">
-                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 99%;">
+                    <col span="1" style="width: 1%;">
                 </colgroup>
                 <thead>
                     <th>Nombre y apellido</th>
-                    <th>INSS</th>
-                    <th>Cedula</th>
-                    <th>Telefono</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -37,13 +30,11 @@
                                     <g:fieldValue bean="${employee}" field="fullName"/>
                                 </g:link>
                             </td>
-                            <td><g:fieldValue bean="${employee}" field="inss"/></td>
-                            <td><g:fieldValue bean="${employee}" field="identificationCard"/></td>
-                            <td><g:fieldValue bean="${employee}" field="telephoneNumber"/></td>
                             <td class="text-center">
                                 <g:link
                                     action="removeEmployee"
-                                    params="[id: companyId, employeeId: employee.id]">
+                                    params="[id: company.id, employeeId: employee.id]"
+                                    class="remove">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </g:link>
                             </td>
@@ -53,42 +44,33 @@
             </table>
         </g:if>
         <g:else>
-            <p>Nada que mostrar</p>
+            <p><br>Nada que mostrar</p>
         </g:else>
     </content>
 
     <content tag="col1">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!filtered ? 'active' : ''}">
-                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
-                    Crear
-                </a>
+            <li role="presentation" class="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:link action="employees" params="[id: company.id]">Crear</g:link>
             </li>
-            <li role="presentation" class="${filtered ? 'active' : ''}">
-                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
-                    Filtrar
-                </a>
+            <li role="presentation" class="${params.tab == 'filter' ? 'active' : ''}">
+                <g:link action="employees" params="[id: company.id, tab: 'filter']">Filtrar</g:link>
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
-                <g:form action="addEmployee" autocomplete="off">
-                    <g:hiddenField name="id" value="${companyId}"/>
-                    <g:render template="formEmployee"/>
+        <g:if test="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+            <g:form action="addEmployee" autocomplete="off">
+                <g:hiddenField name="id" value="${company.id}"/>
+                <g:render template="formEmployee"/>
 
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-                </g:form>
+                <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+            </g:form>
+        </g:if>
+        <g:else>
+            <div class="form-group">
+                <label>Por Nombre o INSS</label>
+                <g:textField name="search" class="form-control"/>
             </div>
-
-            <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
-                <div class="form-group">
-                    <label>Por Nombre o INSS</label>
-                    <g:textField
-                        name="search"
-                        class="form-control"/>
-                </div>
-            </div>
-        </div>
+        </g:else>
     </content>
 </g:applyLayout>

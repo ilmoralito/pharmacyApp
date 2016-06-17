@@ -26,4 +26,23 @@ class PurchaseOrderService {
 
         purchaseOrders
     }
+
+    BigDecimal calculateTotal(List<Item> items, String property) {
+        BigDecimal total = 0.0
+
+        items.each { item ->
+            BigDecimal result = item[property] * item.fixedQuantity
+
+            total += result
+        }
+
+        total
+    }
+
+    BigDecimal getProfits(List<Item> items) {
+        BigDecimal totalPurchasePrice = calculateTotal(items, "purchasePrice")
+        BigDecimal totalSellingPrice = calculateTotal(items, "sellingPrice")
+
+        totalSellingPrice - totalPurchasePrice
+    }
 }

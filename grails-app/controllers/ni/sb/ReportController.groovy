@@ -68,7 +68,7 @@ class ReportController {
             List<Item> items = Item.list().findAll { item ->
                 !(item instanceof MedicineOrder) && !(item instanceof BrandProductOrder)
             }
-            
+
             List data = items.groupBy { it.product.provider }.collect { a ->
                 [
                     labName: a.key,
@@ -88,9 +88,7 @@ class ReportController {
                     labName: a.key,
                     labProducts: a.value.collect { b ->
                         [
-                            name: b,
-                            presentation: b.presentation,
-                            measure: b.measure,
+                            name: b.getFullName(),
                             quantity: b.quantity
                         ]
                     }
@@ -104,9 +102,7 @@ class ReportController {
                     labName: a.key,
                     labProducts: a.value.collect { b ->
                         [
-                            name: b,
-                            brand: b.brand,
-                            detail: b.detail,
+                            name: b.getFullName(),
                             quantity: b.quantity
                         ]
                     }

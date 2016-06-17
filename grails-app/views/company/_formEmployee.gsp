@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="fullName">Nombre completo</label>
+    <label for="fullName">Nombre del empleado</label>
     <g:textField
         name="fullName"
         value="${employee?.fullName}"
@@ -9,10 +9,7 @@
 
 <div class="form-group">
     <label for="telephoneNumber">Numero telefonico</label>
-    <g:textField
-        name="telephoneNumber"
-        value="${employee?.telephoneNumber}"
-        class="form-control"/>
+    <g:field type="tel" name="telephoneNumber" value="${employee?.telephoneNumber}" class="form-control"/>
 </div>
 
 <div class="form-group">

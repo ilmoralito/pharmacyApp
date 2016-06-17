@@ -12,30 +12,23 @@ class ClientController {
     ]
 
     def list() {
-        Boolean enabled = params?.enabled ?: true
-
-        Closure clients = {
-            if (enabled == null) {
-                enabled = true
-            }
-
-            Client.findAllByEnabled(enabled)
-        }
+        List<Client> clients = Client.list()
 
         if (request.method == "POST") {
             Client client = new Client(params)
 
             if (!client.save()) {
                 client.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [clients: clients(), client: client]
+                flash.bag = client
             }
+
+            flash.message = client.hasErrors() ? "A ocurrido un error" : "Acction concluida"
         }
 
-        [clients: clients()]
+        [clients: clients]
     }
 
 
@@ -62,9 +55,9 @@ class ClientController {
             client.errors.allErrors.each { error ->
                 log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
-
-            flash.message = "A ocurrido un error."
         }
+
+        flash.message = client.hasErrors() ? "A ocurrido un error" : "Acction concluida"
 
         redirect action: "show", id: id
     }

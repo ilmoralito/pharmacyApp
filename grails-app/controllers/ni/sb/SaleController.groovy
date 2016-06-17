@@ -15,7 +15,8 @@ class SaleController {
         list: ["GET", "POST"],
         detail: "GET",
         cancelSale: "POST",
-        summary: "GET"
+        summary: "GET",
+        filterCreditSales: ["GET", "POST"]
     ]
 
     def create() {
@@ -28,7 +29,12 @@ class SaleController {
                 List<Item> items = Item.list().unique() { a, b -> a.product.name <=> b.product.name }.sort { it.product.name }
                 List<SaleDetail> saleDetails = []
 
-                [items: items, saleDetails: saleDetails, clientFormState: "hide", saleType: "cash"]
+                [
+                    items: items,
+                    saleDetails: saleDetails,
+                    clientFormState: "hide",
+                    saleType: "cash"
+                ]
             }
 
             on("success").to "sale"
@@ -37,10 +43,10 @@ class SaleController {
         sale {
             on("chooseItems") {
                 Item item = Item.get(params.int("id"))
-                def query = Item.where {
+
+                List<Item> data = Item.where {
                     product.name == item.product.name
-                }
-                List<Item> data = query.list()
+                }.list()
 
                 [data: data, item: item]
             }.to "sale"
@@ -218,19 +224,16 @@ class SaleController {
                 log.error "[field: $error, defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error. Motivo de la anulacion es un dato obligatorio"
-
-            redirect action: "detail", id: id
-            return
+            flash.bag = sale
+        } else {
+            // Return sale items quantity to inventary
+            sale.saleDetails.each { saleDetail ->
+                saleDetail.item.quantity += saleDetail.quantity
+            }
         }
 
-        // Return sale items quantity to inventary
-        sale.saleDetails.each { saleDetail ->
-            saleDetail.item.quantity += saleDetail.quantity
-        }
-
-        flash.message = "Venta anulada exitosamente y productos retornados a inventario"
-        redirect action: "detail", id: id
+        flash.message = sale.hasErrors() ? "A ocurrido un error" : "Venta anulada. Productos restaurados"
+        redirect action: "detail", params: [id: id, tab: "cancel"]
     }
 
     def summary() {
@@ -258,6 +261,30 @@ class SaleController {
                 ]
             }
         ]
+    }
+
+    def filterCreditSales() {
+        if (request.post) {
+            String q = params?.q?.trim()
+            List<CreditSale> creditSales = CreditSale.createCriteria().list {
+                eq "canceled", false
+                or {
+                    eq "invoiceNumber", q
+                    employee {
+                        or {
+                            like "fullName", "%$q%"
+                            eq "inss", q
+                            eq "identificationCard", q
+                            company {
+                                like "name", "%$q%"
+                            }
+                        }
+                    }
+                }
+            }
+
+            return [creditSales: creditSales]
+        }
     }
 }
 

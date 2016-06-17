@@ -47,8 +47,7 @@
             model="[
                 balance: balance,
                 expenseBalance: expenseBalance,
-                balanceCanceledSales: balanceCanceledSales
-            ]"/>
+                balanceCanceledSales: balanceCanceledSales]"/>
 
         <p>Intervalos</p>
         <g:render template="intervals" model="[target: 'sales']"/>

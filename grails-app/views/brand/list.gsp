@@ -8,13 +8,11 @@
         <g:if test="${brands}">
             <table class="table table-hover">
                 <thead>
-                    <th width="1" class="text-center">#</th>
                     <th>Marcas</th>
                 </thead>
                 <tbody>
-                    <g:each in="${brands}" var="brand" status="idx">
+                    <g:each in="${brands}" var="brand">
                         <tr>
-                            <td class="text-center">${idx + 1}</td>
                             <td>
                                 <g:link action="show" id="${brand.id}">
                                     ${brand.name}
@@ -31,67 +29,57 @@
     </content>
 
     <content tag="col1">
-        <g:set var="isFiltered" value="${params.boolean('filtered')}"/>
-
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!isFiltered ? 'active' : 'no-active'}">
-                <a href="#brand" aria-controls="brand" role="tab" data-toggle="tab">
-                    Marca
-                </a>
+            <li role="presentation" class="${!params.tab || params.tab != 'detail' ? 'active' : ''}">
+                <g:link action="list">Marca</g:link>
             </li>
-            <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
-                <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">
-                    Detalle
-                </a>
+            <li role="presentation" class="${params.tab == 'detail' ? 'active' : ''}">
+                <g:link action="list" params="[tab: 'detail']">Detalle</g:link>
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="brand">
-                <g:form action="${actionName}" autocomplete="off">
-                    <g:render template="form"/>
-
-                    <g:if test="${details}">
-                        <label>Filtrar detalles</label>
-                        <pharmacyApp:details/>
-                    </g:if>
-
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-                </g:form>
-            </div>
-
-            <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="detail">
-                <g:form controller="detail" action="create" autocomplete="off">
-                    <div class="form-group">
-                        <g:textField name="name" class="form-control" placeholder="Nombre"/>
-                    </div>
-
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-                </g:form>
+        <g:if test="${!params.tab || params.tab != 'detail'}">
+            <g:form action="${actionName}" autocomplete="off">
+                <g:render template="form"/>
 
                 <g:if test="${details}">
-                    <table class="table table-hover">
-                        <thead>
-                           <th>Nombre</th>
-                        </thead>
-                        <tbody>
-                            <g:each in="${details}" var="detail">
-                                <tr>
-                                    <td
-                                        class="trigger"
-                                        data-id="${detail.id}"
-                                        data-name="${detail.name}">
-                                        ${detail.name}
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
+                    <label>Filtrar detalles</label>
+                    <pharmacyApp:details/>
                 </g:if>
-            </div>
-        </div>
 
-        <!--SAD solution T.T-->
+                <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+            </g:form>
+        </g:if>
+        <g:else>
+            <g:form controller="detail" action="create" autocomplete="off">
+                <div class="form-group">
+                    <g:textField name="name" class="form-control" placeholder="Nombre"/>
+                </div>
+
+                <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
+            </g:form>
+
+            <g:if test="${details}">
+                <table class="table table-hover" style="margin-top: 5px;">
+                    <thead>
+                       <th>Nombre</th>
+                    </thead>
+                    <tbody>
+                        <g:each in="${details}" var="detail">
+                            <tr>
+                                <td
+                                    class="trigger"
+                                    data-id="${detail.id}"
+                                    data-name="${detail.name}">
+                                    ${detail.name}
+                                </td>
+                            </tr>
+                        </g:each>
+                    </tbody>
+                </table>
+            </g:if>
+        </g:else>
+
         <g:javascript>
             window.ajaxPATH = "${createLink(controller: 'detail', action: 'update')}"
         </g:javascript>

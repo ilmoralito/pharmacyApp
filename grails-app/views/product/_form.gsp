@@ -33,7 +33,7 @@
 </g:if>
 
 <g:if test="${actionName == 'show'}">
-    <p>Estado</p>
+    <label>Estado</label>
     <div class="checkbox">
         <label>
             <g:checkBox name="enabled" value="${product.enabled}"/>

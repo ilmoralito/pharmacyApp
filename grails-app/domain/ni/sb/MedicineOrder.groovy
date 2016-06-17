@@ -29,4 +29,8 @@ class MedicineOrder extends Item {
             }
         }
     }
+
+    String getFullName() {
+        "$product.name $presentation.name $measure.name"
+    }
 }

@@ -6,7 +6,8 @@ import grails.plugin.springsecurity.annotation.Secured
 class CompanyController {
     static defaultAction = "list"
     static allowedMethods = [
-        list: ["GET", "POST"],
+        list: "GET",
+        create: ["GET", "POST"],
         show: "GET",
         update: "POST",
         employees: ["GET", "POST"],
@@ -16,29 +17,32 @@ class CompanyController {
         removeEmployee: "GET"
     ]
 
-    def list(Boolean enabled) {
-        Closure getCompanies = {
-            if (enabled == null) {
-                enabled = true
-            }
+    def list() {
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        List<Company> companies = Company.where {
+            enabled == enabled
+        }.list(params)
 
-            Company.findAllByEnabled(enabled)
-        }
+        [companies: companies]
+    }
+
+    def create() {
+        Company company = new Company(params)
 
         if (request.post) {
-            Company company = new Company(params)
-
             if (!company.save()) {
                 company.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field: defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
-                return [companies: getCompanies(), company: company]
+                flash.bag = company
             }
+
+            flash.message = company.hasErrors() ? "A ocurrido un error" : "Accion concluida"
+            return
         }
 
-        [companies: getCompanies()]
+        [company: company]
     }
 
     def show(Long id) {
@@ -62,12 +66,13 @@ class CompanyController {
         
         if (!company.save()) {
             company.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field: defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error."
+            flash.bag = company
         }
 
+        flash.message = company.hasErrors() ? "A ocurrido un error" : "Accion concluida"
         redirect action: "show", id: id
     }
 
@@ -78,7 +83,7 @@ class CompanyController {
             response.sendError 404
         }
 
-        [employees: company.employees, companyId: company.id, companyName: company.name]
+        [employees: company.employees, company: company]
     }
 
     def showEmployee(Long id) {
@@ -102,14 +107,13 @@ class CompanyController {
 
         if (!employee.save()) {
             employee.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error."
-            chain action: "showEmployee", params: [id: id], model: [employee: employee]
-            return
+            flash.bag = employee
         }
 
+        flash.message = employee.hasErrors() ? "A ocurrido un error" : "Acction concluida"
         redirect action: "showEmployee", id: id
     }
 
@@ -121,19 +125,17 @@ class CompanyController {
         }
 
         Employee employee = new Employee(params)
-
         company.addToEmployees(employee)
 
         if (!company.save()) {
             company.errors.allErrors.each { error ->
-                log.error "[$error.field: $error.defaultMessage]"
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
-            flash.message = "A ocurrido un error."
-            chain action: "employees", model: [employee: employee], params: [id: id]
-            return
+            flash.bag = company
         }
 
+        flash.message = company.hasErrors() ? "A ocurrido un error" : "Acction concluida"
         redirect action: "employees", id: id
     }
 

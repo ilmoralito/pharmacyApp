@@ -10,15 +10,15 @@
         <g:if test="${items}">
             <g:form>
                 <div class="form-group">
-                    <g:select
-                        name="id"
-                        from="${items}"
-                        optionKey="id"
-                        optionValue="product"
-                        value="${item?.id}"
-                        class="form-control"/>
+                    <select name="id" id="id" class="form-control">
+                        <g:each in="${items}" var="instance">
+                            <option value="${instance.id}" ${instance.id == item?.id ? 'selected' : ''}>
+                                ${instance.product.name}
+                            </option>
+                        </g:each>
+                    </select>
                 </div>
-            
+
                 <g:submitButton name="chooseItems" value="Filtrar" class="btn btn-primary"/>
             </g:form>
             <br>
@@ -35,19 +35,15 @@
             <table class="table table-hover">
                 <g:if test="${item instanceof ni.sb.MedicineOrder}">
                     <colgroup>
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 45%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 5%;">
                     </colgroup>
                     <thead>
-                        <th>Nombre</th>
                         <th>Laboratorio</th>
-                        <th>Presentacion</th>
-                        <th>Medida</th>
+                        <th>Articulo</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th></th>
@@ -55,19 +51,12 @@
                     <tbody>
                         <g:each in="${data}" var="d">
                             <tr>
-                                <td>
-                                    <g:link event="addItem" params="[id: d.id]">
-                                        ${d.product.name}
-                                    </g:link>
-                                </td>
-                                <td>${d.product.provider}</td>
-                                <td>${d.presentation}</td>
-                                <td>${d.measure}</td>
+                                <td>${d.product.provider.name}</td>
+                                <td>${d.getFullName()}</td>
                                 <td>${d.sellingPrice}</td>
                                 <g:form>
                                     <td>
                                         <input
-                                            style=""
                                             type="number"
                                             name="quantity"
                                             id="quantity"
@@ -78,7 +67,7 @@
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
-                                        
+
                                         <g:submitButton
                                             name="addItem"
                                             value="Agregar"
@@ -92,39 +81,28 @@
 
                 <g:if test="${item instanceof ni.sb.BrandProductOrder}">
                     <colgroup>
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
-                        <col span="1" style="width: 14.28%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 45%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 5%;">
                     </colgroup>
                     <thead>
-                        <th>Nombre</th>
                         <th>Laboratorio</th>
-                        <th>Marca</th>
-                        <th>Detalle</th>
-                        <th>Precio de venta</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
                         <th>Cantidad</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <g:each in="${data}" var="d">
                             <tr>
-                                <td>
-                                    <g:link event="addItem" params="[id: d.id]">
-                                        ${d.product.name}
-                                    </g:link>
-                                </td>
                                 <td>${d.product.provider}</td>
-                                <td>${d.brand}</td>
-                                <td>${d.detail}</td>
+                                <td>${d.getFullName()}</td>
                                 <td>${d.sellingPrice}</td>
                                 <g:form>
                                     <td>
                                         <input
-                                            style=""
                                             type="number"
                                             name="quantity"
                                             id="quantity"
@@ -135,7 +113,7 @@
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
-                                        
+
                                         <g:submitButton
                                             name="addItem"
                                             value="Agregar"
@@ -150,23 +128,23 @@
                 <g:if test="${!(item instanceof ni.sb.MedicineOrder) && !(item instanceof ni.sb.BrandProductOrder)}">
                     <colgroup>
                         <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 45%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 5%;">
                     </colgroup>
                     <thead>
-                        <th>Nombre</th>
                         <th>Laboratorio</th>
-                        <th>Precio de venta</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
                         <th>Cantidad</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <g:each in="${data}" var="d">
                             <tr>
-                                <td>${d.product.name}</td>
                                 <td>${d.product.provider}</td>
+                                <td>${d.product.name}</td>
                                 <td>${d.sellingPrice}</td>
                                 <g:form>
                                     <td>
@@ -182,7 +160,7 @@
                                     </td>
                                     <td>
                                         <g:hiddenField name="item.id" value="${d.id}"/>
-                                        
+
                                         <g:submitButton
                                             name="addItem"
                                             value="Agregar"
@@ -284,7 +262,7 @@
 
             <div class="form-group">
                 <label for="annotation">Observacion</label>
-                <g:textArea name="annotation" class="form-control"/>
+                <g:textArea name="annotation" row="1" class="form-control"/>
             </div>
 
             <g:submitButton
@@ -298,13 +276,13 @@
                 <div class="panel-body">
                     <label>Cedula</label>
                     <p>{{ identificationcard }}</p>
-                    
+
                     <label>INSS</label>
                     <p>{{ inss }}</p>
-                    
+
                     <label>Saldo de deuda pendiente</label>
                     <p></p>
-                    
+
                     <label>Limite permitido</label>
                     <p>{{ companycreditlimit }}</p>
                 </div>

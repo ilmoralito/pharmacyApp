@@ -6,36 +6,18 @@
 
     <content tag="main">
         <g:if test="${dealers}">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 5%;">
-                    <col span="1" style="width: 35%;">
-                    <col span="1" style="width: 35%;">
-                    <col span="1" style="width: 5%;">
-                </colgroup>
+            <table class="table table-hover">
                 <thead>
-                    <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Limite</th>
-                    <th>Contacto</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
+                    <th>Distribuidores</th>
                 </thead>
                 <tbody>
                     <g:each in="${dealers}" var="dealer">
                         <tr>
                             <td>
                                 <g:link action="show" id="${dealer.id}">
-                                    ${dealer.name}
+                                    <g:fieldValue bean="${dealer}" field="name"/>
                                 </g:link>
                             </td>
-                            <td>${dealer.telephoneNumber}</td>
-                            <td>${dealer.daysToPay}</td>
-                            <td>${dealer.contact.fullName}</td>
-                            <td>${dealer.contact.email}</td>
-                            <td>${dealer.contact.telephoneNumber}</td>
                         </tr>
                     </g:each>
                 </tbody>
@@ -46,46 +28,32 @@
         </g:else>
     </content>
     <content tag="col1">
-        <g:set var="filtered" value="${params.boolean('filtered')}"/>
-        <g:set var="isEnabled" value="${params.boolean('enabled')}"/>
-
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!filtered ? 'active' : ''}">
-                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
-                    Crear
-                </a>
+            <li role="presentation" class="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+                <g:link action="list">Crear</g:link>
             </li>
-            <li role="presentation" class="${filtered ? 'active' : ''}">
-                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
-                    Filtrar
-                </a>
+            <li role="presentation" class="${params.tab == 'filter' ? 'active' : ''}">
+                <g:link action="list" params="[tab: 'filter']">Filtrar</g:link>
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!filtered ? 'active' : ''}" id="create">
-                <g:form action="list" autocomplete="off" params="[enabled: params.boolean('enabled')]">
-                    <g:render template="form"/>
+        <g:if test="${!params.tab || params.tab != 'filter'}">
+            <g:link action="create" class="btn btn-primary btn-block">Crear distribuidor</g:link>
+        </g:if>
+        <g:else>
+            <g:link
+                action="list"
+                params="[enabled: true, tab: 'filter']"
+                class="btn btn-block btn-${params.boolean('enabled') || params.enabled == null ? 'primary' : 'default'}">
+                Activos
+            </g:link>
 
-                    <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
-                </g:form>
-            </div>
-
-            <div role="tabpanel" class="tab-pane ${filtered ? 'active' : ''}" id="filter">
-                <g:link
-                    action="list"
-                    params="[enabled: true, filtered: true]"
-                    class="btn btn-block btn-${isEnabled ? 'primary' : 'default'}">
-                    Activos
-                </g:link>
-
-                <g:link
-                    action="list"
-                    params="[enabled: false, filtered: true]"
-                    class="btn btn-block btn-${!isEnabled ? 'primary' : 'default'}">
-                    No activos
-                </g:link>
-            </div>
-        </div>
+            <g:link
+                action="list"
+                params="[enabled: false, tab: 'filter']"
+                class="btn btn-block btn-${params.boolean('enabled') == false ? 'primary' : 'default'}">
+                No activos
+            </g:link>
+        </g:else>
     </content>
 </g:applyLayout>

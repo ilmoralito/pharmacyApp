@@ -4,35 +4,57 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class PaymentController {
-    static defaultAction = ""
+    def springSecurityService
+    def creditSaleService
+
     static allowedMethods = [
         index: ["GET", "POST"]
     ]
 
-    def index() {
-        List<CreditSale> creditSales = []
+    def index(Long creditSaleId) {
+        CreditSale creditSale = CreditSale.get(creditSaleId)
 
-        if (request.post) {
-            String q = params?.q?.trim()
-
-            creditSales = CreditSale.createCriteria().list {
-                eq "canceled", false
-                or {
-                    eq "invoiceNumber", q
-                    employee {
-                        or {
-                            like "fullName", "%$q%"
-                            eq "inss", q
-                            eq "identificationCard", q
-                            company {
-                                like "name", "%$q%"
-                            }
-                        }
-                    }
-                }
-            }
+        if (!creditSale) {
+            response.sendError 404
         }
 
-        [creditSales: creditSales]
+        if (request.post) {
+            BigDecimal balanceToDate = creditSaleService.getBalanceToDate(creditSale)
+            Payment payment = new Payment(
+                receiptNumber: params?.receiptNumber,
+                amount: params?.amount,
+                reference: params?.reference,
+                madeBy: params?.madeBy,
+                madeByIdentityCard: params?.madeByIdentityCard,
+                attendedBy: springSecurityService.currentUser
+            )
+
+            creditSale.addToPayments(payment)
+
+            if (!creditSale.save()) {
+                creditSale.errors.allErrors.each { error ->
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                }
+
+                flash.bag = creditSale
+                return [creditSale: creditSale]
+            }
+
+            flash.message = creditSale.hasErrors() ? "A ocurrido un error" : "Accion concluida correctamente"
+        }
+
+        [creditSale: creditSale, creditSaleDetail: createCreditSaleDetail(creditSale)]
     }
+
+    private CreditSaleDetail createCreditSaleDetail(creditSale) {
+        new CreditSaleDetail(
+            invoiceNumber: creditSale.invoiceNumber,
+            balanceToDate: creditSaleService.getBalanceToDate(creditSale)
+        )
+    }
+}
+
+class CreditSaleDetail {
+    String invoiceNumber
+    BigDecimal balanceToDate
 }

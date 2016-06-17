@@ -5,7 +5,10 @@ import groovy.json.JsonOutput
 
 class AppTagLib {
     def distributorService
+    def creditSaleService
+    def purchaseOrderService
 
+    static namespace = "pharmacyApp"
     static defaultEncodeAs = "html"
     static encodeAsForTags = [
         presentations: "raw",
@@ -21,10 +24,11 @@ class AppTagLib {
         combo: "raw",
         clientsDataList: "raw",
         providers: "raw",
-        companies: "raw"
+        companies: "raw",
+        creditSaleDetail: "raw",
+        purchaseOrderDetail: "raw",
+        purchaseOrderResume: "raw"
     ]
-
-    static namespace = "pharmacyApp"
 
     def presentations = { attrs ->
         MarkupBuilder builder = new MarkupBuilder(out)
@@ -122,7 +126,7 @@ class AppTagLib {
                     }
 
                     span(id: measure.id) {
-                        mkp.yield measure
+                        mkp.yield measure.name
                     }
                 }
             }
@@ -136,7 +140,9 @@ class AppTagLib {
         Map params = [type: "checkbox", name: "users"]
 
         builder.div {
-            label "Usuarios"
+            label(style: "margin-bottom: 0") {
+                mkp.yield "Usuarios"
+            }
 
             users.each { user ->
                 params.value = user.id
@@ -246,7 +252,7 @@ class AppTagLib {
                 mkp.yield "Distribuidores"
                 if (showMessage) {
                     div {
-                        small "Si cambia de distribuidor se eliminaran los articulos agregados"
+                        small "Al cambiar de distribuidor se eliminaran los articulos agregados"
                     }
                 }
             }
@@ -386,7 +392,6 @@ class AppTagLib {
         String name = attrs.name
         String data = attrs.data
         List<Product> from = attrs.from
-        Map<String, String> params = [:]
 
         builder.div(class: "form-group") {
             delegate.select(name: name, class: "form-control") {
@@ -476,19 +481,12 @@ class AppTagLib {
         out << result
     }
 
-    // TODO: Implement a groovier solution
     def calcTotal = { attrs ->
-        List items =attrs.items
-        String property = attrs.property
-        BigDecimal total = 0.0
+        out << purchaseOrderService.calculateTotal(attrs.items, attrs.property)
+    }
 
-        items.each { item ->
-            BigDecimal result = item[property] * item.quantity
-
-            total += result
-        }
-
-        out << total
+    def getProfits = { attrs ->
+        out << purchaseOrderService.getProfits(attrs.items)
     }
 
     def paymentType = { attrs ->
@@ -501,7 +499,7 @@ class AppTagLib {
 
     def purchaseOrderStatus = { attrs ->
         if (attrs.status == "paid") {
-            out << "Pagado"
+            out << "Cancelado"
         } else {
             out << "Pendiente"
         }
@@ -548,6 +546,81 @@ class AppTagLib {
 
                     option(value: company.name, "data-employees": JsonOutput.toJson(employees)) {
                         mkp.yield company.name
+                    }
+                }
+            }
+        }
+    }
+
+    def creditSaleDetail = { attrs ->
+        MarkupBuilder mb = new MarkupBuilder(out)
+
+        mb {
+            label "Numero de factura"
+            p attrs.invoiceNumber
+
+            label "Saldo a la fecha"
+            p attrs.balanceToDate
+        }
+    }
+
+    def purchaseOrderDetail = { attrs ->
+        MarkupBuilder mb = new MarkupBuilder(out)
+
+        mb {
+            label "Distributor"
+            p attrs.distributor
+
+            label "Numero de factura"
+            p attrs.invoiceNumber
+
+            label "Tipo de pago"
+            p pharmacyApp.paymentType(type: attrs.paymentType)
+
+            label "Creado por"
+            p attrs.createdBy
+
+            label "Creado el"
+            p attrs.dateCreated
+
+            if (attrs.paymentType == "credit") {
+                label "Fecha de pago"
+                p attrs.paymentDate
+
+                label "Dias para pagar"
+                p attrs.date("paymentDate", "yyyy-MM-dd") - new Date()
+
+                label "Estado de pago"
+                p pharmacyApp.purchaseOrderStatus(status: attrs.paymentStatus)
+            }
+        }
+    }
+
+    def purchaseOrderResume = { attrs ->
+        MarkupBuilder mb = new MarkupBuilder(out)
+
+        if (attrs.products) {
+            mb.table(class: "table table-hover table-condensed") {
+                caption attrs.label
+                tbody {
+                    tr {
+                        td "Productos"
+                        td attrs.products
+                    }
+
+                    tr {
+                        td "Total compras"
+                        td attrs.totalPurchasePrice
+                    }
+
+                    tr {
+                        td "Total ventas"
+                        td attrs.totalSellingPrice
+                    }
+
+                    tr {
+                        td "Total ganacias"
+                        td attrs.totalProfits
                     }
                 }
             }

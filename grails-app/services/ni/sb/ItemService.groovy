@@ -24,4 +24,8 @@ class ItemService {
 
         medicineOrders
     }
+
+    List<Item> getSoledItems(List<Item> items) {
+        items.findAll { it.quantity != it.fixedQuantity }
+    }
 }

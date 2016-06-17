@@ -4,7 +4,9 @@ import groovy.transform.ToString
 
 @ToString
 class Payment {
-    Long receiptNumber
+    def creditSaleService
+
+    Integer receiptNumber
     BigDecimal amount
     String reference
     String madeBy
@@ -15,11 +17,19 @@ class Payment {
     Date lastUpdated
 
     static constraints = {
-        receiptNumber unique: true, min: 1L
-        amount min: 1.0, scale: 2
+        receiptNumber unique: true, min: 1
+        amount min: 1.0, scale: 2, validator: { amount, obj ->
+            BigDecimal balanceToDate = obj.creditSaleService.getBalanceToDate(obj.creditSale)
+
+            amount <= balanceToDate
+        }
         reference blank: false
         madeBy blank: false
         madeByIdentityCard blank: false
+    }
+
+    static mapping = {
+        sort dateCreated: "desc"
     }
 
     static belongsTo = [creditSale: CreditSale]

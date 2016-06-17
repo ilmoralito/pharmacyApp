@@ -11,8 +11,8 @@
             <g:if test="${!params?.flag}">
                 <table class="table table-hover">
                     <colgroup>
-                        <col span="1" style="width: 30%;">
-                        <col span="1" style="width: 75%;">
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 60%;">
                     </colgroup>
                     <thead>
                         <th>Nombre</th>
@@ -37,15 +37,11 @@
             <g:if test="${params?.flag == 'medicines'}">
                 <table class="table table-hover">
                     <colgroup>
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 60%;">
                     </colgroup>
                     <thead>
                         <th>Nombre</th>
-                        <th>Presentacion</th>
-                        <th>Medida</th>
                         <th>Cantidad</th>
                     </thead>
                     <tbody>
@@ -56,8 +52,6 @@
                             <g:each in="${medicine.labProducts}" var="product">
                                 <tr>
                                     <td>${product.name}</td>
-                                    <td>${product.presentation}</td>
-                                    <td>${product.measure}</td>
                                     <td>${product.quantity}</td>
                                 </tr>
                             </g:each>
@@ -69,15 +63,11 @@
             <g:if test="${params?.flag == 'brandProducts'}">
                 <table class="table table-hover">
                     <colgroup>
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
-                        <col span="1" style="width: 25%;">
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 60%;">
                     </colgroup>
                     <thead>
                         <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Detalle</th>
                         <th>Cantidad</th>
                     </thead>
                     <tbody>
@@ -88,8 +78,6 @@
                             <g:each in="${brandProduct.labProducts}" var="product">
                                 <tr>
                                     <td>${product.name}</td>
-                                    <td>${product.brand}</td>
-                                    <td>${product.detail}</td>
                                     <td>${product.quantity}</td>
                                 </tr>
                             </g:each>

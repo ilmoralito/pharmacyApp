@@ -1,5 +1,8 @@
 package ni.sb
 
+import groovy.transform.ToString
+
+@ToString
 class BrandProductOrder extends Item {
     Brand brand
     Detail detail
@@ -9,5 +12,7 @@ class BrandProductOrder extends Item {
         detail()
     }
 
-    String toString() { product }
+    String getFullName() {
+        "$product.name $brand.name $detail.name"
+    }
 }

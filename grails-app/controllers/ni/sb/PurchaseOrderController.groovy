@@ -6,13 +6,16 @@ import grails.plugin.springsecurity.annotation.Secured
 class PurchaseOrderController {
     def springSecurityService
     def distributorService
+    def itemService
+    def purchaseOrderService
 
     static defaultAction = "list"
     static allowedMethods = [
         list: ["GET", "POST"],
-        create: "GET",
         show: "GET",
-        update: "POST"
+        update: "POST",
+        create: "GET",
+        delete: "GET"
     ]
 
     def list() {
@@ -35,26 +38,29 @@ class PurchaseOrderController {
         [purchaseOrders: purchaseOrders()]
     }
 
-    def create() {
-        redirect action: "createPurchaseOrder"
-    }
-
     def show(Long id) {
-        PurchaseOrder purchaseOrder = PurchaseOrder.get(id)
+        PurchaseOrder po = PurchaseOrder.get(id)
 
-        if (!purchaseOrder) {
+        if (!po) {
             response.sendError 404
         }
 
-        List items = purchaseOrder.items.findAll { !(it instanceof MedicineOrder) || !(it instanceof BrandProductOrder) }
-        List medicineOrders = purchaseOrder.items.findAll { it instanceof MedicineOrder }
-        List brandProductOrders = purchaseOrder.items.findAll { it instanceof BrandProductOrder }
+        println po.items.size()
+
+        List items = po.items.findAll {!(it instanceof MedicineOrder) && !(it instanceof BrandProductOrder)}
+        List medicineOrders = po.items.findAll {it instanceof MedicineOrder}
+        List brandProductOrders = po.items.findAll {it instanceof BrandProductOrder}
 
         [
+            purchaseOrder: po,
             items: items,
             medicineOrders: medicineOrders,
             brandProductOrders: brandProductOrders,
-            purchaseOrder: purchaseOrder
+            soledItems: itemService.getSoledItems(po.items),
+            purchaseOrderDetail: createPurchaseOrderDetail(po),
+            itemsResume: createPurchaseOrderResume(items, "Productos"),
+            medicinesResume: createPurchaseOrderResume(medicineOrders, "Medicinas"),
+            brandProductOrdersResume: createPurchaseOrderResume(brandProductOrders, "Marcas")
         ]
     }
 
@@ -65,23 +71,39 @@ class PurchaseOrderController {
             response.sendError 404
         }
 
-        if (params?.paymentType == "cash" && params?.paymentStatus == "pending") {
-            flash.message = "Operacion no permitida. Pedido de contado no puede estar pendiente"
-            redirect action: "show", id: id
-            return
-        }
-
         purchaseOrder.properties["invoiceNumber", "paymentType", "paymentStatus"] = params
 
         if (!purchaseOrder.save()) {
             purchaseOrder.errors.allErrors.each { error ->
                 log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
+
+            flash.bag = purchaseOrder
         }
 
-        flash.message = "Actualizado"
-
+        flash.message = purchaseOrder.hasErrors() ? "A ocurrido un error" : "Actualizado correctamente"
         redirect action: "show", params: [id: id, tab: params.tab]
+    }
+
+    def create() {
+        redirect action: "createPurchaseOrder"
+    }
+
+    def delete(Long id) {
+        PurchaseOrder po = PurchaseOrder.get(id)
+
+        if (!po) {
+            response.sendError 404
+        }
+
+        List<Item> affectedItems = itemService.getSoledItems(po.items)
+
+        if (!affectedItems) {
+            po.delete(flush: true)
+        }
+
+        flash.message = affectedItems ? "No permitido eliminar pedido" : "Pedido eliminado"
+        redirect action: "list"
     }
 
     def createPurchaseOrderFlow = {
@@ -115,7 +137,7 @@ class PurchaseOrderController {
                     distributor: cmd.distributor,
                     invoiceNumber: cmd.invoiceNumber,
                     paymentType: cmd.paymentType,
-                    paymentDate: getPaymentDate(cmd.paymentType, cmd.distributor.daysToPay),
+                    paymentDate: cmd.paymentType == "credit" ? new Date() + cmd.distributor.daysToPay : null,
                     productList: products.flatten(),
                     products: products.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name },
                     items: [],
@@ -128,7 +150,40 @@ class PurchaseOrderController {
         }
 
         items {
-            on("show").to "show"
+            on("updatePurchaseOrder") { PurchaseOrderCommand cmd ->
+                if (cmd.hasErrors()) {
+                    cmd.errors.allErrors.each { error ->
+                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                    }
+
+                    return error()
+                }
+
+                if (cmd.distributor != flow.distributor) {
+                    List<Product> tempProducts = []
+
+                    // Remove added items
+                    flow.items = []
+                    flow.medicineOrders = []
+                    flow.brandProductOrders = []
+
+                    // Remove products
+                    flow.products = []
+
+                    // Get current distributor products
+                    cmd.distributor.providers.each { provider ->
+                        tempProducts << provider.products
+                    }
+
+                    // Add current distributor products
+                    flow.products = tempProducts.flatten().unique() { a, b -> a.name <=> b.name }.sort { it.name }
+                }
+
+                flow.distributor = cmd.distributor
+                flow.invoiceNumber = cmd.invoiceNumber
+                flow.paymentDate = cmd.paymentType == "credit" ? new Date() + cmd.distributor.daysToPay : null
+                flow.paymentType = cmd.paymentType
+            }.to "items"
 
             on("query") {
                 String q = params?.q
@@ -168,7 +223,7 @@ class PurchaseOrderController {
                 )
 
                 Item prod = flow.items.find { item.product == it.product }
-                
+
                 if (prod) {
                     prod.quantity = cmd.quantity
                     prod.purchasePrice = cmd.purchasePrice
@@ -176,6 +231,8 @@ class PurchaseOrderController {
                 } else {
                     flow.items << item
                 }
+
+                flow.productTab = ""
             }.to "items"
 
             on("addMedicineOrder") { MedicineOrderCommand cmd ->
@@ -212,6 +269,8 @@ class PurchaseOrderController {
                 } else {
                     flow.medicineOrders << medicineOrder
                 }
+
+                flow.productTab = "medicineTab"
             }.to "items"
 
             on("addBrandProductOrder") { BrandProductOrderCommand cmd ->
@@ -246,13 +305,15 @@ class PurchaseOrderController {
                 } else {
                     flow.brandProductOrders << brandProductOrder
                 }
+
+                flow.productTab = "brandProductTab"
             }.to "items"
 
             on("deleteItem") {
                 Integer id = params.int("id")
 
                 Item item = flow.items.find { id == it.product.id }
-                    
+
                 if (item) {
                     flow.items.remove(item)
                 }
@@ -262,7 +323,7 @@ class PurchaseOrderController {
                 Integer id = params.int("id")
 
                 MedicineOrder medicineOrder = flow.medicineOrders.find { id == it.product.id }
-                    
+
                 if (medicineOrder) {
                     flow.medicineOrders.remove(medicineOrder)
                 }
@@ -272,7 +333,7 @@ class PurchaseOrderController {
                 Integer id = params.int("id")
 
                 BrandProductOrder brandProductOrder = flow.brandProductOrders.find { id == it.product.id }
-                    
+
                 if (brandProductOrder) {
                     flow.brandProductOrders.remove(brandProductOrder)
                 }
@@ -333,32 +394,14 @@ class PurchaseOrderController {
 
                 flash.message = "Proceso concluido correctamente"
             }.to "done"
-        }
 
-        show {
-            on("confirm") { PurchaseOrderCommand cmd ->
-                if (cmd.hasErrors()) {
-                    cmd.errors.allErrors.each { error ->
-                        log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
-                    }
+            on("changeItemsTab") {
+                flow.tab = params?.tab
+            }.to "items"
 
-                    return error()
-                }
-
-                if (cmd.distributor != flow.distributor) {
-                    flow.items = []
-                    flow.medicineOrders = []
-                    flow.brandProductOrders = []
-                }
-
-                flow.distributor = cmd.distributor
-                flow.invoiceNumber = cmd.invoiceNumber
-                flow.paymentDate = getPaymentDate(cmd.paymentType, cmd.distributor.daysToPay)
-                flow.paymentType = cmd.paymentType
-
-            }.to "show"
-
-            on("goBack").to "items"
+            on("changeProductListTab") {
+                flow.productTab = params.productTab
+            }.to "items"
         }
 
         done {
@@ -366,16 +409,45 @@ class PurchaseOrderController {
         }
     }
 
-    private getPaymentDate(String paymentType, Integer daysToPay) {
-        Date today = new Date()
-        Date paymentDate = null
-
-        if (paymentType == "credit") {
-            paymentDate = today + daysToPay
-        }
-
-        paymentDate
+    private PurchaseOrderResume createPurchaseOrderResume(List<Item> items, String label) {
+        new PurchaseOrderResume(
+            label: label,
+            products: items.size(),
+            totalPurchasePrice: purchaseOrderService.calculateTotal(items, "purchasePrice"),
+            totalSellingPrice: purchaseOrderService.calculateTotal(items, "sellingPrice"),
+            totalProfits: purchaseOrderService.getProfits(items)
+        )
     }
+
+    private PurchaseOrderDetail createPurchaseOrderDetail(PurchaseOrder po) {
+        new PurchaseOrderDetail(
+            distributor: po.distributor.name,
+            invoiceNumber: po.invoiceNumber,
+            createdBy: po.user.fullName,
+            dateCreated: po.dateCreated.format("yyyy-MM-dd"),
+            paymentType: po.paymentType,
+            paymentDate: po?.paymentDate?.format("yyyy-MM-dd"),
+            paymentStatus: po.paymentStatus
+        )
+    }
+}
+
+class PurchaseOrderDetail {
+    String distributor
+    String invoiceNumber
+    String createdBy
+    String dateCreated
+    String paymentType
+    String paymentDate
+    String paymentStatus
+}
+
+class PurchaseOrderResume {
+    String label
+    Integer products
+    BigDecimal totalPurchasePrice
+    BigDecimal totalSellingPrice
+    BigDecimal totalProfits
 }
 
 class PurchaseOrderCommand {

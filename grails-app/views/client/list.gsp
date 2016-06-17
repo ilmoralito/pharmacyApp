@@ -7,17 +7,8 @@
     <content tag="main">
         <g:if test="${clients}">
             <table class="table table-hover">
-                <colgroup>
-                    <col span="1" style="width: 25%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 45%;">
-                    <col span="1" style="width: 10%;">
-                </colgroup>
                 <thead>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
+                    <th>Clientes</th>
                 </thead>
                 <tbody>
                     <g:each in="${clients}" var="client">
@@ -27,9 +18,6 @@
                                     ${client.fullName}
                                 </g:link>
                             </td>
-                            <td>${client.email}</td>
-                            <td>${client.address}</td>
-                            <td>${client.telephoneNumber}</td>
                         </tr>
                     </g:each>
                 </tbody>

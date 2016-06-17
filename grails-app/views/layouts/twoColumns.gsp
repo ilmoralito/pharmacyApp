@@ -15,7 +15,7 @@
 
         <g:set var="message" value="${message ?: flash.message}"/>
         <g:if test="${message}">
-            <div class="message">${message}</div>
+            <div class="message"><br>${message}</div>
         </g:if>
     </div>
 </body>

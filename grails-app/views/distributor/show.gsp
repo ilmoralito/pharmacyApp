@@ -7,11 +7,7 @@
     <content tag="main">
         <g:form action="update" autocomplete="off">
             <g:hiddenField name="id" value="${params?.id}"/>
-            <div class="row">
-                <div class="col-md-5">
-                    <g:render template="form"/>
-                </div>
-            </div>
+            <g:render template="form"/>
 
             <g:submitButton name="update" value="Actualizar" class="btn btn-primary"/>
         </g:form>

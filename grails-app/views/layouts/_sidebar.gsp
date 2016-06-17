@@ -1,13 +1,13 @@
 <ul class="nav nav-pills nav-stacked">
     <sec:ifAllGranted  roles="ROLE_ADMIN">
         <li class="${controllerName == 'distributor' ? 'active' : ''}">
-            <g:link controller="distributor" params="[enabled: true]">
+            <g:link controller="distributor">
                 Distribuidores
             </g:link>
         </li>
         <li class="${controllerName in ['provider', 'product'] ? 'active' : ''}">
-            <g:link controller="provider" params="[enabled: true]">
-                Laboratorios
+            <g:link controller="provider">
+                Laboratorios ${provider?.name}
             </g:link>
         </li>
         <li class="${controllerName == 'presentation' ? 'active' : ''}">
@@ -21,7 +21,7 @@
             </g:link>
         </li>
         <li class="${controllerName == 'company' ? 'active' : ''}">
-            <g:link controller="company" params="[enabled: true]">
+            <g:link controller="company">
                 Empresas
             </g:link>
         </li>
@@ -34,11 +34,15 @@
             <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
         </li>
     </sec:ifAllGranted>
-    <li class="${controllerName == 'payment' ? 'active' : ''}">
-        <g:link controller="payment" action="index">Abonos</g:link>
+    <li class="${(controllerName == 'sale' && actionName == 'filterCreditSales') || controllerName == 'payment' ? 'active' : ''}">
+        <g:link controller="sale" action="filterCreditSales">
+            Abonos
+        </g:link>
     </li>
-    <li class="${controllerName == 'sale' ? 'active' : ''}">
-        <g:link controller="sale" action="create">Ventas</g:link>
+    <li class="${controllerName == 'sale' && actionName != 'filterCreditSales' ? 'active' : ''}">
+        <g:link controller="sale" action="create">
+            Ventas
+        </g:link>
     </li>
     <li class="${controllerName == 'expense' ? 'active' : ''}">
         <g:link controller="expense">

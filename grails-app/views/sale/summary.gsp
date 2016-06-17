@@ -23,12 +23,9 @@
                         <g:set var="data" value="${saleDetail}"/>
                         <tr>
                             <td>
-                                <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder}">
-                                    ${saleDetail.item.product.name} ${saleDetail.item.presentation} ${saleDetail.item.measure}
+                                <g:if test="${saleDetail.item instanceof ni.sb.MedicineOrder || saleDetail.item instanceof ni.sb.BrandProductOrder}">
+                                    ${saleDetail.item.getFullName()}
                                 </g:if>
-                                <g:elseif test="${saleDetail.item instanceof ni.sb.BrandProductOrder}">
-                                    ${saleDetail.item.product.name} ${saleDetail.item.brand} ${saleDetail.item.detail}
-                                </g:elseif>
                                 <g:else>
                                     ${saleDetail.item.product.name}
                                 </g:else>

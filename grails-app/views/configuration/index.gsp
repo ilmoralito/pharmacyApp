@@ -52,7 +52,7 @@
             </div>
 
             <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>
-            <g:link controller="sale" class="btn btn-default pull-right">Salir y continuar</g:link>
+            <g:link controller="sale" class="btn btn-default pull-right">Salir</g:link>
         </g:form>
     </body>
 </html>
