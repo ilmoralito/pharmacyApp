@@ -28,7 +28,7 @@ grails.project.dependency.resolution = {
     // specify dependency exclusions here; for example, uncomment this to disable ehcache:
     // excludes 'ehcache'
   }
-  
+
   log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
   checksums true // Whether to verify checksums on resolve
   legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
@@ -42,6 +42,7 @@ grails.project.dependency.resolution = {
     grailsCentral()
     mavenCentral()
     mavenRepo "http://repo.grails.org/grails/core"
+    mavenRepo 'https://repo.grails.org/grails/plugins'
     // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
     //mavenRepo "http://repository.codehaus.org"
     //mavenRepo "http://download.java.net/maven/2/"
@@ -50,12 +51,8 @@ grails.project.dependency.resolution = {
 
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-    // runtime 'mysql:mysql-connector-java:5.1.27'
     runtime "mysql:mysql-connector-java:5.1.38"
-    // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
     compile "commons-beanutils:commons-beanutils:1.8.3"
-    //compile "com.craigburke.document:pdf:0.4.15"
-    //compile "org.grails.plugins:quartz:1.0.2"
   }
 
   plugins {
@@ -68,7 +65,7 @@ grails.project.dependency.resolution = {
 
     // plugins needed at runtime but not for compilation
     runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
-    runtime ":database-migration:1.4.0"
+    runtime ':database-migration:1.3.6'
     runtime ":jquery:1.11.0.2"
     runtime ":resources:1.2.7"
     // Uncomment these (or add new ones) to enable additional resources capabilities
@@ -87,7 +84,7 @@ grails.project.dependency.resolution = {
 
     //app plugins
     compile ":build-test-data:2.2.0"
-    compile ":spring-security-core:2.0-RC4"
+    compile ":spring-security-core:2.0.0"
     compile ":spring-security-ui:1.0-RC2"
     compile ":mail:1.0.7"
     compile ":jquery-ui:1.10.3"
@@ -95,6 +92,5 @@ grails.project.dependency.resolution = {
     compile ":webflow:2.0.8.1"
     compile ":export:1.6"
     compile ":quartz:1.0.1"
-    compile "org.grails.plugins:quartz-monitor:1.0"
   }
 }

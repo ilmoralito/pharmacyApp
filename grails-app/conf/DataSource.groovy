@@ -30,13 +30,14 @@ environments {
     production {
         dataSource {
             pooled = true
+            dbCreate = "update"
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-            dbCreate = "update"
-            // url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-            url = "jdbc:mysql://localhost/pharmacyapp"
-            username = "root"
-            password = "hotch"
+            uri = new URI(System.env.CLEARDB_DATABASE_URL)
+            url = "jdbc:mysql://$uri.host$uri.path"
+            userInfo = uri.userInfo.split(":")
+            username = userInfo[0]
+            password = userInfo[1]
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
