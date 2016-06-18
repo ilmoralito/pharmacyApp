@@ -5,19 +5,32 @@
     </head>
 
     <content tag="main">
-        <g:if test="${creditSale.payments}">
+        <g:if test="${payments}">
             <table class="table table-hover">
+                <caption>${creditSaleDescription}</caption>
+                <colgroup>
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 70%;">
+                </colgroup>
                 <thead>
-                    <th>Numero de recibo</th>
+                    <th class="text-center">#</th>
+                    <th>Recibo</th>
+                    <th>Fecha de abono</th>
+                    <th>Cantidad abonada</th>
                 </thead>
                 <tbody>
-                    <g:each in="${creditSale.payments}" var="payment">
+                    <g:each in="${payments}" var="p" status="index">
                         <tr>
+                            <td class="text-center">${index + 1}</td>
                             <td>
-                                <g:link action="show" id="${payment.id}">
-                                    <g:fieldValue bean="${payment}" field="receiptNumber"/>
+                                <g:link action="show" id="${p.id}">
+                                    <g:fieldValue bean="${p}" field="receiptNumber"/>
                                 </g:link>
                             </td>
+                            <td><g:formatDate format="yyyy-MM-dd" date="${p.dateCreated}"/></td>
+                            <td><g:fieldValue bean="${p}" field="amount"/></td>
                         </tr>
                     </g:each>
                 </tbody>
@@ -30,26 +43,21 @@
 
     <content tag="col1">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!params.tab || params.tab != 'payment' ? 'active' : ''}">
+            <li role="presentation" class="${!params.tab || params.tab != 'detail' ? 'active' : ''}">
                 <g:link action="index" params="[creditSaleId: params.creditSaleId]">
-                    Detalle
+                    Abono
                 </g:link>
             </li>
-            <li role="presentation" class="${params.tab == 'payment' ? 'active' : '' }">
-                <g:link action="index" params="[creditSaleId: params.creditSaleId, tab: 'payment']">
-                    Abono
+            <li role="presentation" class="${params.tab == 'detail' ? 'active' : '' }">
+                <g:link action="index" params="[creditSaleId: params.creditSaleId, tab: 'detail']">
+                    Detalle
                 </g:link>
             </li>
         </ul>
 
-        <g:if test="${!params.tab || params.tab != 'payment'}">
-            <pharmacyApp:creditSaleDetail
-                invoiceNumber="${creditSaleDetail.invoiceNumber}"
-                balanceToDate="${creditSaleDetail.balanceToDate}"/>
-        </g:if>
-        <g:else>
-            <g:form name="createPaymentForm" action="index" params="[creditSaleId: params.creditSaleId, tab: 'payment']" autocomplete="off">
-                <g:hiddenField name="creditSaleId" value="${creditSale.id}"/>
+        <g:if test="${!params.tab || params.tab != 'detail'}">
+            <g:form name="addPaymentForm" action="create" autocomplete="off">
+                <g:hiddenField name="creditSaleId" value="${params.creditSaleId}"/>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -87,6 +95,13 @@
 
                 <g:submitButton name="sendCreatePaymentForm" value="Confirmar" class="btn btn-primary btn-block"/>
             </g:form>
+        </g:if>
+        <g:else>
+            <pharmacyApp:creditSaleDetail
+                invoiceNumber="${creditSaleDetail.invoiceNumber}"
+                balance="${creditSaleDetail.balance}"
+                balanceToDate="${creditSaleDetail.balanceToDate}"
+                paidOut="${creditSaleDetail.paidOut}"/>
         </g:else>
     </content>
 </g:applyLayout>

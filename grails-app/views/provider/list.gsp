@@ -8,8 +8,8 @@
         <g:if test="${providers}">
             <table class="table table-hover">
                 <colgroup>
+                    <col span="1" style="width: 20%;">
                     <col span="1" style="width: 89%;">
-                    <col span="1" style="width: 10%;">
                     <col span="1" style="width: 1%;">
                 </colgroup>
                 <thead>

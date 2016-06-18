@@ -560,8 +560,16 @@ class AppTagLib {
             label "Numero de factura"
             p attrs.invoiceNumber
 
+            label "Saldo"
+            p attrs.balance
+
             label "Saldo a la fecha"
             p attrs.balanceToDate
+
+            if (attrs.paidOut) {
+                label "Estado"
+                p "Cancelado"
+            }
         }
     }
 

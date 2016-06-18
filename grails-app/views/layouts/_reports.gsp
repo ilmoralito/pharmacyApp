@@ -23,12 +23,12 @@
             </li>
             <li class="${actionName == 'expenses' ? 'active' : ''}">
                 <g:link controller="report" action="expenses">
-                    Gastos diarios
+                    Gasto diario
                 </g:link>
             </li>
             <li class="${actionName == 'employees' ? 'active' : ''}">
                 <g:link controller="report" action="employees">
-                    A empresas
+                    Empresas
                 </g:link>
             </li>
         </ul>

@@ -3,7 +3,7 @@ package ni.sb
 class CreditSale extends Sale {
     String invoiceNumber
     Employee employee
-    Boolean canceled = false
+    Boolean paidOut = false
 
     static constraints = {
         invoiceNumber blank: false, unique: true
@@ -11,4 +11,8 @@ class CreditSale extends Sale {
 
     List<Payment> payments
     static hasMany = [payments: Payment]
+
+    String getCreditSaleDescription() {
+        "#$invoiceNumber ${employee.fullName} ${employee.company.name}"
+    }
 }

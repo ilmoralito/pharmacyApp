@@ -268,6 +268,7 @@ class SaleController {
             String q = params?.q?.trim()
             List<CreditSale> creditSales = CreditSale.createCriteria().list {
                 eq "canceled", false
+                eq "paidOut", false
                 or {
                     eq "invoiceNumber", q
                     employee {

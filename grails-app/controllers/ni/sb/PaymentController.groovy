@@ -8,7 +8,9 @@ class PaymentController {
     def creditSaleService
 
     static allowedMethods = [
-        index: ["GET", "POST"]
+        index: "GET",
+        create: "POST",
+        show: "GET"
     ]
 
     def index(Long creditSaleId) {
@@ -18,43 +20,92 @@ class PaymentController {
             response.sendError 404
         }
 
-        if (request.post) {
-            BigDecimal balanceToDate = creditSaleService.getBalanceToDate(creditSale)
-            Payment payment = new Payment(
-                receiptNumber: params?.receiptNumber,
-                amount: params?.amount,
-                reference: params?.reference,
-                madeBy: params?.madeBy,
-                madeByIdentityCard: params?.madeByIdentityCard,
-                attendedBy: springSecurityService.currentUser
-            )
+        List<Payment> payments = Payment.where {
+            creditSale.id == creditSaleId
+        }.list(params)
 
-            creditSale.addToPayments(payment)
+        [
+            payments: payments,
+            creditSaleDescription: creditSale.getCreditSaleDescription(),
+            creditSaleDetail: createCreditSaleDetail(creditSale)
+        ]
+    }
 
-            if (!creditSale.save()) {
-                creditSale.errors.allErrors.each { error ->
-                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
-                }
+    def create() {
+        CreditSale creditSale = CreditSale.get(params.creditSaleId)
 
-                flash.bag = creditSale
-                return [creditSale: creditSale]
-            }
-
-            flash.message = creditSale.hasErrors() ? "A ocurrido un error" : "Accion concluida correctamente"
+        if (!creditSale) {
+            response.sendError 404
         }
 
-        [creditSale: creditSale, creditSaleDetail: createCreditSaleDetail(creditSale)]
+        BigDecimal balanceToDate = creditSaleService.getBalanceToDate(creditSale.payments, creditSale.balance)
+        BigDecimal totalPayments = creditSaleService.getTotalPayments(creditSale.payments)
+        BigDecimal amount = params.double("amount")
+
+        if (creditSale.paidOut) {
+            flash.message = "Denegado. Credito cancelado"
+            redirect action:  "index", params: params
+
+            return
+        }
+
+        if (amount > balanceToDate) {
+            flash.message = "Error. Abono es mayor a saldo"
+            redirect action:  "index", params: params
+
+            return
+        }
+
+        Payment payment = new Payment(
+            receiptNumber: params?.receiptNumber,
+            amount: amount,
+            reference: params?.reference,
+            madeBy: params?.madeBy,
+            madeByIdentityCard: params?.madeByIdentityCard,
+            attendedBy: springSecurityService.currentUser
+        )
+
+        creditSale.addToPayments(payment)
+
+        if ((totalPayments + amount) == creditSale.balance) {
+            creditSale.paidOut = true
+        }
+
+        if (!creditSale.save(flush: true)) {
+            creditSale.errors.allErrors.each { error ->
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+            }
+
+            flash.bag = creditSale
+        }
+
+        flash.message = creditSale.hasErrors() ? "A ocurrido un error" : "Accion concluida"
+        redirect action: "index", params: [creditSaleId: params.creditSaleId]
+    }
+
+    def show(Long id) {
+        Payment payment = Payment.get(id)
+
+        if (!payment) {
+            response.sendError 404
+        }
+
+        [payment: payment]
     }
 
     private CreditSaleDetail createCreditSaleDetail(creditSale) {
         new CreditSaleDetail(
             invoiceNumber: creditSale.invoiceNumber,
-            balanceToDate: creditSaleService.getBalanceToDate(creditSale)
+            balance: creditSale.balance,
+            balanceToDate: creditSaleService.getBalanceToDate(creditSale.payments, creditSale.balance),
+            paidOut: creditSale.paidOut
         )
     }
 }
 
 class CreditSaleDetail {
     String invoiceNumber
+    BigDecimal balance
     BigDecimal balanceToDate
+    Boolean paidOut
 }

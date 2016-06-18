@@ -15,7 +15,7 @@
             </li>
             <li class="${controllerName in ['provider', 'product'] ? 'active' : ''}">
                 <g:link controller="provider">
-                    Casas comerciales ${provider?.name}
+                    Laboratorios
                 </g:link>
             </li>
             <li class="${controllerName == 'presentation' ? 'active' : ''}">
@@ -38,6 +38,7 @@
                     Clientes
                 </g:link>
             </li>
+            <li class="divider"></li>
             <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
                 <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
             </li>
