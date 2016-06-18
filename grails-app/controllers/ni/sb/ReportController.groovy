@@ -165,19 +165,15 @@ class ReportController {
                     ]
                 }
             ]
-        }.sort { it.year }
+        }.sort { -it.year }
 
         [data: data]
     }
 
     def expensesDetail(Integer y, Integer m) {
-        def data = Expense.where {
-            year(dateCreated) == y &&
-            month(dateCreated) == m + 1
-        }.list().groupBy { it.dateCreated[DATE] }
-
         def(Date from, Date to) = helperService.getDates("month")
-
+        List<Expense> expenses = Expense.where { year(dateCreated) == y && month(dateCreated) == m }.list()
+        Map data = expenses.groupBy { it.dateCreated[DATE] }
         List result = (from..to).collect { d ->
             [
                 day: d[DATE],
@@ -187,11 +183,23 @@ class ReportController {
                         description: e?.description,
                         quantity: e?.quantity
                     ]
-                }
+                }.sort { it.fullName }
             ]
         }
 
-        [result: result, month: MONTHS[m], year: y]
+        List resume = expenses.groupBy { it.user.fullName }.collect { a ->
+            [
+                fullName: a.key,
+                quantity: a.value.quantity.sum()
+            ]
+        }.sort { -it.quantity }
+
+        [
+            result: result,
+            resume: resume,
+            month: MONTHS[m],
+            year: y
+        ]
     }
 
     def employees() {

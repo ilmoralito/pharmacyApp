@@ -1,6 +1,6 @@
 <g:applyLayout name="twoColumns">
     <head>
-        <title>Ventas</title>
+        <title>Gasto diario</title>
         <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
@@ -9,8 +9,8 @@
 
         <g:if test="${data}">
             <g:each in="${data}" var="d">
-                <p>${d.year}</p>
                 <table class="table table-hover">
+                    <caption>${d.year}</caption>
                     <colgroup>
                         <col span="1" style="width: 10%;">
                         <col span="1" style="width: 15%;">
@@ -26,7 +26,7 @@
                             <tr>
                                 <td>
                                     <g:if test="${m.quantity}">
-                                        <g:link action="expensesDetail" params="[y: d.year, m: idx]">
+                                        <g:link action="expensesDetail" params="[y: d.year, m: idx + 1]">
                                             ${m.name}
                                         </g:link>
                                     </g:if>
