@@ -6,30 +6,18 @@
 
     <content tag="main">
         <g:if test="${users}">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                   <col span="1" style="width: 45%;">
-                   <col span="1" style="width: 45%;">
-                   <col span="1" style="width: 5%;">
-                   <col span="1" style="width: 5%;">
-                </colgroup>
+            <table class="table table-hover">
                 <thead>
                     <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
-                    <th>Rol</th>
                 </thead>
                 <tbody>
                     <g:each in="${users}" var="user">
                         <tr>
                             <td>
                                 <g:link action="show" id="${user.id}">
-                                    ${user.fullName}
+                                    <g:fieldValue bean="${user}" field="fullName"/>
                                 </g:link>
                             </td>
-                            <td>${user.email}</td>
-                            <td>${user.telephoneNumber}</td>
-                            <td>${user.getAuthorities().authority.join(", ").tokenize("_")[1]}</td>
                         </tr>
                     </g:each>
                 </tbody>
@@ -41,46 +29,29 @@
     </content>
 
     <content tag="col1">
-        <g:set var="isFiltered" value="${params.boolean('filtered') ?: false}"/>
-        <g:set var="isEnabled" value="${params.boolean('enabled')}"/>
+        <g:render template="/shared/createFilterNav"/>
 
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="${!isFiltered ? 'active' : 'no-active'}">
-                <a href="#create" aria-controls="create" role="tab" data-toggle="tab">
-                    Crear
-                </a>
-            </li>
-            <li role="presentation" class="${isFiltered ? 'active' : 'no-active'}">
-                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab">
-                    Filtrar
-                </a>
-            </li>
-        </ul>
+        <g:if test="${!params.tab || params.tab != 'filter' ? 'active' : ''}">
+            <g:form action="create" autocomplete="off">
+                <g:render template="form"/>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane ${!isFiltered ? 'active' : 'no-active'}" id="create">
-                <g:form controller="user" action="list" autocomplete="off">
-                    <g:render template="form"/>
+                <input type="submit" class="btn btn-primary btn-block" value="Agregar"/>
+            </g:form>
+        </g:if>
+        <g:else>
+            <g:link
+                action="list"
+                params="[enabled: true, tab: 'filter']"
+                class="btn btn-block btn-${params.boolean('enabled') || params.enabled == null ? 'primary' : 'default'}">
+                Activos
+            </g:link>
 
-                    <input type="submit" class="btn btn-primary btn-block" value="Agregar"/>
-                </g:form>
-            </div>
-
-            <div role="tabpanel" class="tab-pane ${isFiltered ? 'active' : 'no-active'}" id="filter">
-                <g:link
-                    action="list"
-                    params="[enabled: true, filtered: true]"
-                    class="btn btn-block btn-${isEnabled ? 'primary' : 'default'}">
-                    Activos
-                </g:link>
-
-                <g:link
-                    action="list"
-                    params="[enabled: false, filtered: true]"
-                    class="btn btn-block btn-${!isEnabled ? 'primary' : 'default'}">
-                    No activos
-                </g:link>
-            </div>
-        </div>
+            <g:link
+                action="list"
+                params="[enabled: false, tab: 'filter']"
+                class="btn btn-block btn-${params.boolean('enabled') == false ? 'primary' : 'default'}">
+                No activos
+            </g:link>
+        </g:else>
     </content>
 </g:applyLayout>

@@ -9,7 +9,6 @@
             <div class="col-md-6">
                 <g:link action="list">Regresar</g:link>
                 <br>
-                <br>
 
                 <g:form action="update" autocomplete="off">
                     <g:hiddenField name="id" value="${params?.id}"/>

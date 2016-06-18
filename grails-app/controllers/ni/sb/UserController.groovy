@@ -8,43 +8,39 @@ class UserController {
 
     static defaultAction = "list"
     static allowedMethods = [
-        list: ["GET", "POST"],
+        list: "GET",
+        create: "POST",
         show: "GET",
         update: "POST",
         profile: ["GET", "POST"],
         password: ["GET", "POST"]
     ]
 
-    def list(Boolean enabled, Boolean filtered) {
-        Closure users = {
-            if (enabled == null) {
-                enabled = true
+    def list() {
+        Boolean enabled = params.boolean("enabled") == null ? true : params.boolean("enabled")
+        List<User> users = User.where {
+            enabled == enabled
+        }.list(params)
+
+        [users: users]
+    }
+
+    def create() {
+        User user = new User(params)
+
+        if (!user.save()) {
+            user.errors.allErrors.each { error ->
+                log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
             }
 
-            User.findAllByEnabled(enabled)
+            flash.bag = user
+        } else {
+            Role role = Role.findByAuthority(params?.authority)
+            UserRole.create user, role, true
         }
 
-        if (request.post) {
-            User user = new User(params)
-
-            if (!user.save()) {
-                user.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
-                }
-
-                flash.message = "A ocurrido un error"
-                return [users: users()]
-
-                // TODO: FIX error 
-                // object references an unsaved transient instance - save the transient instance before flushing: ni.sb.User
-                //return [users: users(), user: user]
-            } else {
-                Role role = Role.findByAuthority(params?.authority)
-                UserRole.create user, role, true
-            }
-        }
-
-        [users: users()]
+        flash.message = user.hasErrors() ? "A ocurrido un error" : "Accion concluida"
+        redirect action: "list"
     }
 
     def show(Long id) {
@@ -83,10 +79,11 @@ class UserController {
 
             if (!user.save()) {
                 user.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
+                flash.bag = user
+                flash.message = user.hasErrors() ? "A ocurrido un error" : "Accion concluida"
             }
         }
 
@@ -100,21 +97,22 @@ class UserController {
 
             if (command.hasErrors()) {
                 command.errors.allErrors.each { error ->
-                    log.error "[$error.field: $error.defaultMessage]"
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
                 }
 
-                flash.message = "A ocurrido un error."
+                flash.bag = command
+                flash.message = "Datos incorrectos"
                 return
             }
 
             User currentUser = springSecurityService.currentUser
-            currentUser.properties["password"] = command.newPassword
+            currentUser.password = command.newPassword
 
             if (!currentUser.save()) {
                 return
             }
 
-            flash.message = "Clave actualizada"
+            flash.message = currentUser.hasErrors() ? "A ocurrido un error" : "Accion concluida"
         }
     }
 }
