@@ -392,9 +392,10 @@ class AppTagLib {
         String name = attrs.name
         String data = attrs.data
         List<Product> from = attrs.from
+        Map<String, String> params = [:]
 
         builder.div(class: "form-group") {
-            delegate.select(name: name, class: "form-control") {
+            delegate.select(id: name, name: name, class: "form-control") {
                 from.each { o ->
                     params.value = o.id
 
