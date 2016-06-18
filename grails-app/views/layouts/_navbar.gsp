@@ -7,7 +7,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <g:link class="navbar-brand" controller="${controllerName}">App name</g:link>
+            <g:link class="navbar-brand" controller="${controllerName}">
+                ${grailsApplication.config.ni.sb.companyName}
+            </g:link>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
