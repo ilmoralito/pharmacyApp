@@ -65,7 +65,7 @@ grails.project.dependency.resolution = {
 
     // plugins needed at runtime but not for compilation
     runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
-    runtime ':database-migration:1.3.6'
+    runtime ':database-migration:1.4.0'
     runtime ":jquery:1.11.0.2"
     runtime ":resources:1.2.7"
     // Uncomment these (or add new ones) to enable additional resources capabilities
@@ -73,24 +73,13 @@ grails.project.dependency.resolution = {
     //runtime ":cached-resources:1.1"
     //runtime ":yui-minify-resources:0.1.5"
 
-    // An alternative to the default resources plugin is the asset-pipeline plugin
-    //compile ":asset-pipeline:1.6.1"
-
-    // Uncomment these to enable additional asset-pipeline capabilities
-    //compile ":sass-asset-pipeline:1.5.5"
-    //compile ":less-asset-pipeline:1.5.3"
-    //compile ":coffee-asset-pipeline:1.5.0"
-    //compile ":handlebars-asset-pipeline:1.3.0.1"
-
-    //app plugins
-    compile ":build-test-data:2.2.0"
+    // App plugins
     compile ":spring-security-core:2.0.0"
     compile ":spring-security-ui:1.0-RC2"
     compile ":mail:1.0.7"
-    compile ":jquery-ui:1.10.3"
     runtime ":twitter-bootstrap:3.3.0"
     compile ":webflow:2.0.8.1"
-    compile ":export:1.6"
     compile ":quartz:1.0.1"
+    compile ":webxml:1.4.1"
   }
 }
