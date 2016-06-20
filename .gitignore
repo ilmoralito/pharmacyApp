@@ -21,3 +21,5 @@ stacktrace.log
 .info
 *.db
 todo
+.env
+/server
