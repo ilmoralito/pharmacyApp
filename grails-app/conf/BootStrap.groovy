@@ -372,7 +372,7 @@ class BootStrap {
         if (!UserRole.exists(user.id, userRole.id)) {
             UserRole.create user, userRole, true
         }
-        
+
         if (!UserRole.exists(test.id, userRole.id)) {
             UserRole.create test, userRole, true
         }

@@ -3,6 +3,7 @@ package ni.sb
 import grails.plugin.springsecurity.annotation.Secured
 import org.hibernate.transform.AliasToEntityMapResultTransformer
 import static java.util.Calendar.*
+import groovy.json.JsonBuilder
 
 @Secured(["ROLE_ADMIN"])
 class ReportController {
@@ -11,6 +12,7 @@ class ReportController {
     def helperService
     def saleDetailService
     def expenseService
+    def creditSaleService
 
     static defaultAction = "sales"
     static allowedMethods = [
@@ -20,7 +22,8 @@ class ReportController {
         detail: "GET",
         expenses: "GET",
         expensesDetail: ["GET","POST"],
-        employees: ["GET", "POST"]
+        credit: "GET",
+        creditDetail: ["GET", "POST"]
     ]
 
     private static final MONTHS = [
@@ -202,7 +205,69 @@ class ReportController {
         ]
     }
 
-    def employees() {
+    def credit() {
+        List<CreditSale> creditSales = CreditSale.list()
+        List<Company> companies = creditSales.employee.company.unique()
 
+        [companies: companies]
+    }
+
+    def creditDetail(Long id, CreditDetailCommand command) {
+        Company company = Company.get(id)
+        List<CreditSale> credits = []
+
+        if (!company) {
+            response.sendeError 404
+        }
+
+        if (request.post) {
+            if (command.hasErrors()) {
+                command.errors.allErrors.each { error ->
+                    log.error "[field: $error.field, defaultMessage: $error.defaultMessage]"
+                }
+
+                flash.bag = command
+            } else {
+                credits = CreditSale.where {
+                    employee.company == company && paidOut in command.paidOut
+                }.list()
+            }
+        } else {
+            credits = CreditSale.where {
+                employee.company == company
+            }.list()
+        }
+
+        List data = credits.groupBy { it.employee.fullName }.collect { a ->
+            [
+                employee: a.key,
+                credits: a.value.collect { b ->
+                    [
+                        id: b.id,
+                        invoiceNumber: b.invoiceNumber,
+                        balance: b.balance,
+                        balanceToDate: creditSaleService.getBalanceToDate(b.payments, b.balance),
+                        paidOut: b.paidOut
+                    ]
+                }
+            ]
+        }
+
+        List<Boolean> paidOut = params.paidOut ? params.list("paidOut")*.toBoolean() : [true, false]
+
+        [
+            data: data,
+            companyBalance: creditSaleService.getCompanyBalance(data.credits, paidOut),
+            company: company.name,
+            id: company.id
+        ]
+    }
+}
+
+class CreditDetailCommand {
+    List<Boolean> paidOut
+
+    static constraints = {
+        paidOut nullable: false, min: 1
     }
 }

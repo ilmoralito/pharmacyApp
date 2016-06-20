@@ -27,8 +27,8 @@
                 </g:link>
             </li>
             <li class="${actionName == 'employees' ? 'active' : ''}">
-                <g:link controller="report" action="employees">
-                    Empresas
+                <g:link controller="report" action="credit">
+                    Credito
                 </g:link>
             </li>
         </ul>

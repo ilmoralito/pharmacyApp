@@ -40,10 +40,10 @@
     </li>
 
     <li class="${actionName == 'expenses' || actionName == 'expensesDetail' ? 'active' : ''}">
-        <g:link action="expenses">Gastos diarios</g:link>
+        <g:link action="expenses">Gasto diario</g:link>
     </li>
 
-    <li class="${actionName == 'employees' ? 'active' : ''}">
-        <g:link action="employees">A empresas</g:link>
+    <li class="${actionName == 'credit' || actionName == 'creditDetail' ? 'active' : ''}">
+        <g:link action="credit">Credito</g:link>
     </li>
 </ul>

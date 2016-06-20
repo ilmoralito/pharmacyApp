@@ -45,8 +45,6 @@ class PurchaseOrderController {
             response.sendError 404
         }
 
-        println po.items.size()
-
         List items = po.items.findAll {!(it instanceof MedicineOrder) && !(it instanceof BrandProductOrder)}
         List medicineOrders = po.items.findAll {it instanceof MedicineOrder}
         List brandProductOrders = po.items.findAll {it instanceof BrandProductOrder}
