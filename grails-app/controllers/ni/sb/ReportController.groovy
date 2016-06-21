@@ -229,12 +229,12 @@ class ReportController {
                 flash.bag = command
             } else {
                 credits = CreditSale.where {
-                    employee.company == company && paidOut in command.paidOut
+                    employee.company == company && canceled == false && paidOut in command.paidOut
                 }.list()
             }
         } else {
             credits = CreditSale.where {
-                employee.company == company
+                employee.company == company && canceled == false
             }.list()
         }
 

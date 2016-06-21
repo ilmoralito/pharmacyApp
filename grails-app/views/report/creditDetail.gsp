@@ -22,7 +22,7 @@
                     <th>Factura</th>
                     <th>Monto</th>
                     <th>Monto a la fecha</th>
-                    <th>Cancelado</th>
+                    <th>Pagado</th>
                 </thead>
                 <tbody>
                     <g:each in="${data}" var="d">
@@ -68,7 +68,7 @@
             <div class="checkbox">
                 <label>
                     <g:checkBox name="paidOut" value="true" checked="${true in paidOut || !paidOut}"/>
-                    Cancelado
+                    Pagado
                 </label>
             </div>
 
