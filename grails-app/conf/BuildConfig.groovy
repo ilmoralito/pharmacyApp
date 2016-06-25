@@ -81,5 +81,6 @@ grails.project.dependency.resolution = {
     compile ":webflow:2.0.8.1"
     compile ":quartz:1.0.1"
     compile ":webxml:1.4.1"
+    runtime ":console:1.5.9"
   }
 }
