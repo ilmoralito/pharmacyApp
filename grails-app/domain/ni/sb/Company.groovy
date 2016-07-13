@@ -6,24 +6,20 @@ import groovy.transform.ToString
 @ToString
 class Company implements Serializable {
     @BindUsing({ obj, source ->
-        source["name"]?.capitalize()
+        source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
     })
     String name
     String city
     String address
     String telephoneNumber
     BigDecimal creditLimit
-    @BindUsing({ obj, source ->
-        source["contactFullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
-    })
-    String contactFullName
-    String contactTelephoneNumber
-    String contactEmail
+    CompanyContact companyContact
     Boolean enabled = true
-    List<Employee> employees
 
     Date dateCreated
     Date lastUpdated
+
+    List<Employee> employees
 
     static constraints = {
         name blank: false, unique: true
@@ -31,9 +27,7 @@ class Company implements Serializable {
         address unique: true
         telephoneNumber unique: true, size: 8..8
         creditLimit min: 1.0
-        contactFullName blank: false
-        contactTelephoneNumber unique: true, size: 8..8
-        contactEmail email: true, unique: true
+        companyContact nullable: false
     }
 
     static hasMany = [employees: Employee]

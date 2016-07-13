@@ -92,17 +92,22 @@ class BootStrap {
         assert Role.count() == 2
         assert UserRole.count() == 3
 
+        // COMPANIES
         companies << builder.company(
             name: "company1",
             city: "Leon",
             address: "Lorem ipsum dolor sit amet",
             telephoneNumber: "23114455",
             creditLimit: 1500.00,
-            contactFullName: "contact1 name",
-            contactTelephoneNumber: "88776678",
-            contactEmail: "contact1.name@company1.com.ni",
             enabled: true
         ) {
+            companyContact(
+                fullName: "contact1 name",
+                email: "contact1.name@company1.com.ni",
+                telephoneNumber: "2311-3323",
+                personalTelephoneNumber: "88776678"
+            )
+
             10.times {
                 employee(
                     fullName: "employee#$it",
@@ -119,11 +124,15 @@ class BootStrap {
             address: "Lorem ipsum dolor sit amot",
             telephoneNumber: "23124455",
             creditLimit: 3000.00,
-            contactFullName: "contact2 name",
-            contactTelephoneNumber: "76776678",
-            contactEmail: "contact2.name@company1.com.ni",
             enabled: true
         ) {
+            companyContact(
+                fullName: "contact2 name",
+                email: "contact2.name@company1.com.ni",
+                telephoneNumber: "23114541",
+                personalTelephoneNumber: "76776678"
+            )
+
             20.times {
                 employee(
                     fullName: "employee#$it",

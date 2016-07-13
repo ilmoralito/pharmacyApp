@@ -1,21 +1,28 @@
 <div class="row">
     <div class="col-md-6">
-        <p>Empresa</p>
-        <div class="form-group">
-            <label for="name">Nombre</label>
-            <g:textField
-                name="name"
-                value="${company?.name}"
-                class="form-control"/>
-        </div>
+        <p>Informacion de empresa</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <g:textField
+                        name="name"
+                        value="${company?.name}"
+                        class="form-control"/>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="city">Ciudad</label>
-            <g:select
-                name="city"
-                from="['Leon', 'Chinandega']"
-                value="${company?.city}"
-                class="form-control"/>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="city">Ciudad</label>
+                    <g:select
+                        noSelection="[null: 'Selecciona una ciudad']"
+                        name="city"
+                        from="['Leon', 'Chinandega']"
+                        value="${company?.city}"
+                        class="form-control"/>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -41,30 +48,6 @@
                 value="${company?.creditLimit}"
                 class="form-control"/>
         </div>
-    </div>
-
-    <div class="col-md-6">
-        <p>Contacto</p>
-        <div class="form-group">
-            <label for="contactFullName">Nombre de contacto</label>
-            <g:textField
-                name="contactFullName"
-                value="${company?.contactFullName}"
-                class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label for="contactTelephoneNumber">Telefono de contacto</label>
-            <g:textField
-                name="contactTelephoneNumber"
-                value="${company?.contactTelephoneNumber}"
-                class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label for="contactEmail">Emial de contacto</label>
-            <g:field type="email" name="contactEmail" value="${company?.contactEmail}" class="form-control"/>
-        </div>
 
         <g:if test="${actionName == 'show'}">
             <div class="checkbox">
@@ -74,5 +57,40 @@
                 Habilitado
             </div>
         </g:if>
+    </div>
+
+    <div class="col-md-6">
+        <p>Contacto de la empresa</p>
+        <div class="form-group">
+            <label for="companyContact.fullName">Nombre</label>
+            <g:textField
+                name="companyContact.fullName"
+                value="${company?.companyContact?.fullName}"
+                class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyContact.telephoneNumber">Telefono</label>
+            <g:textField
+                name="companyContact.telephoneNumber"
+                value="${company?.companyContact?.telephoneNumber}"
+                class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyContact.personalTelephoneNumber">Telefono personal</label>
+            <g:textField
+                name="companyContact.personalTelephoneNumber"
+                value="${company?.companyContact?.personalTelephoneNumber}"
+                class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyContact.email">Correo</label>
+            <g:field type="email"
+                name="companyContact.email"
+                value="${company?.companyContact?.email}"
+                class="form-control"/>
+        </div>
     </div>
 </div>

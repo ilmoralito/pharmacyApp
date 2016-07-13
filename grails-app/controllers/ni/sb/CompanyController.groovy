@@ -27,22 +27,21 @@ class CompanyController {
     }
 
     def create() {
-        Company company = new Company(params)
-
         if (request.post) {
+            Company company = new Company(params)
+
             if (!company.save()) {
                 company.errors.allErrors.each { error ->
                     log.error "[field: $error.field: defaultMessage: $error.defaultMessage]"
                 }
 
                 flash.bag = company
+                flash.message = "A ocurrido un error"
+                return [company: company]
             }
 
-            flash.message = company.hasErrors() ? "A ocurrido un error" : "Accion concluida"
-            return
+            flash.message = "Creado correctamente"
         }
-
-        [company: company]
     }
 
     def show(Long id) {

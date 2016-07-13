@@ -5,7 +5,7 @@
     </head>
 
     <content tag="main">
-        <g:form action="create" autocomplete="off">
+        <g:form action="save" autocomplete="off">
             <g:render template="form"/>
 
             <g:submitButton name="send" value="Confirmar" class="btn btn-primary"/>

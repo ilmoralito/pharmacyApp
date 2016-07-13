@@ -14,7 +14,7 @@ class Contact implements Serializable {
 
     static constraints = {
         fullName blank: false
-        email email: true, blank: false, unique: true // TODO: check if there exist distribuitor email
+        email email: true, blank: false, unique: true
         telephoneNumber blank: false, unique: true
     }
 

@@ -158,7 +158,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   "/register/forgotPassword/**":    ["permitAll"],
   "/register/index/**":             ["permitAll"],
   "/register/resetPassword/**":     ["permitAll"],
-  "/register/register/**":          ["permitAll"]
+  "/register/register/**":          ["permitAll"],
+  "/console/**":          ['ROLE_ADMIN'],
+  "/plugins/console*/**": ['ROLE_ADMIN']
 ]
 
 ni.sb.minDateToSale = 60
@@ -190,5 +192,7 @@ ni {
     minLowStocks = 10
     minMedicineOrdersAboutToExpire = 60
     minPurchaseOrdersPaymentDateClose = 10
+
+    invoiceNumber = 1000
   }
 }
