@@ -22,3 +22,12 @@ label {
 .tab-label-text { font-size: .9em; }
 
 .text-center { text-align: center; }
+
+.navbar-toggle {
+    transition: all .5s ease-out;
+    border: 1px none transparent;
+}
+
+..navbar-toggle:hover {
+    background: #333;
+}

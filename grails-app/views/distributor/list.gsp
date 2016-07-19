@@ -1,7 +1,7 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Distribuidores</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
     <content tag="main">

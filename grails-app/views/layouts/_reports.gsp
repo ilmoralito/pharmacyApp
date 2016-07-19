@@ -6,9 +6,9 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
-            <li class="${actionName == 'sales' ? 'active' : ''}">
-                <g:link controller="report" action="sales">
-                    Ventas
+            <li class="${actionName == 'expenses' ? 'active' : ''}">
+                <g:link controller="report" action="expenses">
+                    Gasto diario
                 </g:link>
             </li>
             <li class="${actionName == 'stock' ? 'active' : ''}">
@@ -21,14 +21,14 @@
                     Clientes
                 </g:link>
             </li>
-            <li class="${actionName == 'expenses' ? 'active' : ''}">
-                <g:link controller="report" action="expenses">
-                    Gasto diario
-                </g:link>
-            </li>
             <li class="${actionName == 'employees' ? 'active' : ''}">
                 <g:link controller="report" action="credit">
                     Credito
+                </g:link>
+            </li>
+            <li class="${actionName == 'sales' ? 'active' : ''}">
+                <g:link controller="report" action="sales">
+                    Ventas
                 </g:link>
             </li>
         </ul>

@@ -20,6 +20,6 @@
         </sec:ifAllGranted>
 
         <li class="divider"></li>
-        <li><g:link controller="logout" action="index">Salir</g:link></li>
+        <li><g:link controller="logout" action="index">Cerrar sesion</g:link></li>
     </ul>
 </li>

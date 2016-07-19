@@ -18,6 +18,9 @@
                     Laboratorios
                 </g:link>
             </li>
+
+            <li class="divider"></li>
+
             <li class="${controllerName == 'presentation' ? 'active' : ''}">
                 <g:link controller="presentation">
                     Presentaciones
@@ -28,6 +31,9 @@
                     Marcas
                 </g:link>
             </li>
+
+            <li class="divider"></li>
+
             <li class="${controllerName == 'company' ? 'active' : ''}">
                 <g:link controller="company">
                     Empresas
@@ -38,7 +44,6 @@
                     Clientes
                 </g:link>
             </li>
-            <li class="divider"></li>
             <li class="${controllerName == 'purchaseOrder' && actionName != 'stock' ? 'active' : ''}">
                 <g:link controller="purchaseOrder" action="list">Pedidos</g:link>
             </li>

@@ -1,15 +1,15 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Laboratorios</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, app"/>
     </head>
 
     <content tag="main">
         <g:if test="${providers}">
             <table class="table table-hover">
                 <colgroup>
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 89%;">
+                    <col span="1" style="width: 94%;">
+                    <col span="1" style="width: 5%;">
                     <col span="1" style="width: 1%;">
                 </colgroup>
                 <thead>
