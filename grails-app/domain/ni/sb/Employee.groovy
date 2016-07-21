@@ -12,6 +12,7 @@ class Employee implements Serializable {
     String telephoneNumber
     String identificationCard
     String inss
+
     Date dateCreated
     Date lastUpdated
 
@@ -19,7 +20,7 @@ class Employee implements Serializable {
         fullName blank: false
         telephoneNumber blank: false
         identificationCard blank: false, unique: true, minSize: 16, maxSize: 16
-        inss unique: true
+        inss blank:false, unique: true, minSize: 7, maxSize: 7
     }
 
     static mapping = {

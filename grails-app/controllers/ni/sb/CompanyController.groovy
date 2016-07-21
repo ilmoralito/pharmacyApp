@@ -132,6 +132,8 @@ class CompanyController {
             }
 
             flash.bag = company
+            chain action: "employees", id: id, model: [employee: employee]
+            return
         }
 
         flash.message = company.hasErrors() ? "A ocurrido un error" : "Acction concluida"

@@ -178,6 +178,7 @@
             <g:render template="saleDetailsTable" model="[saleDetails: saleDetails]"/>
         </g:if>
     </content>
+
     <content tag="col1">
         <ul class="nav nav-tabs">
             <li class="${saleType == 'cash' ? 'active' : ''}">
@@ -204,6 +205,13 @@
 
         <g:form autocomplete="off" id="saleForm">
             <g:hiddenField name="balance" value="${saleDetails.total.sum()}"/>
+
+            <div class="form-group">
+                <label for="change">Numero de factura</label>
+                <div class="form-control">
+                    <pharmacyApp:invoiceNumber/>
+                </div>
+            </div>
 
             <g:if test="${saleType == 'cash'}">
                 <div class="form-group">
@@ -236,11 +244,6 @@
 
             <g:if test="${saleType == 'credit'}">
                 <div class="form-group">
-                    <label for="invoiceNumber">Numero de factura</label>
-                    <g:textField name="invoiceNumber" class="form-control"/>
-                </div>
-
-                <div class="form-group">
                     <label for="company">Empresa</label>
                     <pharmacyApp:companies/>
                 </div>
@@ -272,6 +275,11 @@
         </g:form>
 
         <script id="template" type="x-tmpl-mustache">
+            <div class="panel-heading">
+                <a href="#" id="clearTemplate" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-close"></span>
+                </a>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <label>Cedula</label>

@@ -4,6 +4,9 @@ import groovy.transform.ToString
 
 @ToString
 class Sale implements Serializable {
+    def saleService
+
+    Long invoiceNumber
     User user
     BigDecimal balance
     Boolean canceled = false
@@ -15,6 +18,7 @@ class Sale implements Serializable {
     Date lastUpdated
 
     static constraints = {
+        invoiceNumber unique: true
         balance min: 1.0, scale: 2
         reazonOfCanelation nullable: true, maxSize: 255, validator: { reazonOfCanelation, obj ->
             if (obj.canceled) {
@@ -34,6 +38,10 @@ class Sale implements Serializable {
 
     List<SaleDetail> saleDetails
     static hasMany = [saleDetails: SaleDetail]
+
+    def beforeValidate() {
+        invoiceNumber = saleService.getNextInvoiceNumber()
+    }
 
     def beforeUpdate() {
         if (isDirty("canceled")) {

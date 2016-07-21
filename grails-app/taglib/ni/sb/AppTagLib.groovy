@@ -7,6 +7,7 @@ class AppTagLib {
     def distributorService
     def creditSaleService
     def purchaseOrderService
+    def saleService
 
     static namespace = "pharmacyApp"
     static defaultEncodeAs = "html"
@@ -634,5 +635,9 @@ class AppTagLib {
                 }
             }
         }
+    }
+
+    def invoiceNumber = { attrs ->
+        out << saleService.getNextInvoiceNumber()
     }
 }

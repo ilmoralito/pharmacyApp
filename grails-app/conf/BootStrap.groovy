@@ -113,7 +113,7 @@ class BootStrap {
                     fullName: "employee#$it",
                     telephoneNumber: "87898978",
                     identificationCard: UUID.randomUUID().toString().replaceAll('-', '')[0..15],
-                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
+                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..6]
                 )
             }
         }
@@ -138,7 +138,7 @@ class BootStrap {
                     fullName: "employee#$it",
                     telephoneNumber: "89090909",
                     identificationCard: UUID.randomUUID().toString().replaceAll('-', '')[0..15],
-                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..8]
+                    inss: UUID.randomUUID().toString().replaceAll('-', '')[0..6]
                 )
             }
         }

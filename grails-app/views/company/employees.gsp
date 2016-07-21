@@ -5,8 +5,7 @@
     </head>
 
     <content tag="main">
-        <g:link controller="company">Regresar</g:link>
-        <br>
+        <g:link controller="company" class="btn-back">Regresar</g:link>
 
         <g:if test="${employees}">
             <table id="employees" class="table table-hover">

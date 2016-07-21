@@ -5,6 +5,8 @@
     </head>
 
     <content tag="main">
+        <g:link action="list" class="btn-back">Regresar</g:link>
+
         <g:form action="update" autocomplete="off">
             <g:hiddenField name="id" value="${params?.id}"/>
             <g:render template="form"/>

@@ -26,7 +26,9 @@ class SaleController {
     def createSaleFlow = {
         init {
             action {
-                List<Item> items = Item.list().unique() { a, b -> a.product.name <=> b.product.name }.sort { it.product.name }
+                List<Item> items = Item.list().unique() { a, b ->
+                    a.product.name <=> b.product.name
+                }.sort { it.product.name }
                 List<SaleDetail> saleDetails = []
 
                 [
@@ -157,7 +159,6 @@ class SaleController {
 
                 CreditSale creditSale = new CreditSale(
                     user: springSecurityService.currentUser,
-                    invoiceNumber: cmd.invoiceNumber,
                     employee: cmd.employee,
                     balance: cmd.balance,
                     annotation: cmd.annotation
@@ -289,7 +290,7 @@ class SaleController {
     }
 }
 
-class CashSaleCommand {
+class CashSaleCommand implements Serializable {
     Client client
     BigDecimal balance
     BigDecimal moneyReceived
@@ -300,8 +301,7 @@ class CashSaleCommand {
     }
 }
 
-class CreditSaleCommand {
-    String invoiceNumber
+class CreditSaleCommand implements Serializable {
     Employee employee
     BigDecimal balance
     String annotation

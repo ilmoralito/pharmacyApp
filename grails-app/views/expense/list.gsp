@@ -1,13 +1,13 @@
 <g:applyLayout name="threeColumns">
     <head>
         <title>Gasto diario</title>
-        <r:require modules="bootstrap-css, bootstrap-collapse, bootstrap-tab, app, bootstrap3datepicker, fromToDatepicker"/>
+        <r:require modules="bootstrap-css, bootstrap-collapse, app, bootstrap3datepicker, fromToDatepicker"/>
     </head>
 
     <content tag="main">
         <g:if test="${expenses}">
             <table class="table table-hover">
-                <caption>Gasto diario</caption> 
+                <caption>Gasto diario</caption>
                 <colgroup>
                     <col span="1" style="width: 1%;">
                     <col span="1" style="width: 5%;">
@@ -74,12 +74,12 @@
                         name="description"
                         class="form-control"/>
                 </div>
-            
+
                 <div class="form-group">
                     <label for="quantity">Monto</label>
                     <g:textField name="quantity" class="form-control"/>
                 </div>
-            
+
                 <g:submitButton name="send" value="Agregar" class="btn btn-primary btn-block"/>
             </g:form>
         </g:if>

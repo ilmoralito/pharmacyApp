@@ -2,15 +2,14 @@ package ni.sb
 
 import grails.transaction.Transactional
 
-
 @Transactional
-class SaleService {
+class SaleService implements Serializable {
     def helperService
+    def grailsApplication
 
     def getSalesFromField(String field) {
         def (Date from, Date to) = helperService.getDates(field)
 
-        log.info "Quering from ${from.format('yyyy-MM-dd')} to ${to.format('yyyy-MM-dd')}"
         Sale.fromTo(from, to).list()
     }
 
@@ -42,5 +41,14 @@ class SaleService {
 
     BigDecimal getBalanceSummary(List<Sale> sales) {
         sales?.balance?.sum() ?: 0.0
+    }
+
+    Long getNextInvoiceNumber() {
+        Sale sale = Sale.list().last()
+        def nextInvoiceNumber = sale ? sale[0].invoiceNumber + 1 : grailsApplication.config.ni.sb.invoiceNumber
+
+        println Sale.list().last().invoiceNumber
+
+        nextInvoiceNumber
     }
 }
